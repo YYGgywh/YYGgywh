@@ -1,0 +1,88 @@
+﻿{
+    "success":  true,
+    "timestamp":  "2025-12-08T13:54:59.019102",
+    "data":  {
+                 "success":  true,
+                 "valid":  true,
+                 "solar_date":  {
+                                    "date":  "2025-02-03 22:10:27",
+                                    "year":  2025,
+                                    "month":  2,
+                                    "day":  3,
+                                    "hour":  22,
+                                    "minute":  10,
+                                    "second":  27,
+                                    "week":  "ä¸",
+                                    "constellation":  "æ°´ç¶",
+                                    "festivals":  [
+
+                                                  ],
+                                    "other_festivals":  [
+
+                                                        ]
+                                },
+                 "lunar_date":  {
+                                    "lunar_date":  "äºãäºäºå¹´æ­£æåå\u0085­",
+                                    "lunar_year":  2025,
+                                    "lunar_month":  1,
+                                    "lunar_day":  6,
+                                    "lunar_year_name":  "äºãäºäº",
+                                    "lunar_month_name":  "æ­£",
+                                    "lunar_day_name":  "åå\u0085­",
+                                    "is_leap_month":  true,
+                                    "animal":  "è",
+                                    "lunar_month_alias":  "æ­£",
+                                    "lunar_day_alias":  "åå\u0085­",
+                                    "lunar_festivals":  [
+
+                                                        ],
+                                    "lunar_other_festivals":  [
+
+                                                              ]
+                                },
+                 "ganzhi_date":  {
+                                     "year":  "ä¹å·³",
+                                     "month":  "æå¯\u0085",
+                                     "day":  "ç¸å¯",
+                                     "time":  "ç¸äº¥"
+                                 },
+                 "jieqi":  {
+                               "jie":  {
+                                           "prev":  {
+                                                        "name":  "å°å¯",
+                                                        "time":  "2025-01-05 10:32:47",
+                                                        "solar":  "2025-01-05"
+                                                    },
+                                           "next":  {
+                                                        "name":  "ç«æ¥",
+                                                        "time":  "2025-02-03 22:10:28",
+                                                        "solar":  "2025-02-03"
+                                                    }
+                                       },
+                               "qi":  {
+                                          "prev":  {
+                                                       "name":  "å¤§å¯",
+                                                       "time":  "2025-01-20 04:00:08",
+                                                       "solar":  "2025-01-20"
+                                                   },
+                                          "next":  {
+                                                       "name":  "é¨æ°´",
+                                                       "time":  "2025-02-18 18:06:34",
+                                                       "solar":  "2025-02-18"
+                                                   }
+                                      },
+                               "current":  {
+                                               "name":  "ç«æ¥",
+                                               "is_jieqi":  true,
+                                               "current_time":  "2025-02-03 22:10:27"
+                                           }
+                           },
+                 "jieqi_result_a":  {
+                                        "prev_jie":  "å°å¯ 2025-01-05 10:32:47",
+                                        "prev_qi":  "å¤§å¯ 2025-01-20 04:00:08",
+                                        "next_jie":  "ç«æ¥ 2025-02-03 22:10:28"
+                                    },
+                 "timestamp":  2460710.423923611
+             },
+    "message":  "åæ³è½¬æ¢æå"
+}

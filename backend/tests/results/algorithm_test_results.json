@@ -1,0 +1,1102 @@
+[
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2024-2-10 12:0:0",
+    "success": true,
+    "execution_time": 0.021708250045776367,
+    "result": {
+      "success": true,
+      "solar_datetime": "2024-02-10 12:00:00",
+      "solar_info": {
+        "date": "2024-02-10 12:00:00",
+        "year": 2024,
+        "month": 2,
+        "day": 10,
+        "hour": 12,
+        "minute": 0,
+        "second": 0,
+        "week": "六"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [
+        "国际气象节"
+      ],
+      "lunar_collection": {
+        "lunar_date": "二〇二四年正月初一",
+        "lunar_year": 2024,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二四",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "龙",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "甲辰",
+        "ganzhi_month": "丙寅",
+        "ganzhi_day": "甲辰",
+        "ganzhi_time": "庚午"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "立春",
+            "time": "2024-02-04 16:27:07",
+            "solar": "2024-02-04"
+          },
+          "next": {
+            "name": "惊蛰",
+            "time": "2024-03-05 10:22:45",
+            "solar": "2024-03-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2024-01-20 22:07:22",
+            "solar": "2024-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2024-02-19 12:13:12",
+            "solar": "2024-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2024-02-10 12:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "立春 2024-02-04 16:27:07",
+        "next_qi": "雨水 2024-02-19 12:13:12",
+        "next_jie": "惊蛰 2024-03-05 10:22:45"
+      },
+      "timestamp": 2460351.0
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2023-1-22 0:0:0",
+    "success": true,
+    "execution_time": 0.009166240692138672,
+    "result": {
+      "success": true,
+      "solar_datetime": "2023-01-22 00:00:00",
+      "solar_info": {
+        "date": "2023-01-22 00:00:00",
+        "year": 2023,
+        "month": 1,
+        "day": 22,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "日"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年正月初一",
+        "lunar_year": 2023,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "兔",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "癸丑",
+        "ganzhi_day": "庚辰",
+        "ganzhi_time": "丙子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "小寒",
+            "time": "2023-01-05 23:04:51",
+            "solar": "2023-01-05"
+          },
+          "next": {
+            "name": "立春",
+            "time": "2023-02-04 10:42:33",
+            "solar": "2023-02-04"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2023-01-20 16:29:32",
+            "solar": "2023-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2023-02-19 06:34:17",
+            "solar": "2023-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2023-01-22 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "小寒 2023-01-05 23:04:51",
+        "prev_qi": "大寒 2023-01-20 16:29:32",
+        "next_jie": "立春 2023-02-04 10:42:33"
+      },
+      "timestamp": 2459966.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2022-2-1 0:0:0",
+    "success": true,
+    "execution_time": 0.0065767765045166016,
+    "result": {
+      "success": true,
+      "solar_datetime": "2022-02-01 00:00:00",
+      "solar_info": {
+        "date": "2022-02-01 00:00:00",
+        "year": 2022,
+        "month": 2,
+        "day": 1,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "二"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二二年正月初一",
+        "lunar_year": 2022,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二二",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "虎",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "壬寅",
+        "ganzhi_month": "辛丑",
+        "ganzhi_day": "乙酉",
+        "ganzhi_time": "丙子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "小寒",
+            "time": "2022-01-05 17:14:04",
+            "solar": "2022-01-05"
+          },
+          "next": {
+            "name": "立春",
+            "time": "2022-02-04 04:50:47",
+            "solar": "2022-02-04"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2022-01-20 10:39:06",
+            "solar": "2022-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2022-02-19 00:43:01",
+            "solar": "2022-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2022-02-01 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "小寒 2022-01-05 17:14:04",
+        "prev_qi": "大寒 2022-01-20 10:39:06",
+        "next_jie": "立春 2022-02-04 04:50:47"
+      },
+      "timestamp": 2459611.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "lunar_to_solar",
+    "input": "农历2024年1月1日 12:0:0",
+    "success": true,
+    "execution_time": 0.019219398498535156,
+    "result": {
+      "success": true,
+      "solar_datetime": "2024-02-10 12:00:00",
+      "solar_info": {
+        "date": "2024-02-10 12:00:00",
+        "year": 2024,
+        "month": 2,
+        "day": 10,
+        "hour": 12,
+        "minute": 0,
+        "second": 0,
+        "week": "六"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [
+        "国际气象节"
+      ],
+      "lunar_collection": {
+        "lunar_date": "二〇二四年正月初一",
+        "lunar_year": 2024,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二四",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "龙",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "甲辰",
+        "ganzhi_month": "丙寅",
+        "ganzhi_day": "甲辰",
+        "ganzhi_time": "庚午"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "立春",
+            "time": "2024-02-04 16:27:07",
+            "solar": "2024-02-04"
+          },
+          "next": {
+            "name": "惊蛰",
+            "time": "2024-03-05 10:22:45",
+            "solar": "2024-03-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2024-01-20 22:07:22",
+            "solar": "2024-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2024-02-19 12:13:12",
+            "solar": "2024-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2024-02-10 12:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "立春 2024-02-04 16:27:07",
+        "next_qi": "雨水 2024-02-19 12:13:12",
+        "next_jie": "惊蛰 2024-03-05 10:22:45"
+      },
+      "timestamp": 2460351.0
+    },
+    "error": null
+  },
+  {
+    "test_type": "lunar_to_solar",
+    "input": "农历2023年1月1日 0:0:0",
+    "success": true,
+    "execution_time": 0.01061105728149414,
+    "result": {
+      "success": true,
+      "solar_datetime": "2023-01-22 00:00:00",
+      "solar_info": {
+        "date": "2023-01-22 00:00:00",
+        "year": 2023,
+        "month": 1,
+        "day": 22,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "日"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年正月初一",
+        "lunar_year": 2023,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "兔",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "癸丑",
+        "ganzhi_day": "庚辰",
+        "ganzhi_time": "丙子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "小寒",
+            "time": "2023-01-05 23:04:51",
+            "solar": "2023-01-05"
+          },
+          "next": {
+            "name": "立春",
+            "time": "2023-02-04 10:42:33",
+            "solar": "2023-02-04"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2023-01-20 16:29:32",
+            "solar": "2023-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2023-02-19 06:34:17",
+            "solar": "2023-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2023-01-22 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "小寒 2023-01-05 23:04:51",
+        "prev_qi": "大寒 2023-01-20 16:29:32",
+        "next_jie": "立春 2023-02-04 10:42:33"
+      },
+      "timestamp": 2459966.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "lunar_to_solar",
+    "input": "农历2022年1月1日 0:0:0",
+    "success": true,
+    "execution_time": 0.034680843353271484,
+    "result": {
+      "success": true,
+      "solar_datetime": "2022-02-01 00:00:00",
+      "solar_info": {
+        "date": "2022-02-01 00:00:00",
+        "year": 2022,
+        "month": 2,
+        "day": 1,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "二"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二二年正月初一",
+        "lunar_year": 2022,
+        "lunar_month": 1,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二二",
+        "lunar_month_name": "正",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "虎",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [
+          "春节"
+        ],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "壬寅",
+        "ganzhi_month": "辛丑",
+        "ganzhi_day": "乙酉",
+        "ganzhi_time": "丙子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "小寒",
+            "time": "2022-01-05 17:14:04",
+            "solar": "2022-01-05"
+          },
+          "next": {
+            "name": "立春",
+            "time": "2022-02-04 04:50:47",
+            "solar": "2022-02-04"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2022-01-20 10:39:06",
+            "solar": "2022-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2022-02-19 00:43:01",
+            "solar": "2022-02-19"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2022-02-01 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "小寒 2022-01-05 17:14:04",
+        "prev_qi": "大寒 2022-01-20 10:39:06",
+        "next_jie": "立春 2022-02-04 04:50:47"
+      },
+      "timestamp": 2459611.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2023-3-22 0:0:0",
+    "success": true,
+    "execution_time": 0.006531953811645508,
+    "result": {
+      "success": true,
+      "solar_datetime": "2023-03-22 00:00:00",
+      "solar_info": {
+        "date": "2023-03-22 00:00:00",
+        "year": 2023,
+        "month": 3,
+        "day": 22,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "三"
+      },
+      "solar_constellation": "白羊",
+      "solar_festivals": [],
+      "solar_other_festivals": [
+        "世界水日"
+      ],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年闰二月初一",
+        "lunar_year": 2023,
+        "lunar_month": -2,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "闰二",
+        "lunar_day_name": "初一",
+        "is_leap_month": false,
+        "animal": "兔",
+        "lunar_month_alias": "闰二",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "乙卯",
+        "ganzhi_day": "己卯",
+        "ganzhi_time": "甲子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "惊蛰",
+            "time": "2023-03-06 04:36:14",
+            "solar": "2023-03-06"
+          },
+          "next": {
+            "name": "清明",
+            "time": "2023-04-05 09:13:04",
+            "solar": "2023-04-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "春分",
+            "time": "2023-03-21 05:24:26",
+            "solar": "2023-03-21"
+          },
+          "next": {
+            "name": "谷雨",
+            "time": "2023-04-20 16:13:37",
+            "solar": "2023-04-20"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2023-03-22 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "惊蛰 2023-03-06 04:36:14",
+        "prev_qi": "春分 2023-03-21 05:24:26",
+        "next_jie": "清明 2023-04-05 09:13:04"
+      },
+      "timestamp": 2460025.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "lunar_to_solar",
+    "input": "农历2023年-2月1日 0:0:0",
+    "success": true,
+    "execution_time": 0.0011725425720214844,
+    "result": {
+      "success": true,
+      "solar_datetime": "2023-03-22 00:00:00",
+      "solar_info": {
+        "date": "2023-03-22 00:00:00",
+        "year": 2023,
+        "month": 3,
+        "day": 22,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "三"
+      },
+      "solar_constellation": "白羊",
+      "solar_festivals": [],
+      "solar_other_festivals": [
+        "世界水日"
+      ],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年闰二月初一",
+        "lunar_year": 2023,
+        "lunar_month": -2,
+        "lunar_day": 1,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "闰二",
+        "lunar_day_name": "初一",
+        "is_leap_month": false,
+        "animal": "兔",
+        "lunar_month_alias": "闰二",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "乙卯",
+        "ganzhi_day": "己卯",
+        "ganzhi_time": "甲子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "惊蛰",
+            "time": "2023-03-06 04:36:14",
+            "solar": "2023-03-06"
+          },
+          "next": {
+            "name": "清明",
+            "time": "2023-04-05 09:13:04",
+            "solar": "2023-04-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "春分",
+            "time": "2023-03-21 05:24:26",
+            "solar": "2023-03-21"
+          },
+          "next": {
+            "name": "谷雨",
+            "time": "2023-04-20 16:13:37",
+            "solar": "2023-04-20"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2023-03-22 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "惊蛰 2023-03-06 04:36:14",
+        "prev_qi": "春分 2023-03-21 05:24:26",
+        "next_jie": "清明 2023-04-05 09:13:04"
+      },
+      "timestamp": 2460025.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "1900-1-1 0:0:0",
+    "success": true,
+    "execution_time": 0.015979766845703125,
+    "result": {
+      "success": true,
+      "solar_datetime": "1900-01-01 00:00:00",
+      "solar_info": {
+        "date": "1900-01-01 00:00:00",
+        "year": 1900,
+        "month": 1,
+        "day": 1,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "一"
+      },
+      "solar_constellation": "摩羯",
+      "solar_festivals": [
+        "元旦节"
+      ],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "一八九九年腊月初一",
+        "lunar_year": 1899,
+        "lunar_month": 12,
+        "lunar_day": 1,
+        "lunar_year_name": "一八九九",
+        "lunar_month_name": "腊",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "猪",
+        "lunar_month_alias": "腊",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "己亥",
+        "ganzhi_month": "丙子",
+        "ganzhi_day": "甲戌",
+        "ganzhi_time": "甲子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "大雪",
+            "time": "1899-12-07 15:04:33",
+            "solar": "1899-12-07"
+          },
+          "next": {
+            "name": "小寒",
+            "time": "1900-01-06 02:03:57",
+            "solar": "1900-01-06"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "冬至",
+            "time": "1899-12-22 08:56:12",
+            "solar": "1899-12-22"
+          },
+          "next": {
+            "name": "大寒",
+            "time": "1900-01-20 19:32:25",
+            "solar": "1900-01-20"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "1900-01-01 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "大雪 1899-12-07 15:04:33",
+        "prev_qi": "冬至 1899-12-22 08:56:12",
+        "next_jie": "小寒 1900-01-06 02:03:57"
+      },
+      "timestamp": 2415020.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2100-12-31 23:59:59",
+    "success": true,
+    "execution_time": 0.02049088478088379,
+    "result": {
+      "success": true,
+      "solar_datetime": "2100-12-31 23:59:59",
+      "solar_info": {
+        "date": "2100-12-31 23:59:59",
+        "year": 2100,
+        "month": 12,
+        "day": 31,
+        "hour": 23,
+        "minute": 59,
+        "second": 59,
+        "week": "五"
+      },
+      "solar_constellation": "摩羯",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二一〇〇年腊月初一",
+        "lunar_year": 2100,
+        "lunar_month": 12,
+        "lunar_day": 1,
+        "lunar_year_name": "二一〇〇",
+        "lunar_month_name": "腊",
+        "lunar_day_name": "初一",
+        "is_leap_month": true,
+        "animal": "猴",
+        "lunar_month_alias": "腊",
+        "lunar_day_alias": "初一",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "庚申",
+        "ganzhi_month": "戊子",
+        "ganzhi_day": "丁未",
+        "ganzhi_time": "壬子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "大雪",
+            "time": "2100-12-07 09:40:07",
+            "solar": "2100-12-07"
+          },
+          "next": {
+            "name": "小寒",
+            "time": "2101-01-05 21:06:51",
+            "solar": "2101-01-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "冬至",
+            "time": "2100-12-22 03:50:52",
+            "solar": "2100-12-22"
+          },
+          "next": {
+            "name": "大寒",
+            "time": "2101-01-20 14:33:47",
+            "solar": "2101-01-20"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2100-12-31 23:59:59"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "大雪 2100-12-07 09:40:07",
+        "prev_qi": "冬至 2100-12-22 03:50:52",
+        "next_jie": "小寒 2101-01-05 21:06:51"
+      },
+      "timestamp": 2488434.499988426
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2024-2-29 0:0:0",
+    "success": true,
+    "execution_time": 0.01862931251525879,
+    "result": {
+      "success": true,
+      "solar_datetime": "2024-02-29 00:00:00",
+      "solar_info": {
+        "date": "2024-02-29 00:00:00",
+        "year": 2024,
+        "month": 2,
+        "day": 29,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "week": "四"
+      },
+      "solar_constellation": "双鱼",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二四年正月二十",
+        "lunar_year": 2024,
+        "lunar_month": 1,
+        "lunar_day": 20,
+        "lunar_year_name": "二〇二四",
+        "lunar_month_name": "正",
+        "lunar_day_name": "二十",
+        "is_leap_month": true,
+        "animal": "龙",
+        "lunar_month_alias": "正",
+        "lunar_day_alias": "二十",
+        "lunar_festivals": [],
+        "lunar_other_festivals": [
+          "天穿节"
+        ]
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "甲辰",
+        "ganzhi_month": "丙寅",
+        "ganzhi_day": "癸亥",
+        "ganzhi_time": "壬子"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "立春",
+            "time": "2024-02-04 16:27:07",
+            "solar": "2024-02-04"
+          },
+          "next": {
+            "name": "惊蛰",
+            "time": "2024-03-05 10:22:45",
+            "solar": "2024-03-05"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "雨水",
+            "time": "2024-02-19 12:13:12",
+            "solar": "2024-02-19"
+          },
+          "next": {
+            "name": "春分",
+            "time": "2024-03-20 11:06:25",
+            "solar": "2024-03-20"
+          }
+        },
+        "current": {
+          "name": "无",
+          "is_jieqi": true,
+          "current_time": "2024-02-29 00:00:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "立春 2024-02-04 16:27:07",
+        "prev_qi": "雨水 2024-02-19 12:13:12",
+        "next_jie": "惊蛰 2024-03-05 10:22:45"
+      },
+      "timestamp": 2460369.5
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2023-2-29 0:0:0",
+    "success": false,
+    "execution_time": 0,
+    "result": null,
+    "error": "历法计算错误：输入数据格式错误：无效的公历日期：2023年2月29日不存在"
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2024-2-4 16:27:0",
+    "success": true,
+    "execution_time": 0.036316871643066406,
+    "result": {
+      "success": true,
+      "solar_datetime": "2024-02-04 16:27:00",
+      "solar_info": {
+        "date": "2024-02-04 16:27:00",
+        "year": 2024,
+        "month": 2,
+        "day": 4,
+        "hour": 16,
+        "minute": 27,
+        "second": 0,
+        "week": "日"
+      },
+      "solar_constellation": "水瓶",
+      "solar_festivals": [],
+      "solar_other_festivals": [
+        "世界抗癌日"
+      ],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年腊月廿五",
+        "lunar_year": 2023,
+        "lunar_month": 12,
+        "lunar_day": 25,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "腊",
+        "lunar_day_name": "廿五",
+        "is_leap_month": true,
+        "animal": "兔",
+        "lunar_month_alias": "腊",
+        "lunar_day_alias": "廿五",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "丙寅",
+        "ganzhi_day": "戊戌",
+        "ganzhi_time": "庚申"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "小寒",
+            "time": "2024-01-06 04:49:22",
+            "solar": "2024-01-06"
+          },
+          "next": {
+            "name": "立春",
+            "time": "2024-02-04 16:27:07",
+            "solar": "2024-02-04"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "大寒",
+            "time": "2024-01-20 22:07:22",
+            "solar": "2024-01-20"
+          },
+          "next": {
+            "name": "雨水",
+            "time": "2024-02-19 12:13:12",
+            "solar": "2024-02-19"
+          }
+        },
+        "current": {
+          "name": "立春",
+          "is_jieqi": true,
+          "current_time": "2024-02-04 16:27:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "小寒 2024-01-06 04:49:22",
+        "prev_qi": "大寒 2024-01-20 22:07:22",
+        "next_jie": "立春 2024-02-04 16:27:07"
+      },
+      "timestamp": 2460345.185416667
+    },
+    "error": null
+  },
+  {
+    "test_type": "solar_to_lunar",
+    "input": "2023-12-22 11:27:0",
+    "success": true,
+    "execution_time": 0.005761146545410156,
+    "result": {
+      "success": true,
+      "solar_datetime": "2023-12-22 11:27:00",
+      "solar_info": {
+        "date": "2023-12-22 11:27:00",
+        "year": 2023,
+        "month": 12,
+        "day": 22,
+        "hour": 11,
+        "minute": 27,
+        "second": 0,
+        "week": "五"
+      },
+      "solar_constellation": "摩羯",
+      "solar_festivals": [],
+      "solar_other_festivals": [],
+      "lunar_collection": {
+        "lunar_date": "二〇二三年冬月初十",
+        "lunar_year": 2023,
+        "lunar_month": 11,
+        "lunar_day": 10,
+        "lunar_year_name": "二〇二三",
+        "lunar_month_name": "冬",
+        "lunar_day_name": "初十",
+        "is_leap_month": true,
+        "animal": "兔",
+        "lunar_month_alias": "冬",
+        "lunar_day_alias": "初十",
+        "lunar_festivals": [],
+        "lunar_other_festivals": []
+      },
+      "ganzhi_collection": {
+        "ganzhi_year": "癸卯",
+        "ganzhi_month": "甲子",
+        "ganzhi_day": "甲寅",
+        "ganzhi_time": "庚午"
+      },
+      "jieqi": {
+        "jie": {
+          "prev": {
+            "name": "大雪",
+            "time": "2023-12-07 17:32:55",
+            "solar": "2023-12-07"
+          },
+          "next": {
+            "name": "小寒",
+            "time": "2024-01-06 04:49:22",
+            "solar": "2024-01-06"
+          }
+        },
+        "qi": {
+          "prev": {
+            "name": "小雪",
+            "time": "2023-11-22 22:02:41",
+            "solar": "2023-11-22"
+          },
+          "next": {
+            "name": "冬至",
+            "time": "2023-12-22 11:27:20",
+            "solar": "2023-12-22"
+          }
+        },
+        "current": {
+          "name": "冬至",
+          "is_jieqi": true,
+          "current_time": "2023-12-22 11:27:00"
+        }
+      },
+      "jieqi_combination": {
+        "prev_jie": "大雪 2023-12-07 17:32:55",
+        "next_qi": "冬至 2023-12-22 11:27:20",
+        "next_jie": "小寒 2024-01-06 04:49:22"
+      },
+      "timestamp": 2460300.9770833333
+    },
+    "error": null
+  }
+]

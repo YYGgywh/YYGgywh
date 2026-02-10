@@ -1,0 +1,942 @@
+
+html {
+    overflow-y: overlay;
+    overflow-x: hidden;
+  }
+  
+  ::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: rgba(153, 153, 153, 0.5);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .wsc-modao-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .modao-navbar {
+    box-shadow: 0px 0px 4px 0px #0000000D;
+    box-shadow: 0px -1px 0px 0px #DDDDDD80 inset;
+    position: relative;
+    background: #ffffff;
+  }
+  
+  .modao-navbar a:hover {
+    text-decoration: none;
+  }
+  
+  .modao-navbar-container {
+    max-width: 1440px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  .modao-navbar-content {
+    display: flex;
+    align-items: center;
+    box-align: center;
+    justify-content: space-between;
+  }
+  
+  .modao-navbar-brand {
+    align-items: center;
+    box-align: center;
+    justify-content: space-between;
+  }
+  
+  .modao-navbar-brand .img-fluid {
+    width: 180px;
+  }
+  .modao-navbar-brand .modao-logo {
+    width: 100px;
+  }
+  
+  .modao-navbar-brand-href {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .modao-navbar-collapse {
+    position: absolute;
+    left: 0;
+    top: 56px;
+    width: 100%;
+  }
+  
+  .modao-navbar-item {
+    list-style: none;
+    position: relative;
+  }
+  
+  .modao-navbar-link {
+    display: flex;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    font-family: MiSans;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .new-ai {
+    background: linear-gradient(90deg, #1684FC 0%, #FF28D1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .modao-navbar-item .new-ai:hover {
+    color: transparent !important;
+    font-weight: normal !important;
+  }
+  
+  .modao-navbar-arrow {
+    transition: all .3s;
+  }
+  
+  .modao-navbar-btnlogin {
+    display: inline-block;
+    margin-right: 12px;
+    padding: 9px 18px;
+    border-radius: 22px;
+    background: #fff;
+    font-size: 16px;
+    line-height: 1;
+    border: 1px solid rgba(31, 97, 255, 1);
+    color: rgba(31, 97, 255, 1);
+  }
+  
+  .modao-navbar-btnlogin:hover {
+    border-color: rgba(67, 129, 255, 1);
+    color: rgba(67, 129, 255, 1);
+    background: #fff;
+  }
+
+  .modao-navbar-btnlogin:active,
+  .modao-navbar-btnlogin:focus {
+    border-color: rgba(31, 97, 255, 1);
+    color: rgba(31, 97, 255, 1);
+    background: #fff;
+  }
+  
+  .modao-navbar-btnworkspace:hover,
+  .modao-navbar-btnregister:hover {
+    color: #ffffff;
+    background: linear-gradient(92.64deg, rgba(43, 89, 255, 0.8) 0.91%, rgba(167, 40, 255, 0.8) 51.51%, rgba(255, 78, 228, 0.8) 95.77%);
+  }
+  
+  .modao-navbar-btnregister,
+  .modao-navbar-btnworkspace {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 22px;
+    font-size: 16px;
+    line-height: 1;
+    margin: 0 auto;
+    color: #ffffff;
+    background: linear-gradient(92.64deg, #2B59FF 0.91%, #A728FF 51.51%, #FF4EE4 95.77%);
+  }
+  .modao-navbar-btnregister:focus,
+  .modao-navbar-btnregister:active,
+  .modao-navbar-btnworkspace:focus,
+  .modao-navbar-btnworkspace:active {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07)), linear-gradient(92.5deg, #1F61FF 6.44%, #A728FF 55.47%, #FF4EE4 98.36%);
+  }
+  
+  .modao-navbar-col {
+    margin-right: 14px;
+    display: inline-block;
+  }
+  
+  .modao-navbar-icon {
+    display: inline-block;
+    width: 42px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+  
+  
+  .modao-navbar-product-icon-left {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+  }
+  
+  .modao-navbar-product-icon-left .product-icon-navbar {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .modao-navbar-icon-left {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+  
+    border: 0.56px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    box-shadow: 0px 0.56px 1.12px 0px rgba(0, 0, 0, 0.08);
+    background: rgb(255, 255, 255);
+  }
+  
+  .modao-navbar-icon-left .icon-navbar {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7.5px;
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-col-core {
+    margin: 0;
+  }
+  
+  .modao-navbar-col-core .modao-navbar-icon {
+    box-shadow: 0px 6px 8px 0px rgba(44, 83, 128, .1);
+    margin-right: 10px;
+  }
+  
+  .modao-navbar-col-help {
+    margin: 0;
+  }
+  
+  .modao-navbar-col-help .modao-navbar-icon {
+    box-shadow: 0px 6px 8px 0px rgba(44, 83, 128, .1);
+    margin-right: 10px;
+  }
+  
+  .modao-navbar-col-help .modao-navbar-col-item-right-title {
+    color: rgb(0, 0, 0);
+    font-family: MiSans;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    margin-right: 16px;
+  }
+  
+  .modao-navbar-col-title {
+    color: rgba(0, 0, 0, 0.55);
+    font-family: MiSans;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 12px;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  
+  .modao-navbar-col-item {
+    margin-bottom: 8px;
+    border-radius: 10px;
+    padding: 8px;
+    min-width: 168px;
+    transition: background .4s;
+    font-size: 14px;
+  }
+  
+  .modao-navbar-col-content {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+  
+  .modao-navbar-col-item-content {
+    /* 鑷姩甯冨眬 */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  
+  .modao-navbar-col-item-content:not(:last-child) {
+    margin-bottom: 8px;
+  }
+  
+  .modao-navbar-col-item-content:last-child {
+    margin-bottom: 0;
+  }
+  
+  .modao-navbar-col-item-content:hover {
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-col-item-content:hover .modao-navbar-icon-left .icon-navbar {
+    background: transparent;
+  }
+  
+  .modao-navbar-col-item-text {
+    display: flex;
+    flex-direction: column;
+    margin-right: 30px;
+  }
+  
+  .modao-navbar-col-item-text .modao-navbar-col-item-b {
+    color: rgb(0, 0, 0);
+    font-family: MiSans;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: 2px;
+  }
+  
+  .modao-navbar-col-item-text .modao-navbar-col-item-n {
+    color: rgba(0, 0, 0, 0.55);
+    font-family: MiSans;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: left;
+    white-space: nowrap;
+  }
+  
+  .modao-navbar-col-core .modao-navbar-col-item {
+    min-width: 250px;
+  }
+  
+  .modao-navbar-col-plat {
+    margin-right: 42px;
+    min-width: 109px;
+  }
+  
+  .modao-navbar-col-plat:last-child {
+    margin: 0;
+  }
+  
+  .modao-navbar-col-plat .modao-navbar-col-item {
+    padding: 0;
+    min-width: auto;
+  }
+  
+  .modao-navbar-col-plat .modao-navbar-col-item:hover {
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-col-item-icon-title .nav-bar-svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .modao-navbar-col-tab .modao-navbar-col-item {
+    min-width: 270px;
+  }
+  
+  .modao-navbar-col-word {
+    margin-right: 42px;
+    min-width: 109px;
+  }
+  
+  .modao-navbar-col-word .modao-navbar-col-item {
+    padding: 0;
+    min-width: auto;
+  }
+  
+  .modao-navbar-col-word .modao-navbar-col-item:hover {
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-col-tab .modao-navbar-col-item:hover {
+    background: transparent;
+  }
+  
+  .modao-navbar-col-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .modao-navbar-col-item:hover {
+    background: linear-gradient(41.46deg, rgba(22, 132, 252, .04) 4.6%, rgba(22, 132, 252, .04) 50.53%, rgba(115, 181, 253, .04) 96.46%);
+  }
+  
+  .modao-navbar-col-line {
+    width: 1px;
+    padding-right: 42px;
+    position: relative;
+  }
+  
+  .modao-navbar-col-line::after {
+    content: '';
+    width: 1px;
+    background: rgba(107, 112, 123, .1);
+    position: absolute;
+    top: 50%;
+    height: 80%;
+    transform: translateY(-50%);
+  }
+  
+  .modao-navbar-col-item-title {
+    font-size: 14px;
+    margin-bottom: 2px;
+    padding-top: 4px;
+  }
+  
+  .modao-navbar-col-item-icon-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px 12px 8px 8px;
+    border-radius: 8px;
+  }
+  
+  .modao-navbar-col-item-icon-title .modao-navbar-col-item-title-content {
+    color: rgb(0, 0, 0);
+    font-family: MiSans;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    margin-left: 8px;
+    white-space: nowrap;
+  }
+  
+  .modao-navbar-col-item-desc {
+    font-size: 12px;
+    color: #6B707B;
+  }
+  
+  .modao-navbar-tabbox {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .modao-navbar-tabnav {
+    padding: 0;
+    margin: 0 24px 0 0;
+  }
+  
+  .modao-navbar-tabnav-item {
+    list-style: none;
+    margin-bottom: 4px;
+  }
+  
+  .modao-navbar-tabnav-item.active .modao-navbar-tabnav-link {
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-tabnav-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .modao-navbar-tabnav-link,
+  .modao-navbar-tabnav-links {
+    display: inline-block;
+    padding: 8px;
+    color: rgb(0, 0, 0);
+    font-family: MiSans;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  
+  .modao-navbar-tabnav-link:hover {
+    background: rgb(246, 246, 246);
+  }
+  
+  .modao-navbar-tabnav-links:hover {
+    color: #1785fc;
+  }
+  
+  .modao-navbar-tabcontent {
+    margin-left: 42px;
+  }
+  
+  .modao-navbar-tabcontent-item {
+    display: none;
+  }
+  
+  .modao-navbar-tabcontent-item.active {
+    display: block;
+    animation: fadeIn .8s;
+  }
+  
+  .modao-navbar-tabcontent-href {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 210px;
+    height: 99px;
+    margin-bottom: 3px;
+  }
+  
+  .modao-navbar-tabcontent-href .modao-navbar-tabcontent-href-img {
+    width: 100%;
+  }
+  
+  .modao-navbar-tabcontent-href:last-child {
+    margin-bottom: 0;
+  }
+  
+  .modao-navbar-toggle {
+    z-index: 1;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  
+  .workspace-signup-btn {
+    padding: 0 60px;
+  }
+  
+  .modao-navbar-collapse .modao-navbar-menu {
+    margin: 0;
+  }
+  
+  .mobile-navbar-cases {
+    display: none;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (min-width: 1001px) {
+    .modao-navbar-brand {
+      height: 72px;
+    }
+  
+    .modao-navbar-brand.mobile-brand {
+      display: none;
+    }
+  
+    .modao-navbar-collapse {
+      display: flex;
+      overflow: visible;
+      justify-content: space-between;
+      -webkit-box-pack: space-between;
+      -ms-flex-pack: space-between;
+      -webkit-box-flex: 1;
+      -ms-flex: auto;
+      flex: auto;
+      position: static;
+    }
+  
+    .modao-navbar-menu {
+      margin-bottom: 0;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+  
+    .modao-navbar-link {
+      font-size: 16px;
+      height: 72px;
+      line-height: 72px;
+      padding: 0 28px;
+    }
+  
+    .modao-navbar-link-bloc {
+      padding-right: 0;
+    }
+  
+    .modao-navbar-link-bloc:hover {
+      font-weight: 400 !important;
+    }
+  
+    .modao-navbar-toggle-content {
+      border-radius: 14px;
+      display: flex;
+      padding: 20px;
+      background: #FFFFFF;
+    }
+  
+    .modao-navbar-toggle {
+      border-radius: 16px;
+      box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.08),0px 16px 24px -8px rgba(0, 0, 0, 0.08);
+      background: rgb(255, 255, 255);
+      position: absolute;
+      left: 50%;
+      transform: translate3d(-30%, 0, 0);
+      top: 100%;
+    }
+  
+    .modao-navbar-item:hover .modao-navbar-toggle {
+      max-height: 100vh;
+      opacity: 1;
+    }
+  
+    .modao-navbar-item:hover .modao-navbar-link {
+      color: #111614;
+    }
+  
+    .modao-navbar-item:hover .modao-navbar-arrow {
+      transform: rotate(180deg);
+    }
+  
+    .modao-navbar-menubtn {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 1001px) and (max-width: 1440px) {
+    .modao-navbar-item .modao-navbar-link {
+      padding: 0 12px;
+    }
+  
+    .workspace-signup-btn {
+      padding: 0 12px;
+    }
+  
+    .nav-md-login-btn {
+      padding: 0px;
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    .modao-navbar-brand {
+      height: 64px;
+    }
+  
+    .modao-navbar-brand.web-brand {
+      display: none;
+    }
+  
+    .modao-navbar-toggle {
+      overflow: visible;
+    }
+  
+    .modao-navbar-toggle-content {
+      width: fit-content;
+    }
+  
+    .modao-navbar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 0;
+      font-size: 16px;
+    }
+  
+    .modao-navbar-menu {
+      padding: 0 18px;
+      position: relative;
+      background-color: #ffffff;
+      z-index: 9;
+      max-height: 0;
+      overflow: hidden;
+    }
+  
+    .modao-navbar-login {
+      padding: 25px 0;
+    }
+  
+    .workspace-signup-btn {
+      padding: 25px 0;
+    }
+  
+    .modao-navbar-item.active .modao-navbar-toggle {
+      opacity: 1;
+      max-height: 100vh;
+      /* transition: max-height .66s; */
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+  
+    .modao-navbar-item.active .modao-navbar-toggle.community,
+    .modao-navbar-item.active .modao-navbar-toggle.download {
+      margin-top: 14px;
+    }
+  
+    .modao-navbar-item.active .modao-navbar-link {
+      /* text-shadow: 0 0 .7px #111614; */
+      color: #111614;
+    }
+  
+    .modao-navbar-item.active .modao-navbar-arrow {
+      transform: rotate(180deg);
+    }
+  
+    .modao-navbar-col-tab .modao-navbar-col-item {
+      padding-left: 8px;
+    }
+  
+    dl.modao-navbar-col-word {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 8px;
+    }
+  
+    .modao-navbar-col-title {
+      /* padding-left: 8px; */
+      padding-left: 0;
+      margin-left: 0;
+    }
+  
+    /* .modao-navbar-col-word .modao-navbar-col-item {
+      padding-left: 8px;
+    } */
+  
+    .modao-navbar-menubtn {
+      cursor: pointer;
+      width: 18px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+  
+    .modao-navbar-menubtn-line {
+      width: 100px;
+      height: 2px;
+      background: rgb(0, 0, 0);
+    }
+  
+    .modao-navbar-menubtn::after,
+    .modao-navbar-menubtn::before {
+      content: '';
+      width: 100%;
+      height: 2px;
+      background: rgb(0, 0, 0);
+      position: absolute;
+      left: 0;
+      transition: all .4s;
+    }
+  
+    .modao-navbar-menubtn::before {
+      top: 11px;
+    }
+  
+    .modao-navbar-menubtn::after {
+      bottom: 11px;
+    }
+  
+    .modao-navbar-menubtn.active::before {
+      transform: rotate(45deg) translate3d(5px, 5px, 0);
+    }
+  
+    .modao-navbar-menubtn.active::after {
+      transform: rotate(-45deg) translate3d(5px, -5px, 0);
+    }
+  
+    .modao-navbar-menubtn.active .modao-navbar-menubtn-line {
+      display: none;
+    }
+  
+    .modao-navbar-collapse.active::after {
+      content: '';
+      width: 100%;
+      position: absolute;
+      top: 0;
+      height: calc(100vh - 56px);
+      background: rgba(0, 0, 0, .6);
+      z-index: 1;
+    }
+  
+    .modao-navbar-collapse.active .modao-navbar-menu {
+      max-height: 100vh;
+      transition: max-height .66s;
+    }
+  
+    .modao-navbar-col-line {
+      width: 100%;
+      height: 1px;
+      padding: 23px 0 20px 0;
+    }
+  
+    .modao-navbar-col-line::after {
+      width: 100%;
+      height: 1px;
+      left: 0;
+    }
+  
+    .modao-navbar-col-plat {
+      margin-right: 14px;
+      display: inline-block;
+      vertical-align: top;
+      /* min-width: 109px; */
+    }
+  
+    .modao-navbar-col.modao-navbar-col-tab {
+      width: 100%;
+    }
+  
+    .web-navbar-cases {
+      display: none;
+    }
+  
+    .mobile-navbar-cases {
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+  
+    .mobile-navbar-cases .cases-content {
+      width: 100%;
+      overflow-x: auto;
+    }
+  
+    .mobile-navbar-cases .cases-content::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+  
+    .mobile-navbar-cases .cases-content::-webkit-scrollbar-thumb {
+      border-radius: 6px;
+      background-color: rgba(153, 153, 153, 0.5);
+    }
+  
+    .mobile-navbar-cases::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 57px;
+      height: 100%;
+      background: linear-gradient(270.00deg, rgb(255, 255, 255),rgba(255, 255, 255, 0) 100%);
+    }
+  
+    .mobile-navbar-cases .cases-scroll {
+      width: auto;
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .mobile-navbar-cases .modao-navbar-tabcontent-href {
+      flex: 0 0 210px;
+    }
+  
+    .mobile-navbar-cases .modao-navbar-tabcontent-href:not(:last-child) {
+      margin-right: 12px;
+    }
+  
+    .modao-navbar-col-word .modao-navbar-col-item,
+    .modao-navbar-col-plat .modao-navbar-col-item {
+      margin-left: -8px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .modao-navbar-brand {
+      height: 56px;
+    }
+  
+    .modao-navbar-link {
+      padding: 12px 0;
+    }
+  
+    .modao-navbar-brand .img-fluid {
+      width: 140px;
+    }
+  
+    .modao-navbar-brand .modao-logo {
+      width: 80px;
+    }
+  
+    .modao-navbar-col-item-icon-title .modao-navbar-col-item-title-content {
+      margin-left: 4px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .modao-navbar-col-item {
+      margin-bottom: 8px;
+      padding: 4px;
+    }
+  
+    .modao-navbar-col-item-content {
+      padding-left: 8px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  
+    .modao-navbar-col-item-title {
+      font-size: 12px;
+    }
+  
+    .modao-navbar-icon .img-fluid {
+      width: 38px;
+    }
+    
+    .modao-navbar-icon .modao-logo {
+       width: 30px;
+    }
+  
+    .modao-navbar-col {
+      margin-bottom: 8px;
+    }
+  
+    .modao-navbar-tabnav {
+      margin-right: 16px;
+    }
+  
+    dl.modao-navbar-col-word {
+      margin-right: 0;
+    }
+  }
+
+/* 2025年4月14日 修改header btn */
+.modao-navbar-btnregister {
+    padding: 9px 18px;
+    border-radius: 22px;
+    background: linear-gradient(92.64deg, #2B59FF 0.91%, #A728FF 51.51%, #FF4EE4 95.77%);
+    /* line-height: 18px; */
+    font-size: 16px;
+  }
+
+.modao-navbar-btnregister:hover,
+.modao-navbar-btnworkspace:hover {
+  background: linear-gradient(92.64deg, rgba(43, 89, 255, 0.8) 0.91%, rgba(167, 40, 255, 0.8) 51.51%, rgba(255, 78, 228, 0.8) 95.77%);
+}
+.modao-navbar-btnregister:focus,
+.modao-navbar-btnregister:active,
+.modao-navbar-btnworkspace:focus,
+.modao-navbar-btnworkspace:active {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07)), linear-gradient(92.5deg, #1F61FF 6.44%, #A728FF 55.47%, #FF4EE4 98.36%);
+}
+.modao-navbar-btnworkspace {
+  padding: 9px 18px;
+  border-radius: 22px;
+  background: linear-gradient(92.64deg, #2B59FF 0.91%, #A728FF 51.51%, #FF4EE4 95.77%);
+  /* line-height: 18px; */
+  font-size: 16px;
+}
+
+.modao-navbar-btnlogin {
+  padding: 9px 18px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid rgba(31, 97, 255, 1);
+  font-size: 16px;
+  color: rgba(31, 97, 255, 1);
+}
+.modao-navbar-btnlogin:hover {
+  border-color: rgba(67, 129, 255, 1);
+  color: rgba(67, 129, 255, 1);
+  background: #fff;
+}
+.modao-navbar-btnlogin:active,
+.modao-navbar-btnlogin:focus {
+  border-color: rgba(31, 97, 255, 1);
+  color: rgba(31, 97, 255, 1);
+  background: #fff;
+}

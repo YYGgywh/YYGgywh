@@ -1,0 +1,80 @@
+/* 路径:src/components/LiuYao/methods/NumberMethod.module.css 时间:2026-02-08 16:40 */
+/* 功能:报数起卦组件样式，使用 CSS Modules 管理样式作用域 */
+
+/* 为 input 元素设置固定宽高，与 span 元素保持一致 */
+.yaoValue {
+  width: 60px;
+  height: 28px;
+  padding: 4px 8px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #F9FAFB;
+  text-align: center;
+  line-height: normal;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* 当 input 获得焦点时的样式 */
+.yaoValue:focus {
+  border-color: #1890FF;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+/* 占位符样式 */
+.yaoValue::placeholder {
+  color: #9CA3AF;
+}
+
+/* 当前可输入的爻位样式 - 更明显的视觉提示 */
+.yaoValueActive {
+  background-color: #E6F7FF;
+  border-color: #1890FF;
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  animation: pulse 2s infinite;
+}
+
+/* 脉冲动画效果 */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(24, 144, 255, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  }
+}
+
+/* 已输入的爻位样式 - 禁用状态 */
+.yaoValueDisabled {
+  background-color: #F9FAFB;
+  border-color: #E5E7EB;
+  color: #BFBFBF;
+  cursor: not-allowed;
+}
+
+/* 标签样式 - 默认 */
+.yaoLabel {
+  margin-right: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* 当前可输入的爻位标签样式 - 暗红色提示 */
+.yaoLabelActive {
+  color: #C00000;
+  font-weight: 700;
+  text-shadow: 0 0 2px rgba(192, 0, 0, 0.3);
+}
+
+/* 已输入的爻位标签样式 - 禁用状态 */
+.yaoLabelDisabled {
+  color: #9CA3AF;
+  font-weight: 400;
+}

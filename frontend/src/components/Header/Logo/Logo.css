@@ -1,0 +1,51 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.logo-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logo-text-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.logo-text-sub {
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-top: 2px;
+  width: 100%;
+  text-align: justify;
+  text-justify: distribute;
+  text-align-last: justify;
+}
+
+/* .logo-text-sub::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 0;
+} */

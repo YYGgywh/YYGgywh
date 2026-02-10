@@ -1,0 +1,108 @@
+// 路径:src/components/Header/DropdownItem/DropdownItem.css 时间:2026-02-07 11:00
+// 功能:下拉菜单项组件样式，包含图标、标题、描述和悬停效果
+.dropdown-col-link {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 12px;
+  color: #333333;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-col-link:hover {
+  background-color: #F9FAFB;
+  color: #1890FF;
+}
+
+.dropdown-col-link > * {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.dropdown-col-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333333;
+  transition: color 0.2s ease;
+}
+
+.dropdown-col-icon-text {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333333;
+  transition: color 0.2s ease;
+}
+
+.dropdown-col-link:hover .dropdown-col-icon,
+.dropdown-col-link:hover .dropdown-col-icon-text {
+  color: #1890FF;
+}
+
+.dropdown-col-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdown-col-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-col-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.dropdown-col-link:hover .dropdown-col-title {
+  color: #1890FF;
+}
+
+.dropdown-col-desc {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.dropdown-col-link:hover .dropdown-col-desc {
+  color: #1890FF;
+}
+
+@media (max-width: 768px) {
+  .dropdown-col-link {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .dropdown-col-icon,
+  .dropdown-col-icon-text {
+    width: 14px;
+    height: 14px;
+    font-size: 12px;
+  }
+
+  .dropdown-col-title {
+    font-size: 13px;
+  }
+
+  .dropdown-col-desc {
+    font-size: 11px;
+  }
+}

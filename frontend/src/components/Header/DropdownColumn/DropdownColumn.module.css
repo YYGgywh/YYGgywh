@@ -1,0 +1,45 @@
+/* 路径:src/components/Header/DropdownColumn/DropdownColumn.module.css 时间:2026-02-07 14:30 */
+/* 功能:下拉菜单列组件样式，包含分类标题和列表样式 */
+.dropdownCol {
+  /* flex: 1; */
+  min-width: 150px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownCol dt,
+.dropdownCol dd {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownCol dt.dropdownColTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #999999;
+  /* margin-bottom: 16px; */
+  padding: 10px 0;
+  text-align: center;
+}
+
+.dropdownColItem {
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .dropdownCol {
+    min-width: 120px;
+  }
+
+  .dropdownColTitle {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .dropdownColItem {
+    margin-bottom: 6px;
+  }
+}

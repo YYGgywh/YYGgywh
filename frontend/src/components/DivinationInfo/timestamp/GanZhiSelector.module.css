@@ -1,0 +1,37 @@
+/* 路径:src/components/DivinationInfo/timestamp/GanZhiSelector.module.css 时间:2026-02-06 10:00 */
+/* 功能:GanZhiSelector 组件的样式模块 */
+
+/* 菜单容器样式 */
+.selector {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+/* 菜单项行样式 */
+.row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+/* 最后一行不显示底部边距 */
+.row:last-child {
+  margin-bottom: 0;
+}
+
+/* 菜单项样式 */
+.item {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* 菜单项悬停效果 */
+.item:hover {
+  background-color: #f0f0f0;
+}

@@ -1,0 +1,610 @@
+/*
+ * @file            src/components/LiuYao/LiuYaoQiGua/LiuYaoQiGua.css
+ * @description     
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-01-28 10:56:07
+ * @lastModified    2026-01-28 18:11:05
+ * Copyright © All rights reserved
+*/
+
+.liu-yao-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #1890FF;
+  border-radius: 16px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.liu-yao-container {
+  display: flex;
+  gap: 20px;
+}
+
+.method-sidebar {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.method-item {
+  padding: 12px 16px;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.method-item:hover {
+  background-color: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.method-item.active {
+  background-color: #1890FF;
+  color: #FFFFFF;
+  border-color: #1890FF;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+}
+
+.liu-yao-content {
+  flex: 1;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.method-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.content-row {
+  display: flex;
+  gap: 20px;
+  /* margin-bottom: 24px; */
+}
+
+.liu-yao-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.yao-display {
+  flex: 1;
+  min-width: 0;
+}
+
+.liu-yao-info h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.liu-yao-info p {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666666;
+  text-indent: 2em;
+}
+
+.liu-yao-info ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666666;
+}
+
+.liu-yao-info li {
+  margin-bottom: 4px;
+}
+
+.yao-display {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  /* margin-bottom: 24px; */
+}
+
+.yao-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yao-label {
+  font-size: 14px;
+  font-weight: 1000;
+  color: #333333;
+  /* width: 60px; */
+}
+
+.yao-value {
+  padding: 4px 8px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #F9FAFB;
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 28px;
+  text-align: center;
+}
+
+.yao-value::placeholder {
+  color: #9CA3AF/*cbcccd*/;
+}
+
+.yao-divider {
+  font-size: 14px;
+  color: #9CA3AF;
+}
+
+.yao-component {
+  /* margin-left: 10px; */
+  display: flex;
+  align-items: center;
+  min-width: 60px;
+}
+
+.divination-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.throw-button {
+  padding: 10px 24px;
+  background-color: #10B981;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.throw-button:hover {
+  background-color: #059669;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.throw-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.throw-button:disabled:hover {
+  background-color: #9CA3AF;
+  box-shadow: none;
+}
+
+.throw-button:focus {
+  outline: none;
+}
+
+.reset-button {
+  padding: 10px 24px;
+  background-color: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+  background-color: #DC2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.reset-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.reset-button:disabled:hover {
+  background-color: #9CA3AF;
+  box-shadow: none;
+}
+
+.reset-button:focus {
+  outline: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .liu-yao-container {
+    flex-direction: column;
+  }
+
+  .method-sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .method-item {
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .liu-yao-content {
+    padding: 16px;
+  }
+
+  .content-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .divination-actions {
+    flex-direction: column;
+  }
+
+  .throw-button,
+  .reset-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* 起卦方式组件样式 */
+.step-by-step-method,
+.one-click-method,
+.number-method,
+.specified-method {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 一键起卦样式 */
+.one-click-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.one-click-button {
+  padding: 12px 32px;
+  background-color: #1890FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.one-click-button:hover {
+  background-color: #40A9FF;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.one-click-button:focus {
+  outline: none;
+}
+
+/* 报数起卦样式 */
+.number-input-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.number-input {
+  padding: 8px 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 120px;
+}
+
+.number-divination-button {
+  padding: 8px 20px;
+  background-color: #1890FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.number-divination-button:hover {
+  background-color: #40A9FF;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.number-divination-button:focus {
+  outline: none;
+}
+
+/* 指定起卦样式 */
+.specified-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.yao-input-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yao-input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  width: 60px;
+}
+
+.yao-input {
+  padding: 6px 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.specified-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.specified-divination-button {
+  padding: 10px 24px;
+  background-color: #1890FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.specified-divination-button:hover {
+  background-color: #40A9FF;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.specified-divination-button:focus {
+  outline: none;
+}
+
+/* 排盘按钮容器样式 */
+.divination-button-container {
+  display: flex;
+  justify-content: center;
+  /* margin-top: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef; */
+}
+
+/* 排盘按钮样式 */
+.divination-button {
+  padding: 12px 32px;
+  background-color: #1890FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.divination-button:hover {
+  background-color: #40A9FF;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.divination-button:focus {
+  outline: none;
+}
+
+.divination-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 报数起卦输入框样式 - 从 NumberMethod.module.css 合并 */
+/* .yao-value 使用 LiuYaoQiGua.css 中的默认样式，不在此覆盖 */
+
+/* 当 input 获得焦点时的样式 */
+.number-method .yao-value:focus {
+  border-color: #1890FF;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
+}
+
+/* 当前可输入的爻位样式 - 更明显的视觉提示 */
+.number-method .yao-value-active {
+  background-color: #E6F7FF;
+  border-color: #1890FF;
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  animation: pulse 2s infinite;
+}
+
+/* 脉冲动画效果 */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(24, 144, 255, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  }
+}
+
+/* 已输入的爻位样式 - 禁用状态 */
+.number-method .yao-value-disabled {
+  background-color: #F9FAFB;
+  border-color: #E5E7EB;
+  color: #BFBFBF;
+  cursor: not-allowed;
+}
+
+/* 当前可输入的爻位标签样式 - 暗红色提示 */
+.number-method .yao-label-active {
+  color: #C00000;
+  font-weight: 700;
+  text-shadow: 0 0 2px rgba(192, 0, 0, 0.3);
+}
+
+/* 已输入的爻位标签样式 - 禁用状态 */
+.number-method .yao-label-disabled {
+  color: #9CA3AF;
+  font-weight: 400;
+}
+
+/* 指定起卦样式 - 从 SpecifiedMethod.module.css 合并 */
+
+/* 阳阴按钮容器 */
+.specified-method .yao-buttons-container {
+  display: flex;              /* 使用弹性布局，使子元素水平排列 */
+  justify-content: center;    /* 水平居中对齐子元素 */
+  align-items: center;        /* 垂直居中对齐子元素 */
+  height: 28px;              /* 固定容器高度为28px，保持统一行高 */
+  gap: 10px;                  /* 子元素之间保持8px的间距 */
+}
+
+/* 基础按钮样式 */
+.specified-method .yao-button {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* 阳按钮未选中状态 */
+.specified-method .yang-button {
+  background-color: #F9FAFB;
+  color: #9CA3AF;
+}
+
+/* 阳按钮选中状态 - 类似激活状态样式 */
+.specified-method .yang-button-selected {
+  background-color: #FFFFFF;
+  color: #C00000;
+  border-color: #C00000;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  animation: pulse-yang 2s infinite;
+}
+
+/* 阳按钮激活状态 - 红色背景白色文字 */
+.specified-method .yang-button-active {
+  background-color: #C00000;
+  color: #FFFFFF;
+  border-color: #C00000;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  animation: pulse-yang 2s infinite;
+}
+
+/* 阳按钮悬停状态 - 排除选中状态和激活状态 */
+.specified-method .yang-button:hover:not(.yang-button-selected):not(.yang-button-active) {
+  background-color: #FFF5F5;
+  border-color: #FFCCCC;
+}
+
+/* 阴按钮未选中状态 */
+.specified-method .yin-button {
+  background-color: #F9FAFB;
+  color: #9CA3AF;
+}
+
+/* 阴按钮选中状态 - 类似激活状态样式 */
+.specified-method .yin-button-selected {
+  background-color: #FFFFFF;
+  color: #002060;
+  border-color: #002060;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  animation: pulse-yin 2s infinite;
+}
+
+/* 阴按钮激活状态 - 蓝色背景白色文字 */
+.specified-method .yin-button-active {
+  background-color: #002060;
+  color: #FFFFFF;
+  border-color: #002060;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  animation: pulse-yin 2s infinite;
+}
+
+/* 阴按钮悬停状态 - 排除选中状态和激活状态 */
+.specified-method .yin-button:hover:not(.yin-button-selected):not(.yin-button-active) {
+  background-color: #F0F5FF;
+  border-color: #B3C6FF;
+}
+
+/* 按钮聚焦样式 */
+.specified-method .yao-button:focus {
+  outline: none;
+}
+
+/* 阳按钮脉冲动画效果 */
+@keyframes pulse-yang {
+  0% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(192, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+}
+
+/* 阴按钮脉冲动画效果 */
+@keyframes pulse-yin {
+  0% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 32, 96, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+}

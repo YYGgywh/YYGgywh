@@ -1,0 +1,31 @@
+/* 路径:frontend/src/components/common/YaoComponents.css 时间:2024-07-01 10:00 */
+
+.yang-yao {
+  transition: all 0.3s ease;
+}
+
+.yin-yao {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.yin-yao .circle {
+  transition: all 0.3s ease;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .yang-yao {
+    max-width: 100%;
+  }
+  
+  .yin-yao {
+    max-width: 100%;
+  }
+  
+  .yin-yao .circle {
+    max-width: 40px;
+    max-height: 40px;
+  }
+}

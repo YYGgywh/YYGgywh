@@ -1,0 +1,66 @@
+/* 路径:src/components/Header/DropdownMenu/DropdownMenu.module.css 时间:2026-02-07 14:30 */
+/* 功能:下拉菜单组件样式，包含多列布局和悬停效果 */
+.dropdownMenuRich {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: -80px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #ebeaea;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(5px);
+  animation: dropdownFadeIn 0.2s ease forwards;
+  min-width: 600px;
+  width: auto;
+  padding: 5px;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownMenuContent {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dropdownMenuContent dl {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 100px;
+  max-width: calc(33.333% - 26.666px);
+  box-sizing: border-box;
+}
+
+.dropdownMenuContent dl dt,
+.dropdownMenuContent dl dd {
+  margin: 0;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .dropdownMenuRich {
+    min-width: 280px;
+    padding: 16px;
+  }
+
+  .dropdownMenuContent {
+    gap: 24px;
+  }
+}

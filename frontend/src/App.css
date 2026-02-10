@@ -1,0 +1,52 @@
+/* 路径:src/App.css 时间:2026-01-28 16:00 */
+/* 功能:应用全局布局样式，使用 CSS Grid 管理组件布局 */
+
+/* 全局盒模型设置：所有元素的宽高包含内边距与边框 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.app-container {
+  display: grid;
+  grid-template-areas: 
+    "header"
+    "main";
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+.app-header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.app-main {
+  grid-area: main;
+  padding: 20px;
+}
+
+.no-spin-buttons::-webkit-inner-spin-button,
+.no-spin-buttons::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spin-buttons {
+  -moz-appearance: textfield;
+}
+
+/* 闰月切换按钮禁用状态样式 */
+.leap-month-toggle:disabled {
+  background-color: #d1d5db;
+  border-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.leap-month-toggle:disabled:hover {
+  background-color: #d1d5db;
+  border-color: #d1d5db;
+}

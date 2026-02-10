@@ -1,0 +1,106 @@
+main {
+    color: #181818;
+    font-family: "Noto Sans SC", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Noto Sans SC", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.btn {font-weight: normal;border-radius: 40px;}
+.btn-xs {padding: 3px 14px;font-size: 12px;line-height: 1.5;border-radius: 18px;}
+.btn-sm {border-radius: 24px;}
+.btn-md {border-radius: 40px;}
+.btn-ml {border-radius: 42px;max-height: 56px;display: inline-flex;justify-content: center;align-items: center;}
+.btn-lg {border-radius: 60px;}
+.btn-xl {border-radius: 80px;}
+.btn-secondary {background: #E73828;color: #FFFFFF;}
+.btn-outline-secondary {color: #E73828;border: 1px solid #E73828;}
+.btn-outline-gray {color: #666666;border: 1px solid #D2D2D2;}
+.btn-outline-gray:hover {border: 1px solid #FC3F55;color: #FC3F55;background-color: #FFFFFF;}
+
+.line-height-100 {line-height: 1 !important;}
+.line-height-125 {line-height: 1.25 !important;}
+.line-height-150 {line-height: 1.5 !important;}
+.line-height-175 {line-height: 1.75 !important;}
+.line-height-200 {line-height: 2 !important;}
+.border-radius-10 { border-radius: 10px;}
+.border-radius-20 {border-radius: 20px;}
+
+.text-primary {color: #181818;}
+.text-gray-1 {color: #888888;}
+.text-gray-2 {color: #555555;}
+
+.text-purple {color: #7635FF;}
+.text-blue {color: #1584FC;}
+.text-red {color: #FF2B3C;}
+.text-green {color: #13CFBB;}
+.btn-purple {background-color: #7635FF; color: #FFFFFF;}
+.btn-blue {background-color: #1584FC;color: #FFFFFF;}
+.btn-red {background-color: #FF2B3C;color: #FFFFFF;}
+.btn-green {background-color: #13CFBB;color: #FFFFFF;}
+.btn-orange {background-color: #FF762F;color: #FFFFFF;}
+
+/* æ–‡æœ¬è¶…å‡ºéšè—ï¼Œé»˜è®¤æ˜¯2è¡Œ */
+.text-overflow-hidden {overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2}
+.text-underline {text-decoration: underline;}
+
+.text-seondary {color: #E73828;}
+
+/* åˆ†é¡µ begin */
+.page-link {width: 2rem;height: 2rem;padding: 0;display: flex;align-items: center;justify-content: center; font-family: "MessinaSansWeb",-apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";}
+.page-link:focus {box-shadow: none;}
+.page-item.active .page-link {min-width: 2rem;min-height: 2rem;color: #fff;background-color: #E73828;border-color: #E73828;}
+/* åˆ†é¡µ end */
+
+.text-line-gradient{-webkit-background-clip: text;color: transparent;}
+
+/* codexå­—ä½“å¤§å°è‡ªé€‚åº” */
+@media (max-width: 1279px) {
+    .display-1 {font-size: 3.5rem;}
+    .display-3 {font-size: 2.5rem;}
+    .display-4 {font-size: 2rem;}
+    .font-size-super {font-size: 18px;}
+    .font-size-huge {font-size: 16px;}
+    .font-size-large {font-size: 14px;}
+    .font-size-normal {font-size: 14px;}
+    .lead {font-size: 24px;}
+    main p {font-size: 14px;}
+}
+@media (max-width: 991px) {
+    .display-1 {font-size: 2.75rem;}
+    .display-3 {font-size: 2.25rem;}
+    .display-4 {font-size: 1.75rem;}
+    h2, .h2 {font-size: 1.75rem;}
+    .font-size-super {font-size: 16px;}
+    .font-size-huge {font-size: 14px;}
+    .font-size-large {font-size: 14px;}
+    .lead {font-size: 20px;}
+
+}
+@media (max-width:767px) {
+    .display-1 { font-size: 2rem;}
+    .display-3 {font-size: 1.75rem;}
+    .display-4 {font-size: 1.5rem;}
+
+    h2, .h2 {font-size: 1.5rem;}
+    .font-size-super {font-size: 12px;}
+    .font-size-huge {font-size: 12px;}
+    .font-size-large {font-size: 12px;}
+    .font-size-normal {font-size: 12px;}
+    .lead {font-size: 20px;}
+
+    main p {font-size: 12px;}
+}
+/* codexå­—ä½“å¤§å°è‡ªé€‚åº” */
+
+/* é€‚ç”¨äºŽ1280å°ºå¯¸ä»¥ä¸Šçš„1å€å›¾ï¼Œè§£å†³å›¾ç‰‡ç”±äºŽè®¾ç½®äº†max-widthï¼š100%å˜æ¨¡ç³Šé—®é¢˜ */
+@media (min-width: 1280px) {
+    .img-xl-auto {
+        max-width: initial;
+    }
+}
+@media (min-width: 1600px) {
+    .img-xxl-auto {
+        max-width: initial;
+    }
+}
+

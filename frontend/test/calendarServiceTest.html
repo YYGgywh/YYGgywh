@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalendarService 功能测试</title>
+  <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .test-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-section h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .test-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 10px 0;
+      transition: background-color 0.3s;
+    }
+    .test-button:hover {
+      background-color: #2980b9;
+    }
+    .test-result {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .test-result.success {
+      background-color: #d4edda;
+      border-left: 4px solid #28a745;
+    }
+    .test-result.error {
+      background-color: #f8d7da;
+      border-left: 4px solid #dc3545;
+    }
+    .test-result pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .test-result strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    .input-group label {
+      font-weight: bold;
+      color: #555;
+    }
+    .input-group input[type="number"],
+    .input-group input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 80px;
+    }
+    .input-group input[type="text"] {
+      width: 100px;
+    }
+    .input-group input[type="checkbox"] {
+      width: auto;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CalendarService 功能测试</h1>
+    
+    <div class="test-section">
+      <h2>1. 农历转公历</h2>
+      <div class="input-group">
+        <label>农历年份：</label>
+        <input type="number" id="lunar_year" value="2024" />
+        <label>农历月份：</label>
+        <input type="number" id="lunar_month" value="1" />
+        <label>农历日期：</label>
+        <input type="number" id="lunar_day" value="1" />
+        <label>小时：</label>
+        <input type="number" id="lunar_hour" value="10" />
+        <label>分钟：</label>
+        <input type="number" id="lunar_minute" value="30" />
+        <label>秒：</label>
+        <input type="number" id="lunar_second" value="0" />
+        <label>闰月：</label>
+        <input type="checkbox" id="is_leap_month" />
+      </div>
+      <button class="test-button" onclick="testConvertLunarToSolar()">测试农历转公历</button>
+      <div id="result1" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>2. 公历转农历</h2>
+      <div class="input-group">
+        <label>公历年份：</label>
+        <input type="number" id="solar_year" value="2024" />
+        <label>公历月份：</label>
+        <input type="number" id="solar_month" value="2" />
+        <label>公历日期：</label>
+        <input type="number" id="solar_day" value="10" />
+        <label>小时：</label>
+        <input type="number" id="solar_hour" value="10" />
+        <label>分钟：</label>
+        <input type="number" id="solar_minute" value="30" />
+        <label>秒：</label>
+        <input type="number" id="solar_second" value="0" />
+      </div>
+      <button class="test-button" onclick="testConvertSolarToLunar()">测试公历转农历</button>
+      <div id="result2" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>3. 获取当前农历信息</h2>
+      <button class="test-button" onclick="testGetCurrentLunarInfo()">测试获取当前农历信息</button>
+      <div id="result3" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>4. 获取阴历月信息</h2>
+      <div class="input-group">
+        <label>农历年份：</label>
+        <input type="number" id="lunar_month_year" value="2024" />
+        <label>农历月份：</label>
+        <input type="number" id="lunar_month_month" value="1" />
+        <label>闰月（负数表示）：</label>
+        <input type="number" id="lunar_month_leap" value="0" placeholder="普通月填0，闰月填负数" />
+      </div>
+      <button class="test-button" onclick="testGetLunarMonthInfo()">测试获取阴历月信息</button>
+      <div id="result4" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>5. 通过八字获取阳历列表</h2>
+      <div class="input-group">
+        <label>年柱：</label>
+        <input type="text" id="year_ganzhi" value="庚子" placeholder="如：庚子" />
+        <label>月柱：</label>
+        <input type="text" id="month_ganzhi" value="辛巳" placeholder="如：辛巳" />
+        <label>日柱：</label>
+        <input type="text" id="day_ganzhi" value="庚午" placeholder="如：庚午" />
+        <label>时柱：</label>
+        <input type="text" id="time_ganzhi" value="丙子" placeholder="如：丙子" />
+        <label>流派：</label>
+        <input type="number" id="sect" value="1" min="1" max="2" />
+        <label>起始年份：</label>
+        <input type="number" id="base_year" value="1" min="1" />
+      </div>
+      <button class="test-button" onclick="testGetSolarFromBaZi()">测试通过八字获取阳历列表</button>
+      <div id="result5" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>6. 获取阳历某月天数</h2>
+      <div class="input-group">
+        <label>公历年份：</label>
+        <input type="number" id="days_in_month_year" value="2024" />
+        <label>公历月份：</label>
+        <input type="number" id="days_in_month_month" value="2" />
+      </div>
+      <button class="test-button" onclick="testGetDaysInMonth()">测试获取阳历某月天数</button>
+      <div id="result6" class="test-result"></div>
+    </div>
+  </div>
+
+  <script>
+    // 等待lunar-javascript库加载完成
+    document.addEventListener('DOMContentLoaded', function() {
+      // 检查库是否加载成功
+      if (typeof Lunar === 'undefined') {
+        console.error('lunar-javascript库未加载成功');
+        return;
+      }
+      
+      // 从全局对象中获取需要的类
+      const { Lunar: LunarClass, Solar: SolarClass, LunarMonth: LunarMonthClass, SolarUtil: SolarUtilClass } = window;
+      
+      // CalendarService 类定义
+      class CalendarService {
+        static convertLunarToSolar(lunarData) {
+          try {
+            const { lunar_year, lunar_month, lunar_day, hour, minute, second, is_leap_month } = lunarData;
+            const lunar = LunarClass.fromYmdHms(
+              parseInt(lunar_year),
+              is_leap_month ? -parseInt(lunar_month) : parseInt(lunar_month),
+              parseInt(lunar_day),
+              parseInt(hour || 0),
+              parseInt(minute || 0),
+              parseInt(second || 0)
+            );
+            const solar = lunar.getSolar();
+            return {
+              success: true,
+              data: {
+                lunar_year_in_GanZhi: lunar.getYearInGanZhi(),
+                lunar_month_in_Chinese: lunar.getMonthInChinese(),
+                lunar_day_in_Chinese: lunar.getDayInChinese(),
+                lunar_time_Zhi: lunar.getTimeZhi(),
+                solar_year: solar.getYear(),
+                solar_month: solar.getMonth(),
+                solar_day: solar.getDay(),
+                solar_hour: solar.getHour(),
+                solar_minute: solar.getMinute(),
+                solar_second: solar.getSecond()
+              }
+            };
+          } catch (error) {
+            return { success: false, error: error.message };
+          }
+        }
+
+        static convertSolarToLunar(solarData) {
+          try {
+            const { year, month, day, hour, minute, second } = solarData;
+            const solar = SolarClass.fromYmdHms(
+              parseInt(year),
+              parseInt(month),
+              parseInt(day),
+              parseInt(hour || 0),
+              parseInt(minute || 0),
+              parseInt(second || 0)
+            );
+            const lunar = solar.getLunar();
+            return {
+              success: true,
+              data: {
+                lunar_year_in_GanZhi: lunar.getYearInGanZhi(),
+                lunar_month_in_Chinese: lunar.getMonthInChinese(),
+                lunar_day_in_Chinese: lunar.getDayInChinese(),
+                lunar_time_Zhi: lunar.getTimeZhi()
+              }
+            };
+          } catch (error) {
+            return { success: false, error: error.message };
+          }
+        }
+
+        static getCurrentLunarInfo() {
+          const now = new Date();
+          return this.convertSolarToLunar({
+            year: now.getFullYear(),
+            month: now.getMonth() + 1,
+            day: now.getDate(),
+            hour: now.getHours(),
+            minute: now.getMinutes(),
+            second: now.getSeconds()
+          });
+        }
+
+        static getLunarMonthInfo(lunarYear, lunarMonth) {
+          try {
+            const lunarMonthObj = LunarMonthClass.fromYm(
+              parseInt(lunarYear),
+              parseInt(lunarMonth)
+            );
+            return {
+              success: true,
+              data: {
+                lunar_month_days: lunarMonthObj.getDayCount()
+              }
+            };
+          } catch (error) {
+            return { success: false, error: error.message };
+          }
+        }
+
+        static getSolarFromBaZi(baZiData) {
+          try {
+            const {
+              yearGanZhi,
+              monthGanZhi,
+              dayGanZhi,
+              timeGanZhi,
+              sect = 1,
+              baseYear = 1
+            } = baZiData;
+            const solarList = SolarClass.fromBaZi(
+              yearGanZhi,
+              monthGanZhi,
+              dayGanZhi,
+              timeGanZhi,
+              sect,
+              baseYear
+            );
+            const now = new Date();
+            const currentMinute = now.getMinutes();
+            const currentSecond = now.getSeconds();
+            const formattedSolarList = solarList.map(solar => ({
+              solar_year: solar.getYear(),
+              solar_month: solar.getMonth(),
+              solar_day: solar.getDay(),
+              solar_hour: solar.getHour(),
+              solar_minute: currentMinute,
+              solar_second: currentSecond
+            }));
+            return {
+              success: true,
+              data: {
+                solar_list: formattedSolarList,
+                total_count: formattedSolarList.length
+              }
+            };
+          } catch (error) {
+            return { success: false, error: error.message };
+          }
+        }
+
+        static getDaysInMonth(year, month) {
+          try {
+            const days = SolarUtilClass.getDaysOfMonth(
+              parseInt(year),
+              parseInt(month)
+            );
+            return days;
+          } catch (error) {
+            console.error('获取阳历某月天数失败:', error);
+            return 0;
+          }
+        }
+      }
+      
+      // 将CalendarService暴露到全局
+      window.CalendarService = CalendarService;
+    });
+
+    function displayResult(resultId, result) {
+      const resultDiv = document.getElementById(resultId);
+      if (result.success) {
+        resultDiv.className = 'test-result success';
+        resultDiv.innerHTML = '<pre>' + JSON.stringify(result.data, null, 2) + '</pre>';
+      } else {
+        resultDiv.className = 'test-result error';
+        resultDiv.innerHTML = '<strong>错误：</strong>' + result.error;
+      }
+    }
+
+    function testConvertLunarToSolar() {
+      const result = CalendarService.convertLunarToSolar({
+        lunar_year: document.getElementById('lunar_year').value,
+        lunar_month: document.getElementById('lunar_month').value,
+        lunar_day: document.getElementById('lunar_day').value,
+        hour: document.getElementById('lunar_hour').value,
+        minute: document.getElementById('lunar_minute').value,
+        second: document.getElementById('lunar_second').value,
+        is_leap_month: document.getElementById('is_leap_month').checked
+      });
+      displayResult('result1', result);
+    }
+
+    function testConvertSolarToLunar() {
+      const result = CalendarService.convertSolarToLunar({
+        year: document.getElementById('solar_year').value,
+        month: document.getElementById('solar_month').value,
+        day: document.getElementById('solar_day').value,
+        hour: document.getElementById('solar_hour').value,
+        minute: document.getElementById('solar_minute').value,
+        second: document.getElementById('solar_second').value
+      });
+      displayResult('result2', result);
+    }
+
+    function testGetCurrentLunarInfo() {
+      const result = CalendarService.getCurrentLunarInfo();
+      displayResult('result3', result);
+    }
+
+    function testGetLunarMonthInfo() {
+      const year = document.getElementById('lunar_month_year').value;
+      const month = document.getElementById('lunar_month_month').value;
+      const leap = document.getElementById('lunar_month_leap').value;
+      const lunarMonth = parseInt(leap) < 0 ? parseInt(leap) : parseInt(month);
+      const result = CalendarService.getLunarMonthInfo(year, lunarMonth);
+      displayResult('result4', result);
+    }
+
+    function testGetSolarFromBaZi() {
+      const result = CalendarService.getSolarFromBaZi({
+        yearGanZhi: document.getElementById('year_ganzhi').value,
+        monthGanZhi: document.getElementById('month_ganzhi').value,
+        dayGanZhi: document.getElementById('day_ganzhi').value,
+        timeGanZhi: document.getElementById('time_ganzhi').value,
+        sect: parseInt(document.getElementById('sect').value),
+        baseYear: parseInt(document.getElementById('base_year').value)
+      });
+      displayResult('result5', result);
+    }
+
+    function testGetDaysInMonth() {
+      const days = CalendarService.getDaysInMonth(
+        document.getElementById('days_in_month_year').value,
+        document.getElementById('days_in_month_month').value
+      );
+      const result = { success: true, data: { days: days } };
+      displayResult('result6', result);
+    }
+  </script>
+</body>
+</html>

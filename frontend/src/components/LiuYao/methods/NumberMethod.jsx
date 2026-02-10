@@ -1,0 +1,378 @@
+// 路径:src/components/LiuYao/methods/NumberMethod.jsx 时间:2026-02-08 16:30
+// 功能:报数起卦组件，通过输入数字生成卦象，实现顺序输入
+import React, { useState, useRef, useEffect } from 'react';
+import { YangYao, YinYao } from '../../common/YaoComponents';
+import LiuYaoService from '../../../services/liuyaoService';
+import '../LiuYaoQiGua/LiuYaoQiGua.css';
+
+const NumberMethod = ({ onReset, onNumberDivination }) => {
+  const [yaoValues, setYaoValues] = useState({
+    shang: '',
+    wu: '',
+    si: '',
+    san: '',
+    er: '',
+    chu: ''
+  });
+
+  const [disabledYaos, setDisabledYaos] = useState({
+    shang: true,
+    wu: true,
+    si: true,
+    san: true,
+    er: true,
+    chu: false // 初爻初始可输入
+  });
+
+  const [hasValidInput, setHasValidInput] = useState(false); // 跟踪是否有合法输入
+  const [allInputsValid, setAllInputsValid] = useState(false); // 跟踪是否所有输入框都有有效值
+  const [yaoOddCounts, setYaoOddCounts] = useState({
+    shang: null,
+    wu: null,
+    si: null,
+    san: null,
+    er: null,
+    chu: null
+  }); // 存储每个爻位的奇数个数
+
+  const yaoRefs = {
+    shang: useRef(null),
+    wu: useRef(null),
+    si: useRef(null),
+    san: useRef(null),
+    er: useRef(null),
+    chu: useRef(null)
+  };
+
+  const generateButtonRef = useRef(null); // 生成卦象按钮的ref
+
+  const yaoOrder = ['chu', 'er', 'san', 'si', 'wu', 'shang']; // 从初爻到上爻的顺序
+
+  // 根据odd_count值确定爻的形状和颜色
+  const getYaoComponent = (oddCount) => {
+    if (oddCount === null || oddCount === undefined) return null;
+    
+    const oddCountStr = oddCount.toString();
+    
+    switch (oddCountStr) {
+      case '1':
+        return <YangYao backgroundColor="#000000" />;
+      case '2':
+        return <YinYao backgroundColor="#000000" />;
+      case '3':
+        return <YangYao backgroundColor="#C00000" />;
+      case '0':
+        return <YinYao backgroundColor="#0070C0" />;
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    // 初始化时聚焦到初爻
+    if (!disabledYaos.chu) {
+      yaoRefs.chu.current?.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    // 监听 disabledYaos 变化，当某个爻位变为可输入时自动聚焦
+    for (const yao of yaoOrder) {
+      if (!disabledYaos[yao]) {
+        setTimeout(() => {
+          yaoRefs[yao].current?.focus();
+        }, 200);
+        break;
+      }
+    }
+  }, [disabledYaos]);
+
+  const handleInputChange = (yao, value) => {
+    // 只调用一次setYaoValues，避免状态更新冲突
+    setYaoValues(prev => {
+      const newValues = {
+        ...prev,
+        [yao]: value
+      };
+      
+      // 检查是否有任何输入框有值
+      const hasAnyInput = Object.values(newValues).some(val => val.length > 0);
+      setHasValidInput(hasAnyInput);
+      
+      // 检查所有输入框是否都有有效值（3位数字）
+      const allValid = Object.values(newValues).every(val => val.length === 3);
+      setAllInputsValid(allValid);
+      
+      // 如果所有输入都有效，聚焦到生成卦象按钮
+      if (allValid) {
+        setTimeout(() => {
+          generateButtonRef.current?.focus();
+        }, 300);
+      }
+      
+      return newValues;
+    });
+
+    // 检查输入是否完成（3位数字）
+    if (value.length === 3) {
+      // 计算下一个要输入的爻位
+      const currentIndex = yaoOrder.indexOf(yao);
+      if (currentIndex < yaoOrder.length - 1) {
+        const nextYao = yaoOrder[currentIndex + 1];
+        // 同时更新禁用状态
+        setDisabledYaos(prev => ({
+          ...prev,
+          [yao]: true, // 禁用当前爻位
+          [nextYao]: false // 启用下一个爻位
+        }));
+      } else {
+        // 所有爻位输入完成
+        setDisabledYaos(prev => ({
+          ...prev,
+          [yao]: true // 禁用当前爻位
+        }));
+      }
+    } else if (value.length === 0) {
+      // 不需要在这里再次检查hasValidInput，因为上面已经检查过了
+    }
+  };
+
+  const handleDoubleClick = (yao) => {
+    // 只有当前可输入的爻位可以双击清空
+    if (!disabledYaos[yao]) {
+      setYaoValues(prev => {
+        const newValues = {
+          ...prev,
+          [yao]: ''
+        };
+        
+        // 检查是否有任何输入框有值
+        const hasAnyInput = Object.values(newValues).some(val => val.length > 0);
+        setHasValidInput(hasAnyInput);
+        
+        // 检查所有输入框是否都有有效值（3位数字）
+        setAllInputsValid(false);
+        
+        return newValues;
+      });
+    }
+  };
+
+  const handleReset = () => {
+    // 清空所有输入框
+    setYaoValues({
+      shang: '',
+      wu: '',
+      si: '',
+      san: '',
+      er: '',
+      chu: ''
+    });
+    
+    // 重置禁用状态，只有初爻可输入
+    setDisabledYaos({
+      shang: true,
+      wu: true,
+      si: true,
+      san: true,
+      er: true,
+      chu: false
+    });
+    
+    // 重置输入状态
+    setHasValidInput(false);
+    setAllInputsValid(false);
+    
+    // 重置爻象数据
+    setYaoOddCounts({
+      shang: null,
+      wu: null,
+      si: null,
+      san: null,
+      er: null,
+      chu: null
+    });
+    
+    // 调用父组件的重置函数
+    onReset();
+  };
+
+  const handleGenerateDivination = () => {
+    // 将用户输入的6个3位数字转换为数字数组
+    const digitsArray = [
+      parseInt(yaoValues.chu),
+      parseInt(yaoValues.er),
+      parseInt(yaoValues.san),
+      parseInt(yaoValues.si),
+      parseInt(yaoValues.wu),
+      parseInt(yaoValues.shang)
+    ];
+    
+    // 调用liuyaoService计算爻象数据
+    const yaoData = LiuYaoService.calculateYaoDataFromDigits(digitsArray);
+    
+    // 更新爻象数据
+    setYaoOddCounts(yaoData.yaoOddCounts);
+  };
+
+  const handleInputValidation = (e) => {
+    const value = e.target.value;
+    if (value === '') {
+      return;
+    }
+    // 1. 只允许数字输入
+    if (!/^\d+$/.test(value)) {
+      e.target.value = value.replace(/\D/g, '');
+    }
+    // 2. 限制长度为恰好3位
+    if (value.length > 3) {
+      e.target.value = value.slice(0, 3);
+    }
+  };
+
+  return (
+    <div className="number-method">
+      <div className="content-row">
+        <div className="liu-yao-info">
+          <h3>报数起卦：</h3>
+          <p>根据您随机报出的数字生成卦象，简单快捷。</p>
+          <ol>
+            <li>诚心静默，排除杂念</li>
+            <li>心念占事，随机报出一个数字</li>
+            <li>点击起卦，系统根据数字生成卦象</li>
+          </ol>
+          <div className="divination-actions">
+            <button 
+              ref={generateButtonRef}
+              className="throw-button" 
+              disabled={!allInputsValid}
+              onClick={handleGenerateDivination}
+            >
+              生成卦象
+            </button>
+            <button 
+              className="reset-button" 
+              onClick={handleReset}
+              disabled={!hasValidInput}
+            >
+              重新报数
+            </button>
+          </div>
+        </div>
+
+        <div className="yao-display">
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.shang ? 'yao-label-disabled' : ''} ${!disabledYaos.shang ? 'yao-label-active' : ''}`}>上爻：</span>
+            <input 
+              ref={yaoRefs.shang}
+              className={`yao-value ${disabledYaos.shang ? 'yao-value-disabled' : ''} ${!disabledYaos.shang ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.shang}
+              onChange={(e) => handleInputChange('shang', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('shang')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.shang}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.shang)}</div>
+          </div>
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.wu ? 'yao-label-disabled' : ''} ${!disabledYaos.wu ? 'yao-label-active' : ''}`}>五爻：</span>
+            <input 
+              ref={yaoRefs.wu}
+              className={`yao-value ${disabledYaos.wu ? 'yao-value-disabled' : ''} ${!disabledYaos.wu ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.wu}
+              onChange={(e) => handleInputChange('wu', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('wu')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.wu}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.wu)}</div>
+          </div>
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.si ? 'yao-label-disabled' : ''} ${!disabledYaos.si ? 'yao-label-active' : ''}`}>四爻：</span>
+            <input 
+              ref={yaoRefs.si}
+              className={`yao-value ${disabledYaos.si ? 'yao-value-disabled' : ''} ${!disabledYaos.si ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.si}
+              onChange={(e) => handleInputChange('si', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('si')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.si}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.si)}</div>
+          </div>
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.san ? 'yao-label-disabled' : ''} ${!disabledYaos.san ? 'yao-label-active' : ''}`}>三爻：</span>
+            <input 
+              ref={yaoRefs.san}
+              className={`yao-value ${disabledYaos.san ? 'yao-value-disabled' : ''} ${!disabledYaos.san ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.san}
+              onChange={(e) => handleInputChange('san', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('san')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.san}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.san)}</div>
+          </div>
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.er ? 'yao-label-disabled' : ''} ${!disabledYaos.er ? 'yao-label-active' : ''}`}>二爻：</span>
+            <input 
+              ref={yaoRefs.er}
+              className={`yao-value ${disabledYaos.er ? 'yao-value-disabled' : ''} ${!disabledYaos.er ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.er}
+              onChange={(e) => handleInputChange('er', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('er')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.er}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.er)}</div>
+          </div>
+          <div className="yao-item">
+            <span className={`yao-label ${disabledYaos.chu ? 'yao-label-disabled' : ''} ${!disabledYaos.chu ? 'yao-label-active' : ''}`}>初爻：</span>
+            <input 
+              ref={yaoRefs.chu}
+              className={`yao-value ${disabledYaos.chu ? 'yao-value-disabled' : ''} ${!disabledYaos.chu ? 'yao-value-active' : ''}`} 
+              type="text"
+              placeholder="待输入"
+              value={yaoValues.chu}
+              onChange={(e) => handleInputChange('chu', e.target.value)}
+              onDoubleClick={() => handleDoubleClick('chu')}
+              onInput={handleInputValidation}
+              minLength={3}
+              maxLength={3}
+              pattern="\d{3}"
+              disabled={disabledYaos.chu}
+            />
+            <div className="yao-component">{getYaoComponent(yaoOddCounts?.chu)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NumberMethod;

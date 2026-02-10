@@ -1,0 +1,119 @@
+/* 功能:指定起卦组件样式，使用 CSS Modules 管理样式作用域 */
+
+/* 阳阴按钮容器 */
+.yaoButtonsContainer {
+  display: flex;
+  gap: 8px;
+  /* margin-left: 8px; */
+}
+
+/* 基础按钮样式 */
+.yaoButton {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* 阳按钮未选中状态 */
+.yangButton {
+  background-color: #FFFFFF;
+  color: #333333;
+}
+
+/* 阳按钮选中状态 - 类似激活状态样式 */
+.yangButtonSelected {
+  background-color: #FFFFFF;
+  color: #C00000;
+  border-color: #C00000;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  animation: pulse-yang 2s infinite;
+}
+
+/* 阳按钮激活状态 - 红色背景白色文字 */
+.yangButtonActive {
+  background-color: #C00000;
+  color: #FFFFFF;
+  border-color: #C00000;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  animation: pulse-yang 2s infinite;
+}
+
+/* 阳按钮悬停状态 - 排除选中状态和激活状态 */
+.yangButton:hover:not(.yangButtonSelected):not(.yangButtonActive) {
+  background-color: #FFF5F5;
+  border-color: #FFCCCC;
+}
+
+/* 阴按钮未选中状态 */
+.yinButton {
+  background-color: #FFFFFF;
+  color: #333333;
+}
+
+/* 阴按钮选中状态 - 类似激活状态样式 */
+.yinButtonSelected {
+  background-color: #FFFFFF;
+  color: #002060;
+  border-color: #002060;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  animation: pulse-yin 2s infinite;
+}
+
+/* 阴按钮激活状态 - 蓝色背景白色文字 */
+.yinButtonActive {
+  background-color: #002060;
+  color: #FFFFFF;
+  border-color: #002060;
+  border-width: 1px;
+  box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  animation: pulse-yin 2s infinite;
+}
+
+/* 阴按钮悬停状态 - 排除选中状态和激活状态 */
+.yinButton:hover:not(.yinButtonSelected):not(.yinButtonActive) {
+  background-color: #F0F5FF;
+  border-color: #B3C6FF;
+}
+
+/* 按钮聚焦样式 */
+.yaoButton:focus {
+  outline: none;
+}
+
+/* 阳按钮脉冲动画效果 */
+@keyframes pulse-yang {
+  0% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(192, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+}
+
+/* 阴按钮脉冲动画效果 */
+@keyframes pulse-yin {
+  0% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 32, 96, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+}
