@@ -28,15 +28,19 @@
 .first-name-input,
 .last-name-input,
 .birth-year-input {
-  width: 50px;
+  width: 80px;
   height: 32px;
-  padding: 0 10px;
+  padding: 0 8px;
   border: 1px solid #E5E7EB;
   border-radius: 6px;
   font-size: 14px;
   text-align: center;
   display: flex;
   align-items: center;
+}
+
+.birth-year-input {
+  width: 50px;
 }
 
 .location-input {
@@ -127,8 +131,8 @@
   position: absolute;
   top: 4px;
   left: 4px;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: #FFFFFF;
 }
@@ -160,7 +164,7 @@
 }
 
 .dropdown-select {
-  width: 40px;
+  width: 50px;
   height: 32px;
   padding: 0 6px;
   border: 1px solid #E5E7EB;
@@ -546,11 +550,12 @@ textarea:focus,
   width: 60px;
   font-size: 14px;
 }
-
+/* 
 .date-value + .date-value,
 .date-value + .time-value {
-  /* margin-left: 7px; */
+  margin-left: 7px; 
 }
+*/
 
 .lunar-info:last-child {
   margin-bottom: 0;

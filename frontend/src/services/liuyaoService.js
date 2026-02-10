@@ -6,13 +6,14 @@
  * 封装所有与六爻起卦相关的API请求和数据处理
  */
 class LiuYaoService {
+  static API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
   /**
    * 生成单个随机数字
    * @returns {Promise<Object>} 随机数字结果
    */
   static async generateRandomDigit() {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/random/digit');
+      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/digit`);
       const data = await response.json();
       return data.data || data;
     } catch (error) {
@@ -27,7 +28,7 @@ class LiuYaoService {
    */
   static async generateRandomThreeDigits() {
     try {
-      const response = await fetch('http://localhost:8000/api/v1/random/three-digits');
+      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/three-digits`);
       const data = await response.json();
       return data.data || data;
     } catch (error) {
