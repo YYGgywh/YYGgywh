@@ -1,11 +1,16 @@
-# backend/main.py 2025-11-28 22:12:17
+# backend/main.py 2026-02-11 13:00:00
 # 功能：FastAPI应用主入口
 
+import sys
+import os
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 import json
+
+# 添加src目录到Python路径
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from config import settings
 from src.api import router as api_router

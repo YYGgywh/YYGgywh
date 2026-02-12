@@ -9,7 +9,7 @@ import os
 # 添加src目录到Python路径
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src'))
 
-from core.calendar_service import CalendarService
+from core.calendar_algorithm_core import CalendarAlgorithmCore
 from algorithms.calendar_calculator import CalendarConverter
 
 def analyze_parameter_differences():

@@ -1,12 +1,28 @@
-// 路径:src/components/LiuYao/LiuYaoQiGua/LiuYaoQiGua.jsx 时间:2026-02-08 12:20
+// 路径:src/components/LiuYao/LiuYaoQiGua/LiuYaoQiGua.jsx 时间:2026-02-10 10:00
 // 功能:六爻起卦主容器组件，协调各子组件的状态和布局
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './LiuYaoQiGua.css';
 import NavigationSidebar from '../components/NavigationSidebar';
 import MethodContent from '../components/MethodContent';
 import LiuYaoService from '../../../services/liuyaoService';
+import { useDivination } from '../../../contexts/DivinationContext';
 
 const LiuYaoQiGua = () => {
+  const { formData, timestamp, threeDigitsArray, setThreeDigitsArray, setCalendarResult, setDivineResult } = useDivination();
+  
+  // 使用 ref 来存储最新的状态值
+  const formDataRef = useRef(formData);
+  const timestampRef = useRef(timestamp);
+  
+  // 当状态更新时，更新 ref 的值
+  useEffect(() => {
+    formDataRef.current = formData;
+  }, [formData]);
+  
+  useEffect(() => {
+    timestampRef.current = timestamp;
+  }, [timestamp]);
+  
   const [selectedMethod, setSelectedMethod] = useState('逐爻起卦');
   const [yaoValues, setYaoValues] = useState({
     shang: '待生成',
@@ -27,7 +43,6 @@ const LiuYaoQiGua = () => {
   const [currentYaoIndex, setCurrentYaoIndex] = useState(0);
   const [isResetEnabled, setIsResetEnabled] = useState(false);
   const [isDivinationButtonEnabled, setIsDivinationButtonEnabled] = useState(false); // 开始排盘按钮状态
-  const [threeDigitsArray, setThreeDigitsArray] = useState([]);
   const threeDigitsArrayRef = useRef([]);
   
   // 爻位顺序
@@ -252,6 +267,85 @@ const LiuYaoQiGua = () => {
     
     console.log('指定起卦状态更新完成');
   };
+  
+  // 处理开始排盘按钮点击事件
+  const handleStartDivination = async () => {
+    try {
+      // 1. 从 ref 获取最新的表单数据和时间数据
+      const collectedFormData = formDataRef.current;
+      const collectedTimestamp = timestampRef.current || new Date();
+      
+      // 2. 格式化时间数据
+      const calendarData = {
+        year: collectedTimestamp.getFullYear(),
+        month: collectedTimestamp.getMonth() + 1,
+        day: collectedTimestamp.getDate(),
+        hour: collectedTimestamp.getHours(),
+        minute: collectedTimestamp.getMinutes(),
+        second: collectedTimestamp.getSeconds()
+      };
+      
+      // 3. 打印所有传递的数据
+      console.log('传递的数据:');
+      console.log('表单数据:', collectedFormData);
+      console.log('公历时间:', calendarData);
+      console.log('起卦三位数数组:', threeDigitsArrayRef.current);
+      
+      // 4. 调用日历转换接口
+      let calendarResult = null;
+      try {
+        const calendarResponse = await fetch('http://localhost:8000/api/v1/calendar/convert', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(calendarData)
+        });
+        calendarResult = await calendarResponse.json();
+        console.log('后端返回的数据:');
+        console.log('日历转换结果:', calendarResult);
+        setCalendarResult(calendarResult);
+      } catch (error) {
+        console.error('日历转换接口调用失败:', error);
+      }
+      
+      // 5. 调用排盘接口
+      let divineResult = null;
+      try {
+        const divineData = {
+          numbers: threeDigitsArrayRef.current
+        };
+        const divineResponse = await fetch('http://localhost:8000/api/v1/liuyao/divine', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(divineData)
+        });
+        divineResult = await divineResponse.json();
+        console.log('排盘结果:', divineResult);
+        setDivineResult(divineResult);
+      } catch (error) {
+        console.error('排盘接口调用失败:', error);
+      }
+      
+      // 6. 存储数据到 localStorage
+      const allData = {
+        formData: collectedFormData,
+        calendarData,
+        calendarResult,
+        threeDigitsArray: threeDigitsArrayRef.current,
+        divineResult
+      };
+      
+      localStorage.setItem('divinationResult', JSON.stringify(allData));
+      
+      // 7. 在新标签页中打开结果页面
+      window.open('/divination-result', '_blank');
+    } catch (error) {
+      console.error('开始排盘错误:', error);
+    }
+  };
 
   return (
     <div className="liu-yao-wrapper">
@@ -278,13 +372,14 @@ const LiuYaoQiGua = () => {
         </div>
       </div>
       <div className="divination-button-container">
-        <button 
-          className="divination-button" 
-          disabled={!isDivinationButtonEnabled}
-        >
-          开始排盘
-        </button>
-      </div>
+          <button 
+            className="divination-button" 
+            disabled={!isDivinationButtonEnabled}
+            onClick={handleStartDivination}
+          >
+            开始排盘
+          </button>
+        </div>
     </div>
   );
 };

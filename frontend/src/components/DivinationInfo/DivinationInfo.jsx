@@ -1,20 +1,12 @@
-// 路径:src/components/DivinationInfo/DivinationInfo.jsx 时间:2026-01-30 10:00
+// 路径:src/components/DivinationInfo/DivinationInfo.jsx 时间:2026-02-10 10:00
 // 功能:占卜信息收集表单，包含姓名、性别、生年、属地、占类、占题和时间戳
 import React, { useState, useRef, useEffect } from 'react';
 import './DivinationInfo.css';
 import TimestampModal from './timestamp/TimestampModal';
+import { useDivination } from '../../contexts/DivinationContext';
 
 const DivinationInfo = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    gender: '男',
-    birthYear: '',
-    location: '',
-    divinationType: '',
-    subType: '',
-    question: ''
-  });
+  const { formData, setFormData, setTimestamp } = useDivination();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isTimestampModalOpen, setIsTimestampModalOpen] = useState(false);
@@ -62,6 +54,7 @@ const DivinationInfo = () => {
 
   const handleTimestampSubmit = (timeData) => {
     setSubmittedTimestamp(timeData);
+    setTimestamp(timeData);
   };
 
   const handleSubmit = (e) => {

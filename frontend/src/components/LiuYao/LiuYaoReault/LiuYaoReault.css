@@ -1,0 +1,68 @@
+/* 路径:src/components/LiuYao/LiuYaoReault/LiuYaoReault.css 时间:2026-02-10 10:00 */
+/* 功能:排盘结果页面样式，包含结果容器和各个结果区块的样式 */
+
+.liu-yao-reault-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.liu-yao-reault-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.result-section {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-section h2 {
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.result-section p {
+  color: #666;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.result-section pre {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .liu-yao-reault-container {
+    padding: 10px;
+  }
+  
+  .result-section {
+    padding: 15px;
+  }
+  
+  .liu-yao-reault-container h1 {
+    font-size: 24px;
+  }
+  
+  .result-section h2 {
+    font-size: 18px;
+  }
+}
