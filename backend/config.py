@@ -9,7 +9,7 @@ load_dotenv()
 
 class Settings:
     # 应用配置
-    APP_NAME: str = "中华易学排盘系统"
+    APP_NAME: str = "圆运阁古易文化"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
     
