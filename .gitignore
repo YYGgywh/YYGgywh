@@ -1,16 +1,12 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+#
+# * @file            .gitignore
+# * @description     
+# * @author          Gordon <gordon_cao@qq.com>
+# * @createTime      2026-02-10 11:39:17
+# * @lastModified    2026-02-15 21:10:38
+# * Copyright © All rights reserved
+#
 
-# Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -25,6 +21,7 @@ build/
 .idea/
 *.swp
 *.swo
+.trae/
 
 # OS
 .DS_Store
