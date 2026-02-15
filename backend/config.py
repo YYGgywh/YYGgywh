@@ -1,4 +1,4 @@
-# backend/config.py 2025-11-28 22:12:17
+# backend/config.py 2026-02-15 10:00:00
 # 功能：应用配置管理
 
 import os
@@ -13,16 +13,8 @@ class Settings:
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
     
-    # 数据库配置
-    DATABASE_URL: str = os.getenv(
-        "DATABASE_URL", 
-        "sqlite:///./paipan.db"
-    )
-    
     # API配置
     API_V1_STR: str = "/api/v1"
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8天
     
     # CORS配置
     BACKEND_CORS_ORIGINS: list = [
@@ -32,19 +24,5 @@ class Settings:
         "http://127.0.0.1:3001",
         "https://1198675leyc06.vicp.fun",  # 生产环境域名
     ]
-    
-    # 算法配置
-    BAZI_CONFIG = {
-        "timezone": "Asia/Shanghai",
-        "calendar_type": "lunar",  # lunar或solar
-    }
-    
-    LIUYAO_CONFIG = {
-        "method": "coin",  # coin或yarrow
-    }
-    
-    QIMEN_CONFIG = {
-        "pattern": "yang_dun",  # yang_dun或yin_dun
-    }
 
 settings = Settings()

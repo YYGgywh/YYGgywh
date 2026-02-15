@@ -60,6 +60,33 @@ class LunarValidationException(CalendarValidationException):
         super().__init__("农历时间验证失败")
 
 
+class CalendarConversionException(BusinessException):
+    """日历转换业务异常"""
+    
+    def __init__(self, message: str = None):
+        if message is None:
+            message = "日历转换失败"
+        super().__init__(message, "CALENDAR_CONVERSION_ERROR")
+
+
+class SolarConversionException(CalendarConversionException):
+    """公历转换异常"""
+    
+    def __init__(self, message: str = None):
+        if message is None:
+            message = "公历转换失败"
+        super().__init__(message)
+
+
+class LunarConversionException(CalendarConversionException):
+    """农历转换异常"""
+    
+    def __init__(self, message: str = None):
+        if message is None:
+            message = "农历转换失败"
+        super().__init__(message)
+
+
 # 默认导出列表
 __all__ = [
     'BusinessException',
@@ -69,5 +96,8 @@ __all__ = [
     'RandomJiaziException',
     'CalendarValidationException',
     'SolarValidationException',
-    'LunarValidationException'
+    'LunarValidationException',
+    'CalendarConversionException',
+    'SolarConversionException',
+    'LunarConversionException'
 ]

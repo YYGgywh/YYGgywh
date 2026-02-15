@@ -1,18 +1,17 @@
-fastapi==0.104.1
-uvicorn==0.24.0
-pydantic==2.5.0
-sqlalchemy==2.0.23
-python-multipart==0.0.6
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-python-dotenv==1.0.0
-pytest==7.4.3
-pytest-asyncio==0.21.1
-httpx==0.25.2
+#
+# * @file            backend/requirements.txt
+# * @description     
+# * @author          Gordon <gordon_cao@qq.com>
+# * @createTime      2026-02-10 11:39:17
+# * @lastModified    2026-02-15 16:20:51
+# * Copyright © All rights reserved
+#
 
-# 易学算法相关依赖
-lunar-python==1.4.8
-lunardate==0.2.0
-ephem==4.1.4
-numpy==1.24.3
-pandas==2.0.3
+# Web 框架相关
+fastapi==0.104.1        # FastAPI Web 框架，用于构建 RESTful API
+uvicorn==0.24.0         # ASGI 服务器，用于运行 FastAPI 应用
+pydantic==2.5.0         # 数据验证和序列化库，用于 API 请求和响应模型
+python-dotenv==1.0.0     # 环境变量管理库，用于加载 .env 文件中的配置
+
+# 易学算法相关
+lunar-python==1.4.8       # 中国农历和干支计算库，用于历法转换和六爻排盘算法

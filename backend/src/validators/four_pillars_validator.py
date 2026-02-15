@@ -1,4 +1,4 @@
-# backend/src/utils/verify_pillars.py 2024-12-19 15:30:00
+# backend/src/validators/four_pillars_validator.py 2026-02-15 10:30:00
 # 功能：验证四柱组合的正确性，包括六十甲子验证、五虎遁验证和五鼠遁验证
 
 """
@@ -203,16 +203,3 @@ def get_simple_pillars_conversion(year_pillar: str, month_pillar: str, day_pilla
             "success": False,
             "error": f"四柱转换过程中发生错误: {str(e)}"
         }
-
-# 测试简化方法
-print("=== 测试简化四柱转换方法 ===")
-test_simple = get_simple_pillars_conversion("甲辰", "丁丑", "癸卯", "癸亥")
-print(f"简化方法结果: {test_simple['success']}")
-if test_simple['success']:
-    print(f"匹配数量: {test_simple['total_matches']}")
-    if test_simple['solar_dates']:
-        print("所有结果:")
-        for i, date in enumerate(test_simple['solar_dates']):
-            print(f"  {i+1}. {date['solar_date']}")
-else:
-    print(f"错误信息: {test_simple['error']}")

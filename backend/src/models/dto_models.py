@@ -2,7 +2,7 @@
 # 功能：数据传输对象模型，用于服务层与API层之间的数据传递
 
 from pydantic import BaseModel  # 导入Pydantic的BaseModel基类，用于定义数据验证模型
-from typing import Optional  # 导入Optional类型注解，用于表示可选参数
+from typing import Optional, Dict, Any  # 导入Optional类型注解，用于表示可选参数；导入Dict和Any类型注解，用于定义字典类型和任意类型
 
 # 定义随机数字数据传输对象类，继承自BaseModel
 class RandomDigitDTO(BaseModel):
@@ -42,6 +42,32 @@ class LunarValidationDTO(BaseModel):
     method: str = "农历时间参数验证"  # 验证方法：描述农历时间验证的方式，默认值为"农历时间参数验证"，字符串类型
     description: str = "验证农历年、月、日、闰月、时、分、秒参数的有效性和合法性"  # 描述信息：对农历时间验证的详细说明，默认值为"验证农历年、月、日、闰月、时、分、秒参数的有效性和合法性"，字符串类型
 
+# 定义公历转换结果数据传输对象类，继承自BaseModel
+class SolarConversionDTO(BaseModel):
+    success: bool  # 转换是否成功：表示公历转农历是否成功，布尔类型
+    valid: bool  # 数据是否有效：表示输入数据是否有效，布尔类型
+    input_type: str  # 输入类型：表示原始输入的类型，字符串类型
+    conversion_type: str  # 转换类型：表示执行的转换操作类型，字符串类型
+    solar_info: Dict[str, Any]  # 公历信息：包含所有公历相关的详细信息，字典类型
+    lunar_info: Dict[str, Any]  # 农历信息：包含所有农历相关的详细信息，字典类型
+    ganzhi_info: Dict[str, Any]  # 干支信息：包含所有干支相关的详细信息，字典类型
+    jieqi_info: Dict[str, Any]  # 节气信息：包含所有节气相关的详细信息，字典类型
+    method: str = "公历转农历"  # 转换方法：描述公历转农历的方式，默认值为"公历转农历"，字符串类型
+    description: str = "将公历日期转换为农历信息"  # 描述信息：对公历转农历的详细说明，默认值为"将公历日期转换为农历信息"，字符串类型
+
+# 定义农历转换结果数据传输对象类，继承自BaseModel
+class LunarConversionDTO(BaseModel):
+    success: bool  # 转换是否成功：表示农历转公历是否成功，布尔类型
+    valid: bool  # 数据是否有效：表示输入数据是否有效，布尔类型
+    input_type: str  # 输入类型：表示原始输入的类型，字符串类型
+    conversion_type: str  # 转换类型：表示执行的转换操作类型，字符串类型
+    solar_info: Dict[str, Any]  # 公历信息：包含所有公历相关的详细信息，字典类型
+    lunar_info: Dict[str, Any]  # 农历信息：包含所有农历相关的详细信息，字典类型
+    ganzhi_info: Dict[str, Any]  # 干支信息：包含所有干支相关的详细信息，字典类型
+    jieqi_info: Dict[str, Any]  # 节气信息：包含所有节气相关的详细信息，字典类型
+    method: str = "农历转公历"  # 转换方法：描述农历转公历的方式，默认值为"农历转公历"，字符串类型
+    description: str = "将农历日期转换为公历信息"  # 描述信息：对农历转公历的详细说明，默认值为"将农历日期转换为公历信息"，字符串类型
+
 
 # 默认导出列表（定义模块的公开导出列表）
 __all__ = [
@@ -49,5 +75,7 @@ __all__ = [
     'RandomThreeDigitsDTO',  # 导出三个随机数字数据传输对象
     'RandomJiaziDTO',  # 导出随机六十甲子数据传输对象
     'SolarValidationDTO',  # 导出公历时间验证结果数据传输对象
-    'LunarValidationDTO'  # 导出农历时间验证结果数据传输对象
+    'LunarValidationDTO',  # 导出农历时间验证结果数据传输对象
+    'SolarConversionDTO',  # 导出公历转换结果数据传输对象
+    'LunarConversionDTO'  # 导出农历转换结果数据传输对象
 ]

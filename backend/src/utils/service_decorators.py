@@ -10,7 +10,9 @@ from exceptions.business_exceptions import (
     RandomThreeDigitsException,  # 随机三位数异常：处理三位随机数字生成错误
     RandomJiaziException,  # 随机干支异常：处理干支序列生成错误
     SolarValidationException,  # 公历时间验证异常：处理公历时间验证错误
-    LunarValidationException  # 农历时间验证异常：处理农历时间验证错误
+    LunarValidationException,  # 农历时间验证异常：处理农历时间验证错误
+    SolarConversionException,  # 公历转换异常：处理公历转换错误
+    LunarConversionException  # 农历转换异常：处理农历转换错误
 )
 
 logger = logging.getLogger(__name__)  # 创建日志记录器实例，使用当前模块名称
@@ -32,7 +34,7 @@ def handle_service_errors(success_message: str, exception_class):
             # 捕获所有异常
             except Exception as e:
                 logger.error(f"{success_message}失败: {str(e)}")  # 记录错误日志，包含异常信息
-                raise exception_class()  # 抛出指定的业务异常
+                raise exception_class(str(e))  # 抛出指定的业务异常，传递原始错误信息
             
         return wrapper  # 返回包装函数
     
@@ -69,6 +71,18 @@ handle_lunar_validation_service_errors = handle_service_errors(
     LunarValidationException  # 对应的业务异常类
 )
 
+# 定义公历转换服务错误处理装饰器
+handle_solar_conversion_service_errors = handle_service_errors(
+    "成功转换公历",  # 成功日志消息模板
+    SolarConversionException  # 对应的业务异常类
+)
+
+# 定义农历转换服务错误处理装饰器
+handle_lunar_conversion_service_errors = handle_service_errors(
+    "成功转换农历",  # 成功日志消息模板
+    LunarConversionException  # 对应的业务异常类
+)
+
 
 # 默认导出列表（定义模块的公开导出列表）
 __all__ = [
@@ -77,5 +91,7 @@ __all__ = [
     'handle_random_three_digits_service_errors',  # 导出随机三位数装饰器
     'handle_random_jiazi_service_errors',  # 导出随机干支装饰器
     'handle_solar_validation_service_errors',  # 导出公历时间验证装饰器
-    'handle_lunar_validation_service_errors'  # 导出农历时间验证装饰器
+    'handle_lunar_validation_service_errors',  # 导出农历时间验证装饰器
+    'handle_solar_conversion_service_errors',  # 导出公历转换装饰器
+    'handle_lunar_conversion_service_errors'  # 导出农历转换装饰器
 ]
