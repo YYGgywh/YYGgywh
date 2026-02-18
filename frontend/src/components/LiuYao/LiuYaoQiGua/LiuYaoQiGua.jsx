@@ -91,6 +91,9 @@ const LiuYaoQiGua = () => {
     
     console.log(`投掷${currentYaoName}爻`);
     
+    // 保存当前索引，用于后续检查
+    const currentIndex = currentYaoIndex;
+    
     try {
       // 调用服务层获取随机数字
       const resultData = await LiuYaoService.generateRandomThreeDigits();
@@ -103,9 +106,12 @@ const LiuYaoQiGua = () => {
       setYaoValues(updatedData.yaoValues);
       setYaoOddCounts(updatedData.yaoOddCounts);
       
-      // 收集three_digits值到数组中
-      if (resultData.three_digits) {
+      // 收集three_digits值到数组中 - 只有当当前索引小于6时才添加
+      if (resultData.three_digits && currentIndex < 6) {
         setThreeDigitsArray(prev => {
+          // 确保数组长度不超过6
+          if (prev.length >= 6) return prev;
+          
           const newArray = [...prev, resultData.three_digits];
           threeDigitsArrayRef.current = newArray; // 更新ref引用
           console.log('收集的three_digits数组:', newArray);
@@ -275,8 +281,9 @@ const LiuYaoQiGua = () => {
       const collectedFormData = formDataRef.current;
       const collectedTimestamp = timestampRef.current || new Date();
       
-      // 2. 格式化时间数据
-      const calendarData = {
+      // 2. 格式化请求数据
+      const requestData = {
+        numbers: threeDigitsArrayRef.current,
         year: collectedTimestamp.getFullYear(),
         month: collectedTimestamp.getMonth() + 1,
         day: collectedTimestamp.getDate(),
@@ -288,39 +295,17 @@ const LiuYaoQiGua = () => {
       // 3. 打印所有传递的数据
       console.log('传递的数据:');
       console.log('表单数据:', collectedFormData);
-      console.log('公历时间:', calendarData);
-      console.log('起卦三位数数组:', threeDigitsArrayRef.current);
+      console.log('请求数据:', requestData);
       
-      // 4. 调用日历转换接口
-      let calendarResult = null;
-      try {
-        const calendarResponse = await fetch('http://localhost:8000/api/v1/calendar/convert', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(calendarData)
-        });
-        calendarResult = await calendarResponse.json();
-        console.log('后端返回的数据:');
-        console.log('日历转换结果:', calendarResult);
-        setCalendarResult(calendarResult);
-      } catch (error) {
-        console.error('日历转换接口调用失败:', error);
-      }
-      
-      // 5. 调用排盘接口
+      // 4. 调用统一排盘接口
       let divineResult = null;
       try {
-        const divineData = {
-          numbers: threeDigitsArrayRef.current
-        };
-        const divineResponse = await fetch('http://localhost:8000/api/v1/liuyao/divine', {
+        const divineResponse = await fetch('http://localhost:8000/api/v1/liuyao/assemble-liuya', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(divineData)
+          body: JSON.stringify(requestData)
         });
         divineResult = await divineResponse.json();
         console.log('排盘结果:', divineResult);
@@ -329,18 +314,16 @@ const LiuYaoQiGua = () => {
         console.error('排盘接口调用失败:', error);
       }
       
-      // 6. 存储数据到 localStorage
+      // 5. 存储数据到 localStorage
       const allData = {
         formData: collectedFormData,
-        calendarData,
-        calendarResult,
-        threeDigitsArray: threeDigitsArrayRef.current,
+        requestData,
         divineResult
       };
       
       localStorage.setItem('divinationResult', JSON.stringify(allData));
       
-      // 7. 在新标签页中打开结果页面
+      // 6. 在新标签页中打开结果页面
       window.open('/divination-result', '_blank');
     } catch (error) {
       console.error('开始排盘错误:', error);

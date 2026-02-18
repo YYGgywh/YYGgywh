@@ -1,0 +1,332 @@
+/*
+ * @file            frontend/src/Reset.css
+ * @description     全局CSS Reset和基础标准设置，1rem = 16px
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-16 11:19:08
+ * @lastModified    2026-02-16 13:15:00
+ * Copyright © All rights reserved
+*/
+
+/* ===== 盒模型重置 ===== */
+
+/* 全局盒模型设置：所有元素的宽高包含内边距与边框 */
+*, *::before, *::after {
+  box-sizing: border-box; /* 设置盒模型为border-box，确保padding和border包含在宽高内 */
+}
+
+/* ===== 全局重置 ===== */
+
+/* 清空所有元素的默认外边距和内边距 */
+* {
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
+}
+
+/* ===== HTML和Body基础设置（1rem = 16px） ===== */
+
+html {
+  font-size: 16px; /* 设置根字体大小为16px，作为rem单位的基准（1rem = 16px） */
+  line-height: 1.5; /* 设置默认行高为1.5倍字体大小 */
+  -webkit-font-smoothing: antialiased; /* Webkit浏览器字体抗锯齿 */
+  -moz-osx-font-smoothing: grayscale; /* Firefox OS X字体平滑 */
+  scroll-behavior: smooth; /* 启用平滑滚动 */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* 使用系统字体栈 */
+  font-size: 1rem; /* 使用rem单位，继承html的16px */
+  line-height: 1.5; /* 行高1.5倍 */
+  color: #333; /* 默认文字颜色 */
+  background-color: #fff; /* 默认背景颜色 */
+  min-height: 100vh; /* 最小高度为视口高度 */
+}
+
+/* ===== 排版元素重置 ===== */
+
+/* 重置所有标题的默认样式 */
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit; /* 继承父元素的字体大小 */
+  font-weight: inherit; /* 继承父元素的字体粗细 */
+  line-height: inherit; /* 继承父元素的行高 */
+  margin: 0; /* 清空默认外边距 */
+}
+
+/* 重置段落样式 */
+p {
+  margin: 0; /* 清空默认外边距 */
+  line-height: 1.5; /* 设置行高 */
+}
+
+/* 重置列表样式 */
+ul, ol {
+  list-style: none; /* 移除默认列表标记 */
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
+}
+
+/* 重置列表项样式 */
+li {
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
+}
+
+/* ===== 文本元素重置 ===== */
+
+/* 重置链接样式 */
+a {
+  text-decoration: none; /* 移除默认下划线 */
+  color: inherit; /* 继承父元素的颜色 */
+  cursor: pointer; /* 设置鼠标指针 */
+}
+
+/* 重置强调文本 */
+strong, b {
+  font-weight: bold; /* 设置加粗 */
+}
+
+/* 重置斜体文本 */
+em, i {
+  font-style: italic; /* 设置斜体 */
+}
+
+/* 重置删除线 */
+del, s {
+  text-decoration: line-through; /* 设置删除线 */
+}
+
+/* ===== 媒体元素重置 ===== */
+
+/* 重置图片样式 */
+img {
+  max-width: 100%; /* 最大宽度为父元素宽度 */
+  height: auto; /* 高度自动调整 */
+  display: block; /* 块级显示，避免底部间隙 */
+  border: 0; /* 移除边框 */
+}
+
+/* 重置视频样式 */
+video {
+  max-width: 100%; /* 最大宽度为父元素宽度 */
+  height: auto; /* 高度自动调整 */
+}
+
+/* ===== 表单元素重置 ===== */
+
+/* 重置表单元素通用样式 */
+button, input, textarea, select {
+  font-family: inherit; /* 继承字体 */
+  font-size: inherit; /* 继承字体大小 */
+  line-height: inherit; /* 继承行高 */
+  color: inherit; /* 继承颜色 */
+  border: none; /* 移除默认边框 */
+  background: none; /* 移除默认背景 */
+  outline: none; /* 移除默认轮廓 */
+  padding: 0; /* 清空默认内边距 */
+  margin: 0; /* 清空默认外边距 */
+}
+
+/* 重置按钮样式 */
+button {
+  cursor: pointer; /* 设置鼠标指针 */
+  appearance: none; /* 移除默认样式（标准属性） */
+  -webkit-appearance: none; /* 移除Webkit浏览器默认样式 */
+  -moz-appearance: none; /* 移除Firefox浏览器默认样式 */
+}
+
+/* 重置输入框样式 */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea {
+  appearance: none; /* 移除默认样式（标准属性） */
+  -webkit-appearance: none; /* 移除Webkit浏览器默认样式 */
+  -moz-appearance: none; /* 移除Firefox浏览器默认样式 */
+}
+
+/* 移除数字输入框的上下箭头按钮（Chrome浏览器） */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* 移除Webkit浏览器的默认样式 */
+  margin: 0; /* 设置外边距为0 */
+}
+
+/* 移除数字输入框的上下箭头按钮（Firefox浏览器） */
+input[type="number"] {
+  -moz-appearance: textfield; /* 移除Firefox浏览器的默认样式 */
+}
+
+/* 重置选择框样式 */
+select {
+  appearance: none; /* 移除默认样式（标准属性） */
+  -webkit-appearance: none; /* 移除Webkit浏览器默认样式 */
+  -moz-appearance: none; /* 移除Firefox浏览器默认样式 */
+}
+
+/* 重置文本域样式 */
+textarea {
+  resize: vertical; /* 只允许垂直调整大小 */
+  overflow: auto; /* 超出时显示滚动条 */
+}
+
+/* ===== 表格元素重置 ===== */
+
+/* 重置表格样式 */
+table {
+  border-collapse: collapse; /* 合并边框 */
+  border-spacing: 0; /* 移除单元格间距 */
+  width: 100%; /* 宽度为父元素宽度 */
+}
+
+/* 重置表格单元格样式 */
+th, td {
+  padding: 0; /* 清空默认内边距 */
+  text-align: left; /* 左对齐 */
+}
+
+/* ===== 其他元素重置 ===== */
+
+/* 重置分割线样式 */
+hr {
+  border: 0; /* 移除默认边框 */
+  height: 0; /* 移除默认高度 */
+  margin: 0; /* 清空默认外边距 */
+}
+
+/* 重置引用样式 */
+blockquote {
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
+}
+
+/* 重置代码样式 */
+code, pre {
+  font-family: 'Courier New', Courier, monospace; /* 使用等宽字体 */
+  font-size: 1rem; /* 使用rem单位 */
+}
+
+/* 重置预格式化文本 */
+pre {
+  white-space: pre-wrap; /* 允许换行 */
+  word-wrap: break-word; /* 单词换行 */
+}
+
+/* ===== 工具类 ===== */
+
+/* 清除浮动 */
+.clearfix::after {
+  content: ""; /* 添加空内容 */
+  display: table; /* 表格显示 */
+  clear: both; /* 清除浮动 */
+}
+
+/* 隐藏元素 */
+.hidden {
+  display: none !important; /* 强制隐藏 */
+}
+
+/* 文本截断 */
+.text-truncate {
+  overflow: hidden; /* 隐藏超出的内容 */
+  text-overflow: ellipsis; /* 超出显示省略号 */
+  white-space: nowrap; /* 不换行 */
+}
+
+/* 居中对齐 */
+.text-center {
+  text-align: center; /* 文本居中 */
+}
+
+/* 右对齐 */
+.text-right {
+  text-align: right; /* 文本右对齐 */
+}
+
+/* 左对齐 */
+.text-left {
+  text-align: left; /* 文本左对齐 */
+}
+
+/* ===== rem字体大小工具类（基于1rem = 16px） ===== */
+
+/* 超小字体 */
+.text-xs {
+  font-size: 0.625rem; /* 10px */
+}
+
+/* 小字体 */
+.text-sm {
+  font-size: 0.6875rem; /* 11px */
+}
+
+/* 基础字体 */
+.text-base {
+  font-size: 0.75rem; /* 12px */
+}
+
+/* 中小字体 */
+.text-md {
+  font-size: 0.8125rem; /* 13px */
+}
+
+/* 中等字体（相当于原来的14px） */
+.text-lg {
+  font-size: 0.875rem; /* 14px */
+}
+
+/* 大字体（相当于原来的16px） */
+.text-xl {
+  font-size: 1rem; /* 16px */
+}
+
+/* 超大字体（相当于原来的18px） */
+.text-2xl {
+  font-size: 1.125rem; /* 18px */
+}
+
+/* 特大字体（相当于原来的20px） */
+.text-3xl {
+  font-size: 1.25rem; /* 20px */
+}
+
+/* 巨大字体（相当于原来的24px） */
+.text-4xl {
+  font-size: 1.5rem; /* 24px */
+}
+
+/* 超巨大字体（相当于原来的28px） */
+.text-5xl {
+  font-size: 1.75rem; /* 28px */
+}
+
+/* ===== 全局Flex布局限制（防止内容被挤压） ===== */
+
+/* 导航栏相关元素：防止被压缩 */
+.navigation-left,
+.navigation-menu,
+.navigation-right,
+.navigation-utils,
+.navigation-actions {
+  min-width: max-content;
+  flex-shrink: 0;
+}
+
+/* 弹窗相关元素：防止被压缩 */
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer {
+  min-width: max-content;
+  flex-shrink: 0;
+}
+
+/* 防止文字换行 */
+.navigation-link,
+.modal-button,
+.tab-button,
+.button {
+  white-space: nowrap;
+}

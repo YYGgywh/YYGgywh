@@ -1,37 +1,43 @@
-/* 路径:src/components/DivinationInfo/timestamp/GanZhiSelector.module.css 时间:2026-02-06 10:00 */
-/* 功能:GanZhiSelector 组件的样式模块 */
+/*
+ * @file            frontend/src/components/DivinationInfo/timestamp/GanZhiSelector.module.css
+ * @description     
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-10 11:39:17
+ * @lastModified    2026-02-18 16:16:08
+ * Copyright © All rights reserved
+*/
 
 /* 菜单容器样式 */
 .selector {
-  position: absolute;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 2px 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  z-index: 1000;
+  position: absolute; /* 设置绝对定位,使菜单相对于最近的定位父元素定位 */
+  background-color: #fff; /* 设置背景颜色为白色 */
+  border: 1px solid #ccc; /* 设置边框为1像素实线,颜色为浅灰色 */
+  border-radius: 4px; /* 设置边框圆角为4像素 */
+  padding: 2px 4px; /* 设置内边距,上下2像素,左右4像素 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* 设置阴影效果,水平偏移0,垂直偏移2像素,模糊半径8像素,黑色透明度0.15 */
+  z-index: 1000; /* 设置层叠顺序为1000,确保菜单显示在其他元素之上 */
 }
 
 /* 菜单项行样式 */
 .row {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
+  display: flex; /* 设置为弹性布局,使子元素横向排列 */
+  gap: 4px; /* 设置子元素之间的间距为4像素 */
+  margin-bottom: 8px; /* 设置下外边距为8像素 */
 }
 
 /* 最后一行不显示底部边距 */
 .row:last-child {
-  margin-bottom: 0;
+  margin-bottom: 0; /* 移除最后一行的下外边距 */
 }
 
 /* 菜单项样式 */
 .item {
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 4px;
+  padding: 4px 8px; /* 设置内边距,上下4像素,左右8像素 */
+  cursor: pointer; /* 设置鼠标指针为手型,表示可点击 */
+  border-radius: 4px; /* 设置边框圆角为4像素 */
 }
 
 /* 菜单项悬停效果 */
 .item:hover {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* 设置背景颜色为浅灰色 */
 }

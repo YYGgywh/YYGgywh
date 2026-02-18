@@ -1,0 +1,64 @@
+/*
+ * @file            frontend/src/App.css
+ * @description     
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-10 11:39:17
+ * @lastModified    2026-02-16 10:21:53
+ * Copyright © All rights reserved
+*/
+
+/* 全局盒模型设置：所有元素的宽高包含内边距与边框 */
+*, *::before, *::after {
+  box-sizing: border-box; /* 设置盒模型为border-box，确保padding和border包含在宽高内 */
+}
+
+/* 应用容器：使用CSS Grid布局，定义网格区域和行高 */
+.app-container {
+  display: grid; /* 启用CSS Grid布局 */
+  grid-template-areas: /* 定义网格区域名称 */
+    "header" /* 头部区域 */
+    "main"; /* 主内容区域 */
+  grid-template-rows: auto 1fr; /* 定义网格行高：头部自动高度，主内容占剩余空间 */
+  min-height: 100vh; /* 设置最小高度为视口高度，确保页面占满整个屏幕 */
+}
+
+/* 应用头部：固定在页面顶部，设置z-index确保在其他元素之上 */
+.app-header {
+  grid-area: header; /* 将头部元素放置在header网格区域 */
+  position: sticky; /* 设置为粘性定位，滚动时固定在顶部 */
+  top: 0; /* 距离顶部0像素 */
+  z-index: 1000; /* 设置层级为1000，确保头部在其他内容之上 */
+}
+
+/* 应用主内容区：设置内边距，为内容提供留白 */
+.app-main {
+  grid-area: main; /* 将主内容元素放置在main网格区域 */
+  padding: 20px; /* 设置内边距为20像素，为内容提供留白 */
+}
+
+/* 移除数字输入框的上下箭头按钮（Chrome浏览器） */
+.no-spin-buttons::-webkit-inner-spin-button,
+.no-spin-buttons::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* 移除Webkit浏览器的默认样式 */
+  margin: 0; /* 设置外边距为0 */
+}
+
+/* 移除数字输入框的上下箭头按钮（Firefox浏览器） */
+.no-spin-buttons {
+  -moz-appearance: textfield; /* 移除Firefox浏览器的默认样式 */
+}
+
+/* 闰月切换按钮禁用状态样式 */
+.leap-month-toggle:disabled {
+  background-color: #d1d5db; /* 设置禁用状态的背景色为浅灰色 */
+  border-color: #d1d5db; /* 设置禁用状态的边框色为浅灰色 */
+  color: #9ca3af; /* 设置禁用状态的文字颜色为灰色 */
+  cursor: not-allowed; /* 设置鼠标指针为禁止符号 */
+  opacity: 0.5; /* 设置透明度为0.5，使禁用状态看起来更淡 */
+}
+
+/* 闰月切换按钮禁用状态下的悬停样式 */
+.leap-month-toggle:disabled:hover {
+  background-color: #d1d5db; /* 悬停时保持禁用状态的背景色 */
+  border-color: #d1d5db; /* 悬停时保持禁用状态的边框色 */
+}

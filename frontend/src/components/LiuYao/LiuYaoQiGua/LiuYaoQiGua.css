@@ -233,43 +233,6 @@
   outline: none;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .liu-yao-container {
-    flex-direction: column;
-  }
-
-  .method-sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .method-item {
-    white-space: nowrap;
-    flex: 1;
-  }
-
-  .liu-yao-content {
-    padding: 16px;
-  }
-
-  .content-row {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .divination-actions {
-    flex-direction: column;
-  }
-
-  .throw-button,
-  .reset-button {
-    width: 100%;
-    text-align: center;
-  }
-}
-
 /* 起卦方式组件样式 */
 .step-by-step-method,
 .one-click-method,

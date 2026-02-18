@@ -1,57 +1,74 @@
+/*
+ * @file            frontend/src/components/Header/Button/Button.css
+ * @description     通用按钮组件样式，支持主按钮和次要按钮样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-01-27 16:33:00
+ * @lastModified    2026-02-16 15:04:56
+ * Copyright © All rights reserved
+*/
+
+/* 按钮基础样式 */
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 20px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 6px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  outline: none;
+  display: inline-flex; /* 使用inline-flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
+  justify-content: center; /* 内容水平居中对齐 */
+  height: 40px; /* 设置按钮高度 */
+  padding: 0 20px; /* 设置左右内边距 */
+  font-size: 0.875rem; /* 设置字体大小（14px） */
+  font-weight: 600; /* 设置字体粗细 */
+  border-radius: 6px; /* 设置圆角 */
+  border: 2px solid transparent; /* 设置边框为透明 */
+  cursor: pointer; /* 设置鼠标指针为手型 */
+  transition: all 0.2s ease; /* 设置过渡动画 */
+  outline: none; /* 移除默认轮廓 */
 }
 
+/* 按钮聚焦样式 */
 .button:focus {
-  outline: 2px solid #1890FF;
-  outline-offset: 2px;
+  outline: 2px solid #1890FF; /* 设置聚焦轮廓颜色 */
+  outline-offset: 2px; /* 设置轮廓偏移 */
 }
 
+/* 主按钮样式 */
 .button-primary {
-  background-color: #1890FF;
-  color: #FFFFFF;
-  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.2);
+  background-color: #1890FF; /* 设置背景颜色 */
+  color: #FFFFFF; /* 设置文字颜色 */
+  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.2); /* 设置阴影效果 */
 }
 
+/* 主按钮悬停样式 */
 .button-primary:hover {
-  background-color: #0D7ACC;
-  box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3);
-  transform: translateY(-1px);
+  background-color: #0D7ACC; /* 设置悬停背景颜色 */
+  box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3); /* 设置悬停阴影效果 */
+  transform: translateY(-1px); /* 设置向上移动效果 */
 }
 
+/* 主按钮激活样式 */
 .button-primary:active {
-  background-color: #0A6BB8;
-  transform: translateY(0);
+  background-color: #0A6BB8; /* 设置激活背景颜色 */
+  transform: translateY(0); /* 设置回到原位 */
 }
 
+/* 次要按钮样式 */
 .button-secondary {
-  background-color: #FFFFFF;
-  color: #1890FF;
-  border-color: #1890FF;
+  background-color: #FFFFFF; /* 设置背景颜色 */
+  color: #1890FF; /* 设置文字颜色 */
+  border-color: #1890FF; /* 设置边框颜色 */
 }
 
+/* 次要按钮悬停样式 */
 .button-secondary:hover {
-  background-color: #F0F7FF;
-  border-color: #0D7ACC;
-  color: #0D7ACC;
+  background-color: #F0F7FF; /* 设置悬停背景颜色 */
+  border-color: #0D7ACC; /* 设置悬停边框颜色 */
+  color: #0D7ACC; /* 设置悬停文字颜色 */
 }
 
+/* 次要按钮激活样式 */
 .button-secondary:active {
-  background-color: #E6F2FF;
+  background-color: #E6F2FF; /* 设置激活背景颜色 */
 }
 
+/* 全宽按钮样式 */
 .button-full-width {
-  width: 100%;
+  width: 100%; /* 设置宽度为100% */
 }

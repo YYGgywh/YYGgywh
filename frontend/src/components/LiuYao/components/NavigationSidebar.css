@@ -29,17 +29,3 @@
   border-color: #1890FF;
   box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
 }
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .method-sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .method-item {
-    white-space: nowrap;
-    flex: 1;
-  }
-}

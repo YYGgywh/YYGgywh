@@ -1,51 +1,59 @@
+/*
+ * @file            frontend/src/components/Header/Logo/Logo.css
+ * @description     圆运阁品牌Logo组件样式，包含Logo图标和品牌名称样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-01-27 16:30:00
+ * @lastModified    2026-02-16 20:17:41
+ * Copyright © All rights reserved
+*/
+
+/* Logo容器样式 */
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
+  gap: 6px; /* 设置图标和文字之间的间距 */
+  text-decoration: none; /* 移除下划线 */
+  transition: opacity 0.2s ease; /* 设置透明度过渡动画 */
 }
 
+/* Logo悬停效果 */
 .logo:hover {
-  opacity: 0.8;
+  opacity: 0.8; /* 设置悬停时透明度为0.8 */
 }
 
+/* Logo图标样式 */
 .logo-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
+  width: 40px; /* 设置图标宽度 */
+  height: 40px; /* 设置图标高度 */
+  flex-shrink: 0; /* 禁止图标被压缩 */
 }
 
+/* Logo文字容器样式 */
 .logo-text-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 设置flex方向为垂直 */
+  align-items: flex-start; /* 内容左对齐 */
 }
 
+/* Logo主标题样式 */
 .logo-text-main {
-  font-size: 18px;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 1px;
-  line-height: 1;
+  font-size: 1.125rem; /* 设置字体大小（18px） */
+  font-weight: 700; /* 设置字体粗细为700 */
+  color: #000000; /* 设置文字颜色为黑色 */
+  letter-spacing: 1px; /* 设置字间距为1px */
+  line-height: 1; /* 设置行高为1 */
 }
 
+/* Logo副标题样式 */
 .logo-text-sub {
-  font-size: 12px;
-  font-weight: 500;
-  color: #000000;
-  letter-spacing: 0.5px;
-  line-height: 1;
-  margin-top: 2px;
-  width: 100%;
-  text-align: justify;
-  text-justify: distribute;
-  text-align-last: justify;
+  font-size: 0.75rem; /* 设置字体大小（12px） */
+  font-weight: 500; /* 设置字体粗细为500 */
+  color: #000000; /* 设置文字颜色为黑色 */
+  letter-spacing: 0.5px; /* 设置字间距为0.5px */
+  line-height: 1; /* 设置行高为1 */
+  margin-top: 2px; /* 设置上外边距为2px */
+  width: 100%; /* 设置宽度为100% */
+  text-align: justify; /* 设置文字两端对齐 */
+  text-justify: distribute; /* 设置文字分布对齐 */
+  text-align-last: justify; /* 设置最后一行两端对齐 */
 }
-
-/* .logo-text-sub::after {
-  content: '';
-  display: inline-block;
-  width: 100%;
-  height: 0;
-} */

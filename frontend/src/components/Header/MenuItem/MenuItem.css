@@ -1,103 +1,123 @@
+/*
+ * @file            frontend/src/components/Header/MenuItem/MenuItem.css
+ * @description     导航菜单项组件样式，包含菜单链接、下拉菜单和激活状态样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-07 14:30:00
+ * @lastModified    2026-02-16 20:47:30
+ * Copyright © All rights reserved
+*/
+
+/* 菜单项容器样式 */
 .menu-item {
-  position: relative;
-  display: flex;
-  align-items: center;
+  position: relative; /* 设置相对定位 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
 }
 
+/* 菜单链接样式 */
 .menu-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  color: #333333;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  transition: all 0.2s ease;
-  border-radius: 6px;
-  position: relative;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
+  gap: 6px; /* 设置图标和文字之间的间距 */
+  padding: 8px 12px; /* 设置内边距 */
+  color: #333333; /* 设置文字颜色 */
+  text-decoration: none; /* 移除下划线 */
+  font-size: 1rem; /* 设置字体大小（16px） */
+  font-weight: 500; /* 设置字体粗细为500 */
+  line-height: 1.5; /* 设置行高为1.5 */
+  transition: all 0.2s ease; /* 设置过渡动画 */
+  border-radius: 6px; /* 设置圆角 */
+  position: relative; /* 设置相对定位 */
 }
 
+/* 菜单链接悬停效果 */
 .menu-link:hover {
-  color: #1890FF;
-  background-color: #F9FAFB;
+  color: #1890FF; /* 设置文字颜色为蓝色 */
+  background-color: #F9FAFB; /* 设置背景颜色 */
 }
 
+/* 菜单链接激活状态 */
 .menu-link.active {
-  color: #1890FF;
-  font-weight: 600;
+  color: #1890FF; /* 设置文字颜色为蓝色 */
+  font-weight: 600; /* 设置字体粗细为600 */
 }
 
+/* 菜单链接激活状态的下划线 */
 .menu-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 12px;
-  right: 12px;
-  height: 2px;
-  background-color: #1890FF;
-  border-radius: 1px;
+  content: ''; /* 设置伪元素内容为空 */
+  position: absolute; /* 设置绝对定位 */
+  bottom: 0; /* 设置底部位置为0 */
+  left: 12px; /* 设置左侧位置为12px */
+  right: 12px; /* 设置右侧位置为12px */
+  height: 2px; /* 设置高度为2px */
+  background-color: #1890FF; /* 设置背景颜色为蓝色 */
+  border-radius: 1px; /* 设置圆角 */
 }
 
+
+/* 下拉箭头样式 */
 .dropdown-arrow {
-  color: #666666;
-  transition: transform 0.2s ease, color 0.2s ease;
+  color: #666666; /* 设置箭头颜色 */
+  transition: transform 0.2s ease, color 0.2s ease; /* 设置过渡动画 */
 }
 
+/* 菜单项悬停时的下拉箭头 */
 .menu-item:hover .dropdown-arrow {
-  color: #1890FF;
-  transform: translateY(2px);
+  color: #1890FF; /* 设置箭头颜色为蓝色 */
+  transform: translateY(2px); /* 设置向下偏移2px */
 }
 
+/* 下拉菜单容器样式 */
 .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  opacity: 0;
-  transform: translateY(5px);
-  animation: dropdownFadeIn 0.2s ease forwards;
-  min-width: fit-content !important;
-  width: auto !important;
+  position: absolute; /* 设置绝对定位 */
+  top: 100%; /* 设置顶部位置为父元素底部 */
+  left: 0; /* 设置左侧位置为0 */
+  background-color: #FFFFFF; /* 设置背景颜色为白色 */
+  border-radius: 8px; /* 设置圆角 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* 设置阴影效果 */
+  z-index: 100; /* 设置层级 */
+  opacity: 0; /* 设置初始透明度为0 */
+  transform: translateY(5px); /* 设置初始向下偏移5px */
+  animation: dropdownFadeIn 0.2s ease forwards; /* 设置淡入动画 */
+  min-width: fit-content !important; /* 设置最小宽度为内容宽度 */
+  width: auto !important; /* 设置宽度为自动 */
 }
 
+/* 下拉菜单淡入动画定义 */
 @keyframes dropdownFadeIn {
+  /* 动画起始状态 */
   from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    opacity: 0; /* 设置透明度为0 */
+    transform: translateY(-5px); /* 设置向上偏移5px */
+  } /* 结束起始状态 */
+  /* 动画结束状态 */
+  to { 
+    opacity: 1; /* 设置透明度为1 */
+    transform: translateY(0); /* 设置无偏移 */
+  } /* 结束结束状态 */
 }
 
+/* 简单下拉菜单样式 */
 .dropdown-menu-simple {
-  min-width: 80px;
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
+  min-width: 80px; /* 设置最小宽度 */
+  list-style: none; /* 移除列表样式 */
+  padding-top: 8px; /* 设置上内边距 */
+  padding-bottom: 8px; /* 设置下内边距 */
 }
 
-.dropdown-menu-simple li {
-  margin: 0;
-}
-
+/* 简单下拉菜单项样式 */
 .dropdown-menu-simple .dropdown-item {
-  display: block;
-  padding: 12px 16px;
-  color: #333333;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  transition: all 0.2s ease;
+  display: block; /* 设置为块级元素 */
+  padding: 12px 16px; /* 设置内边距 */
+  color: #333333; /* 设置文字颜色 */
+  text-decoration: none; /* 移除下划线 */
+  font-size: 0.875rem; /* 设置字体大小（14px） */
+  font-weight: 400; /* 设置字体粗细为400 */
+  transition: all 0.2s ease; /* 设置过渡动画 */
 }
 
+/* 简单下拉菜单项悬停效果 */
 .dropdown-menu-simple .dropdown-item:hover {
-  background-color: #F9FAFB;
-  color: #1890FF;
+  background-color: #F9FAFB; /* 设置背景颜色 */
+  color: #1890FF; /* 设置文字颜色为蓝色 */
 }

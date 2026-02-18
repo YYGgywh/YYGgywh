@@ -1,31 +1,25 @@
-/* 路径:frontend/src/components/common/YaoComponents.css 时间:2024-07-01 10:00 */
+/*
+ * @file            frontend/src/components/common/YaoComponents.css
+ * @description     六爻爻型组件样式，包含阳爻和阴爻样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2024-07-01 10:00:00
+ * @lastModified    2026-02-16 21:59:41
+ * Copyright © All rights reserved
+*/
 
+/* 阳爻样式 */
 .yang-yao {
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 阴爻容器样式 */
 .yin-yao {
-  display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 阴爻圆圈样式 */
 .yin-yao .circle {
-  transition: all 0.3s ease;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .yang-yao {
-    max-width: 100%;
-  }
-  
-  .yin-yao {
-    max-width: 100%;
-  }
-  
-  .yin-yao .circle {
-    max-width: 40px;
-    max-height: 40px;
-  }
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }

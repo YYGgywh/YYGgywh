@@ -1,52 +1,36 @@
-/* 路径:src/App.css 时间:2026-01-28 16:00 */
-/* 功能:应用全局布局样式，使用 CSS Grid 管理组件布局 */
+/*
+ * @file            frontend/src/App.css
+ * @description     
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-10 11:39:17
+ * @lastModified    2026-02-16 12:52:44
+ * Copyright © All rights reserved
+*/
 
-/* 全局盒模型设置：所有元素的宽高包含内边距与边框 */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+/* 导入全局Reset和基础标准（1rem = 16px） */
+@import './Reset.css';
 
+/* 应用容器：使用CSS Grid布局，定义网格区域和行高 */
 .app-container {
-  display: grid;
-  grid-template-areas: 
-    "header"
-    "main";
-  grid-template-rows: auto 1fr;
-  min-height: 100vh;
+  display: grid; /* 启用CSS Grid布局 */
+  /* 定义网格区域名称 */
+  grid-template-areas:
+    "header" /* 头部区域 */
+    "main"; /* 主内容区域 */
+  grid-template-rows: auto 1fr; /* 定义网格行高：头部自动高度，主内容占剩余空间 */
+  min-height: 100vh; /* 设置最小高度为视口高度，确保页面占满整个屏幕 */
 }
 
+/* 应用头部：固定在页面顶部，设置z-index确保在其他元素之上 */
 .app-header {
-  grid-area: header;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  grid-area: header; /* 将头部元素放置在header网格区域 */
+  position: sticky; /* 设置为粘性定位，滚动时固定在顶部 */
+  top: 0; /* 距离顶部0像素 */
+  z-index: 1000; /* 设置层级为1000，确保头部在其他内容之上 */
 }
 
+/* 应用主内容区：设置内边距，为内容提供留白 */
 .app-main {
-  grid-area: main;
-  padding: 20px;
-}
-
-.no-spin-buttons::-webkit-inner-spin-button,
-.no-spin-buttons::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.no-spin-buttons {
-  -moz-appearance: textfield;
-}
-
-/* 闰月切换按钮禁用状态样式 */
-.leap-month-toggle:disabled {
-  background-color: #d1d5db;
-  border-color: #d1d5db;
-  color: #9ca3af;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.leap-month-toggle:disabled:hover {
-  background-color: #d1d5db;
-  border-color: #d1d5db;
+  grid-area: main; /* 将主内容元素放置在main网格区域 */
+  padding: 20px; /* 设置内边距为20像素，为内容提供留白 */
 }

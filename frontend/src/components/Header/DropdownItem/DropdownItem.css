@@ -84,25 +84,3 @@
 .dropdown-col-link:hover .dropdown-col-desc {
   color: #1890FF;
 }
-
-@media (max-width: 768px) {
-  .dropdown-col-link {
-    padding: 6px 10px;
-    gap: 8px;
-  }
-
-  .dropdown-col-icon,
-  .dropdown-col-icon-text {
-    width: 14px;
-    height: 14px;
-    font-size: 12px;
-  }
-
-  .dropdown-col-title {
-    font-size: 13px;
-  }
-
-  .dropdown-col-desc {
-    font-size: 11px;
-  }
-}

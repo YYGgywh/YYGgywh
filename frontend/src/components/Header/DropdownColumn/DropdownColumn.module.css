@@ -1,45 +1,39 @@
-/* 路径:src/components/Header/DropdownColumn/DropdownColumn.module.css 时间:2026-02-07 14:30 */
-/* 功能:下拉菜单列组件样式，包含分类标题和列表样式 */
+/*
+ * @file            frontend/src/components/Header/DropdownColumn/DropdownColumn.module.css
+ * @description     下拉菜单列组件样式，包含分类标题和列表样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-07 14:30:00
+ * @lastModified    2026-02-16 15:22:29
+ * Copyright © All rights reserved
+*/
+
+/* 下拉菜单列容器样式 */
 .dropdownCol {
-  /* flex: 1; */
-  min-width: 150px;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 设置flex方向为垂直 */
+  min-width: 150px; /* 设置最小宽度 */
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
 }
 
+/* 下拉菜单列中的定义列表标题和描述项样式 */
 .dropdownCol dt,
 .dropdownCol dd {
-  margin: 0;
-  padding: 0;
+  margin: 0; /* 清空默认外边距 */
+  padding: 0; /* 清空默认内边距 */
 }
 
+/* 下拉菜单列标题样式 */
 .dropdownCol dt.dropdownColTitle {
-  font-size: 14px;
-  font-weight: 500;
-  color: #999999;
-  /* margin-bottom: 16px; */
-  padding: 10px 0;
-  text-align: center;
+  font-size: 0.875rem; /* 设置字体大小（14px） */
+  font-weight: 500; /* 设置字体粗细为中等 */
+  color: #999999; /* 设置文字颜色为浅灰色 */
+  padding: 10px 0; /* 设置上下内边距 */
+  text-align: center; /* 设置文字居中对齐 */
 }
 
+/* 下拉菜单列项样式 */
 .dropdownColItem {
-  margin: 0 0 8px 0;
-  padding: 0;
-}
-
-@media (max-width: 768px) {
-  .dropdownCol {
-    min-width: 120px;
-  }
-
-  .dropdownColTitle {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-
-  .dropdownColItem {
-    margin-bottom: 6px;
-  }
+  margin: 0 0 8px 0; /* 设置下外边距 */
+  padding: 0; /* 清空默认内边距 */
 }

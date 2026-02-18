@@ -1,69 +1,52 @@
-/* 路径:frontend/src/components/common/SixYaoDisplay.css 时间:2024-07-01 10:00 */
+/*
+ * @file            frontend/src/components/common/SixYaoDisplay.css
+ * @description     六爻显示组件样式，包含容器、爻位标签和爻内容样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2024-07-01 10:00:00
+ * @lastModified    2026-02-16 21:51:13
+ * Copyright © All rights reserved
+*/
 
+/* 六爻显示容器样式 */
 .six-yao-display {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease;
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 设置flex方向为垂直 */
+  gap: 0.625rem; /* 设置元素间距（10px） */
+  padding: 0.9375rem; /* 设置内边距（15px） */
+  border-radius: 0.5rem; /* 设置圆角（8px） */
+  background-color: #f9f9f9; /* 设置背景颜色为浅灰色 */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 爻容器样式 */
 .yao-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: all 0.3s ease;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 内容垂直居中对齐 */
+  gap: 0.9375rem; /* 设置元素间距（15px） */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 爻位标签样式 */
 .yao-label {
-  font-size: 14px;
-  font-weight: 500;
-  width: 60px;
-  text-align: right;
-  color: #333;
-  transition: all 0.3s ease;
+  font-size: 0.875rem; /* 设置字体大小（14px） */
+  font-weight: 500; /* 设置字体粗细为500 */
+  width: 3.75rem; /* 设置宽度（60px） */
+  text-align: right; /* 设置文字右对齐 */
+  color: #333; /* 设置文字颜色为深灰色 */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 爻内容容器样式 */
 .yao-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  min-height: 20px;
-  transition: all 0.3s ease;
+  flex: 1; /* 设置flex增长为1 */
+  align-items: center; /* 内容垂直居中对齐 */
+  min-height: 1.25rem; /* 设置最小高度（20px） */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 爻占位符样式 */
 .yao-placeholder {
-  background-color: transparent;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .six-yao-display {
-    padding: 10px;
-    gap: 8px;
-  }
-  
-  .yao-container {
-    gap: 10px;
-  }
-  
-  .yao-label {
-    font-size: 12px;
-    width: 50px;
-  }
-}
-
-/* 暗色模式支持 */
-@media (prefers-color-scheme: dark) {
-  .six-yao-display {
-    background-color: #2c2c2c;
-  }
-  
-  .yao-label {
-    color: #e0e0e0;
-  }
+  background-color: transparent; /* 设置背景颜色为透明 */
+  border-radius: 0.25rem; /* 设置圆角（4px） */
+  transition: all 0.3s ease; /* 设置过渡动画 */
 }

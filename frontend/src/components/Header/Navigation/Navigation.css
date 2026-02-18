@@ -1,233 +1,81 @@
+/*
+ * @file            frontend/src/components/Header/Navigation/Navigation.css
+ * @description     圆运阁顶部导航栏组件样式，包含导航栏和菜单样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-07 11:10:00
+ * @lastModified    2026-02-16 21:26:58
+ * Copyright © All rights reserved
+*/
+
+/* 导航栏容器样式 */
 .navigation {
-  position: relative;
-  height: 72px;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #E5E7EB;
-  z-index: 1000;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* 设置相对定位 */
+  height: 72px; /* 设置高度 */
+  background-color: #FFFFFF; /* 设置背景颜色为白色 */
+  border-bottom: 1px solid #E5E7EB; /* 设置底部边框 */
+  z-index: 1000; /* 设置层级 */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 设置过渡动画 */
 }
 
+/* 导航栏滚动样式 */
 .navigation.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.95); /* 设置背景颜色为半透明白色 */
+  backdrop-filter: blur(10px); /* 设置背景模糊效果 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 设置阴影效果 */
 }
 
+/* 导航栏容器样式 */
 .navigation-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  max-width: 1440px; /* 设置最大宽度 */
+  margin: 0 auto; /* 设置水平居中 */
+  padding: 0 24px; /* 设置左右内边距 */
+  height: 100%; /* 设置高度为100% */
+  display: flex; /* 使用flex布局 */
+  justify-content: space-between; /* 设置内容两端对齐 */
+  align-items: center; /* 设置内容垂直居中对齐 */
 }
 
+/* 导航栏左侧区域样式 */
 .navigation-left {
-  display: flex;
-  align-items: center;
-  gap: 40px;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 设置内容垂直居中对齐 */
+  gap: 40px; /* 设置元素间距 */
 }
 
+/* 导航菜单列表样式 */
 .navigation-menu {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 32px;
+  display: flex; /* 使用flex布局 */
+  gap: 32px; /* 设置菜单项间距 */
 }
 
+/* 导航栏右侧区域样式 */
 .navigation-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 设置内容垂直居中对齐 */
+  gap: 24px; /* 设置元素间距 */
 }
 
+/* 导航工具区域样式 */
 .navigation-utils {
-  display: flex;
-  gap: 24px;
+  display: flex; /* 使用flex布局 */
+  gap: 24px; /* 设置元素间距 */
 }
 
+/* 导航链接样式 */
 .navigation-link {
-  color: #333333;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  color: #333333; /* 设置文字颜色 */
+  font-size: 0.875rem; /* 设置字体大小（14px） */
+  font-weight: 500; /* 设置字体粗细为500 */
+  transition: color 0.2s ease; /* 设置颜色过渡动画 */
 }
 
+/* 导航链接悬停效果 */
 .navigation-link:hover {
-  color: #1890FF;
+  color: #1890FF; /* 设置文字颜色为蓝色 */
 }
 
+/* 导航操作区域样式 */
 .navigation-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.hamburger-menu {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 24px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.hamburger-menu span {
-  width: 24px;
-  height: 2px;
-  background-color: #333333;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.hamburger-menu:hover span {
-  background-color: #1890FF;
-}
-
-.mobile-menu {
-  display: none;
-  position: absolute;
-  top: 72px;
-  right: -100%;
-  width: 280px;
-  height: calc(100vh - 72px);
-  background-color: #FFFFFF;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  transition: right 0.3s ease;
-  overflow-y: auto;
-}
-
-.mobile-menu.open {
-  right: 0;
-}
-
-.mobile-menu-items {
-  list-style: none;
-  margin: 0;
-  padding: 24px;
-}
-
-.mobile-menu-item {
-  margin-bottom: 8px;
-}
-
-.mobile-menu-link {
-  display: block;
-  padding: 12px 16px;
-  color: #333333;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.mobile-menu-link:hover {
-  background-color: #F9FAFB;
-  color: #1890FF;
-}
-
-.mobile-menu-link.active {
-  color: #1890FF;
-  font-weight: 600;
-}
-
-.mobile-dropdown {
-  list-style: none;
-  margin: 8px 0 0 0;
-  padding: 0 0 0 16px;
-}
-
-.mobile-dropdown li {
-  margin-bottom: 4px;
-}
-
-.mobile-dropdown-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 8px;
-  padding: 4px 0;
-}
-
-.mobile-dropdown-sub {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.mobile-dropdown-sub li {
-  margin-bottom: 2px;
-}
-
-.mobile-dropdown a {
-  display: block;
-  padding: 8px 16px;
-  color: #666666;
-  text-decoration: none;
-  font-size: 14px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.mobile-dropdown-sub a {
-  padding: 6px 12px;
-  font-size: 13px;
-}
-
-.mobile-dropdown a:hover {
-  background-color: #F9FAFB;
-  color: #1890FF;
-}
-
-.mobile-menu-actions {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-@media (max-width: 1023px) {
-  .navigation-left {
-    gap: 24px;
-  }
-
-  .navigation-menu {
-    gap: 24px;
-  }
-
-  .navigation-utils {
-    gap: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .navigation-menu {
-    display: none;
-  }
-
-  .navigation-utils {
-    display: none;
-  }
-
-  .navigation-actions {
-    display: none;
-  }
-
-  .hamburger-menu {
-    display: flex;
-  }
-
-  .mobile-menu {
-    display: block;
-  }
-
-  .navigation-left {
-    gap: 16px;
-  }
+  display: flex; /* 使用flex布局 */
+  gap: 12px; /* 设置元素间距 */
 }

@@ -48,21 +48,3 @@
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-
-@media (max-width: 768px) {
-  .liu-yao-reault-container {
-    padding: 10px;
-  }
-  
-  .result-section {
-    padding: 15px;
-  }
-  
-  .liu-yao-reault-container h1 {
-    font-size: 24px;
-  }
-  
-  .result-section h2 {
-    font-size: 18px;
-  }
-}
