@@ -3,13 +3,14 @@
  * @description     公历时间输入和显示组件，支持公历转农历转换
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-17 10:00:00
- * @lastModified    2026-02-17 18:52:40
+ * @lastModified    2026-02-18 21:12:32
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'; // 导入React核心库和钩子函数
 import CalendarService from '../../../services/calendarService'; // 导入日历服务模块
 import { formatInputValue, handleInputValidation, validateInputData, padValue, handleNumberInputKeyDown } from '../../../utils/validationUtils'; // 导入输入验证工具函数
+import AlertMessage from './shared/AlertMessage'; // 导入错误提示组件
 
 /**
  * 公历时间输入和显示组件
@@ -692,15 +693,11 @@ const SolarTime = ({ onTimeChange, confirmedTime }) => {
         </div> {/* 农历信息容器结束 */}
       </div> {/* 时间显示容器结束 */}
       
-      {/* 警告弹窗 */}
-      {showAlert && ( // 如果显示警告弹窗
-        <div className="alert-overlay"> {/* 警告遮罩层 */}
-          <div className="alert-content"> {/* 警告内容容器 */}
-            <div className="alert-message">{alertMessage}</div> {/* 警告信息 */}
-            <button className="alert-close" onClick={closeAlert}>确定</button> {/* 确定按钮，点击关闭弹窗 */}
-          </div> {/* 警告内容容器结束 */}
-        </div> // 警告遮罩层结束
-      )} {/* 警告弹窗条件渲染结束 */}
+      <AlertMessage
+        showAlert={showAlert}
+        alertMessage={alertMessage}
+        onClose={closeAlert}
+      />
     </div> // 公历时间容器结束
   ); // return结束
 }; // 组件定义结束

@@ -1,24 +1,44 @@
-// 路径:src/services/liuyaoService.js 时间:2026-02-08 12:00
-// 功能:六爻起卦服务，封装API请求和数据处理逻辑
+/*
+ * @file            frontend/src/services/liuyaoService.js
+ * @description     六爻起卦服务，封装API请求和数据处理逻辑，包括随机数字生成、爻位计算、排盘等功能
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-08 12:00
+ * @lastModified    2026-02-19 14:58:38
+ * Copyright © All rights reserved
+*/
 
 /**
  * 六爻起卦服务类
  * 封装所有与六爻起卦相关的API请求和数据处理
  */
 class LiuYaoService {
-  static API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+  static API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000'; // 定义API基础URL，优先使用环境变量，否则使用默认的本地地址
+  static YAO_ORDER = ['初', '二', '三', '四', '五', '上']; // 定义爻位顺序数组，从初爻到上爻
+  static YAO_ORDER_KEYS = ['chu', 'er', 'san', 'si', 'wu', 'shang']; // 定义爻位顺序对应的键名数组，用于数据存储
+  // 定义按钮状态到三位数字的映射关系
+  static BUTTON_STATE_TO_THREE_DIGITS = {
+    'yang': '100', // 阳爻状态对应100
+    'yin': '110', // 阴爻状态对应110
+    'yang-active': '111', // 阳爻动爻状态对应111
+    'yin-active': '000' // 阴爻动爻状态对应000
+  };
+  
   /**
    * 生成单个随机数字
    * @returns {Promise<Object>} 随机数字结果
    */
   static async generateRandomDigit() {
     try {
-      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/digit`);
-      const data = await response.json();
-      return data.data || data;
-    } catch (error) {
-      console.error('生成随机数字失败:', error);
-      throw error;
+      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/digit`); // 发送GET请求到后端API，生成单个随机数字
+      const data = await response.json(); // 解析响应数据为JSON格式
+      
+      return data.data || data; // 返回数据中的data字段，如果不存在则直接返回data
+    }
+    // 捕获并处理其他异常
+    catch (error) {
+      console.error('生成随机数字失败:', error); // 捕获并打印错误信息
+      
+      throw error; // 重新抛出错误，让调用者处理
     }
   }
 
@@ -28,12 +48,16 @@ class LiuYaoService {
    */
   static async generateRandomThreeDigits() {
     try {
-      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/three-digits`);
-      const data = await response.json();
-      return data.data || data;
-    } catch (error) {
-      console.error('生成三位随机数字失败:', error);
-      throw error;
+      const response = await fetch(`${this.API_BASE_URL}/api/v1/random/three-digits`); // 发送GET请求到后端API，生成三位随机数字
+      const data = await response.json(); // 解析响应数据为JSON格式
+      
+      return data.data || data; // 返回数据中的data字段，如果不存在则直接返回data
+    }
+    // 捕获并处理其他异常
+    catch (error) {
+      console.error('生成三位随机数字失败:', error); // 捕获并打印错误信息
+      
+      throw error; // 重新抛出错误，让调用者处理
     }
   }
 
@@ -42,14 +66,17 @@ class LiuYaoService {
    * @returns {Promise<Array>} 六个随机数字的数组
    */
   static async generateSixDigits() {
-    const digitsArray = [];
+    const digitsArray = []; // 初始化空数组，用于存储六个三位数字
+    // 循环六次，每次生成一个三位数字
     for (let i = 0; i < 6; i++) {
-      const result = await this.generateRandomThreeDigits();
+      const result = await this.generateRandomThreeDigits(); // 调用generateRandomThreeDigits方法生成三位数字
+      // 如果结果中包含three_digits字段，则将其添加到数组中
       if (result.three_digits) {
-        digitsArray.push(result.three_digits);
+        digitsArray.push(result.three_digits); // 将三位数字添加到数组中
       }
     }
-    return digitsArray;
+    
+    return digitsArray; // 返回包含六个三位数字的数组
   }
 
   /**
@@ -59,20 +86,19 @@ class LiuYaoService {
    */
   static async performDivination(digitsArray) {
     // 这里可以添加排盘逻辑，或者调用后端排盘API
-    console.log('执行排盘，使用数字:', digitsArray);
-    console.log('数字数组长度:', digitsArray.length);
+    console.log('执行排盘，使用数字:', digitsArray); // 打印使用的数字数组
+    console.log('数字数组长度:', digitsArray.length); // 打印数字数组的长度
     
-    // 计算爻位数据
-    const yaoData = this.calculateYaoDataFromDigits(digitsArray);
+    const yaoData = this.calculateYaoDataFromDigits(digitsArray); // 调用calculateYaoDataFromDigits方法计算爻位数据
     
     // 示例：返回模拟排盘结果
     return {
-      success: true,
+      success: true, // 操作成功标志
       data: {
-        digits: digitsArray,
-        timestamp: new Date().toISOString(),
-        yaoValues: yaoData.yaoValues,
-        yaoOddCounts: yaoData.yaoOddCounts
+        digits: digitsArray, // 原始数字数组
+        timestamp: new Date().toISOString(), // 当前时间戳
+        yaoValues: yaoData.yaoValues, // 爻值数据
+        yaoOddCounts: yaoData.yaoOddCounts // 爻奇数个数数据
       }
     };
   }
@@ -83,25 +109,27 @@ class LiuYaoService {
    * @returns {Object} 爻位数据对象
    */
   static calculateYaoDataFromDigits(digitsArray) {
-    const yaoOrder = ['初', '二', '三', '四', '五', '上'];
-    const yaoKeyMap = this.getYaoKeyMap();
+    const yaoOrder = this.YAO_ORDER; // 获取爻位顺序数组
+    const yaoKeyMap = this.getYaoKeyMap(); // 获取爻位键名映射对象
     
-    const yaoValues = {};
-    const yaoOddCounts = {};
+    const yaoValues = {}; // 初始化爻值对象
+    const yaoOddCounts = {}; // 初始化爻奇数个数对象
     
+    // 遍历爻位顺序数组
     yaoOrder.forEach((yaoName, index) => {
+      // 检查索引是否在数字数组范围内
       if (index < digitsArray.length) {
-        const threeDigits = digitsArray[index];
-        const oddCount = this.calculateOddCount(threeDigits);
-        const parityStr = this.calculateParityStr(threeDigits);
+        const threeDigits = digitsArray[index]; // 获取当前爻位的三位数字
+        const oddCount = this.calculateOddCount(threeDigits); // 计算该三位数字中奇数的个数
+        const parityStr = this.calculateParityStr(threeDigits); // 计算该三位数字的奇偶字符串（正/背）
+        const yaoKey = yaoKeyMap[yaoName]; // 根据爻位名称获取对应的键名
         
-        const yaoKey = yaoKeyMap[yaoName];
-        yaoValues[yaoKey] = parityStr;
-        yaoOddCounts[yaoKey] = oddCount;
+        yaoValues[yaoKey] = parityStr; // 将奇偶字符串存储到爻值对象中
+        yaoOddCounts[yaoKey] = oddCount; // 将奇数个数存储到爻奇数个数对象中
       }
     });
     
-    return { yaoValues, yaoOddCounts };
+    return { yaoValues, yaoOddCounts }; // 返回爻值和爻奇数个数对象
   }
 
   /**
@@ -110,8 +138,9 @@ class LiuYaoService {
    * @returns {number} 奇数个数
    */
   static calculateOddCount(threeDigits) {
-    const digits = threeDigits.toString().split('').map(Number);
-    return digits.filter(d => d % 2 === 1).length;
+    const digits = threeDigits.toString().split('').map(Number); // 将三位数字转换为字符串，然后分割成单个数字的数组
+    
+    return digits.filter(d => d % 2 === 1).length; // 过滤出奇数，返回奇数的个数
   }
 
   /**
@@ -120,8 +149,9 @@ class LiuYaoService {
    * @returns {string} 奇偶字符串
    */
   static calculateParityStr(threeDigits) {
-    const digits = threeDigits.toString().split('').map(Number);
-    return digits.map(d => d % 2 === 1 ? '正' : '背').join('');
+    const digits = threeDigits.toString().split('').map(Number); // 将三位数字转换为字符串，然后分割成单个数字的数组
+    
+    return digits.map(d => d % 2 === 1 ? '正' : '背').join(''); // 将每个数字转换为'正'（奇数）或'背'（偶数），然后连接成字符串
   }
 
   /**
@@ -129,13 +159,14 @@ class LiuYaoService {
    * @returns {Object} 爻位映射对象
    */
   static getYaoKeyMap() {
+    // 返回爻位名称到键名的映射对象
     return {
-      '初': 'chu',
-      '二': 'er',
-      '三': 'san',
-      '四': 'si',
-      '五': 'wu',
-      '上': 'shang'
+      '初': 'chu', // 初爻对应chu
+      '二': 'er', // 二爻对应er
+      '三': 'san', // 三爻对应san
+      '四': 'si', // 四爻对应si
+      '五': 'wu', // 五爻对应wu
+      '上': 'shang' // 上爻对应shang
     };
   }
 
@@ -148,24 +179,25 @@ class LiuYaoService {
    * @returns {Object} 更新后的状态对象
    */
   static processYaoData(yaoValues, yaoOddCounts, yaoKey, resultData) {
-    const updatedYaoValues = { ...yaoValues };
-    const updatedYaoOddCounts = { ...yaoOddCounts };
+    const updatedYaoValues = { ...yaoValues }; // 复制当前的爻值对象
+    const updatedYaoOddCounts = { ...yaoOddCounts }; // 复制当前的爻奇数个数对象
 
     // 更新爻值
     if (resultData.parity_str) {
-      updatedYaoValues[yaoKey] = resultData.parity_str;
+      updatedYaoValues[yaoKey] = resultData.parity_str; // 如果API返回的数据中包含parity_str字段，则更新对应的爻值
     }
 
     // 更新奇数个数
     if (resultData.odd_count !== undefined) {
-      updatedYaoOddCounts[yaoKey] = resultData.odd_count;
+      updatedYaoOddCounts[yaoKey] = resultData.odd_count; // 如果API返回的数据中包含odd_count字段，则更新对应的奇数个数
     }
 
+    // 返回更新后的爻值和爻奇数个数对象
     return {
-      yaoValues: updatedYaoValues,
-      yaoOddCounts: updatedYaoOddCounts
+      yaoValues: updatedYaoValues, // 返回更新后的爻值对象
+      yaoOddCounts: updatedYaoOddCounts // 返回更新后的爻奇数个数对象
     };
   }
 }
 
-export default LiuYaoService;
+export default LiuYaoService; // 导出LiuYaoService类作为默认导出

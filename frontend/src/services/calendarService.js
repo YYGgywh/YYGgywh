@@ -1,7 +1,13 @@
-// 路径:src/services/calendarService.js 时间:2026-02-06 10:00
-// 功能:提供历法转换服务
+/*
+ * @file            frontend/src/services/calendarService.js
+ * @description     提供历法转换服务，包括阳历与农历之间的转换、干支计算、节气信息获取等功能
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-06 10:00
+ * @lastModified    2026-02-19 14:50:14
+ * Copyright © All rights reserved
+*/
 
-import { Lunar, Solar, LunarMonth, LunarYear, SolarUtil, LunarUtil } from 'lunar-javascript';
+import { Lunar, Solar, LunarMonth, LunarYear, SolarUtil, LunarUtil } from 'lunar-javascript'; // 导入lunar-javascript库中的核心类，用于历法计算
 
 /**
  * 历法服务类
@@ -14,7 +20,8 @@ class CalendarService {
    * @returns {Object} 包含所有历法信息的对象
    */
   static getFullCalendarInfo(timeData) {
-    try {      
+    // 检查时间数据是否包含必要的年、月、日字段（阳历）或lunar_year、lunar_month、lunar_day字段（农历）
+    try {
       const isSolar = timeData.hasOwnProperty('year') && timeData.hasOwnProperty('month') && timeData.hasOwnProperty('day');// 检查是否为阳历数据（包含年、月、日字段）      
       const isLunar = timeData.hasOwnProperty('lunar_year') && timeData.hasOwnProperty('lunar_month') && timeData.hasOwnProperty('lunar_day');// 检查是否为农历数据（包含lunar_year、lunar_month、lunar_day字段）
       
@@ -38,9 +45,10 @@ class CalendarService {
         );
         // 从阳历对象获取对应的农历对象
         lunar = solar.getLunar();
-      } else {
-        // 如果是农历数据，处理闰月情况（闰月用负数表示）
-        const lunarMonth = timeData.is_leap_month ? -parseInt(timeData.lunar_month) : parseInt(timeData.lunar_month);
+      }
+      // 如果是农历数据，处理闰月情况（闰月用负数表示）
+      else {
+        const lunarMonth = timeData.is_leap_month ? -parseInt(timeData.lunar_month) : parseInt(timeData.lunar_month); // 处理闰月情况（闰月用负数表示）
         // 使用农历数据创建农历对象
         lunar = Lunar.fromYmdHms(
           parseInt(timeData.lunar_year), // 农历年
@@ -99,19 +107,22 @@ class CalendarService {
             hasLeapMonth: lunarYear.getLeapMonth() > 0, // 是否有闰月
             dayCount: lunarYear.getDayCount() // 农历年总天数
           },
-          lunarMonth: { // 农历月信息
+          // 农历月信息
+          lunarMonth: {
             year: lunarMonth.getYear(), // 农历年
             month: lunarMonth.getMonth(), // 农历月
             isLeap: lunarMonth.isLeap(), // 是否为闰月
             dayCount: lunarMonth.getDayCount() // 农历月天数
           },
-          ganzhi: { // 干支信息
+          // 干支信息
+          ganzhi: {
             year: lunar.getYearInGanZhiByLiChun(), // 年干支（新年以立春零点起算）
             month: lunar.getMonthInGanZhiExact(), // 月干支（新的一月以节交接准确时刻起算）
             day: lunar.getDayInGanZhiExact(), // 日干支（流派1，晚子时日柱算明天）
             time: lunar.getTimeInGanZhi() // 时干支
           },
-          jieqi: { // 节气信息
+          // 节气信息
+          jieqi: {
             prevJie: { // 上一个节
               name: lunar.getPrevJie().getName(), // 节气名称
               time: lunar.getPrevJie().getSolar().toYmdHms() // 节气时间
@@ -131,9 +142,11 @@ class CalendarService {
           }
         }
       };
-    } catch (error) {
-      // 捕获并打印错误
+    }
+    // 捕获并打印错误
+    catch (error) {
       console.error('获取完整历法信息失败:', error);
+
       // 返回错误信息
       return {
         success: false, // 操作失败标志
@@ -149,34 +162,36 @@ class CalendarService {
    */
   static convertSolarToLunar(solarData) {
     try {
-      const { year, month, day, hour = 0, minute = 0, second = 0 } = solarData;
-      
-      // 创建阳历对象
-      const solar = Solar.fromYmdHms(year, month, day, hour, minute, second);
-      // 获取农历对象
-      const lunar = solar.getLunar();
+      const { year, month, day, hour = 0, minute = 0, second = 0 } = solarData; // 解构赋值获取阳历时间数据，设置默认值
+      const solar = Solar.fromYmdHms(year, month, day, hour, minute, second);  // 创建阳历对象
+      const lunar = solar.getLunar(); // 获取农历对象
       
       // 返回转换结果
       return {
-        success: true,
+        success: true, // 操作成功标志
+        // 农历信息
         data: {
-          lunar_year_in_GanZhi: lunar.getYearInGanZhi(),
-          lunar_month_in_Chinese: lunar.getMonthInChinese(),
-          lunar_day_in_Chinese: lunar.getDayInChinese(),
-          lunar_time_Zhi: lunar.getTimeZhi(),
-          solar_year: solar.getYear(),
-          solar_month: solar.getMonth(),
-          solar_day: solar.getDay(),
-          solar_hour: solar.getHour(),
-          solar_minute: solar.getMinute(),
-          solar_second: solar.getSecond()
+          lunar_year_in_GanZhi: lunar.getYearInGanZhi(), // 农历年干支
+          lunar_month_in_Chinese: lunar.getMonthInChinese(), // 农历月中文
+          lunar_day_in_Chinese: lunar.getDayInChinese(), // 农历日中文
+          lunar_time_Zhi: lunar.getTimeZhi(), // 农历时辰
+          solar_year: solar.getYear(), // 阳历年
+          solar_month: solar.getMonth(), // 阳历月
+          solar_day: solar.getDay(), // 阳历日
+          solar_hour: solar.getHour(), // 小时
+          solar_minute: solar.getMinute(), // 分钟
+          solar_second: solar.getSecond() // 秒钟
         }
       };
-    } catch (error) {
-      console.error('阳历转农历失败:', error);
+    }
+    // 捕获并打印错误
+    catch (error) {
+      console.error('阳历转农历失败:', error); // 捕获并打印错误
+
+      // 返回错误信息
       return {
-        success: false,
-        error: error.message
+        success: false, // 操作失败标志
+        error: error.message // 错误消息
       };
     }
   }
@@ -188,37 +203,37 @@ class CalendarService {
    */
   static convertLunarToSolar(lunarData) {
     try {
-      const { lunar_year, lunar_month, lunar_day, hour = 0, minute = 0, second = 0, is_leap_month = false } = lunarData;
-      
-      // 处理闰月情况（闰月用负数表示）
-      const month = is_leap_month ? -lunar_month : lunar_month;
-      
-      // 创建农历对象
-      const lunar = Lunar.fromYmdHms(lunar_year, month, lunar_day, hour, minute, second);
-      // 获取阳历对象
-      const solar = lunar.getSolar();
+      const { lunar_year, lunar_month, lunar_day, hour = 0, minute = 0, second = 0, is_leap_month = false } = lunarData; // 解构赋值获取农历时间数据，设置默认值
+      const month = is_leap_month ? -lunar_month : lunar_month; // 处理闰月情况（闰月用负数表示）
+      const lunar = Lunar.fromYmdHms(lunar_year, month, lunar_day, hour, minute, second); // 创建农历对象、
+      const solar = lunar.getSolar(); // 获取阳历对象
       
       // 返回转换结果
       return {
-        success: true,
+        success: true, // 操作成功标志
+        // 阳历信息
         data: {
-          lunar_year_in_GanZhi: lunar.getYearInGanZhi(),
-          lunar_month_in_Chinese: lunar.getMonthInChinese(),
-          lunar_day_in_Chinese: lunar.getDayInChinese(),
-          lunar_time_Zhi: lunar.getTimeZhi(),
-          solar_year: solar.getYear(),
-          solar_month: solar.getMonth(),
-          solar_day: solar.getDay(),
-          solar_hour: solar.getHour(),
-          solar_minute: solar.getMinute(),
-          solar_second: solar.getSecond()
+          lunar_year_in_GanZhi: lunar.getYearInGanZhi(), // 农历年干支
+          lunar_month_in_Chinese: lunar.getMonthInChinese(), // 农历月中文
+          lunar_day_in_Chinese: lunar.getDayInChinese(), // 农历日中文
+          lunar_time_Zhi: lunar.getTimeZhi(), // 农历时辰
+          solar_year: solar.getYear(), // 阳历年
+          solar_month: solar.getMonth(), // 阳历月
+          solar_day: solar.getDay(), // 阳历日
+          solar_hour: solar.getHour(), // 小时
+          solar_minute: solar.getMinute(), // 分钟
+          solar_second: solar.getSecond() // 秒钟
         }
       };
-    } catch (error) {
-      console.error('农历转阳历失败:', error);
+    }
+    // 捕获并打印错误
+    catch (error) {
+      console.error('农历转阳历失败:', error); // 捕获并打印错误
+
+      // 返回错误信息
       return {
-        success: false,
-        error: error.message
+        success: false, // 操作失败标志
+        error: error.message // 错误消息
       };
     }
   }
@@ -231,9 +246,13 @@ class CalendarService {
    */
   static getDaysInMonth(year, month) {
     try {
-      return SolarUtil.getDaysOfMonth(year, month);
-    } catch (error) {
-      console.error('获取月份天数失败:', error);
+      return SolarUtil.getDaysOfMonth(year, month); // 使用SolarUtil工具类获取指定年月的天数
+    }
+    // 捕获并打印错误
+    catch (error) {
+      console.error('获取月份天数失败:', error); // 捕获并打印错误
+
+      // 返回默认值31天
       return 31; // 默认值
     }
   }
@@ -247,32 +266,35 @@ class CalendarService {
    */
   static getLunarTimeByHms(hour = 0, minute = 0, second = 0) {
     try {
-      // 使用当前日期作为基础日期
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth() + 1; // 月份从0开始，需要加1
-      const day = now.getDate();
+      const now = new Date(); // 使用当前日期作为基础日期
+      const year = now.getFullYear(); // 获取当前年份
+      const month = now.getMonth() + 1; // 获取当前月份（月份从0开始，需要加1）
+      const day = now.getDate(); // 获取当前日期
       
-      // 创建包含完整时间的阳历对象
-      const solar = Solar.fromYmdHms(year, month, day, hour, minute, second);
-      // 获取农历对象
-      const lunar = solar.getLunar();
+      const solar = Solar.fromYmdHms(year, month, day, hour, minute, second); // 创建包含完整时间的阳历对象
+      
+      const lunar = solar.getLunar(); // 获取农历对象
       
       // 返回时辰信息
       return {
-        success: true,
+        success: true, // 操作成功标志
+        // 农历信息
         data: {
-          lunar_time_Zhi: lunar.getTimeZhi(),
-          solar_hour: solar.getHour(),
-          solar_minute: solar.getMinute(),
-          solar_second: solar.getSecond()
+          lunar_time_Zhi: lunar.getTimeZhi(), // 农历时辰
+          solar_hour: solar.getHour(), // 小时
+          solar_minute: solar.getMinute(), // 分钟
+          solar_second: solar.getSecond() // 秒钟
         }
       };
-    } catch (error) {
-      console.error('获取农历时辰失败:', error);
+    }
+    // 捕获并打印错误
+    catch (error) {
+      console.error('获取农历时辰失败:', error); // 捕获并打印错误
+
+      // 返回错误信息
       return {
-        success: false,
-        error: error.message
+        success: false, // 操作失败标志
+        error: error.message // 错误消息
       };
     }
   }
@@ -289,53 +311,55 @@ class CalendarService {
    */
   static getSolarListByBaZi(yearGanZhi, monthGanZhi, dayGanZhi, timeGanZhi, sect = 1, baseYear = 1) {
     try {
-      // 获取当前时间的分、秒值
-      const now = new Date();
-      const currentMinute = now.getMinutes();
-      const currentSecond = now.getSeconds();
+      const now = new Date(); // 获取当前时间的分、秒值
+      const currentMinute = now.getMinutes(); // 获取当前分钟
+      const currentSecond = now.getSeconds(); // 获取当前秒数
       
-      // 调用 Solar.fromBaZi 方法获取匹配的阳历列表
-      const solarList = Solar.fromBaZi(yearGanZhi, monthGanZhi, dayGanZhi, timeGanZhi, sect, baseYear);
+      const solarList = Solar.fromBaZi(yearGanZhi, monthGanZhi, dayGanZhi, timeGanZhi, sect, baseYear); // 调用 Solar.fromBaZi 方法获取匹配的阳历列表
       
       // 格式化结果，使用当前时间的分、秒值
       const formattedList = solarList.map(solar => {
-        // 使用当前的分、秒值
-        const minute = currentMinute;
-        const second = currentSecond;
+        const minute = currentMinute; // 使用当前分钟
+        const second = currentSecond; // 使用当前秒数
         
         // 构建更新后的完整时间字符串
         const fullString = `${String(solar.getYear()).padStart(4, '0')}-${String(solar.getMonth()).padStart(2, '0')}-${String(solar.getDay()).padStart(2, '0')} ${String(solar.getHour()).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`;
         
+        // 返回格式化后的对象
         return {
-          year: solar.getYear(),
-          month: solar.getMonth(),
-          day: solar.getDay(),
-          hour: solar.getHour(),
-          minute: minute,
-          second: second,
-          dateString: solar.toString(),
-          fullString: fullString
+          year: solar.getYear(), // 年份
+          month: solar.getMonth(), // 月份
+          day: solar.getDay(), // 日期
+          hour: solar.getHour(), // 小时
+          minute: minute, // 分钟
+          second: second, // 秒钟
+          dateString: solar.toString(), // 日期字符串
+          fullString: fullString // 完整时间字符串
         };
       });
       
       // 返回结果
       return {
-        success: true,
+        success: true, // 操作成功标志
         data: {
-          count: formattedList.length,
-          list: formattedList,
-          sect,
-          baseYear
+          count: formattedList.length, // 匹配数量
+          list: formattedList, // 匹配列表
+          sect, // 流派
+          baseYear // 起始年份
         }
       };
-    } catch (error) {
-      console.error('通过八字获取阳历列表失败:', error);
+    }
+    // 捕获并打印错误
+    catch (error) {
+      console.error('通过八字获取阳历列表失败:', error);// 捕获并打印错误
+
+      // 返回错误信息
       return {
-        success: false,
-        error: error.message
+        success: false, // 操作失败标志
+        error: error.message // 错误消息
       };
     }
   }
 }
 
-export default CalendarService;
+export default CalendarService; // 导出CalendarService类作为默认导出

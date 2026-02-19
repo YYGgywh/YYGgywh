@@ -1,0 +1,10 @@
+{
+    "commentTranslate.targetLanguage": "zh-CN",
+    "Translate-next.defaultEngine": "baidu",
+    "notebook.output.wordWrap": false,
+    "workbench.editor.wrapTabs": false,
+    "editor.wordWrap": "on",
+    "editor.fontSize": 14,          // 代码编辑区字体
+    "window.zoomLevel": 1.2,        // 整体缩放（包括聊天）
+    "chat.fontSize": 16            // 有些版本的 TRAE 支持单独聊天字体
+}

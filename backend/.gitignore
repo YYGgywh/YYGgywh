@@ -1,0 +1,55 @@
+#
+# * @file            backend/.gitignore
+# * @description     Python后端项目的Git忽略规则配置
+# * @author          Gordon <gordon_cao@qq.com>
+# * @createTime      2026-02-19 16:00:00
+# * @lastModified    2026-02-19 16:17:47
+# * Copyright © All rights reserved
+#
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Database
+*.db
+*.sqlite
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/

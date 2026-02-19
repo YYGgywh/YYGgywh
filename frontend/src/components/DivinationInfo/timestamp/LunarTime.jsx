@@ -3,7 +3,7 @@
  * @description     农历时间输入和显示组件，支持农历转公历转换
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-04 10:00:00
- * @lastModified    2026-02-18 13:27:38
+ * @lastModified    2026-02-18 21:12:52
  * Copyright © All rights reserved
 */
 
@@ -16,6 +16,7 @@ import React, {
 } from 'react';
 
 import CalendarService from '../../../services/calendarService'; // 导入日历服务模块,用于处理日历转换和计算
+import AlertMessage from './shared/AlertMessage'; // 导入错误提示组件
 
 // 导入验证工具函数集合
 import {
@@ -903,17 +904,11 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
         </> {/* 结束React Fragment */}
       </div> {/* 结束时间戳显示区域 */}
       
-      {/* 警告弹窗 */}
-      {showAlert && ( // 如果显示警告
-        <div className="alert-overlay"> {/* 警告遮罩层 */}
-          <div className="alert-content"> {/* 警告内容容器 */}
-            {/* 显示警告消息 */}
-            <div className="alert-message">{alertMessage}</div>
-            {/* 确定按钮,点击关闭警告 */}
-            <button className="alert-close" onClick={closeAlert}>确定</button>
-          </div>
-        </div>
-      )}
+      <AlertMessage
+        showAlert={showAlert}
+        alertMessage={alertMessage}
+        onClose={closeAlert}
+      />
     </div> // 结束农历时间容器
   ); // 结束return语句
 }; // 结束组件定义

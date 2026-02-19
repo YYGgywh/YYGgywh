@@ -1,31 +1,43 @@
-/* 路径:src/components/LiuYao/components/NavigationSidebar.css 时间:2026-01-28 11:30 */
+/*
+ * @file            frontend/src/components/LiuYao/components/NavigationSidebar.css
+ * @description     侧边导航组件样式，定义侧边栏容器和方法项的样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-01-28 11:30:00
+ * @lastModified    2026-02-19 09:16:50
+ * Copyright © All rights reserved
+*/
+
+/* 侧边导航容器样式 */
 .method-sidebar {
-  width: 120px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  width: 120px;  /* 容器宽度 */
+  display: flex;  /* 使用弹性布局 */
+  flex-direction: column;  /* 垂直方向排列子元素 */
+  gap: 4px;  /* 子元素之间的间距 */
 }
 
+/* 方法项基础样式 */
 .method-item {
-  padding: 12px 16px;
-  background-color: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 12px 16px;  /* 内边距：上下12px，左右16px */
+  background-color: #FFFFFF;  /* 背景色：白色 */
+  border: 1px solid #E5E7EB;  /* 边框：1px 实线，浅灰色 */
+  border-radius: 8px;  /* 圆角半径：8px */
+  text-align: center;  /* 文本居中对齐 */
+  cursor: pointer;  /* 鼠标指针：手型 */
+  transition: all 0.2s ease;  /* 过渡动画：所有属性0.2秒缓动 */
+  font-size: 14px;  /* 字体大小：14px */
+  font-weight: 500;  /* 字体粗细：中等 */
 }
 
+/* 方法项悬停状态样式 */
 .method-item:hover {
-  background-color: #F3F4F6;
-  border-color: #D1D5DB;
+  background-color: #F3F4F6;  /* 悬停时背景色：浅灰色 */
+  border-color: #D1D5DB;  /* 悬停时边框颜色：中灰色 */
 }
 
+/* 方法项激活状态样式 */
 .method-item.active {
-  background-color: #1890FF;
-  color: #FFFFFF;
-  border-color: #1890FF;
-  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+  background-color: #1890FF;  /* 激活时背景色：蓝色 */
+  color: #FFFFFF;  /* 激活时文字颜色：白色 */
+  border-color: #1890FF;  /* 激活时边框颜色：蓝色 */
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);  /* 激活时阴影效果 */
 }

@@ -3,7 +3,7 @@
  * @description     导航菜单项组件，支持下拉菜单和激活状态，使用DropdownMenu组件渲染下拉内容
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-07 14:30:00
- * @lastModified    2026-02-16 20:36:02
+ * @lastModified    2026-02-18 21:47:35
  * Copyright © All rights reserved
 */
 
@@ -13,7 +13,7 @@ import DropdownMenu from '../DropdownMenu/DropdownMenu'; // 导入下拉菜单�
 
 // 定义MenuItem组件，接收name、hasDropdown、dropdownItems、dropdownConfig、isActive、onClick参数
 const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfig = null, isActive = false, onClick }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 定义下拉菜单打开状态，默认为false
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownTimerRef = useRef(null); // 定义下拉菜单定时器引用
 
   // 定义鼠标移入处理函数
@@ -116,20 +116,15 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
       
       {/* 检查是否有下拉菜单且下拉菜单是否打开 */}
       {hasDropdown && isDropdownOpen && (
-        // 检查是否有下拉菜单配置
         dropdownConfig ? (
-          // 渲染下拉菜单组件
           <DropdownMenu
-            columns={dropdownConfig.columns} // 传递列配置
-            className="community" // 设置类名
-            onMouseEnter={handleMouseEnter} // 绑定鼠标移入事件
-            onMouseLeave={handleMouseLeave} // 绑定鼠标移出事件
-          /> // 结束下拉菜单组件
-          // 否则渲染简单下拉菜单
+            columns={dropdownConfig.columns}
+            className="community"
+          />
         ) : (
-          renderSimpleDropdown() // 调用简单下拉菜单渲染函数
-        ) // 结束条件渲染
-      )} {/* 结束下拉菜单渲染 */}
+          renderSimpleDropdown()
+        )
+      )}{/* 结束下拉菜单渲染 */}
     </li> // 结束列表项元素
   ); // 结束return
 }; // 结束组件定义

@@ -12,6 +12,7 @@ import './Navigation.css'; // 导入Navigation组件样式
 import Logo from '../Logo/Logo'; // 导入Logo组件
 import MenuItem from '../MenuItem/MenuItem'; // 导入MenuItem组件
 import Button from '../Button/Button'; // 导入Button组件
+import { menuItems } from '../menuConfig';
 
 // 定义Navigation组件
 const Navigation = () => {
@@ -34,86 +35,7 @@ const Navigation = () => {
   // 定义菜单点击处理函数
   const handleMenuClick = (menuName) => {
     setActiveMenu(menuName); // 设置激活菜单
-  }; // 结束菜单点击处理函数
-
-  // 定义菜单项数组
-  const menuItems = [
-    { name: '广场', hasDropdown: false }, // 广场菜单项
-    // 排盘菜单项
-    {
-      name: '排盘',
-      hasDropdown: true,
-      // 排盘下拉菜单配置
-      dropdownConfig: {
-        // 排盘下拉菜单列配置数组
-        columns: [
-          // 第一列
-          {
-            title: '命理排盘',
-            className: 'dropdown-col-word',
-            // 排盘下拉菜单第一列菜单项数组
-            items: [
-              {
-                title: '八字',
-                href: '#',
-                icon: '★'
-              },
-              {
-                title: '紫微',
-                href: '#',
-                icon: '★'
-              }
-            ]
-          },
-          // 排盘下拉菜单第二列
-          {
-            title: '卦爻排盘',
-            className: 'dropdown-col-word',
-            // 排盘下拉菜单第二列菜单项数组
-            items: [
-              {
-                title: '六爻',
-                href: '#',
-                icon: '★'
-              },
-              {
-                title: '梅花',
-                href: '#',
-                icon: '★'
-              }
-            ]
-          },
-          // 排盘下拉菜单第三列
-          {
-            title: '三式排盘',
-            className: 'dropdown-col-word',
-            // 排盘下拉菜单第三列菜单项数组
-            items: [
-              {
-                title: '奇门',
-                href: '#',
-                icon: '★'
-              },
-              {
-                title: '六壬',
-                href: '#',
-                icon: '★'
-              },
-              {
-                title: '太乙',
-                href: '#',
-                icon: '★'
-              }
-            ]
-          }
-        ]
-      }
-    },
-
-    { name: '藏经阁', hasDropdown: false }, // 藏经阁菜单项
-
-    { name: 'TEST', hasDropdown: false } // TEST菜单项
-  ]; // 结束菜单项数组
+  };
 
   // 返回JSX
   return (

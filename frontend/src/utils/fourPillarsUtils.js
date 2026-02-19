@@ -1,13 +1,18 @@
-// 路径:src/utils/fourPillarsUtils.js 时间:2026-02-06 10:00
-// 功能:提供四柱排盘相关的工具函数，包括天干地支验证、组合逻辑等
+/*
+ * @file            frontend/src/utils/fourPillarsUtils.js
+ * @description     提供四柱排盘相关的工具函数，包括天干地支验证、五虎遁月干计算、五鼠遁时干计算等功能
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-06 10:00
+ * @lastModified    2026-02-19 15:41:34
+ * Copyright © All rights reserved
+*/
 
-// 定义阳干、阴干、阳支、阴支
-const YANG_GANS = ['甲', '丙', '戊', '庚', '壬'];
-const YIN_GANS = ['乙', '丁', '己', '辛', '癸'];
-const YANG_ZHIS = ['子', '寅', '辰', '午', '申', '戌'];
-const YIN_ZHIS = ['丑', '卯', '巳', '未', '酉', '亥'];
-const ALL_GANS = [...YANG_GANS, ...YIN_GANS];
-const ALL_ZHIS = [...YANG_ZHIS, ...YIN_ZHIS];
+// 导入干支基础数据
+import { YANG_GANS, YIN_GANS, YANG_ZHIS, YIN_ZHIS, ALL_GANS, ALL_ZHIS } from '../data/ganZhiData';
+// 导入五虎遁月干表数据
+import { yearGetMonthTable } from '../data/yearGetMonthData';
+// 导入五鼠遁时干表数据
+import { dayGetHourTable } from '../data/dayGetHourData';
 
 /**
  * 验证天干输入
@@ -15,8 +20,9 @@ const ALL_ZHIS = [...YANG_ZHIS, ...YIN_ZHIS];
  * @returns {boolean} 是否有效
  */
 export const validateGanInput = (value) => {
-  const validGans = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
-  return validGans.includes(value);
+  const validGans = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']; // 定义有效的天干列表
+  
+  return validGans.includes(value); // 检查输入值是否在有效天干列表中
 };
 
 /**
@@ -25,8 +31,9 @@ export const validateGanInput = (value) => {
  * @returns {boolean} 是否有效
  */
 export const validateZhiInput = (value) => {
-  const validZhis = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-  return validZhis.includes(value);
+  const validZhis = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']; // 定义有效的地支列表
+  
+  return validZhis.includes(value); // 检查输入值是否在有效地支列表中
 };
 
 /**
@@ -34,6 +41,8 @@ export const validateZhiInput = (value) => {
  * @returns {Array<Array<string>>} 天干列表，第一行为阳干，第二行为阴干
  */
 export const getTianGanList = () => {
+
+  // 返回二维数组，第一行为阳干，第二行为阴干
   return [
     ['甲', '丙', '戊', '庚', '壬'], // 阳干
     ['乙', '丁', '己', '辛', '癸']  // 阴干
@@ -45,6 +54,8 @@ export const getTianGanList = () => {
  * @returns {Array<string>} 地支列表
  */
 export const getDiZhiList = () => {
+
+  // 返回十二地支数组
   return ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 };
 
@@ -57,17 +68,23 @@ export const getDiZhiList = () => {
 export const validateYearGanInput = (value, yearZhi) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
   
+  // 如果没有年支，检查是否为所有天干之一
   if (!yearZhi) {
-    return ALL_GANS.includes(value);
-  } else if (YANG_ZHIS.includes(yearZhi)) {
-    return YANG_GANS.includes(value);
-  } else if (YIN_ZHIS.includes(yearZhi)) {
-    return YIN_GANS.includes(value);
+    return ALL_GANS.includes(value); // 如果年支为空，检查是否为所有天干之一
   }
-  return false;
+  // 如果年支是阳支，检查年干是否为阳干
+  else if (YANG_ZHIS.includes(yearZhi)) {
+    return YANG_GANS.includes(value); // 如果年支是阳支，检查年干是否为阳干
+  }
+  // 如果年支是阴支，检查年干是否为阴干
+  else if (YIN_ZHIS.includes(yearZhi)) {
+    return YIN_GANS.includes(value); // 如果年支是阴支，检查年干是否为阴干
+  }
+  
+  return false; // 其他情况返回无效
 };
 
 /**
@@ -79,17 +96,24 @@ export const validateYearGanInput = (value, yearZhi) => {
 export const validateYearZhiInput = (value, yearGan) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
   
+  // 如果没有年干，检查是否为所有地支之一
   if (!yearGan) {
-    return ALL_ZHIS.includes(value);
-  } else if (YANG_GANS.includes(yearGan)) {
-    return YANG_ZHIS.includes(value);
-  } else if (YIN_GANS.includes(yearGan)) {
-    return YIN_ZHIS.includes(value);
+    return ALL_ZHIS.includes(value); // 如果年干为空，检查是否为所有地支之一
   }
-  return false;
+  // 如果年干是阳干，检查年支是否为阳支
+  else if (YANG_GANS.includes(yearGan)) {
+    return YANG_ZHIS.includes(value);// 如果年干是阳干，检查年支是否为阳支
+  
+  }
+  // 如果年干是阴干，检查年支是否为阴支
+  else if (YIN_GANS.includes(yearGan)) {
+    return YIN_ZHIS.includes(value); // 如果年干是阴干，检查年支是否为阴支
+  }
+  
+  return false; // 其他情况返回无效
 };
 
 /**
@@ -101,17 +125,23 @@ export const validateYearZhiInput = (value, yearGan) => {
 export const validateDayGanInput = (value, dayZhi) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
   
+  // 如果没有日支，检查是否为所有天干之一
   if (!dayZhi) {
-    return ALL_GANS.includes(value);
-  } else if (YANG_ZHIS.includes(dayZhi)) {
-    return YANG_GANS.includes(value);
-  } else if (YIN_ZHIS.includes(dayZhi)) {
-    return YIN_GANS.includes(value);
+    return ALL_GANS.includes(value); // 如果日支为空，检查是否为所有天干之一
   }
-  return false;
+  // 如果日支是阳支，检查日干是否为阳干
+  else if (YANG_ZHIS.includes(dayZhi)) {
+    return YANG_GANS.includes(value); // 如果日支是阳支，检查日干是否为阳干
+  } 
+  // 如果日支是阴支，检查日干是否为阴干
+  else if (YIN_ZHIS.includes(dayZhi)) {
+    return YIN_GANS.includes(value); // 如果日支是阴支，检查日干是否为阴干
+  }
+  
+  return false; // 其他情况返回无效
 };
 
 /**
@@ -123,17 +153,23 @@ export const validateDayGanInput = (value, dayZhi) => {
 export const validateDayZhiInput = (value, dayGan) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
   
+  // 如果没有日干，检查是否为所有地支之一
   if (!dayGan) {
-    return ALL_ZHIS.includes(value);
-  } else if (YANG_GANS.includes(dayGan)) {
-    return YANG_ZHIS.includes(value);
-  } else if (YIN_GANS.includes(dayGan)) {
-    return YIN_ZHIS.includes(value);
+    return ALL_ZHIS.includes(value); // 如果日干为空，检查是否为所有地支之一
   }
-  return false;
+  // 如果日干是阳干，检查日支是否为阳支
+  else if (YANG_GANS.includes(dayGan)) {
+    return YANG_ZHIS.includes(value); // 如果日干是阳干，检查日支是否为阳支
+  } 
+  // 如果日干是阴干，检查日支是否为阴支
+  else if (YIN_GANS.includes(dayGan)) {
+    return YIN_ZHIS.includes(value); // 如果日干是阴干，检查日支是否为阴支
+  }
+  
+  return false; // 其他情况返回无效
 };
 
 /**
@@ -144,10 +180,10 @@ export const validateDayZhiInput = (value, dayGan) => {
 export const validateMonthZhiInput = (value) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
-  
-  return ALL_ZHIS.includes(value);
+    
+  return ALL_ZHIS.includes(value); // 检查输入值是否为所有地支之一
 };
 
 /**
@@ -158,10 +194,10 @@ export const validateMonthZhiInput = (value) => {
 export const validateHourZhiInput = (value) => {
   // 允许空字符串通过验证，以便用户可以删除输入值
   if (value === '') {
-    return true;
+    return true; // 允许空字符串通过验证
   }
   
-  return ALL_ZHIS.includes(value);
+  return ALL_ZHIS.includes(value); // 检查输入值是否为所有地支之一
 };
 
 /**
@@ -171,56 +207,13 @@ export const validateHourZhiInput = (value) => {
  * @returns {string} 月干
  */
 export const calculateMonthGan = (yearGan, monthZhi) => {
-  // 五虎遁月干表：年干 -> 月支 -> 月干
-  const wuhuDunTable = {
-    '甲': {
-      '寅': '丙', '卯': '丁', '辰': '戊', '巳': '己', '午': '庚', '未': '辛',
-      '申': '壬', '酉': '癸', '戌': '甲', '亥': '乙', '子': '丙', '丑': '丁'
-    },
-    '乙': {
-      '寅': '戊', '卯': '己', '辰': '庚', '巳': '辛', '午': '壬', '未': '癸',
-      '申': '甲', '酉': '乙', '戌': '丙', '亥': '丁', '子': '戊', '丑': '己'
-    },
-    '丙': {
-      '寅': '庚', '卯': '辛', '辰': '壬', '巳': '癸', '午': '甲', '未': '乙',
-      '申': '丙', '酉': '丁', '戌': '戊', '亥': '己', '子': '庚', '丑': '辛'
-    },
-    '丁': {
-      '寅': '壬', '卯': '癸', '辰': '甲', '巳': '乙', '午': '丙', '未': '丁',
-      '申': '戊', '酉': '己', '戌': '庚', '亥': '辛', '子': '壬', '丑': '癸'
-    },
-    '戊': {
-      '寅': '甲', '卯': '乙', '辰': '丙', '巳': '丁', '午': '戊', '未': '己',
-      '申': '庚', '酉': '辛', '戌': '壬', '亥': '癸', '子': '甲', '丑': '乙'
-    },
-    '己': {
-      '寅': '丙', '卯': '丁', '辰': '戊', '巳': '己', '午': '庚', '未': '辛',
-      '申': '壬', '酉': '癸', '戌': '甲', '亥': '乙', '子': '丙', '丑': '丁'
-    },
-    '庚': {
-      '寅': '戊', '卯': '己', '辰': '庚', '巳': '辛', '午': '壬', '未': '癸',
-      '申': '甲', '酉': '乙', '戌': '丙', '亥': '丁', '子': '戊', '丑': '己'
-    },
-    '辛': {
-      '寅': '庚', '卯': '辛', '辰': '壬', '巳': '癸', '午': '甲', '未': '乙',
-      '申': '丙', '酉': '丁', '戌': '戊', '亥': '己', '子': '庚', '丑': '辛'
-    },
-    '壬': {
-      '寅': '壬', '卯': '癸', '辰': '甲', '巳': '乙', '午': '丙', '未': '丁',
-      '申': '戊', '酉': '己', '戌': '庚', '亥': '辛', '子': '壬', '丑': '癸'
-    },
-    '癸': {
-      '寅': '甲', '卯': '乙', '辰': '丙', '巳': '丁', '午': '戊', '未': '己',
-      '申': '庚', '酉': '辛', '戌': '壬', '亥': '癸', '子': '甲', '丑': '乙'
-    }
-  };
-  
   // 查找对应月干
-  if (yearGan && monthZhi && wuhuDunTable[yearGan] && wuhuDunTable[yearGan][monthZhi]) {
-    return wuhuDunTable[yearGan][monthZhi];
+  if (yearGan && monthZhi && yearGetMonthTable[yearGan] && yearGetMonthTable[yearGan][monthZhi]) {
+    
+    return yearGetMonthTable[yearGan][monthZhi]; // 返回查找到的月干
   }
   
-  return '';
+  return ''; // 如果找不到对应的月干，返回空字符串
 };
 
 /**
@@ -230,57 +223,13 @@ export const calculateMonthGan = (yearGan, monthZhi) => {
  * @returns {string} 时干
  */
 export const calculateHourGan = (dayGan, hourZhi) => {
-  // 五鼠遁时干表：日干 -> 时支 -> 时干
-  // 正确规则：甲、己日子时起甲；乙、庚子时起丙；丙、辛日子时起戊；丁、壬日子时起庚；戊、癸日子时起壬
-  const wushuDunTable = {
-    '甲': {
-      '子': '甲', '丑': '乙', '寅': '丙', '卯': '丁', '辰': '戊', '巳': '己',
-      '午': '庚', '未': '辛', '申': '壬', '酉': '癸', '戌': '甲', '亥': '乙'
-    },
-    '乙': {
-      '子': '丙', '丑': '丁', '寅': '戊', '卯': '己', '辰': '庚', '巳': '辛',
-      '午': '壬', '未': '癸', '申': '甲', '酉': '乙', '戌': '丙', '亥': '丁'
-    },
-    '丙': {
-      '子': '戊', '丑': '己', '寅': '庚', '卯': '辛', '辰': '壬', '巳': '癸',
-      '午': '甲', '未': '乙', '申': '丙', '酉': '丁', '戌': '戊', '亥': '己'
-    },
-    '丁': {
-      '子': '庚', '丑': '辛', '寅': '壬', '卯': '癸', '辰': '甲', '巳': '乙',
-      '午': '丙', '未': '丁', '申': '戊', '酉': '己', '戌': '庚', '亥': '辛'
-    },
-    '戊': {
-      '子': '壬', '丑': '癸', '寅': '甲', '卯': '乙', '辰': '丙', '巳': '丁',
-      '午': '戊', '未': '己', '申': '庚', '酉': '辛', '戌': '壬', '亥': '癸'
-    },
-    '己': {
-      '子': '甲', '丑': '乙', '寅': '丙', '卯': '丁', '辰': '戊', '巳': '己',
-      '午': '庚', '未': '辛', '申': '壬', '酉': '癸', '戌': '甲', '亥': '乙'
-    },
-    '庚': {
-      '子': '丙', '丑': '丁', '寅': '戊', '卯': '己', '辰': '庚', '巳': '辛',
-      '午': '壬', '未': '癸', '申': '甲', '酉': '乙', '戌': '丙', '亥': '丁'
-    },
-    '辛': {
-      '子': '戊', '丑': '己', '寅': '庚', '卯': '辛', '辰': '壬', '巳': '癸',
-      '午': '甲', '未': '乙', '申': '丙', '酉': '丁', '戌': '戊', '亥': '己'
-    },
-    '壬': {
-      '子': '庚', '丑': '辛', '寅': '壬', '卯': '癸', '辰': '甲', '巳': '乙',
-      '午': '丙', '未': '丁', '申': '戊', '酉': '己', '戌': '庚', '亥': '辛'
-    },
-    '癸': {
-      '子': '壬', '丑': '癸', '寅': '甲', '卯': '乙', '辰': '丙', '巳': '丁',
-      '午': '戊', '未': '己', '申': '庚', '酉': '辛', '戌': '壬', '亥': '癸'
-    }
-  };
-  
   // 查找对应时干
-  if (dayGan && hourZhi && wushuDunTable[dayGan] && wushuDunTable[dayGan][hourZhi]) {
-    return wushuDunTable[dayGan][hourZhi];
+  if (dayGan && hourZhi && dayGetHourTable[dayGan] && dayGetHourTable[dayGan][hourZhi]) {
+    
+    return dayGetHourTable[dayGan][hourZhi]; // 返回查找到的时干
   }
   
-  return '';
+  return ''; // 如果找不到对应的时干，返回空字符串
 };
 
 /**
@@ -289,19 +238,20 @@ export const calculateHourGan = (dayGan, hourZhi) => {
  * @returns {boolean} 是否有效
  */
 export const validateFourPillars = (fourPillars) => {
-  const { yearGan, monthGan, dayGan, hourGan, yearZhi, monthZhi, dayZhi, hourZhi } = fourPillars;
   
-  // 验证所有天干是否有效
+  const { yearGan, monthGan, dayGan, hourGan, yearZhi, monthZhi, dayZhi, hourZhi } = fourPillars; // 解构赋值获取四柱的干支数据
+  
+  // 验证所有天干是否有效（空字符串或有效天干）
   const gansValid = [yearGan, monthGan, dayGan, hourGan].every(gan => 
     gan === '' || validateGanInput(gan)
   );
   
-  // 验证所有地支是否有效
+  // 验证所有地支是否有效（空字符串或有效地支）
   const zhisValid = [yearZhi, monthZhi, dayZhi, hourZhi].every(zhi => 
     zhi === '' || validateZhiInput(zhi)
   );
   
-  return gansValid && zhisValid;
+  return gansValid && zhisValid; // 返回天干和地支是否都有效
 };
 
 /**
@@ -310,14 +260,15 @@ export const validateFourPillars = (fourPillars) => {
  * @returns {Object} 格式化后的四柱数据
  */
 export const formatFourPillars = (fourPillars) => {
+  // 返回格式化后的四柱数据，确保空值被转换为空字符串
   return {
-    yearGan: fourPillars.yearGan || '',
-    monthGan: fourPillars.monthGan || '',
-    dayGan: fourPillars.dayGan || '',
-    hourGan: fourPillars.hourGan || '',
-    yearZhi: fourPillars.yearZhi || '',
-    monthZhi: fourPillars.monthZhi || '',
-    dayZhi: fourPillars.dayZhi || '',
-    hourZhi: fourPillars.hourZhi || ''
+    yearGan: fourPillars.yearGan || '',   // 年干
+    monthGan: fourPillars.monthGan || '', // 月干
+    dayGan: fourPillars.dayGan || '',     // 日干
+    hourGan: fourPillars.hourGan || '',   // 时干
+    yearZhi: fourPillars.yearZhi || '',   // 年支
+    monthZhi: fourPillars.monthZhi || '', // 月支
+    dayZhi: fourPillars.dayZhi || '',     // 日支
+    hourZhi: fourPillars.hourZhi || ''    // 时支
   };
 };

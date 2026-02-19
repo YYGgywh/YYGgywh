@@ -15,7 +15,8 @@ import Navigation from './components/Header/Navigation/Navigation' // 导入导�
 import DivinationInfo from './components/DivinationInfo/DivinationInfo' // 导入占卜信息组件
 import LiuYaoQiGua from './components/LiuYao/LiuYaoQiGua/LiuYaoQiGua' // 导入六爻起卦组件
 import LiuYaoReault from './components/LiuYao/LiuYaoReault/LiuYaoReault' // 导入六爻结果组件
-import { DivinationProvider } from './contexts/DivinationContext' // 导入占卜上下文提供者
+import { AppProvider } from './contexts/AppContext' // 导入应用全局上下文提供者
+import { LiuyaoProvider } from './contexts/LiuyaoContext' // 导入六爻排盘上下文提供者
 
 // import Add from './components/Add/Add' // 导入添加组件
 // import Footer from './components/Footer/Footer' // 导入页脚组件
@@ -31,32 +32,36 @@ export default class App extends Component {
     if (path === '/divination-result') {
       // 返回结果页面的JSX结构
       return (
-        <DivinationProvider> {/* 注释：使用DivinationProvider包裹，提供全局状态管理 */}
-          <div className="app-container"> {/* 注释：应用容器div，设置class为app-container */}
-            <header className="app-header"> {/* 注释：头部区域，设置class为app-header */}
-              <Navigation /> {/* 注释：渲染导航组件 */}
-            </header>            
-            <main className="app-main"> {/* 注释：主内容区域，设置class为app-main */}
-              <LiuYaoReault /> {/* 注释：渲染六爻结果组件 */}
-            </main>
-          </div>
-        </DivinationProvider>
+        <AppProvider> {/* 注释：使用AppProvider包裹，提供全局状态管理 */}
+          <LiuyaoProvider> {/* 注释：使用LiuyaoProvider包裹，提供六爻排盘状态管理 */}
+            <div className="app-container"> {/* 注释：应用容器div，设置class为app-container */}
+              <header className="app-header"> {/* 注释：头部区域，设置class为app-header */}
+                <Navigation /> {/* 注释：渲染导航组件 */}
+              </header>            
+              <main className="app-main"> {/* 注释：主内容区域，设置class为app-main */}
+                <LiuYaoReault /> {/* 注释：渲染六爻结果组件 */}
+              </main>
+            </div>
+          </LiuyaoProvider>
+        </AppProvider>
       );
     }
     
     // 默认返回主页面的JSX结构
     return (
-      <DivinationProvider> {/* 注释：使用DivinationProvider包裹，提供全局状态管理 */}
-        <div className="app-container"> {/* 注释：应用容器div，设置class为app-container */}
-          <header className="app-header"> {/* 注释：头部区域，设置class为app-header */}
-            <Navigation /> {/* 注释：渲染导航组件 */}
-          </header>
-          <main className="app-main"> {/* 注释：主内容区域，设置class为app-main */}
-            <DivinationInfo /> {/* 注释：渲染占卜信息组件 */}
-            <LiuYaoQiGua /> {/* 注释：渲染六爻起卦组件 */}
-          </main>
-        </div>
-      </DivinationProvider>
+      <AppProvider> {/* 注释：使用AppProvider包裹，提供全局状态管理 */}
+        <LiuyaoProvider> {/* 注释：使用LiuyaoProvider包裹，提供六爻排盘状态管理 */}
+          <div className="app-container"> {/* 注释：应用容器div，设置class为app-container */}
+            <header className="app-header"> {/* 注释：头部区域，设置class为app-header */}
+              <Navigation /> {/* 注释：渲染导航组件 */}
+            </header>
+            <main className="app-main"> {/* 注释：主内容区域，设置class为app-main */}
+              <DivinationInfo /> {/* 注释：渲染占卜信息组件 */}
+              <LiuYaoQiGua /> {/* 注释：渲染六爻起卦组件 */}
+            </main>
+          </div>
+        </LiuyaoProvider>
+      </AppProvider>
     )
   }
 }
