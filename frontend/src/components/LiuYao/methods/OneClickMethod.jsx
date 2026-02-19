@@ -43,25 +43,18 @@ const OneClickMethod = ({
 
     // 尝试执行
     try {
-      // 一键生成六个数字
+      // 1. 生成六个随机数字
       const digitsArray = await LiuYaoService.generateSixDigits();  // 调用服务生成六个数字
 
       console.log('生成的数字数组:', digitsArray);  // 打印生成的数字数组
       
-      // 执行排盘
-      const divinationResult = await LiuYaoService.performDivination(digitsArray);  // 调用服务执行排盘
-
-      console.log('排盘结果:', divinationResult);  // 打印排盘结果
+      // 2. 前端计算奇偶、正背
+      const yaoData = LiuYaoService.calculateYaoDataFromDigits(digitsArray);  // 调用服务计算爻位数据
       
-      // 更新UI状态
-      if (divinationResult && divinationResult.data) {  // 如果排盘结果存在
-        const { yaoValues, yaoOddCounts } = divinationResult.data;  // 解构爻值和爻奇数计数
-        console.log('更新的yaoValues:', yaoValues);  // 打印爻值
-        console.log('更新的yaoOddCounts:', yaoOddCounts);  // 打印爻奇数计数
-        
-        // 调用父组件的onOneClickDivination方法更新状态，同时传递digitsArray
-        await onOneClickDivination(yaoValues, yaoOddCounts, digitsArray);  // 调用父组件回调
-      }
+      console.log('计算的爻位数据:', yaoData);  // 打印计算的爻位数据
+      
+      // 3. 更新UI状态
+      await onOneClickDivination(yaoData.yaoValues, yaoData.yaoOddCounts, digitsArray);  // 调用父组件回调
     }
     // 捕获异常
     catch (error) {

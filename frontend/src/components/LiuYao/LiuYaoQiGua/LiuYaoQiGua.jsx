@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件，协调各子组件的状态和布局
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-19 14:04:37
+ * @lastModified    2026-02-19 19:19:49
  * Copyright © All rights reserved
 */
 
@@ -77,6 +77,9 @@ const LiuYaoQiGua = () => {
   
   const yaoOrder = LiuYaoService.YAO_ORDER;  // 爻位顺序
 
+  // API 基础地址配置
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';  // 从环境变量获取API基础地址，默认为本地地址
+
   // 起卦方式列表
   const divinationMethods = [
     '逐爻起卦',
@@ -133,7 +136,7 @@ const LiuYaoQiGua = () => {
     
     // 获取当前要投掷的爻位
     const currentYaoName = yaoOrder[currentYaoIndex];  // 获取当前爻位名称
-    const yaoKey = LiuYaoService.getYaoKeyMap()[currentYaoName];  // 获取爻位键值
+    const yaoKey = LiuYaoService.YAO_ORDER_KEYS[currentYaoIndex];  // 获取爻位键值
     
     console.log(`投掷${currentYaoName}爻`);  // 打印投掷信息
     
@@ -185,17 +188,9 @@ const LiuYaoQiGua = () => {
       // 完成六次投掷后执行排盘
       // 如果已完成六次投掷
       if (newIndex === 6) {
-        // 延迟执行
-        setTimeout(async () => {
-          // 开始排盘：捕获异常并记录错误
-          try {
-            await LiuYaoService.performDivination(threeDigitsArrayRef.current);  // 使用ref获取最新的数组值，执行排盘
-            setIsDivinationButtonEnabled(true);  // 启用排盘按钮
-          }
-          // 排盘失败处理：捕获异常并记录错误
-          catch (error) {
-            console.error('排盘失败:', error);  // 打印排盘失败错误
-          }
+        // 延迟执行，确保状态更新完成
+        setTimeout(() => {
+          setIsDivinationButtonEnabled(true);  // 启用排盘按钮
         }, 500);  // 延迟执行，确保状态更新完成
       }
       
@@ -275,6 +270,31 @@ const LiuYaoQiGua = () => {
   };
 
   /**
+   * @description     处理起卦状态更新的公共逻辑
+   * @param           {Object}    yaoValues         爻值对象
+   * @param           {Object}    yaoOddCounts      爻奇数计数对象
+   * @param           {Array}     digitsArray       三位数数组
+   * @param           {boolean}   allPositionsFilled 是否所有爻位都已填充（默认为true）
+   */
+
+  // 处理起卦状态更新的公共逻辑
+  const handleDivinationUpdate = (yaoValues, yaoOddCounts, digitsArray, allPositionsFilled = true) => {
+    setYaoValues(yaoValues);  // 更新爻值状态
+    setYaoOddCounts(yaoOddCounts);  // 更新爻奇数计数状态
+    
+    // 更新 threeDigitsArray（如果提供了digitsArray）
+    if (digitsArray && digitsArray.length === 6) {
+      setThreeDigitsArray(digitsArray);  // 更新三位数数组
+      threeDigitsArrayRef.current = digitsArray;  // 更新ref引用
+    }
+    
+    // 更新状态为完成
+    setCurrentYaoIndex(6);  // 设置当前爻位索引为6（完成）
+    setIsResetEnabled(true);  // 启用重置按钮
+    setIsDivinationButtonEnabled(!!allPositionsFilled);  // 根据填充状态设置按钮启用状态
+  };
+
+  /**
    * @description     处理一键成卦的状态更新
    * @param           {Object}    yaoValues         爻值对象
    * @param           {Object}    yaoOddCounts      爻奇数计数对象
@@ -283,29 +303,8 @@ const LiuYaoQiGua = () => {
 
   // 处理一键成卦的状态更新
   const handleOneClickDivination = async (yaoValues, yaoOddCounts, digitsArray) => {
-
     console.log('处理一键成卦状态更新:', yaoValues, yaoOddCounts, digitsArray);  // 打印状态更新信息
-    
-    // 直接更新所有爻位的状态
-    setYaoValues(yaoValues);  // 更新爻值状态
-    setYaoOddCounts(yaoOddCounts);  // 更新爻奇数计数状态
-    
-    // 更新 threeDigitsArray（如果提供了digitsArray）
-    // 检查数组是否有效
-    if (digitsArray && digitsArray.length === 6) {
-      setThreeDigitsArray(digitsArray);  // 更新三位数数组
-      threeDigitsArrayRef.current = digitsArray;  // 更新ref引用
-
-      console.log('一键起卦收集的three_digits数组:', digitsArray);  // 打印收集的数组
-    }
-    
-    // 更新状态为完成
-    setCurrentYaoIndex(6);  // 设置当前爻位索引为6（完成）
-    setIsResetEnabled(true);  // 启用重置按钮
-
-    // 启用开始排盘按钮
-    setIsDivinationButtonEnabled(true);  // 启用排盘按钮
-    
+    handleDivinationUpdate(yaoValues, yaoOddCounts, digitsArray);  // 调用公共逻辑
     console.log('一键成卦状态更新完成');  // 打印完成信息
   };
   
@@ -319,25 +318,7 @@ const LiuYaoQiGua = () => {
   // 处理报数起卦的状态更新
   const handleNumberDivination = async (yaoValues, yaoOddCounts, digitsArray) => {
     console.log('处理报数起卦状态更新:', yaoValues, yaoOddCounts, digitsArray);  // 打印状态更新信息
-    
-    // 直接更新所有爻位的状态
-    setYaoValues(yaoValues);  // 更新爻值状态
-    setYaoOddCounts(yaoOddCounts);  // 更新爻奇数计数状态
-    
-    // 更新 threeDigitsArray（如果提供了digitsArray）
-    // 检查数组是否有效
-    if (digitsArray && digitsArray.length === 6) {
-      setThreeDigitsArray(digitsArray);  // 更新三位数数组
-      threeDigitsArrayRef.current = digitsArray;  // 更新ref引用
-      console.log('报数起卦收集的three_digits数组:', digitsArray);  // 打印收集的数组
-    }
-    
-    // 更新状态为完成
-    setCurrentYaoIndex(6);  // 设置当前爻位索引为6（完成）
-    setIsResetEnabled(true);  // 启用重置按钮
-    // 启用开始排盘按钮
-    setIsDivinationButtonEnabled(true);  // 启用排盘按钮
-    
+    handleDivinationUpdate(yaoValues, yaoOddCounts, digitsArray);  // 调用公共逻辑
     console.log('报数起卦状态更新完成');  // 打印完成信息
   };
   
@@ -352,25 +333,7 @@ const LiuYaoQiGua = () => {
   // 处理指定起卦的状态更新
   const handleSpecifiedDivination = async (yaoValues, yaoOddCounts, digitsArray, allPositionsFilled) => {
     console.log('处理指定起卦状态更新:', yaoValues, yaoOddCounts, digitsArray, allPositionsFilled);  // 打印状态更新信息
-    
-    // 直接更新所有爻位的状态
-    setYaoValues(yaoValues);  // 更新爻值状态
-    setYaoOddCounts(yaoOddCounts);  // 更新爻奇数计数状态
-    
-    // 更新 threeDigitsArray（如果提供了digitsArray）
-    // 检查数组是否有效
-    if (digitsArray && digitsArray.length === 6) {
-      setThreeDigitsArray(digitsArray);  // 更新三位数数组
-      threeDigitsArrayRef.current = digitsArray;  // 更新ref引用
-      console.log('指定起卦收集的three_digits数组:', digitsArray);  // 打印收集的数组
-    }
-    
-    // 更新状态为完成
-    setCurrentYaoIndex(6);  // 设置当前爻位索引为6（完成）
-    setIsResetEnabled(true);  // 启用重置按钮
-    // 根据是否所有爻位都有合法输入来启用或禁用开始排盘按钮
-    setIsDivinationButtonEnabled(!!allPositionsFilled);  // 根据填充状态设置按钮启用状态
-    
+    handleDivinationUpdate(yaoValues, yaoOddCounts, digitsArray, allPositionsFilled);  // 调用公共逻辑
     console.log('指定起卦状态更新完成');  // 打印完成信息
   };
   
@@ -438,7 +401,7 @@ const LiuYaoQiGua = () => {
       // 尝试调用后端排盘接口，获取排盘结果
       try {
         // 发起排盘请求
-        const divineResponse = await fetch('http://localhost:8000/api/v1/liuyao/assemble-liuya', {
+        const divineResponse = await fetch(`${API_BASE_URL}/api/v1/liuyao/assemble-liuya`, {  // 使用环境变量配置的API基础地址
           method: 'POST',  // 请求方法
           // 请求头，指定发送 JSON 格式数据
           headers: {
