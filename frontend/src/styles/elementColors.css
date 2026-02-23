@@ -1,0 +1,57 @@
+/*
+ * @file            frontend/src/styles/elementColors.css
+ * @description     五行颜色样式，用于根据五行属性自动着色
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-23 15:00:00
+ * @lastModified    2026-02-23 15:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 只在彩色模式下应用五行颜色 */
+.color-mode [data-element="木"],
+.color-mode [data-element="甲"],
+.color-mode [data-element="乙"],
+.color-mode [data-element="寅"],
+.color-mode [data-element="卯"],
+.color-mode [data-element="青龙"] {
+  color: #00B050;
+}
+
+.color-mode [data-element="火"],
+.color-mode [data-element="丙"],
+.color-mode [data-element="丁"],
+.color-mode [data-element="巳"],
+.color-mode [data-element="午"],
+.color-mode [data-element="朱雀"] {
+  color: #FF0000;
+}
+
+.color-mode [data-element="金"],
+.color-mode [data-element="庚"],
+.color-mode [data-element="辛"],
+.color-mode [data-element="申"],
+.color-mode [data-element="酉"],
+.color-mode [data-element="白虎"] {
+  color: #FFC000;
+}
+
+.color-mode [data-element="水"],
+.color-mode [data-element="壬"],
+.color-mode [data-element="癸"],
+.color-mode [data-element="亥"],
+.color-mode [data-element="子"],
+.color-mode [data-element="玄武"] {
+  color: #002060;
+}
+
+.color-mode [data-element="土"],
+.color-mode [data-element="戊"],
+.color-mode [data-element="己"],
+.color-mode [data-element="丑"],
+.color-mode [data-element="辰"],
+.color-mode [data-element="未"],
+.color-mode [data-element="戌"],
+.color-mode [data-element="勾陈"],
+.color-mode [data-element="螣蛇"] {
+  color: #80350E;
+}

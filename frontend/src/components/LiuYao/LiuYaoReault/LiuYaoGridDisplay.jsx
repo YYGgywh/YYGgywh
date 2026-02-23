@@ -13,6 +13,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // 导入组件样式文件，定义组件的视觉样式
 import './LiuYaoGridDisplay.css';
+// 导入五行颜色样式
+import '../../../styles/elementColors.css';
 
 /**
  * 根据爻性获取爻符号
@@ -27,7 +29,8 @@ const getYaoSymbol = (yaoNature) => {
 // 使用 React.memo 包装组件，避免在父组件重渲染时不必要的重新渲染
 // props 参数说明：
 //   - divinationData (object): 占卜数据对象，包含本卦、变卦、动爻等信息
-const LiuYaoGridDisplay = React.memo(({ divinationData }) => {
+//   - isColorMode (boolean): 是否启用彩色模式
+const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) => {
   // 使用 React.useMemo 缓存是否有伏神的判断结果
   // 依赖项：divinationData.ben_gua_head?.fu_shen_wei_list
   // 优化目的：避免每次渲染都判断是否有伏神
@@ -131,7 +134,7 @@ const LiuYaoGridDisplay = React.memo(({ divinationData }) => {
     // 返回 JSX 元素，渲染六爻排盘网格
     return (
       <>
-        <div className="liu-yao-details" role="listitem" aria-label="六爻详细排盘">
+        <div className={`liu-yao-details ${isColorMode ? 'color-mode' : ''}`} role="listitem" aria-label="六爻详细排盘">
           <div className={`liu-yao-grid columns-${gridColumns}`}>
             {/* 卦宫行 */}
             <div className="grid-row head-gua-palace-row">
@@ -181,20 +184,20 @@ const LiuYaoGridDisplay = React.memo(({ divinationData }) => {
               return (
                 <div key={`ben-yao-${index}`} className={`grid-row position-${yao.position}`}>
                   <div className="grid-cell liu-shen-cell">
-                    <span className={`liu-shen position-${yao.position}`}>{yao.liu_shen || ''}</span>
+                    <span className={`liu-shen position-${yao.position}`} data-element={yao.liu_shen || ''}>{yao.liu_shen || ''}</span>
                   </div>
                   {hasFuShen && (
                     <div className="grid-cell fu-shen-cell">
                       <span className="fu-qin">{yao.fu_qin || ''}</span>
-                      <span className="fu-gan">{yao.fu_gan || ''}</span>
-                      <span className="fu-zhi">{yao.fu_zhi || ''}</span>
+                      <span className="fu-gan" data-element={yao.fu_gan || ''}>{yao.fu_gan || ''}</span>
+                      <span className="fu-zhi" data-element={yao.fu_zhi || ''}>{yao.fu_zhi || ''}</span>
                     </div>
                   )}
                   <div className="grid-cell ben-body-cell">
                     <span className={`liu-qin position-${yao.position}`}>{yao.liu_qin || ''}</span>
                     <span className={`yao-shape position-${yao.position}`}>{getYaoSymbol(yao.yao_nature)}</span>
-                    <span className={`yao-gan position-${yao.position}`}>{yao.na_gan || ''}</span>
-                    <span className={`yao-zhi position-${yao.position}`}>{yao.na_zhi || ''}</span>
+                    <span className={`yao-gan position-${yao.position}`} data-element={yao.na_gan || ''}>{yao.na_gan || ''}</span>
+                    <span className={`yao-zhi position-${yao.position}`} data-element={yao.na_zhi || ''}>{yao.na_zhi || ''}</span>
                   </div>
                   <div className="grid-cell ben-si-ying-cell">
                     <span className={`yao-si-yin position-${yao.position}`}>{yao.shi_ying || ''}</span>
@@ -210,8 +213,8 @@ const LiuYaoGridDisplay = React.memo(({ divinationData }) => {
                         <>
                           <span className={`liu-qin position-${yao.position}`}>{bianYao.liu_qin || ''}</span>
                           <span className={`yao-shape position-${yao.position}`}>{getYaoSymbol(bianYao.yao_nature)}</span>
-                          <span className={`yao-gan position-${yao.position}`}>{bianYao.na_gan || ''}</span>
-                          <span className={`yao-zhi position-${yao.position}`}>{bianYao.na_zhi || ''}</span>
+                          <span className={`yao-gan position-${yao.position}`} data-element={bianYao.na_gan || ''}>{bianYao.na_gan || ''}</span>
+                          <span className={`yao-zhi position-${yao.position}`} data-element={bianYao.na_zhi || ''}>{bianYao.na_zhi || ''}</span>
                         </>
                       )}
                     </div>
@@ -309,7 +312,8 @@ LiuYaoGridDisplay.propTypes = {
         yao_nature: PropTypes.string
       }))
     })
-  })
+  }),
+  isColorMode: PropTypes.bool
 };
 
 // 为 LiuYaoGridDisplay 组件添加 displayName，便于在 React DevTools 中调试

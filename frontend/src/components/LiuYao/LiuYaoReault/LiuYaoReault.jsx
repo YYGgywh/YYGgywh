@@ -3,7 +3,7 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-23 11:46:40
+ * @lastModified    2026-02-23 14:22:33
  * Copyright © All rights reserved
 */
 
@@ -17,6 +17,8 @@ import FourPillarsDisplay from '../../FourPillars/FourPillarsDisplay';
 import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/DivinationInfoDisplay';
 // 导入六爻网格展示组件
 import LiuYaoGridDisplay from './LiuYaoGridDisplay';
+// 导入显示控制组件
+import DisplayControl from '../../common/DisplayControl';
 
 /**
  * 解析占卜数据
@@ -98,6 +100,22 @@ const LiuYaoReault = React.memo(() => {
   const [error, setError] = useState(null);
   // 初始化标志，确保useEffect只执行一次
   const [hasInitialized, setHasInitialized] = useState(false);
+  // 显示控制状态，存储激活的按钮ID
+  const [activeButtons, setActiveButtons] = useState(['liuqin', 'fuchen', 'yinyang', 'colorChange']);
+
+  /**
+   * 处理显示控制按钮点击事件
+   * @param {string} buttonId - 被点击的按钮ID
+   */
+  const handleDisplayControlClick = (buttonId) => {
+    setActiveButtons(prev => {
+      if (prev.includes(buttonId)) {
+        return prev.filter(id => id !== buttonId);
+      } else {
+        return [...prev, buttonId];
+      }
+    });
+  };
 
   /**
    * 组件初始化副作用钩子
@@ -199,10 +217,20 @@ const LiuYaoReault = React.memo(() => {
             {/* 四柱展示组件，显示干支信息 */}
             <FourPillarsDisplay 
               ganzhiInfo={divinationData.calendar_info?.ganzhi_info || {}}
+              isColorMode={activeButtons.includes('colorChange')}
             />
 
             {/* 六爻网格展示组件，显示卦象信息 */}
-            <LiuYaoGridDisplay divinationData={divinationData} />
+            <LiuYaoGridDisplay 
+              divinationData={divinationData}
+              isColorMode={activeButtons.includes('colorChange')}
+            />
+
+            {/* 显示控制组件，用于控制展示样式和模式切换 */}
+            <DisplayControl
+              activeButtons={activeButtons}
+              onButtonClick={handleDisplayControlClick}
+            />
           </div>
 
           {/* 补充信息区域，待开发功能 */}
