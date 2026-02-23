@@ -1,0 +1,171 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoGridDisplay.css
+ * @description     六爻排盘网格展示组件样式，负责展示主卦、变卦及每爻的详细信息的视觉样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-23 00:00:00
+ * @lastModified    2026-02-23 10:50:34
+ * Copyright © All rights reserved
+*/
+
+:root {
+  --grid-cell-padding: 2px 0;
+  --text-color: #333;
+  --text-size: 0.875rem;
+  --error-color: #ff4d4f;
+  --error-border-color: #ff4d4f;
+  --line-color-red: red;
+  --line-color-green: green;
+  --line-color-black: black;
+  --line-color-white: #666;
+  --line-color-yellow: #cc9900;
+  --line-color-blue: #0066cc;
+  --primary-color: #1890FF;
+}
+
+.liu-yao-details {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.liu-yao-grid {
+  display: grid;
+  gap: 0;
+}
+
+.liu-yao-grid.columns-3 {
+  grid-template-columns: repeat(3, auto);
+}
+
+.liu-yao-grid.columns-4 {
+  grid-template-columns: repeat(4, auto);
+}
+
+.liu-yao-grid.columns-6 {
+  grid-template-columns: repeat(6, auto);
+}
+
+.liu-yao-grid.columns-7 {
+  grid-template-columns: repeat(7, auto);
+}
+
+.grid-row {
+  display: contents;
+}
+
+.grid-cell {
+  padding: var(--grid-cell-padding);
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: fit-content;
+}
+
+.liu-shen,
+.fu-shen,
+.liu-qin,
+.yao-shape,
+.yao-gan,
+.yao-zhi,
+.yao-si-yin {
+  font-size: var(--text-size);
+  white-space: nowrap;
+}
+
+.liu-shen {
+  padding-right: 10px;
+}
+
+.fu-zhi {
+  padding-right: 10px;
+}
+
+.yao-shape {
+  padding: 0 10px;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.yao-gan,
+.yao-zhi {
+  transition: color 0.3s ease;
+}
+
+.yao-shape:hover,
+.yao-gan:hover,
+.yao-zhi:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.yao-si-yin {
+  padding-left: 10px;
+}
+
+.dong-yao {
+  padding: 0 10px;
+}
+
+.liu-yao-details p,
+.liu-yao-accessory p {
+  font-size: var(--text-size);
+  color: var(--text-color);
+  text-indent: 0;
+}
+
+.liu-yao-details p {
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.liu-yao-accessory {
+  text-align: center;
+}
+
+.liu-yao-accessory p {
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.chong-he {
+  font-size: 0.5rem;
+  padding: 0 4px;
+}
+
+.line-color-red {
+  color: var(--line-color-red);
+}
+
+.line-color-green {
+  color: var(--line-color-green);
+}
+
+.line-color-black {
+  color: var(--line-color-black);
+}
+
+.line-color-white {
+  color: var(--line-color-white);
+}
+
+.line-color-yellow {
+  color: var(--line-color-yellow);
+}
+
+.line-color-blue {
+  color: var(--line-color-blue);
+}
+
+.liu-yao-error {
+  border: 2px solid var(--error-border-color);
+  color: var(--error-color);
+  text-align: center;
+  padding: 20px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}

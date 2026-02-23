@@ -1,81 +1,72 @@
-/*
- * @file            frontend/src/components/Header/Navigation/Navigation.css
- * @description     圆运阁顶部导航栏组件样式，包含导航栏和菜单样式
- * @author          Gordon <gordon_cao@qq.com>
- * @createTime      2026-02-07 11:10:00
- * @lastModified    2026-02-16 21:26:58
- * Copyright © All rights reserved
-*/
 
-/* 导航栏容器样式 */
 .navigation {
-  position: relative; /* 设置相对定位 */
-  height: 72px; /* 设置高度 */
-  background-color: #FFFFFF; /* 设置背景颜色为白色 */
-  border-bottom: 1px solid #E5E7EB; /* 设置底部边框 */
-  z-index: 1000; /* 设置层级 */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 设置过渡动画 */
+  position: relative; 
+  height: 72px; 
+  background-color: #FFFFFF; 
+  border-bottom: 1px solid #E5E7EB; 
+  z-index: 1000; 
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; 
 }
 
-/* 导航栏滚动样式 */
+
 .navigation.scrolled {
-  background-color: rgba(255, 255, 255, 0.95); /* 设置背景颜色为半透明白色 */
-  backdrop-filter: blur(10px); /* 设置背景模糊效果 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* 设置阴影效果 */
+  background-color: rgba(255, 255, 255, 0.95); 
+  backdrop-filter: blur(10px); 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
 }
 
-/* 导航栏容器样式 */
+
 .navigation-container {
-  max-width: 1440px; /* 设置最大宽度 */
-  margin: 0 auto; /* 设置水平居中 */
-  padding: 0 24px; /* 设置左右内边距 */
-  height: 100%; /* 设置高度为100% */
-  display: flex; /* 使用flex布局 */
-  justify-content: space-between; /* 设置内容两端对齐 */
-  align-items: center; /* 设置内容垂直居中对齐 */
+  max-width: 1440px; 
+  margin: 0 auto; 
+  padding: 0 24px; 
+  height: 100%; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
 }
 
-/* 导航栏左侧区域样式 */
+
 .navigation-left {
-  display: flex; /* 使用flex布局 */
-  align-items: center; /* 设置内容垂直居中对齐 */
-  gap: 40px; /* 设置元素间距 */
+  display: flex; 
+  align-items: center; 
+  gap: 40px; 
 }
 
-/* 导航菜单列表样式 */
+
 .navigation-menu {
-  display: flex; /* 使用flex布局 */
-  gap: 32px; /* 设置菜单项间距 */
+  display: flex; 
+  gap: 32px; 
 }
 
-/* 导航栏右侧区域样式 */
+
 .navigation-right {
-  display: flex; /* 使用flex布局 */
-  align-items: center; /* 设置内容垂直居中对齐 */
-  gap: 24px; /* 设置元素间距 */
+  display: flex; 
+  align-items: center; 
+  gap: 24px; 
 }
 
-/* 导航工具区域样式 */
+
 .navigation-utils {
-  display: flex; /* 使用flex布局 */
-  gap: 24px; /* 设置元素间距 */
+  display: flex; 
+  gap: 24px; 
 }
 
-/* 导航链接样式 */
+
 .navigation-link {
-  color: #333333; /* 设置文字颜色 */
-  font-size: 0.875rem; /* 设置字体大小（14px） */
-  font-weight: 500; /* 设置字体粗细为500 */
-  transition: color 0.2s ease; /* 设置颜色过渡动画 */
+  color: #333333; 
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  transition: color 0.2s ease; 
 }
 
-/* 导航链接悬停效果 */
+
 .navigation-link:hover {
-  color: #1890FF; /* 设置文字颜色为蓝色 */
+  color: #1890FF; 
 }
 
-/* 导航操作区域样式 */
+
 .navigation-actions {
-  display: flex; /* 使用flex布局 */
-  gap: 12px; /* 设置元素间距 */
+  display: flex; 
+  gap: 12px; 
 }

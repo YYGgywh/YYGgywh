@@ -1,0 +1,130 @@
+
+:root {
+  --primary-color: #1890FF;
+  --error-color: #ff4d4f;
+  --text-color: #333;
+  --border-radius: 16px;
+}
+
+.divination-info {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.divination-info:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.info-top {
+  margin-bottom: 7px;
+}
+
+
+.seeker-info {
+  display: flex;
+  width: 100%;
+  gap: 28px;
+}
+
+
+.name-label,
+.gender-label,
+.birth-year-label,
+.location-label,
+.question-label,
+.divination-type-label,
+.solar-label,
+.lunar-label,
+.prev-jie-label,
+.next-jie-label {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.name-label {
+  font-size: 14px;
+}
+
+
+.info-middle {
+  margin-bottom: 7px;
+}
+
+
+.divination-query {
+  display: flex;
+  width: 100%;
+  gap: 28px;
+}
+
+
+.info-bottom {
+  display: flex;
+  gap: 100px;
+}
+
+
+.divination-datetime {
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+}
+
+.divination-datetime > .solar-info,
+.divination-datetime > .lunar-info {
+  width: max-content;
+}
+
+
+.date-info {
+  display: inline-block;
+  min-width: 115px;
+  text-align: center;
+}
+
+
+.time-info {
+  display: inline-block;
+  width: 63px;
+  text-align: center;
+}
+
+
+.solar-terms-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.divination-info.error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+  text-align: center;
+  padding: 20px;
+  font-weight: 500;
+}
+
+.divination-info.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+
+.divination-info.brief {
+  padding: 0px 8px 5px 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  border-bottom: 1px solid #e8e8e8;
+}

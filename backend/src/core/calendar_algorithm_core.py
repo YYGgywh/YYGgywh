@@ -77,9 +77,9 @@ class CalendarAlgorithmCore:
             "lunar_info": {
                 "lunar_year": lunar_date.getYear(),  # 农历年份：获取农历对象的年份 2025
                 "lunar_year_in_Chinese": lunar_date.getYearInChinese(),  # 农历年份中文：获取农历年份的中文表示 "二〇二五"
-                "lunar_year_in_GanZhi": lunar_date.getYearInGanZhi(),  # 农历年干支：获取农历年份的干支表示 "乙巳"
-                "lunar_year_in_Gan": lunar_date.getYearGan(),  # 农历年天干：获取农历年份的天干 "乙"
-                "lunar_year_in_Zhi": lunar_date.getYearZhi(),  # 农历年地支：获取农历年份的地支 "巳"
+                "lunar_year_in_GanZhi": lunar_date.getYearInGanZhi(),  # 农历年干支：获取农历年份（以正月初一起算）的干支表示 "乙巳"
+                "lunar_year_in_Gan": lunar_date.getYearGan(),  # 农历年天干：获取农历年份（以正月初一起算）的天干 "乙"
+                "lunar_year_in_Zhi": lunar_date.getYearZhi(),  # 农历年地支：获取农历年份（以正月初一起算）的地支 "巳"
                 "lunar_year_shengxiao": lunar_date.getYearShengXiao(),  # 农历年生肖：获取农历年份对应的生肖 "蛇"
                 "lunar_year_shengxiao_by_lichun": lunar_date.getYearShengXiaoByLiChun(),  # 农历年立春生肖：按立春划分的生肖 "蛇"
                 "lunar_month": lunar_date.getMonth(),  # 农历月份：获取农历对象的月份 11
@@ -95,9 +95,9 @@ class CalendarAlgorithmCore:
             },            
             # 干支信息子字典：包含所有干支相关的详细信息
             "ganzhi_info": {
-                "lunar_year_in_ganzhi_exact": lunar_date.getYearInGanZhiExact(),  # 农历年精确干支：获取精确的年干支 "乙巳"
-                "lunar_year_gan_exact": lunar_date.getYearGanExact(),  # 农历年精确天干：获取精确的年天干 "乙"
-                "lunar_year_zhi_exact": lunar_date.getYearZhiExact(),  # 农历年精确地支：获取精确的年地支 "巳"
+                "lunar_year_in_ganzhi_exact": lunar_date.getYearInGanZhiExact(),  # 农历年精确干支：获取精确的年干支（以立春节气交接的时刻） "乙巳"
+                "lunar_year_gan_exact": lunar_date.getYearGanExact(),  # 农历年精确天干：获取精确的年天干（以立春节气交接的时刻） "乙"
+                "lunar_year_zhi_exact": lunar_date.getYearZhiExact(),  # 农历年精确地支：获取精确的年地支（以立春节气交接的时刻） "巳"
                 "lunar_month_in_ganzhi_exact": lunar_date.getMonthInGanZhiExact(),  # 农历月精确干支：获取精确的月干支 "戊子"
                 "lunar_month_gan_exact": lunar_date.getMonthGanExact(),  # 农历月精确天干：获取精确的月天干 "戊"
                 "lunar_month_zhi_exact": lunar_date.getMonthZhiExact(),  # 农历月精确地支：获取精确的月地支 "子"
@@ -106,7 +106,10 @@ class CalendarAlgorithmCore:
                 "lunar_day_in_zhi_exact": lunar_date.getDayZhiExact(),  # 农历日精确地支：获取精确的日地支 "亥"
                 "lunar_day_in_ganzhi_exact2": lunar_date.getDayInGanZhiExact2(),  # 农历日精确干支2：获取第二种精确的日干支 "乙亥"
                 "lunar_day_in_gan_exact2": lunar_date.getDayGanExact2(),  # 农历日精确天干2：获取第二种精确的日天干 "乙"
-                "lunar_day_in_zhi_exact2": lunar_date.getDayZhiExact2()  # 农历日精确地支2：获取第二种精确的日地支 "亥"
+                "lunar_day_in_zhi_exact2": lunar_date.getDayZhiExact2(),  # 农历日精确地支2：获取第二种精确的日地支 "亥"
+                "lunar_time_in_gan_exact": lunar_date.getTimeGan(),  # 农历时辰天干：获取时辰对应的天干 "丙"
+                "lunar_time_in_zhi_exact": lunar_date.getTimeZhi(),  # 农历时辰地支：获取时辰对应的地支 "丑"
+                "lunar_time_in_ganzhi_exact": lunar_date.getTimeInGanZhi(),  # 农历时辰干支：获取时辰对应的干支 "丙丑"
             },            
             # 节气信息子字典：包含所有节气相关的详细信息
             "jieqi_info": {

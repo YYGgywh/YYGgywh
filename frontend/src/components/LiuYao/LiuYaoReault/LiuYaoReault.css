@@ -1,62 +1,221 @@
-/*
- * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoReault.css
- * @description     排盘结果页面样式，包含结果容器和各个结果区块的样式
- * @author          Gordon <gordon_cao@qq.com>
- * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-19 10:02:54
- * Copyright © All rights reserved
-*/
 
-/* 六爻排盘结果容器样式 */
+:root {
+  --primary-color: #1890FF;
+  --text-color: #333;
+  --light-text-color: #8e8e8e;
+  --gray-text-color: #666;
+  --border-color: #ddd;
+  --bg-color: #f5f5f5;
+  --white-color: #fff;
+}
+
 .liu-yao-reault-container {
-  max-width: 1200px;  /* 最大宽度：1200px */
-  margin: 0 auto;  /* 水平居中 */
-  padding: 20px;  /* 内边距：20px */
-  font-family: Arial, sans-serif;  /* 字体：Arial，无衬线 */
-  background-color: #f5f5f5;  /* 背景色：浅灰色 */
-  min-height: 100vh;  /* 最小高度：100视口高度 */
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  background-color: var(--bg-color); 
+  min-height: 100vh; 
+  font-size: 0.875rem; 
 }
 
-/* 六爻排盘结果标题样式 */
-.liu-yao-reault-container h1 {
-  text-align: center;  /* 文本居中对齐 */
-  color: #333;  /* 文字颜色：深灰色 */
-  margin-bottom: 30px;  /* 底部外边距：30px */
-  font-size: 28px;  /* 字体大小：28px */
+.divination-info {
+  max-width: 800px; 
+  margin: 0 auto; 
+  padding: 10px; 
+  border: 1px solid var(--primary-color); 
+  border-radius: 16px; 
+  margin-bottom: 20px; 
 }
 
-/* 结果区块样式 */
-.result-section {
-  background-color: #fff;  /* 背景色：白色 */
-  border-radius: 8px;  /* 圆角半径：8px */
-  padding: 20px;  /* 内边距：20px */
-  margin-bottom: 20px;  /* 底部外边距：20px */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 阴影效果 */
+
+.info-top {
+  margin-bottom: 7px;
 }
 
-/* 结果区块标题样式 */
-.result-section h2 {
-  color: #555;  /* 文字颜色：中灰色 */
-  margin-bottom: 15px;  /* 底部外边距：15px */
-  font-size: 20px;  /* 字体大小：20px */
-  border-bottom: 1px solid #e0e0e0;  /* 底部边框：1px 实线，浅灰色 */
-  padding-bottom: 10px;  /* 底部内边距：10px */
+
+.seeker-info {
+  display: flex;
+  width: 100%;
+  gap: 28px;
 }
 
-/* 结果区块段落样式 */
-.result-section p {
-  color: #666;  /* 文字颜色：浅灰色 */
-  margin-bottom: 10px;  /* 底部外边距：10px */
-  line-height: 1.5;  /* 行高：1.5倍 */
+
+
+
+.name-label,
+.gender-label,
+.birth-year-label,
+.location-label,
+.question-label,
+.divination-type-label,
+.solar-label,
+.lunar-label,
+.prev-jie-label,
+.next-jie-label {
+  color: var(--text-color);
+  font-weight: bold;
 }
 
-/* 结果区块预格式化文本样式 */
-.result-section pre {
-  background-color: #f9f9f9;  /* 背景色：浅灰白色 */
-  padding: 15px;  /* 内边距：15px */
-  border-radius: 4px;  /* 圆角半径：4px */
-  overflow-x: auto;  /* 水平溢出自动滚动 */
-  font-family: 'Courier New', monospace;  /* 字体：Courier New，等宽 */
-  white-space: pre-wrap;  /* 空白符保留，自动换行 */
-  word-wrap: break-word;  /* 长单词自动换行 */
+.divination-query {
+  display: flex;
+  width: 100%;
+  gap: 28px;
+}
+
+.date-info {
+  display: inline-block;
+  min-width: 115px;
+  text-align: center; 
+}
+
+.time-info {
+  display: inline-block;
+  width: 63px;
+  
+  text-align: center; 
+}
+
+.name-label {
+  font-size: 14px;
+}
+
+.info-middle {
+  margin-bottom: 7px;
+}
+
+
+
+.info-bottom {
+  display: flex;
+  gap: 100px;
+}
+
+
+.divination-datetime {
+  
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+}
+
+.divination-datetime > .solar-info,
+.divination-datetime > .lunar-info {
+  width: max-content; 
+}
+
+
+
+.solar-terms-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.main-content {
+  background-color: var(--white-color); 
+  border: 1px solid var(--border-color); 
+  padding: 20px; 
+  max-width: 800px; 
+  margin: 0 auto; 
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.liu-yao-info {
+  flex: 2;
+  max-width: 50%; 
+}
+
+.liu-yao-info > .divination-info {
+  padding-top: 0px;
+  margin-bottom: 10px;
+  border: 0px;
+  border-radius: 0px;
+  border-bottom: 1px solid #ddd;
+}
+
+.liu-yao-info > .divination-info > .solar-info {
+  margin-bottom:0px; 
+}
+
+.liu-yao-info > .divination-info > .four-pillars-info {
+  display: flex;
+  padding: 0;
+  border: 0;
+}
+
+
+
+.four-pillars-info {
+  display: flex; 
+  gap: 40px; 
+  justify-content: center; 
+  margin-bottom: 10px;
+}
+
+.year-pillars-info,
+.month-pillars-info,
+.day-pillars-info,
+.hour-pillars-info {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;   
+  width: auto; 
+}
+
+.year-label,
+.month-label,
+.day-label,
+.hour-label {
+  font-size: 0.75rem; 
+  color: var(--light-text-color); 
+}
+
+.year-gan,
+.month-gan,
+.day-gan,
+.hour-gan,
+.year-zhi,
+.month-zhi,
+.day-zhi,
+.hour-zhi {
+  font-size: 0.875rem; 
+  color: var(--text-color); 
+  font-weight: bolder; 
+}
+
+.year-vacancy,
+.month-vacancy,
+.day-vacancy,
+.hour-vacancy {
+  font-size: 0.75rem; 
+  color: var(--gray-text-color); 
+}
+
+
+.supplement-info {
+  flex: 1;
+}
+
+.text-box {
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  margin-bottom: 20px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.text-box:hover {
+  border-color: var(--primary-color);
+  color: var(--text-color);
 }

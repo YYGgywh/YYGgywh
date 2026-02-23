@@ -146,6 +146,18 @@ class LiuYaoAlgorithmCore:
             return ""
         return "阳" if array[index] == 1 else "阴"
     
+    # 私有方法：提取世应爻位
+    def _extract_shi_ying_positions(self, shi_ying_list: List[str]) -> Dict[str, int]:
+        """从世应数组中提取世爻位和应爻位（从下往上：1→6）"""
+        shi_position = 0
+        ying_position = 0
+        for i, value in enumerate(shi_ying_list):
+            if value == "世":
+                shi_position = i + 1
+            elif value == "应":
+                ying_position = i + 1
+        return {"shi_position": shi_position, "ying_position": ying_position}
+    
     # 私有方法：统一计算逻辑
     def _calculate_paipan_common(self, yao_list: List[str], calendar_info: Dict[str, Any], validate: bool = True) -> Dict[str, Any]:
         # 从历法信息中提取日干
@@ -243,17 +255,25 @@ class LiuYaoAlgorithmCore:
                 }
                 bian_gua_body.append(bian_gua_body_info)
 
+        # 提取本卦世应爻位
+        ben_gua_shi_ying = self._extract_shi_ying_positions(ben_gua_info.get("世应", []))
+        
         # 构建新的返回结果（移除冗余的success字段，Core层通过异常表示失败）
         result = {
             "liuyao_config_data": {
                 "calendar_info": calendar_info,
                 "ben_gua_head": {
-                    "ben_gua_name": ben_gua_info.get("卦名", ""),  # 本卦卦名
-                    "ben_gua_code": ben_gua_str,  # 本卦字符串（如"111111"）
-                    "ben_gua_palace": ben_gua_info.get("卦宫", ""),  # 本卦卦宫
-                    "ben_gua_nature": ben_gua_info.get("宫属", ""),  # 本卦宫属（金木水火土）
-                    "ben_gua_upper": ben_gua_info.get("上卦", ""),  # 本卦上卦
-                    "ben_gua_lower": ben_gua_info.get("下卦", ""),  # 本卦下卦
+                    "name": ben_gua_info.get("卦名", ""),  # 本卦卦名
+                    "code": ben_gua_str,  # 本卦字符串（如"111111"）
+                    "palace": ben_gua_info.get("卦宫", ""),  # 本卦卦宫
+                    "nature": ben_gua_info.get("宫属", ""),  # 本卦宫属（金木水火土）
+                    "upper": ben_gua_info.get("上卦", ""),  # 本卦上卦
+                    "lower": ben_gua_info.get("下卦", ""),  # 本卦下卦
+                    "chong_he": ben_gua_info.get("冲合", ""),  # 本卦六冲或六合
+                    "shi_body": ben_gua_info.get("世身", ""),  # 本卦世身
+                    "month_body": ben_gua_info.get("月身", ""),  # 本卦月身
+                    "shi_position": ben_gua_shi_ying["shi_position"],  # 本卦世爻位（从下往上：1→6）
+                    "ying_position": ben_gua_shi_ying["ying_position"],  # 本卦应爻位（从下往上：1→6）
                     "fu_shen_wei_list": fu_shen_wei_list,  # 伏神爻位列表（从下往上：1→6），始终返回，用于判断是否有伏神
                 },                
                 "ben_gua_body": ben_gua_body  # 本卦主体（六个爻位的详细信息，包含世应信息）
@@ -263,6 +283,9 @@ class LiuYaoAlgorithmCore:
         
         # 如果有动爻，才添加动爻和变卦信息
         if has_dong_yao:
+            # 提取变卦世应爻位
+            bian_gua_shi_ying = self._extract_shi_ying_positions(bian_gua_info.get("世应", []))
+            
             result["liuyao_config_data"]["dong_yao_info"] = {
                 "positions": dong_yao_positions,  # 动爻位置列表（从下往上：1→6）
                 "count": len(dong_yao_positions),  # 动爻数量
@@ -274,7 +297,10 @@ class LiuYaoAlgorithmCore:
                 "palace": bian_gua_info.get("卦宫", ""),  # 变卦卦宫
                 "nature": bian_gua_info.get("宫属", ""),  # 变卦宫属（金木水火土）
                 "upper": bian_gua_info.get("上卦", ""),  # 变卦上卦
-                "lower": bian_gua_info.get("下卦", "")  # 变卦下卦
+                "lower": bian_gua_info.get("下卦", ""),  # 变卦下卦
+                "chong_he": bian_gua_info.get("冲合", ""),  # 本卦六冲或六合
+                "shi_position": bian_gua_shi_ying["shi_position"],  # 变卦世爻位（从下往上：1→6）
+                "ying_position": bian_gua_shi_ying["ying_position"]  # 变卦应爻位（从下往上：1→6）
             }
             result["liuyao_config_data"]["bian_gua_body"] = bian_gua_body  # 变卦主体（六个爻位的详细信息，包含世应信息）
         

@@ -1,0 +1,65 @@
+/*
+ * @file            frontend/src/components/FourPillars/FourPillarsDisplay.css
+ * @description     四柱显示组件样式，用于年、月、日、时四柱的干支和空亡信息展示
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-23 00:00:00
+ * @lastModified    2026-02-23 10:48:32
+ * Copyright © All rights reserved
+*/
+
+.four-pillars-info {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.year-pillars-info,
+.month-pillars-info,
+.day-pillars-info,
+.hour-pillars-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.year-label,
+.month-label,
+.day-label,
+.hour-label {
+  font-size: 0.75rem;
+  color: #8e8e8e;
+}
+
+.year-gan,
+.month-gan,
+.day-gan,
+.hour-gan,
+.year-zhi,
+.month-zhi,
+.day-zhi,
+.hour-zhi {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bolder;
+  transition: color 0.3s ease;
+}
+
+.year-gan:hover,
+.month-gan:hover,
+.day-gan:hover,
+.hour-gan:hover,
+.year-zhi:hover,
+.month-zhi:hover,
+.day-zhi:hover,
+.hour-zhi:hover {
+  color: #1890FF;
+}
+
+.year-vacancy,
+.month-vacancy,
+.day-vacancy,
+.hour-vacancy {
+  font-size: 0.75rem;
+  color: #666;
+}
