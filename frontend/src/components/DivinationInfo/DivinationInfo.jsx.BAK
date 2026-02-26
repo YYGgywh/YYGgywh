@@ -68,21 +68,6 @@ const DivinationInfo = () => {
     setTimestamp(timeData); // 更新时间戳字段为用户选择的时间
   };
 
-  // 定义时间戳刷新处理函数
-  const handleTimestampRefresh = () => {
-    const now = new Date(); // 获取当前时间
-    const timeData = {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
-      day: now.getDate(),
-      hour: now.getHours(),
-      minute: now.getMinutes(),
-      second: now.getSeconds()
-    };
-    setSubmittedTimestamp(timeData); // 更新已提交的时间戳状态为当前时间
-    setTimestamp(timeData); // 更新时间戳字段为当前时间
-  };
-
   // 定义表单提交处理函数
   const handleSubmit = (e) => {
     e.preventDefault(); // 阻止表单默认提交行为，避免页面刷新
@@ -139,13 +124,6 @@ const DivinationInfo = () => {
             onDoubleClick={() => handleDoubleClick('location')} // 双击月日输入框时的处理函数，用于清空输入框
             className="location-input" // 月日输入框的类名，用于样式化
           />
-          <div className="form-row form-row-timestamp"> {/* 占题时间戳行 */}
-            <TimestampDisplay
-              timestamp={submittedTimestamp}
-              onClick={handleTimestampClick}
-              onRefresh={handleTimestampRefresh}
-            />
-          </div>
         </div>
 
         <div className="form-row"> {/* 占类选择行 */}
@@ -173,7 +151,12 @@ const DivinationInfo = () => {
           />
         </div>
 
-
+        <div className="form-row form-row-timestamp"> {/* 占题时间戳行 */}
+          <TimestampDisplay
+            timestamp={submittedTimestamp}
+            onClick={handleTimestampClick}
+          />
+        </div>
       </form>
 
       {/* 占题时间戳弹窗 */}

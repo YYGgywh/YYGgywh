@@ -57,7 +57,7 @@ const DivinationTypeDropdown = ({ selectedType, onTypeSelect }) => {
     <div className="divination-type-container"> {/* 占类下拉选择组件容器 */}
       <label className="type-label"></label> {/* 占类下拉选择组件标签 */}
       <div className="dropdown-container" ref={dropdownRef}> {/* 占类下拉选择组件容器 */}
-        <div className="dropdown-select" onClick={handleToggle}> {/* 占类下拉选择组件选择框 */}
+        <div className="dropdown-select" onClick={handleToggle} tabIndex="0"> {/* 占类下拉选择组件选择框，tabIndex 使其可聚焦 */}
           {selectedType || '占类'} {/* 占类下拉选择组件选择框文本 */}
           <span className="dropdown-arrow">▼</span> {/* 占类下拉选择组件选择框下拉箭头 */}
         </div>

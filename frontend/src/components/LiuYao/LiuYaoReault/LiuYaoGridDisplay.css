@@ -1,26 +1,18 @@
 /*
  * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoGridDisplay.css
  * @description     六爻排盘网格展示组件样式，负责展示主卦、变卦及每爻的详细信息的视觉样式
+ *                  使用全局主题变量（variables.css），确保设计一致性
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 00:00:00
- * @lastModified    2026-02-23 10:50:34
+ * @lastModified    2026-02-25 00:00:00
  * Copyright © All rights reserved
 */
 
-:root {
-  --grid-cell-padding: 2px 0;
-  --text-color: #333;
-  --text-size: 0.875rem;
-  --error-color: #ff4d4f;
-  --error-border-color: #ff4d4f;
-  --line-color-red: red;
-  --line-color-green: green;
-  --line-color-black: black;
-  --line-color-white: #666;
-  --line-color-yellow: #cc9900;
-  --line-color-blue: #0066cc;
-  --primary-color: #1890FF;
-}
+/* ========================================
+   六爻网格展示组件样式
+   设计思路：使用全局主题变量，确保与整个应用的设计风格一致
+   特点：网格布局、悬停效果、五行颜色着色
+   ======================================== */
 
 .liu-yao-details {
   display: flex;

@@ -1,0 +1,330 @@
+/*
+ * @file            frontend/src/styles/Reset.css
+ * @description     全局CSS Reset和基础标准设置，1rem = 16px
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-16 11:19:08
+ * @lastModified    2026-02-25 11:29:26
+ * Copyright © All rights reserved
+*/
+
+/*=========================================
+  盒模型重置
+  设计思路：使用 border-box 盒模型，确保元素宽度包括边框和内边距
+  ========================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/*=========================================
+  通用重置
+  设计思路：重置所有元素的 margin 和 padding，消除浏览器默认值差异
+  ========================================== */ 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*=========================================
+  HTML 和 BODY 基础设置
+  设计思路：设置基础字体大小、行高、抗锯齿等，确保良好的阅读体验
+  ========================================= */
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* 开启抗锯齿渲染 */
+  -moz-osx-font-smoothing: grayscale; /* 开启抗锯齿渲染 */
+  scroll-behavior: smooth; /* 开启平滑滚动 */
+}
+
+body {
+  font-family: var(--font-family-base); /* 使用主题变量，确保跨平台一致性 */
+  font-size: var(--font-size-base); /* 使用主题变量，确保字体大小一致性 */
+  line-height: var(--line-height-base); /* 使用主题变量，确保行高一致性 */
+  color: var(--text-primary); /* 基础文本颜色 - 使用主题变量 */
+  background-color: var(--bg-white); /* 基础背景颜色 - 使用主题变量 */
+  min-height: 100vh; /* 确保body至少占满视口高度 */
+}
+
+/*=========================================
+  标题元素重置
+  设计思路：重置标题元素的默认样式，使其继承父元素的字体设置
+  ========================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit; /* 继承父元素字体大小 */
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+/*=========================================
+  段落元素重置
+  设计思路：重置段落的默认 margin，统一行高
+  ========================================= */
+p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/*=========================================
+  列表元素重置
+  设计思路：移除列表的默认样式，包括列表标记、margin 和 padding
+  ========================================= */
+
+ul, ol {
+  list-style: none; /* 移除列表标记 */
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+/*=========================================
+  链接元素重置
+  设计思路：移除链接的默认下划线，继承父元素的颜色
+  ========================================= */
+a {
+  text-decoration: none; /* 移除下划线 */
+  color: inherit;
+  cursor: pointer; /* 鼠标悬停时显示为指针 */
+}
+
+/*=========================================
+  文本格式化元素重置
+  设计思路：确保文本格式化元素的默认样式正确
+  ========================================== */
+strong, b {
+  font-weight: bold;
+}
+
+em, i {
+  font-style: italic;
+}
+
+del, s {
+  text-decoration: line-through; /* 删除线 */
+}
+
+/*========================================
+  媒体元素重置
+  设计思路：确保图片和视频响应式显示，移除默认边框
+  ========================================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* 确保图片和视频响应式显示 */
+  border: 0;
+}
+
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/*=========================================
+  表单元素重置
+  设计思路：重置表单元素的默认样式，确保一致性
+  ========================================= */
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  border: none; /* 移除边框 */
+  background: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer; /* 鼠标悬停时显示为指针 */
+  appearance: none; /* 移除默认样式 */
+  -webkit-appearance: none; /* 移除默认样式 */
+  -moz-appearance: none; /* 移除默认样式 */
+}
+
+/* 文本类输入框和多行文本输入框 */
+input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="submit"]):not([type="reset"]):not([type="button"]),
+textarea {
+  appearance: none; /* 移除默认样式 */
+  -webkit-appearance: none; /* 移除默认样式 */
+  -moz-appearance: none; /* 移除默认样式 */
+}
+
+/*=========================================
+  输入框特殊处理
+  设计思路：移除数字输入框的默认上下箭头
+  ========================================= */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* 移除默认样式 */
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Mozilla Firefox 浏览器的专有前缀属性 移除默认样式 */
+  -ms-appearance: textfield; /* Internet Explorer/Edge 浏览器的专有前缀属性 移除默认样式 */
+  appearance: textfield; /* 标准属性 移除默认样式 */
+}
+
+select { /* 下拉选择框 */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+textarea { /* 多行文本输入框 */
+  resize: vertical; /* 垂直方向可调整大小 */
+  overflow: auto;  /* 自动显示滚动条 */
+}
+
+/*=========================================
+  表格元素重置
+  设计思路：重置表格的默认样式，确保边框折叠
+  ========================================= */
+table {
+  border-collapse: collapse; /* 合并边框 */
+  border-spacing: 0; /* 移除单元格间距 */
+  width: 100%;
+}
+
+th, td {
+  padding: 0;
+  text-align: left;
+}
+
+/*=========================================
+  其他元素重置
+  设计思路：重置 hr 和 blockquote 等元素的默认样式
+  ========================================= */
+hr { /* 水平分割线 */
+  border: 0;
+  height: 0;
+  margin: 0;
+}
+
+blockquote { /* 引用块 */
+  margin: 0;
+  padding: 0;
+}
+
+/*=========================================
+  代码元素设置
+  设计思路：为代码元素设置合适的字体
+  ========================================= */
+code, pre {
+  font-family: var(--font-family-code); /* 使用主题变量，确保代码字体一致性 */
+  font-size: var(--font-size-sm); /* 使用主题变量，确保字体大小一致性 */
+}
+
+pre {
+  white-space: pre-wrap; /* 保留换行符和空格 */
+  word-wrap: break-word; /* 长单词或 URL 地址换行 */
+}
+
+/*=========================================
+  常用工具类
+  设计思路：提供常用的布局和文本工具类
+  ========================================= */
+.clearfix::after { /* 清除浮动 */
+  content: ""; /* 空内容 */
+  display: table; /* 表格布局 */
+  clear: both; /* 清除浮动 */
+}
+
+.hidden { /* 隐藏元素 */
+  display: none !important; /* 隐藏元素 */
+}
+
+.text-truncate { /* 文本截断 */
+  overflow: hidden; /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 显示省略号 */
+  white-space: nowrap; /* 不换行 */
+}
+
+.text-center { /* 文本居中 */
+  text-align: center;
+}
+
+.text-right { /* 文本右对齐 */
+  text-align: right;
+}
+
+.text-left { /* 文本左对齐 */
+  text-align: left;
+}
+
+/*=========================================
+  字体大小工具类
+  设计思路：提供不同尺寸的字体工具类
+  ========================================= */
+.text-xs { /* 额外小字体 */
+  font-size: var(--font-size-xs);
+}
+
+.text-sm { /* 小字体 */
+  font-size: var(--font-size-2xs);
+}
+
+.text-base { /* 基础字体 */
+  font-size: var(--font-size-sm);
+}
+
+.text-md { /* 中等字体 */
+  font-size: var(--font-size-md);
+}
+
+.text-lg { /* 大字体 */
+  font-size: var(--font-size-base);
+}
+
+.text-xl { /* 额外大字体 */
+  font-size: var(--font-size-lg);
+}
+
+.text-2xl { /* 2倍大字体 */
+  font-size: var(--font-size-xl);
+}
+
+.text-3xl { /* 3倍大字体 */
+  font-size: var(--font-size-2xl);
+}
+
+.text-4xl { /* 4倍大字体 */
+  font-size: var(--font-size-3xl);
+}
+
+.text-5xl { /* 5倍大字体 */
+  font-size: var(--font-size-4xl);
+}
+
+/*=========================================
+  导航和模态框相关样式
+  设计思路：确保导航和模态框元素的最小宽度
+  ========================================= */
+.navigation-left,
+.navigation-menu,
+.navigation-right,
+.navigation-utils,
+.navigation-actions {
+  min-width: max-content; /* 导航操作项最小宽度 */
+  flex-shrink: 0;
+}
+
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer {
+  min-width: max-content;
+  flex-shrink: 0;
+}
+
+.navigation-link,
+.modal-button,
+.tab-button,
+.button {
+  white-space: nowrap;
+}

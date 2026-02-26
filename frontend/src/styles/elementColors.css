@@ -3,7 +3,7 @@
  * @description     五行颜色样式，用于根据五行属性自动着色
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 15:00:00
- * @lastModified    2026-02-23 15:00:00
+ * @lastModified    2026-02-25 12:06:40
  * Copyright © All rights reserved
 */
 
@@ -14,7 +14,7 @@
 .color-mode [data-element="寅"],
 .color-mode [data-element="卯"],
 .color-mode [data-element="青龙"] {
-  color: #00B050;
+  color: var(--element-wood);
 }
 
 .color-mode [data-element="火"],
@@ -23,7 +23,7 @@
 .color-mode [data-element="巳"],
 .color-mode [data-element="午"],
 .color-mode [data-element="朱雀"] {
-  color: #FF0000;
+  color: var(--element-fire);
 }
 
 .color-mode [data-element="金"],
@@ -32,7 +32,7 @@
 .color-mode [data-element="申"],
 .color-mode [data-element="酉"],
 .color-mode [data-element="白虎"] {
-  color: #FFC000;
+  color: var(--element-metal);
 }
 
 .color-mode [data-element="水"],
@@ -41,7 +41,7 @@
 .color-mode [data-element="亥"],
 .color-mode [data-element="子"],
 .color-mode [data-element="玄武"] {
-  color: #002060;
+  color: var(--element-water);
 }
 
 .color-mode [data-element="土"],
@@ -53,5 +53,5 @@
 .color-mode [data-element="戌"],
 .color-mode [data-element="勾陈"],
 .color-mode [data-element="螣蛇"] {
-  color: #80350E;
+  color: var(--element-earth);
 }

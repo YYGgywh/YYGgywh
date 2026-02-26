@@ -11,6 +11,11 @@ import React from 'react'; // 导入React核心库
 import ReactDOM from 'react-dom/client'; // 导入ReactDOM的客户端渲染API
 import App from './App'; // 导入应用主组件
 
+/* 导入全局样式文件 - 按照优先级顺序引入 */
+import './styles/variables.css';  // 统一的主题变量文件 - 必须最先引入
+import './styles/elementColors.css';  // 五行颜色样式
+import './styles/Reset.css';  // 全局CSS Reset和基础标准设置
+
 const root = ReactDOM.createRoot(document.getElementById('root')); // 创建React根节点，绑定到DOM中的root元素
 // 开始渲染React应用
 root.render(

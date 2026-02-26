@@ -3,7 +3,7 @@
  * @description     报数起卦组件，通过输入数字生成卦象，实现顺序输入
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-08 16:30:00
- * @lastModified    2026-02-19 10:30:42
+ * @lastModified    2026-02-25 15:30:00
  * Copyright © All rights reserved
 */
 
@@ -43,6 +43,7 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
 
   const [hasValidInput, setHasValidInput] = useState(false);  // 跟踪是否有合法输入
   const [allInputsValid, setAllInputsValid] = useState(false);  // 跟踪是否所有输入框都有有效值
+  const [isGenerating, setIsGenerating] = useState(false);  // 跟踪是否正在生成卦象
   // 爻奇数计数状态
   const [yaoOddCounts, setYaoOddCounts] = useState({
     shang: null,
@@ -215,6 +216,7 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
     // 重置输入状态
     setHasValidInput(false);  // 重置是否有合法输入状态
     setAllInputsValid(false);  // 重置所有输入是否有效状态
+    setIsGenerating(false);  // 重置生成状态
     
     // 重置爻象数据
     setYaoOddCounts({  // 重置爻奇数计数状态
@@ -234,6 +236,9 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
    * @description     处理生成卦象
    */
   const handleGenerateDivination = () => {
+    // 设置为正在生成卦象状态
+    setIsGenerating(true);
+    
     // 将用户输入的6个3位数字转换为字符串数组
     const digitsArray = [  // 创建字符串数组
       yaoValues.chu,  // 初爻数字（字符串）
@@ -270,7 +275,7 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
     }
     // 1. 只允许数字输入
     // 如果输入包含非数字字符
-    if (!/^\d+$/.test(value)) {  
+    if (!/^\d+$/.test(value)) {
       e.target.value = value.replace(/\D/g, '');  // 移除非数字字符
     }
     // 2. 限制长度为恰好3位
@@ -296,10 +301,10 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
             <button 
               ref={generateButtonRef}  // 按钮引用
               className="throw-button"  // 按钮样式
-              disabled={!allInputsValid}  // 所有输入有效时才可点击
+              disabled={!allInputsValid || isGenerating}  // 所有输入有效且不在生成中时才可点击
               onClick={handleGenerateDivination}  // 点击事件
             >
-              生成卦象  {/* 按钮文字 */}
+              {isGenerating ? '卦象已成' : '生成卦象'}  {/* 按钮文字，根据生成状态显示不同文本 */}
             </button>
             <button 
               className="reset-button"  // 按钮样式

@@ -3,7 +3,7 @@
  * @description     性别选择组件，提供男/女单选按钮
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-18 10:30:00
- * @lastModified    2026-02-18 20:11:11
+ * @lastModified    2026-02-25 16:05:09
  * Copyright © All rights reserved
 */
 
@@ -16,7 +16,7 @@ const GenderSelector = ({ selectedGender, onGenderChange }) => {
   // 渲染性别选择组件
   return (
     <div className="gender-radio-container"> {/* 性别选择组件容器 */}
-      <label className="type-label">性别：</label> {/* 性别选择组件标题 */}
+      {/*<label className="type-label">性别：</label>  性别选择组件标题 */}
       <div className="radio-group"> {/* 性别选择组件单选按钮组 */}
         {/* 性别选择组件单选按钮 */}
         {genderOptions.map((gender) => (

@@ -3,78 +3,15 @@
  * @description     占卜信息组件样式文件，包含表单输入、模态框、时间选择器等UI元素的视觉样式
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 00:00:00
- * @lastModified    2026-02-25 18:56:16
+ * @lastModified    2026-02-25 09:59:34
  * Copyright © All rights reserved
 */
 
-/* ======================================== 
-   公共基类样式
-   设计思路：提取重复的样式规则到基类，减少代码重复，提高可维护性
+/* ========================================
+   占卜信息组件样式
+   设计思路：使用全局主题变量（variables.css），确保与整个应用的设计风格一致
+   特点：表单输入、模态框、时间选择器、自定义组件样式
    ======================================== */
-
-/* 输入框基类 - 所有输入类元素的通用样式 */
-.first-name-input,
-.last-name-input,
-.birth-year-input,
-.location-input,
-.question-textarea, 
-.sub-type-input,
-.timestamp, 
-.dropdown-select {
-  height: 30px;                   /* 固定高度，确保视觉一致性 */
-  padding: 0 var(--spacing-sm);                /* 内边距，为内容留出呼吸空间 */
-  border: 1px solid var(--border-color);   /* 默认边框颜色 */
-  border-radius: var(--radius-md);         /* 中等圆角 */
-  font-size: var(--font-size-base);        /* 基础字体大小 */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐内容 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐内容 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐内容 - 标准属性 */
-  text-align: center;            /* 水平居中对齐内容 */
-  -webkit-transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 - Webkit 浏览器 */
-  -moz-transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 - Firefox 浏览器 */
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 - 标准属性 */
-}
-
-/* 输入框占位符样式 - 统一设置所有输入框的占位符样式 */
-.first-name-input::placeholder,
-.last-name-input::placeholder,
-.birth-year-input::placeholder,
-.location-input::placeholder,
-.question-textarea::placeholder,
-.sub-type-input::placeholder,
-.timestamp::placeholder,
-.time-input::placeholder {
-  color: var(--text-placeholder);    /* 使用变量定义的占位符颜色 */
-  font-size: var(--font-size-sm);  /* 使用与输入框相同的字体大小 */
-  opacity: 0.8;                      /* 调整透明度，使占位符与实际文本有区别 */
-}
-
-/* 基础输入框焦点状态 - 为所有基础输入框提供焦点效果 */
-.first-name-input:focus,
-.last-name-input:focus,
-.birth-year-input:focus,
-.location-input:focus,
-.sub-type-input:focus,
-.timestamp:focus,
-.question-textarea:focus,
-.dropdown-select:focus,
-.time-input:focus,
-.leap-month-toggle:focus {
-  outline: none;                 /* 移除默认轮廓 */
-  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
-  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
-}
-
-/*========================================= 
-  占卜信息组件样式
-  设计思路：使用全局主题变量（variables.css），确保与整个应用的设计风格一致
-  特点：表单输入、模态框、时间选择器、自定义组件样式
-  ========================================= */
 
 /* 主容器 - 整个占卜信息组件的外层容器 */
 .divination-info-container {
@@ -95,28 +32,48 @@
 
 /* 表单行 - 水平排列的表单元素组 */
 .form-row {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
   gap: var(--spacing-lg);        /* 元素间距，保持视觉一致性 */
   margin-bottom: var(--spacing-xl);        /* 底部间距，区分不同表单组 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
+  align-items: center;           /* 垂直居中对齐 */
 }
 
-/* 选择 .divination-form 内的最后一个子元素，且该元素的 class 为 form-row */
-.divination-form .form-row:last-child {
-  margin-bottom: 0;
+/* 时间戳表单行 - 特殊的表单行，底部间距较小 */
+.form-row-timestamp {
+  margin-bottom: 5px;             /* 较小的底部间距，紧凑布局 */
 }
 
-/*=========================================
-  基础输入框样式
-  设计思路：统一输入框样式，提供一致的交互体验
-  特点：固定高度、居中文本、焦点高亮效果
-  ========================================= */
+/* ========================================
+   基础输入框样式
+   设计思路：统一输入框样式，提供一致的交互体验
+   特点：固定高度、居中文本、焦点高亮效果
+   ======================================== */
+
+/* 基础输入框 - 所有输入框的通用样式 */
+.input-base {
+  height: 32px;                   /* 固定高度，确保视觉一致性 */
+  padding: 0 var(--spacing-md);  /* 左右内边距，不使用上下内边距以保持高度 */
+  border: 1px solid var(--border-color);   /* 默认边框颜色 */
+  border-radius: var(--radius-md);         /* 中等圆角 */
+  font-size: var(--font-size-base);        /* 基础字体大小 */
+  text-align: center;            /* 文本居中对齐 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐内容 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 */
+}
+
+/* 输入框焦点状态 - 提供视觉反馈 */
+.input-base:focus {
+  outline: none;                 /* 移除默认轮廓 */
+  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
+  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
+}
+
+/* 输入框占位符样式 */
+.input-base::placeholder {
+  text-align: center;            /* 占位符文本居中 */
+  color: var(--text-placeholder);        /* 占位符颜色，降低视觉干扰 */
+}
 
 /* 姓名输入框 - 姓和名分别使用固定宽度 */
 .first-name-input,
@@ -131,37 +88,36 @@
   padding: 0 var(--spacing-sm);  /* 较小的左右内边距 */
 }
 
-/* 地点输入框 - 弹性宽度，占据剩余空间并可压缩 */
+/* 地点输入框 - 弹性宽度，占据剩余空间 */
 .location-input {
-  flex: 1 1 100px;               /* 弹性布局，自动占据剩余空间，可压缩，最小宽度100px */
-  min-width: 100px;              /* 最小宽度，确保有足够的输入空间 */
+  flex: 1;                       /* 弹性布局，自动占据剩余空间 */
+  padding: 0 var(--spacing-lg);  /* 较大的左右内边距，提供舒适的输入体验 */
 }
 
 /* 子类型输入框 - 固定宽度 */
 .sub-type-input {
   width: 80px;                   /* 固定宽度，适合输入简短的子类型 */
+  padding: 0 var(--spacing-lg);  /* 较大的左右内边距 */
 }
 
-/* 时间戳表单行 - 特殊的表单行，底部间距较小，宽度内容撑开 */
-.form-row-timestamp {
-  margin-bottom: 0;             /* 较小的底部间距，紧凑布局 */
-  width: fit-content;           /* 宽度根据内容自适应 */
-  white-space: nowrap;          /* 防止内容换行 */
-  flex-shrink: 0;               /* 防止被压缩，保持原有宽度 */
-}
+/* ========================================
+   性别选择组件 - 单选按钮组
+   设计思路：使用自定义单选按钮样式，隐藏原生 radio，提供更好的视觉效果
+   特点：圆形指示器、选中状态高亮、悬停效果
+   ======================================== */
 
-/*=========================================
-  性别选择组件 - 单选按钮组
-  设计思路：使用自定义单选按钮样式，隐藏原生 radio，提供更好的视觉效果
-  特点：圆形指示器、选中状态高亮、悬停效果
-  ========================================= */
+/* 性别选择容器 - 包含性别单选按钮的区域 */
+.gender-dropdown-container {
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐 */
+  position: relative;            /* 相对定位，为绝对定位子元素提供参考 */
+}
 
 /* 性别单选按钮容器 */
 .gender-radio-container {
   display: flex;                 /* 使用 Flexbox 布局 */
   align-items: center;           /* 垂直居中对齐 */
   position: relative;            /* 相对定位 */
-  flex-shrink: 0;               /* 防止被压缩，保持原有宽度 */
 }
 
 /* 单选按钮组 - 水平排列的单选按钮 */
@@ -196,9 +152,7 @@
   border-radius: 50%;            /* 圆形边框 */
   background-color: var(--bg-white);       /* 白色背景 */
   position: relative;            /* 相对定位，为伪元素提供参考 */
-  -webkit-transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
 }
 
 /* 单选按钮选中状态 */
@@ -225,11 +179,16 @@
   color: var(--text-primary);             /* 主要文本颜色 */
 }
 
-/*=========================================
-  占卜类型下拉选择组件
-  设计思路：自定义下拉选择器，提供更好的视觉体验和交互反馈
-  特点：紧凑布局、悬停高亮、箭头指示器
-  ========================================= */
+/* 单选按钮标签悬停效果 */
+.radio-label:hover .radio-custom {
+  border-color: var(--primary-color);      /* 主色边框，提示可交互 */
+}
+
+/* ========================================
+   占卜类型下拉选择组件
+   设计思路：自定义下拉选择器，提供更好的视觉体验和交互反馈
+   特点：紧凑布局、悬停高亮、箭头指示器
+   ======================================== */
 
 /* 占卜类型容器 - 包含类型标签和下拉选择器 */
 .divination-type-container {
@@ -252,14 +211,28 @@
 
 /* 下拉选择器 - 显示当前选择的值 */
 .dropdown-select {
-  width: 55px;                   /* 固定宽度，紧凑布局 */
+  width: 50px;                   /* 固定宽度，紧凑布局 */
+  height: 32px;                  /* 固定高度，与输入框一致 */
   padding: 0 var(--spacing-sm);  /* 左右内边距 */
+  border: 1px solid var(--border-color);   /* 默认边框颜色 */
+  border-radius: var(--radius-md);         /* 中等圆角 */
+  font-size: var(--font-size-base);        /* 基础字体大小 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
+  display: flex;                 /* 使用 Flexbox 布局 */
   justify-content: space-between; /* 两端对齐，文本和箭头分开 */
+  align-items: center;           /* 垂直居中对齐 */
   background-color: var(--bg-white);       /* 白色背景 */
   white-space: nowrap;           /* 防止文本换行 */
   overflow: hidden;              /* 隐藏溢出内容 */
   text-overflow: ellipsis;       /* 文本溢出时显示省略号 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 */
+}
+
+/* 下拉选择器焦点状态 */
+.dropdown-select:focus {
+  outline: none;                 /* 移除默认轮廓 */
+  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
+  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
 }
 
 /* 下拉箭头 - 指示下拉菜单 */
@@ -276,11 +249,10 @@
   background-color: var(--bg-white);       /* 白色背景 */
   border: 1px solid var(--border-color);   /* 边框颜色 */
   border-radius: var(--radius-lg);         /* 大圆角 */
-  -webkit-box-shadow: var(--shadow-sm);            /* 小阴影，营造层次感 - Webkit 浏览器 */
-  -moz-box-shadow: var(--shadow-sm);            /* 小阴影，营造层次感 - Firefox 浏览器 */
-  box-shadow: var(--shadow-sm);            /* 小阴影，营造层次感 - 标准属性 */
+  box-shadow: var(--shadow-sm);            /* 小阴影，营造层次感 */
   z-index: var(--z-dropdown);               /* 下拉菜单层级 */
   margin-top: var(--spacing-xs);           /* 顶部间距，与选择器分开 */
+  min-width: 40px;               /* 最小宽度 */
 }
 
 /* 下拉菜单项 - 单个选项 */
@@ -292,7 +264,6 @@
   white-space: nowrap;           /* 防止文本换行 */
   overflow: hidden;              /* 隐藏溢出内容 */
   text-overflow: ellipsis;       /* 文本溢出时显示省略号 */
-  min-width: 40px;               /* 最小宽度 */
 }
 
 /* 下拉菜单项悬停状态 */
@@ -301,79 +272,52 @@
   color: var(--primary-color);             /* 主色文本，增强视觉反馈 */
 }
 
-/*=========================================
-  问题输入和时间戳显示
-  设计思路：问题输入框使用文本域样式，时间戳显示为可点击的触发器
-  特点：居中对齐、悬停效果、焦点高亮
-  ========================================= */
+/* ========================================
+   问题输入和时间戳显示
+   设计思路：问题输入框使用文本域样式，时间戳显示为可点击的触发器
+   特点：居中对齐、悬停效果、焦点高亮
+   ======================================== */
 
 /* 问题文本域 - 用于输入占卜问题的多行文本框 */
 .question-textarea {
   flex: 1;                       /* 弹性布局，占据剩余空间 */
+  height: 32px;                  /* 固定高度，与输入框一致 */
+  padding: 0 var(--spacing-lg);  /* 左右内边距 */
+  border: 1px solid var(--border-color);   /* 默认边框颜色 */
+  border-radius: var(--radius-md);         /* 中等圆角 */
+  font-size: var(--font-size-base);        /* 基础字体大小 */
+  min-height: 32px;              /* 最小高度 */
+  line-height: 32px;             /* 行高与高度一致，确保垂直居中 */
+  text-align: center;            /* 文本居中对齐 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐内容 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 */
 }
 
-/* 时间戳容器 - 包含时间戳显示和刷新按钮 */
-.timestamp-container {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐内容 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐内容 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐内容 - 标准属性 */
-  gap: 8px;                      /* 时间戳和刷新按钮之间的间距 */
+/* 问题文本域焦点状态 */
+.question-textarea:focus {
+  outline: none;                 /* 移除默认轮廓 */
+  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
+  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
 }
 
 /* 时间戳显示 - 显示当前选择的时间，点击可打开时间选择模态框 */
 .timestamp {
+  flex: 1;                       /* 弹性布局，占据剩余空间 */
+  height: 32px;                  /* 固定高度，与输入框一致 */
   padding: 0 var(--spacing-lg);  /* 左右内边距 */
+  border: 1px solid var(--border-color);   /* 默认边框颜色 */
+  border-radius: var(--radius-md);         /* 中等圆角 */
+  font-size: var(--font-size-base);        /* 基础字体大小 */
   background-color: var(--bg-gray-light);  /* 浅灰背景，区别于输入框 */
   text-align: center;            /* 文本居中对齐 */
   color: var(--text-secondary);  /* 次要文本颜色 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐内容 */
   justify-content: center;       /* 水平居中对齐内容 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
   will-change: background-color, color;     /* 性能优化，提示浏览器这些属性会变化 */
-  width: fit-content;            /* 宽度根据内容自适应 */
-  margin: 0 auto;                /* 水平居中 */
-}
-
-/* 时间戳刷新按钮 - 用于刷新时间的图标按钮 */
-.timestamp-refresh {
-  width: 30px;                   /* 正方形宽度 30px */
-  height: 30px;                  /* 正方形高度 30px */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐内容 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐内容 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐内容 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中对齐内容 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中对齐内容 - IE 浏览器 */
-  justify-content: center;       /* 水平居中对齐内容 - 标准属性 */
-  cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-fast), transform var(--transition-fast);  /* 快速过渡效果 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast), transform var(--transition-fast);  /* 快速过渡效果 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast), transform var(--transition-fast);  /* 快速过渡效果 - 标准属性 */
-}
-
-/* 时间戳刷新按钮图标 */
-.timestamp-refresh .icon {
-  width: 20px;                   /* 图标宽度 */
-  height: 20px;                  /* 图标高度 */
-  display: block;                /* 块级元素 */
-}
-
-/* 时间戳刷新按钮悬停状态 */
-.timestamp-refresh:hover {
-  background-color: var(--bg-gray-medium);  /* 中灰背景，增强悬停反馈 */
-  -webkit-transform: rotate(180deg);  /* 旋转 180 度 - Webkit 浏览器 */
-  -moz-transform: rotate(180deg);     /* 旋转 180 度 - Firefox 浏览器 */
-  -ms-transform: rotate(180deg);      /* 旋转 180 度 - IE 浏览器 */
-  transform: rotate(180deg);          /* 旋转 180 度 - 标准属性 */
 }
 
 /* 时间戳悬停状态 - 提示可交互 */
@@ -395,7 +339,7 @@
   left: 0;                       /* 左侧对齐 */
   right: 0;                      /* 右侧对齐 */
   bottom: 0;                     /* 底部对齐 */
-  background-color: var(--overlay-bg);  /* 半透明黑色背景，淡化背景内容 */
+  background-color: rgba(0, 0, 0, 0.5);  /* 半透明黑色背景，淡化背景内容 */
   display: flex;                 /* 使用 Flexbox 布局 */
   justify-content: center;       /* 水平居中 */
   align-items: center;           /* 垂直居中 */
@@ -406,9 +350,7 @@
 .modal-content {
   background-color: var(--bg-white);       /* 白色背景 */
   border-radius: var(--radius-lg);         /* 大圆角 */
-  -webkit-box-shadow: var(--shadow-lg);            /* 大阴影，营造层次感 - Webkit 浏览器 */
-  -moz-box-shadow: var(--shadow-lg);            /* 大阴影，营造层次感 - Firefox 浏览器 */
-  box-shadow: var(--shadow-lg);            /* 大阴影，营造层次感 - 标准属性 */
+  box-shadow: var(--shadow-lg);            /* 大阴影，营造层次感 */
   width: 90%;                    /* 宽度占视口的 90% */
   max-width: 500px;              /* 最大宽度限制 */
   overflow: hidden;              /* 隐藏溢出内容，确保圆角效果 */
@@ -419,49 +361,29 @@
   max-width: 600px;              /* 更大的最大宽度，适应时间选择器的需求 */
 }
 
-/* ===== 弹窗部分 ===== */
-/*=========================================
-  模态框头部 - 标题和关闭按钮
-  设计思路：使用浅色背景区分头部，提供清晰的视觉层次
-  特点：底部边框、关闭按钮、标签页切换
-  ========================================= */
+/* ========================================
+   模态框头部 - 标题和关闭按钮
+   设计思路：使用浅色背景区分头部，提供清晰的视觉层次
+   特点：底部边框、关闭按钮、标签页切换
+   ======================================== */
 
 /* 模态框头部 - 包含标题和关闭按钮 */
 .modal-header {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-pack: start;       /* 左对齐 - Webkit 浏览器 */
-  -moz-box-pack: start;          /* 左对齐 - Firefox 浏览器 */
-  -ms-flex-pack: start;          /* 左对齐 - IE 浏览器 */
-  justify-content: flex-start;   /* 左对齐 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  justify-content: flex-start;   /* 左对齐 */
+  align-items: center;           /* 垂直居中对齐 */
   padding: var(--spacing-xl) var(--spacing-2xl);  /* 内边距 */
   border-bottom: 1px solid var(--border-color);   /* 底部边框，区分头部和内容 */
   background-color: var(--bg-gray-light);  /* 浅灰背景，突出头部区域 */
-  -ms-flex-wrap: nowrap;         /* 防止换行 - IE 浏览器 */
-  flex-wrap: nowrap;             /* 防止换行 - 标准属性 */
+  flex-wrap: nowrap;             /* 防止换行 */
 }
 
 /* 时间戳标签页 - 阳历/阴历切换标签 */
 .timestamp-tabs {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
   border-bottom: 1px solid var(--border-color);   /* 底部边框 */
-  -webkit-box-flex: 1;           /* 弹性布局，占据剩余空间 - Webkit 浏览器 */
-  -moz-box-flex: 1;              /* 弹性布局，占据剩余空间 - Firefox 浏览器 */
-  -ms-flex: 1;                   /* 弹性布局，占据剩余空间 - IE 浏览器 */
-  flex: 1;                       /* 弹性布局，占据剩余空间 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中 - IE 浏览器 */
-  justify-content: center;       /* 水平居中 - 标准属性 */
+  flex: 1;                       /* 弹性布局，占据剩余空间 */
+  justify-content: center;       /* 水平居中 */
 }
 
 /* 标签页按钮 - 单个标签按钮 */
@@ -476,21 +398,10 @@
   font-weight: 500;              /* 中等字重 */
   color: var(--text-secondary);  /* 次要文本颜色 */
   border-bottom: 2px solid transparent;     /* 底部边框，默认透明 */
-  -webkit-transition: color var(--transition-fast), background-color var(--transition-fast), border-bottom-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: color var(--transition-fast), background-color var(--transition-fast), border-bottom-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: color var(--transition-fast), background-color var(--transition-fast), border-bottom-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中对齐 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中对齐 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中对齐 - IE 浏览器 */
-  justify-content: center;       /* 水平居中对齐 - 标准属性 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐 */
+  justify-content: center;       /* 水平居中对齐 */
 }
 
 /* 标签页按钮悬停状态 */
@@ -505,30 +416,20 @@
   border-bottom-color: var(--primary-color);  /* 主色底部边框，强调选中状态 */
 }
 
-/*=========================================
-  时间输入区 - 天干地支和时间选择
-  设计思路：使用紧凑的输入框布局，支持天干地支和标准时间输入
-  特点：小尺寸输入框、禁用状态、焦点高亮
-  ========================================= */
+/* ========================================
+   时间输入区 - 天干地支和时间选择
+   设计思路：使用紧凑的输入框布局，支持天干地支和标准时间输入
+   特点：小尺寸输入框、禁用状态、焦点高亮
+   ======================================== */
 
 /* 时间输入容器 - 包含所有时间输入框的区域 */
 .timestamp-inputs {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
   gap: var(--spacing-2xl);       /* 较大的元素间距 */
   margin-bottom: var(--spacing-2xl);        /* 底部间距 */
-  -ms-flex-wrap: wrap;           /* 允许换行，适应小屏幕 - IE 浏览器 */
-  flex-wrap: wrap;               /* 允许换行，适应小屏幕 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中 - IE 浏览器 */
-  justify-content: center;       /* 水平居中 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
+  flex-wrap: wrap;               /* 允许换行，适应小屏幕 */
+  justify-content: center;       /* 水平居中 */
+  align-items: center;           /* 垂直居中对齐 */
 }
 
 /* 天干输入容器 - 特殊的天干输入区域 */
@@ -542,7 +443,7 @@
   width: 24px;                   /* 较小的宽度，适应单个字符 */
   height: 24px;                  /* 较小的高度 */
   padding: 2px;                   /* 较小的内边距 */
-  border: 1px solid var(--border-color-special);        /* 特殊边框颜色，区分于其他输入框 */
+  border: 1px solid #ccc;        /* 特殊边框颜色，区分于其他输入框 */
   box-sizing: content-box;       /* 内容盒模型，确保尺寸准确 */
 }
 
@@ -553,20 +454,15 @@
   border: 1px solid var(--border-color);   /* 默认边框颜色 */
   border-radius: var(--radius-md);         /* 中等圆角 */
   font-size: var(--font-size-base);        /* 基础字体大小 */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐内容 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐内容 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐内容 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中对齐内容 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中对齐内容 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中对齐内容 - IE 浏览器 */
-  justify-content: center;       /* 水平居中对齐内容 - 标准属性 */
+  text-align: center;            /* 文本居中对齐 */
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 */
-  text-align: center;            /* 居中对齐文本 */
+}
+
+/* 时间输入框焦点状态 */
+.time-input:focus {
+  outline: none;                 /* 移除默认轮廓 */
+  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
+  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
 }
 
 /* 年份输入框 - 较宽的宽度 */
@@ -587,59 +483,55 @@
   border-color: var(--border-color);        /* 保持边框颜色 */
 }
 
-/*=========================================
-  闰月切换按钮 - 特殊的开关按钮
-  设计思路：使用紧凑的按钮样式，支持激活和禁用状态
-  特点：小尺寸、颜色变化、状态指示
-  ========================================= */
+/* ========================================
+   闰月切换按钮 - 特殊的开关按钮
+   设计思路：使用紧凑的按钮样式，支持激活和禁用状态
+   特点：小尺寸、颜色变化、状态指示
+   ======================================== */
 
 /* 闰月切换按钮 - 用于切换闰月状态的特殊按钮 */
 .leap-month-toggle {
   width: 20px;                   /* 固定宽度，小尺寸 */
   height: 20px;                  /* 固定高度，小尺寸 */
-  border: 1px solid var(--toggle-border-color);     /* 特殊边框颜色 */
+  border: 1px solid #D0D0D0;     /* 特殊边框颜色 */
   border-radius: 5px;            /* 小圆角 */
   background-color: var(--bg-gray-dark);    /* 深灰背景 */
   color: var(--text-primary);     /* 主要文本颜色 */
   font-size: var(--font-size-xs);         /* 极小字体 */
   font-weight: 500;              /* 中等字重 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal); /* 正常过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal); /* 正常过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal); /* 正常过渡效果，指定具体属性 - 标准属性 */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
-  -webkit-box-pack: center;      /* 水平居中对齐 - Webkit 浏览器 */
-  -moz-box-pack: center;         /* 水平居中对齐 - Firefox 浏览器 */
-  -ms-flex-pack: center;         /* 水平居中对齐 - IE 浏览器 */
-  justify-content: center;       /* 水平居中对齐 - 标准属性 */
+  transition: all var(--transition-normal); /* 正常过渡效果 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐 */
+  justify-content: center;       /* 水平居中对齐 */
   padding: 0;                    /* 无内边距 */
   margin-top: 11px;              /* 顶部外边距，与其他元素对齐 */
 }
 
 /* 闰月切换按钮悬停状态 */
 .leap-month-toggle:hover {
-  background-color: var(--toggle-bg-color);     /* 更亮的背景，增强悬停反馈 */
+  background-color: #E0E0E0;     /* 更亮的背景，增强悬停反馈 */
   border-color: #B0B0B0;         /* 更深的边框颜色 */
+}
+
+/* 闰月切换按钮焦点状态 */
+.leap-month-toggle:focus {
+  outline: none;                 /* 移除默认轮廓 */
+  border-color: var(--primary-color);      /* 主色边框，突出焦点 */
+  box-shadow: 0 0 0 2px var(--primary-focus);  /* 外发光效果，增强焦点提示 */
 }
 
 /* 闰月切换按钮激活状态 - 表示闰月已开启 */
 .leap-month-toggle.active {
-  background-color: var(--toggle-active-bg);     /* 浅绿色背景，表示激活状态 */
-  border-color: var(--toggle-active-border);         /* 深绿色边框，强调激活状态 */
+  background-color: #D4EBD9;     /* 浅绿色背景，表示激活状态 */
+  border-color: #289846;         /* 深绿色边框，强调激活状态 */
   color: var(--text-primary);     /* 保持主要文本颜色 */
 }
 
 /* 闰月切换按钮激活状态的悬停效果 */
 .leap-month-toggle.active:hover {
-  background-color: var(--toggle-active-hover-bg);     /* 更亮的浅绿色背景 */
-  border-color: var(--toggle-active-hover-border);         /* 更亮的绿色边框 */
+  background-color: #C9E6D0;     /* 更亮的浅绿色背景 */
+  border-color: #A5D9B0;         /* 更亮的绿色边框 */
 }
 
 /* 闰月切换按钮禁用状态 */
@@ -651,11 +543,11 @@
   opacity: 0.5;                  /* 半透明，进一步表示禁用 */
 }
 
-/*=========================================
-  警告弹窗组件 - 用于显示错误和警告信息
-  设计思路：使用固定定位覆盖全屏，居中显示警告内容
-  特点：高层级、简洁布局、单按钮操作
-  ========================================= */
+/* ========================================
+   警告弹窗组件 - 用于显示错误和警告信息
+   设计思路：使用固定定位覆盖全屏，居中显示警告内容
+   特点：高层级、简洁布局、单按钮操作
+   ======================================== */
 
 /* 警告弹窗遮罩层 - 覆盖全屏的半透明背景 */
 .alert-overlay {
@@ -664,7 +556,7 @@
   left: 0;                       /* 左侧对齐 */
   right: 0;                      /* 右侧对齐 */
   bottom: 0;                     /* 底部对齐 */
-  background-color: var(--overlay-bg);  /* 半透明黑色背景，淡化背景内容 */
+  background-color: rgba(0, 0, 0, 0.5);  /* 半透明黑色背景，淡化背景内容 */
   display: flex;                 /* 使用 Flexbox 布局 */
   justify-content: center;       /* 水平居中 */
   align-items: center;           /* 垂直居中 */
@@ -675,9 +567,7 @@
 .alert-content {
   background-color: var(--bg-white);       /* 白色背景 */
   border-radius: var(--radius-lg);         /* 大圆角 */
-  -webkit-box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - Webkit 浏览器 */
-  -moz-box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - Firefox 浏览器 */
-  box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - 标准属性 */
+  box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 */
   padding: var(--spacing-3xl);            /* 较大的内边距，提供舒适的阅读体验 */
   max-width: 400px;              /* 最大宽度限制 */
   width: 90%;                    /* 宽度占视口的 90% */
@@ -701,9 +591,7 @@
   padding: var(--spacing-sm) var(--spacing-3xl);  /* 内边距，较大的左右内边距 */
   font-size: var(--font-size-base);        /* 基础字体大小 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
 }
 
 /* 警告关闭按钮悬停状态 */
@@ -711,11 +599,11 @@
   background-color: var(--primary-hover);   /* 主色悬停态，增强交互反馈 */
 }
 
-/*=========================================
-  时间戳显示区 - 显示阳历和阴历时间信息
-  设计思路：使用卡片式布局，清晰展示不同历法的时间信息
-  特点：浅色背景、居中对齐、标签与值分离
-  ========================================= */
+/* ========================================
+   时间戳显示区 - 显示阳历和阴历时间信息
+   设计思路：使用卡片式布局，清晰展示不同历法的时间信息
+   特点：浅色背景、居中对齐、标签与值分离
+   ======================================== */
 
 /* 时间戳显示容器 - 包含所有时间信息的区域 */
 .timestamp-display {
@@ -822,11 +710,41 @@
   border-color: var(--warning-hover);      /* 警告色边框悬停态 */
 }
 
-/*=========================================
-  模态框通用组件 - 标题、关闭按钮、内容区、底部按钮
-  设计思路：提供通用的模态框组件样式，确保一致性
-  特点：清晰的视觉层次、标准化的交互反馈
-  ========================================= */
+/* ========================================
+   模态框通用组件 - 标题、关闭按钮、内容区、底部按钮
+   设计思路：提供通用的模态框组件样式，确保一致性
+   特点：清晰的视觉层次、标准化的交互反馈
+   ======================================== */
+
+/* 模态框标题 - 模态框的主标题 */
+.modal-header h3 {
+  margin: 0;                     /* 移除默认外边距 */
+  font-size: var(--font-size-lg);         /* 大字体，突出标题 */
+  font-weight: 600;              /* 加粗字体 */
+  color: var(--text-primary);    /* 主要文本颜色 */
+}
+
+/* 模态框关闭按钮 - 右上角的关闭按钮 */
+.modal-close {
+  background: none;               /* 无背景 */
+  border: none;                  /* 无边框 */
+  font-size: var(--font-size-xl);         /* 超大字体，使用 × 符号 */
+  cursor: pointer;               /* 鼠标指针，提示可点击 */
+  color: var(--text-secondary);   /* 次要文本颜色 */
+  padding: 0;                     /* 无内边距 */
+  width: 24px;                   /* 固定宽度 */
+  height: 24px;                  /* 固定高度 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐 */
+  justify-content: center;       /* 水平居中对齐 */
+  border-radius: var(--radius-sm);         /* 小圆角 */
+}
+
+/* 模态框关闭按钮悬停状态 */
+.modal-close:hover {
+  background-color: var(--bg-gray-medium);  /* 中灰背景，突出悬停 */
+  color: var(--text-primary);     /* 主要文本颜色 */
+}
 
 /* 模态框内容区 - 模态框的主要内容区域 */
 .modal-body {
@@ -835,25 +753,19 @@
 
 /* 模态框底部 - 包含操作按钮的区域 */
 .modal-footer {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-pack: end;         /* 右对齐 - Webkit 浏览器 */
-  -moz-box-pack: end;            /* 右对齐 - Firefox 浏览器 */
-  -ms-flex-pack: end;            /* 右对齐 - IE 浏览器 */
-  justify-content: flex-end;     /* 右对齐 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  justify-content: flex-end;     /* 右对齐 */
   gap: var(--spacing-lg);        /* 按钮间距 */
   padding: var(--spacing-xl) var(--spacing-2xl);  /* 内边距 */
   border-top: 1px solid var(--border-color);   /* 顶部边框，区分底部和内容 */
   background-color: var(--bg-gray-light);  /* 浅灰背景，突出底部区域 */
 }
 
-/*=========================================
-  模态框按钮 - 通用按钮样式
-  设计思路：提供多种按钮类型，适应不同的操作场景
-  特点：语义化颜色、禁用状态、悬停效果
-  ========================================= */
+/* ========================================
+   模态框按钮 - 通用按钮样式
+   设计思路：提供多种按钮类型，适应不同的操作场景
+   特点：语义化颜色、禁用状态、悬停效果
+   ======================================== */
 
 /* 模态框按钮 - 通用按钮样式 */
 .modal-button {
@@ -862,9 +774,7 @@
   border-radius: var(--radius-md);         /* 中等圆角 */
   font-size: var(--font-size-base);        /* 基础字体大小 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
 }
 
 /* 取消按钮 - 用于取消操作 */
@@ -914,11 +824,11 @@
   color: var(--text-disabled);     /* 禁用文本颜色 */
 }
 
-/*=========================================
-  结果列表组件 - 显示占卜结果列表
-  设计思路：使用卡片式布局，支持滚动和选中状态
-  特点：自定义滚动条、悬停效果、选中高亮、错误提示
-  ========================================= */
+/* ========================================
+   结果列表组件 - 显示占卜结果列表
+   设计思路：使用卡片式布局，支持滚动和选中状态
+   特点：自定义滚动条、悬停效果、选中高亮、错误提示
+   ======================================== */
 
 /* 阳历结果列表容器 - 包含结果列表的区域 */
 .solar-list-result {
@@ -931,14 +841,8 @@
 
 /* 结果列表 - 可滚动的结果项列表 */
 .result-list {
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-orient: vertical;  /* 垂直排列 - Webkit 浏览器 */
-  -moz-box-orient: vertical;     /* 垂直排列 - Firefox 浏览器 */
-  -ms-flex-direction: column;     /* 垂直排列 - IE 浏览器 */
-  flex-direction: column;        /* 垂直排列 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  flex-direction: column;        /* 垂直排列 */
   gap: var(--spacing-md);        /* 结果项间距 */
   max-height: 200px;             /* 最大高度，超出后滚动 */
   overflow-y: auto;              /* 垂直滚动 */
@@ -959,30 +863,21 @@
 
 /* 滚动条滑块 */
 .result-list::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb-color);          /* 灰色滑块 */
+  background: #C1C1C1;          /* 灰色滑块 */
   border-radius: 3px;          /* 小圆角 */
 }
 
 /* 滚动条滑块悬停状态 */
 .result-list::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);          /* 更深的灰色，增强交互反馈 */
+  background: #A8A8A8;          /* 更深的灰色，增强交互反馈 */
 }
 
 /* 结果项 - 单个结果项 */
 .result-item {
   height: 40px;                  /* 固定高度 */
-  display: -webkit-box;          /* 使用 Flexbox 布局 - Webkit 浏览器 */
-  display: -moz-box;             /* 使用 Flexbox 布局 - Firefox 浏览器 */
-  display: -ms-flexbox;          /* 使用 Flexbox 布局 - IE 浏览器 */
-  display: flex;                 /* 使用 Flexbox 布局 - 标准属性 */
-  -webkit-box-align: center;     /* 垂直居中对齐 - Webkit 浏览器 */
-  -moz-box-align: center;        /* 垂直居中对齐 - Firefox 浏览器 */
-  -ms-flex-align: center;        /* 垂直居中对齐 - IE 浏览器 */
-  align-items: center;           /* 垂直居中对齐 - 标准属性 */
-  -webkit-box-pack: start;       /* 左对齐 - Webkit 浏览器 */
-  -moz-box-pack: start;          /* 左对齐 - Firefox 浏览器 */
-  -ms-flex-pack: start;          /* 左对齐 - IE 浏览器 */
-  justify-content: flex-start;   /* 左对齐 - 标准属性 */
+  display: flex;                 /* 使用 Flexbox 布局 */
+  align-items: center;           /* 垂直居中对齐 */
+  justify-content: flex-start;   /* 左对齐 */
   padding: 10px;                 /* 内边距 */
   background-color: var(--bg-white);       /* 白色背景 */
   border-radius: var(--radius-sm);         /* 小圆角 */
@@ -991,9 +886,7 @@
   color: var(--text-primary);    /* 主要文本颜色 */
   gap: var(--spacing-lg);        /* 元素间距 */
   cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
+  transition: all var(--transition-fast);   /* 快速过渡效果 */
 }
 
 /* 结果项悬停状态 */
@@ -1010,7 +903,7 @@
 
 /* 结果项选中状态的悬停效果 */
 .result-item.selected:hover {
-  background-color: var(--selected-hover-bg);     /* 更亮的主色浅色背景 */
+  background-color: #BAE7FF;     /* 更亮的主色浅色背景 */
 }
 
 /* 结果索引 - 结果项的序号 */

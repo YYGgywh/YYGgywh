@@ -1,65 +1,82 @@
 
+/*
+ * @file            frontend/src/components/Header/Button/Button.css
+ * @description     按钮组件样式，提供主要和次要按钮样式
+ *                  使用全局主题变量（variables.css），确保设计一致性
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-25 00:00:00
+ * @lastModified    2026-02-25 00:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ========================================
+   按钮组件样式
+   设计思路：使用全局主题变量，确保与整个应用的设计风格一致
+   特点：主要按钮、次要按钮、悬停效果、焦点状态
+   ======================================== */
+
+/* 按钮基础样式 */
 .button {
-  display: inline-flex; 
-  align-items: center; 
-  justify-content: center; 
-  height: 40px; 
-  padding: 0 20px; 
-  font-size: 0.875rem; 
-  font-weight: 600; 
-  border-radius: 6px; 
-  border: 2px solid transparent; 
-  cursor: pointer; 
-  transition: all 0.2s ease; 
-  outline: none; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 20px;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
 }
 
-
+/* 按钮焦点状态 */
 .button:focus {
-  outline: 2px solid #1890FF; 
-  outline-offset: 2px; 
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
-
+/* 主要按钮样式 */
 .button-primary {
-  background-color: #1890FF; 
-  color: #FFFFFF; 
-  box-shadow: 0 2px 4px rgba(0, 122, 255, 0.2); 
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+  box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
 }
 
-
+/* 主要按钮悬停状态 */
 .button-primary:hover {
-  background-color: #0D7ACC; 
-  box-shadow: 0 4px 8px rgba(0, 122, 255, 0.3); 
-  transform: translateY(-1px); 
+  background-color: #0D7ACC;
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.3);
+  transform: translateY(-1px);
 }
 
-
+/* 主要按钮激活状态 */
 .button-primary:active {
-  background-color: #0A6BB8; 
-  transform: translateY(0); 
+  background-color: #0A6BB8;
+  transform: translateY(0);
 }
 
-
+/* 次要按钮样式 */
 .button-secondary {
-  background-color: #FFFFFF; 
-  color: #1890FF; 
-  border-color: #1890FF; 
+  background-color: var(--bg-white);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-
+/* 次要按钮悬停状态 */
 .button-secondary:hover {
-  background-color: #F0F7FF; 
-  border-color: #0D7ACC; 
-  color: #0D7ACC; 
+  background-color: #F0F7FF;
+  border-color: #0D7ACC;
+  color: #0D7ACC;
 }
 
-
+/* 次要按钮激活状态 */
 .button-secondary:active {
-  background-color: #E6F2FF; 
+  background-color: #E6F2FF;
 }
 
-
+/* 全宽按钮样式 */
 .button-full-width {
-  width: 100%; 
+  width: 100%;
 }

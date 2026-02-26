@@ -22,7 +22,8 @@ class Settings:
         "http://127.0.0.1:3000",
         "http://localhost:3001",  # React开发服务器（备用端口）
         "http://127.0.0.1:3001",
-        "https://1198675leyc06.vicp.fun",  # 生产环境域名
+        "http://115.191.48.226:3000",  # 生产环境域名
+        "http://115.191.48.226",  # 生产环境（使用公网IP，无端口）
     ]
 
 settings = Settings()

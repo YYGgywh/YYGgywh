@@ -1,0 +1,142 @@
+/*
+ * @file            frontend/src/styles/variables.css
+ * @description     统一的主题变量文件，包含整个应用的设计系统变量
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-25 00:00:00
+ * @lastModified    2026-02-26 10:00:00
+ * Copyright © All rights reserved
+*/
+
+/*=========================================
+  CSS 变量定义 - 设计系统核心
+  设计思路：使用 CSS 自定义属性（Custom Properties）集中管理设计系统
+  优势：便于主题切换、统一视觉风格、提高维护性、支持动态样式更新
+  ========================================= */
+:root {
+  /* 主色调系统 - 用于主要交互元素和品牌色 */
+  --primary-color: #1890FF;          /* 主色 - 蓝色系，用于按钮、链接等主要交互元素 */
+  --primary-hover: #40A9FF;          /* 主色悬停态 - 比主色稍亮，提供视觉反馈 */
+  --primary-light: #E6F7FF;          /* 主色浅色 - 用于背景高亮、选中状态等 */
+  --primary-focus: rgba(24, 144, 255, 0.1);  /* 主色焦点态 - 用于输入框聚焦时的外发光效果 */
+  
+  /* 文本颜色系统 - 遵循无障碍设计标准，确保足够的对比度 */
+  --text-primary: #333333;          /* 主要文本 - 用于标题、重要内容 */
+  --text-secondary: #666666;        /* 次要文本 - 用于说明文字、辅助信息 */
+  --text-placeholder: #9CA3AF;      /* 占位符文本 - 用于输入框提示文字 */
+  --text-disabled: #9CA3AF;          /* 禁用文本 - 用于禁用状态的文本 */
+  --text-color: #333;               /* 通用文本颜色 - 兼容旧代码，建议使用 --text-primary */
+  --light-text-color: #8e8e8e;     /* 浅色文本 - 用于次要信息 */
+  --gray-text-color: #666;           /* 灰色文本 - 用于辅助信息 */
+  
+  /* 边框颜色系统 - 用于表单元素、分割线等 */
+  --border-color: #E5E7EB;           /* 默认边框 - 中性灰色，不抢夺视觉焦点 */
+  --border-hover: #1890FF;           /* 悬停边框 - 使用主色，提供交互反馈 */
+  --border-disabled: #D1D5DB;       /* 禁用边框 - 比默认边框更深，表示不可用状态 */
+  
+  /* 背景颜色系统 - 用于不同层级和状态的背景 */
+  --bg-white: #FFFFFF;              /* 白色背景 - 用于卡片、模态框等主要内容区 */
+  --bg-gray-light: #F9FAFB;         /* 浅灰背景 - 用于次要内容区、悬停状态 */
+  --bg-gray-medium: #F3F4F6;        /* 中灰背景 - 用于禁用状态、分割区域 */
+  --bg-gray-dark: #F0F0F0;          /* 深灰背景 - 用于特殊按钮、禁用按钮 */
+  --bg-color: #f5f5f5;             /* 通用背景色 - 兼容旧代码 */
+  --white-color: #fff;               /* 白色 - 兼容旧代码，建议使用 --bg-white */
+  
+  /* 语义化颜色系统 - 用于状态提示、操作反馈 */
+  --success-color: #52C41A;         /* 成功色 - 绿色系，用于成功提示、确认按钮 */
+  --success-hover: #73D13D;         /* 成功悬停态 - 比成功色稍亮 */
+  --warning-color: #FF4D4F;         /* 警告色 - 红色系，用于错误提示、危险操作 */
+  --warning-hover: #FF7875;         /* 警告悬停态 - 比警告色稍亮 */
+  --warning-bg: #FFF2F0;            /* 警告背景 - 浅红色，用于警告提示框背景 */
+  --warning-border: #FFCCC7;        /* 警告边框 - 浅红色，用于警告提示框边框 */
+  --error-color: #ff4d4f;          /* 错误色 - 红色系，用于错误提示 */
+  --error-border-color: #ff4d4f;    /* 错误边框色 - 用于错误提示框边框 */
+  
+  /* 间距系统 - 基于 4px 网格，保持视觉一致性 */
+  --spacing-xs: 4px;                /* 极小间距 - 用于紧密排列的元素 */
+  --spacing-sm: 6px;                /* 小间距 - 用于相关元素之间 */
+  --spacing-md: 8px;                /* 中间距 - 用于常规元素间距 */
+  --spacing-lg: 12px;               /* 大间距 - 用于主要分组之间 */
+  --spacing-xl: 16px;               /* 超大间距 - 用于区块之间 */
+  --spacing-2xl: 20px;              /* 特大间距 - 用于主要区块 */
+  --spacing-3xl: 24px;              /* 最大间距 - 用于页面级布局 */
+  
+  /* 字体族系统 - 确保跨平台一致性 */
+  --font-family-base: 'Noto Sans SC', 'Helvetica Neue', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei',  Arial, sans-serif;
+  --font-family-code: 'Courier New', Courier, monospace;
+  
+  /* 字体大小系统 - 基于 rem 单位，支持响应式缩放 */
+  --font-size-xs: 0.625rem;         /* 极小字体 - 10px，用于辅助信息 */
+  --font-size-2xs: 0.6875rem;       /* 二极小字体 - 11px，用于辅助信息 */
+  --font-size-sm: 0.75rem;          /* 小字体 - 12px，用于次要文本 */
+  --font-size-md: 0.8125rem;        /* 中等字体 - 13px，用于常规文本 */
+  --font-size-base: 0.875rem;       /* 基础字体 - 14px，用于正文内容 */
+  --font-size-lg: 1rem;             /* 大字体 - 16px，用于标题 */
+  --font-size-xl: 1.25rem;          /* 超大字体 - 20px，用于主标题 */
+  --font-size-2xl: 1.5rem;          /* 特大字体 - 24px，用于页面标题 */
+  --font-size-3xl: 1.75rem;         /* 极大字体 - 28px，用于重要标题 */
+  --font-size-4xl: 2rem;            /* 4倍大字体 - 32px，用于特别重要的标题 */
+  --font-size-5xl: 2.5rem;          /* 5倍大字体 - 40px，用于页面主标题 */
+  --text-size: 0.875rem;           /* 通用文本大小 - 兼容旧代码，建议使用 --font-size-base */
+  
+  /* 行高系统 - 确保文本可读性 */
+  --line-height-base: 1.5;          /* 基础行高 - 用于正文内容 */
+  --line-height-tight: 1.25;        /* 紧凑行高 - 用于标题 */
+  --line-height-relaxed: 1.75;      /* 宽松行高 - 用于长文本 */
+  
+  /* 圆角系统 - 用于按钮、卡片、输入框等元素 */
+  --radius-sm: 4px;                 /* 小圆角 - 用于按钮、小卡片 */
+  --radius-md: 6px;                 /* 中圆角 - 用于输入框、中等卡片 */
+  --radius-lg: 8px;                 /* 大圆角 - 用于大卡片、模态框 */
+  --radius-xl: 16px;                /* 超大圆角 - 用于主容器、特殊卡片 */
+  --radius-full: 9999px;            /* 全圆角 - 用于圆形按钮、头像等 */
+  --border-radius: var(--radius-xl);  /* 通用圆角 - 兼容旧代码，使用 --radius-xl */
+  
+  /* 阴影系统 - 用于层次感和悬浮效果 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);      /* 小阴影 - 用于下拉菜单、提示框 */
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);      /* 中阴影 - 用于卡片、表单 */
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);    /* 大阴影 - 用于模态框、弹窗 */
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);    /* 超大阴影 - 用于重要组件 */
+
+  /* 特殊颜色系统 - 用于特定组件的颜色 */
+  --border-color-special: #ccc;      /* 特殊边框颜色 */
+  --toggle-border-color: #D0D0D0;   /* 切换按钮边框颜色 */
+  --toggle-bg-color: #E0E0E0;        /* 切换按钮背景颜色 */
+  --toggle-active-bg: #D4EBD9;       /* 切换按钮激活背景颜色 */
+  --toggle-active-border: #289846;    /* 切换按钮激活边框颜色 */
+  --toggle-active-hover-border: #A5D9B0; /* 切换按钮激活悬停边框颜色 */
+  --toggle-active-hover-bg: #C9E6D0;   /* 切换按钮激活悬停背景颜色 */
+  --scrollbar-thumb-color: #C1C1C1;   /* 滚动条滑块颜色 */
+  --scrollbar-thumb-hover: #A8A8A8;   /* 滚动条滑块悬停颜色 */
+  --selected-hover-bg: #BAE7FF;       /* 选中项悬停背景颜色 */
+  --overlay-bg: rgba(0, 0, 0, 0.5);    /* 遮罩层背景颜色 */
+
+  /* 过渡动画系统 - 统一动画时长和缓动函数 */
+  --transition-fast: 0.2s ease;     /* 快速过渡 - 用于 hover、focus 等即时反馈 */
+  --transition-normal: 0.25s ease;  /* 正常过渡 - 用于一般状态变化 */
+  --transition-slow: 0.3s ease;     /* 慢速过渡 - 用于模态框等复杂动画 */
+  --transition-all: var(--transition-normal);    /* 所有属性的过渡 */
+  --transition-color: var(--transition-fast);    /* 颜色属性的过渡 */
+  --transition-transform: var(--transition-fast); /* 变换属性的过渡 */
+  
+  /* 层级系统 - 确保元素正确的堆叠顺序 */
+  --z-dropdown: 10;                 /* 下拉菜单层级 - 在普通内容之上 */
+  --z-modal: 1000;                  /* 模态框层级 - 在所有内容之上 */
+  --z-alert: 2000;                  /* 警告弹窗层级 - 在模态框之上 */
+  
+  /* 网格系统 - 用于六爻排盘等网格布局 */
+  --grid-cell-padding: 2px 0;       /* 网格单元格内边距 */
+  
+  /* 五行颜色系统 - 用于天干地支的五行属性着色 */
+  --element-fire: #FF0000;        /* 火元素 - 红色 */
+  --element-wood: #00B050;        /* 木元素 - 绿色 */
+  --element-water: #002060;       /* 水元素 - 深蓝色 */
+  --element-earth: #80350E;       /* 土元素 - 棕色 */
+  --element-metal: #FFC000;       /* 金元素 - 橙黄色 */
+  
+  /* 兼容旧代码的五行颜色变量 */
+  --line-color-red: var(--element-fire);
+  --line-color-green: var(--element-wood);
+  --line-color-black: var(--element-water);
+  --line-color-yellow: var(--element-earth);
+  --line-color-blue: var(--element-metal);
+}

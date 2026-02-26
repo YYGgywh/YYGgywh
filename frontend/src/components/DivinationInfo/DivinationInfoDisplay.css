@@ -1,10 +1,19 @@
 
-:root {
-  --primary-color: #1890FF;
-  --error-color: #ff4d4f;
-  --text-color: #333;
-  --border-radius: 16px;
-}
+/*
+ * @file            frontend/src/components/DivinationInfo/DivinationInfoDisplay.css
+ * @description     占卜信息展示组件样式，负责展示用户输入的占卜信息
+ *                  使用全局主题变量（variables.css），确保设计一致性
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-23 00:00:00
+ * @lastModified    2026-02-25 00:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ========================================
+   占卜信息展示组件样式
+   设计思路：使用全局主题变量，确保与整个应用的设计风格一致
+   特点：卡片式布局、信息展示、悬停效果
+   ======================================== */
 
 .divination-info {
   max-width: 800px;
@@ -23,6 +32,34 @@
 
 .info-top {
   margin-bottom: 7px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.info-top-left {
+  flex-shrink: 0;
+}
+
+.info-top-right {
+  flex: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 7px;
 }
 
 
@@ -70,17 +107,44 @@
 }
 
 
-.divination-datetime {
+.datetime-container {
+  width: 100%;
+  display: flex;
   flex-direction: column;
   gap: 8px;
-  width: max-content;
 }
 
-.divination-datetime > .solar-info,
-.divination-datetime > .lunar-info {
-  width: max-content;
+.calendar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
+.calendar-label {
+  font-weight: bold;
+  min-width: 60px;
+  color: var(--text-color);
+  display: inline-block;
+}
+
+.calendar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.jieqi-label {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.time-label {
+  font-weight: bold;
+  color: #C00000;
+}
 
 .date-info {
   display: inline-block;
@@ -88,19 +152,21 @@
   text-align: center;
 }
 
-
 .time-info {
   display: inline-block;
-  width: 63px;
+  width: 60px;
   text-align: center;
 }
 
+.solar-row {
+  background-color: rgba(240, 240, 240, 0.5);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
 
-.solar-terms-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.solar-row:hover {
+  background-color: rgba(220, 220, 240, 0.8);
 }
 
 

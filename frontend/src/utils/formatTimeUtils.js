@@ -3,7 +3,7 @@
  * @description     时间格式化工具函数，提供西历、农历、节气等日期时间的格式化功能
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-21 22:00:00
- * @lastModified    2026-02-21 21:57:07
+ * @lastModified    2026-02-25 21:39:13
  * Copyright © All rights reserved
 */
 
@@ -89,4 +89,87 @@ export function formatJieqiDate(time) {
  */
 export function formatJieqiTime(time) {
   return time ? time.split(' ')[1] : ''; // 如果有时间字符串，返回时间部分，否则返回空字符串
+}
+
+/**
+ * 格式化节气日期为农历
+ * @param {string} time - 节气时间字符串，如"2025-08-07 12:00:00"
+ * @returns {string} 格式化后的农历日期，如"乙巳年六月十七"
+ */
+export function formatJieqiDateToLunar(time) {
+  if (!time) return ''; // 如果没有时间字符串，返回空字符串
+  
+  try {
+    const [dateStr, timeStr] = time.split(' ') || []; // 分离日期和时间
+    const [year, month, day] = dateStr.split('-') || []; // 分离年、月、日
+    const [hour, minute, second] = timeStr.split(':') || []; // 分离时、分、秒
+    
+    const solarData = {
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      hour: parseInt(hour),
+      minute: parseInt(minute),
+      second: parseInt(second)
+    };
+    
+    const CalendarService = require('../services/calendarService').default; // 同步导入CalendarService
+    const result = CalendarService.convertSolarToLunar(solarData); // 转换为农历
+    
+    if (result.success && result.data) {
+      const lunarData = result.data;
+      const year = lunarData.lunar_year_in_GanZhi || ''; // 干支年
+      const month = lunarData.lunar_month_in_Chinese || ''; // 中文月
+      const day = lunarData.lunar_day_in_Chinese || ''; // 中文日
+      return `${year}年${month}月${day}`; // 返回格式化后的农历日期
+    }
+    
+    return ''; // 转换失败返回空字符串
+  } catch (error) {
+    console.error('节气日期转农历失败:', error);
+    return ''; // 出错返回空字符串
+  }
+}
+
+/**
+ * 格式化节气时间为农历
+ * @param {string} time - 节气时间字符串，如"2025-08-07 12:00:00"
+ * @returns {string} 格式化后的农历时间，如"午时"
+ */
+export function formatJieqiTimeToLunar(time) {
+  if (!time) return ''; // 如果没有时间字符串，返回空字符串
+  
+  try {
+    const [dateStr, timeStr] = time.split(' ') || []; // 分离日期和时间
+    const [year, month, day] = dateStr.split('-') || []; // 分离年、月、日
+    const [hour, minute, second] = timeStr.split(':') || []; // 分离时、分、秒
+    
+    const solarData = {
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      hour: parseInt(hour),
+      minute: parseInt(minute),
+      second: parseInt(second)
+    };
+    
+    const CalendarService = require('../services/calendarService').default; // 同步导入CalendarService
+    const result = CalendarService.convertSolarToLunar(solarData); // 转换为农历
+    
+    if (result.success && result.data) {
+      const lunarData = result.data;
+      const timeZhi = lunarData.lunar_time_Zhi || ''; // 时辰
+      const hourNum = parseInt(hour || '0', 10);
+      
+      if (timeZhi === '子') {
+        return hourNum >= 23 ? '晚子时' : '早子时'; // 子时特殊处理
+      }
+      return `${timeZhi}时`; // 返回格式化后的农历时间
+    }
+    
+    return ''; // 转换失败返回空字符串
+  } catch (error) {
+    console.error('节气时间转农历失败:', error);
+    return ''; // 出错返回空字符串
+  }
 }

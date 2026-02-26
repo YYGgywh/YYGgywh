@@ -11,8 +11,6 @@ import json  # 导入json模块，用于JSON序列化
 
 # 添加src目录到Python路径，确保可以导入src目录下的模块
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-# 添加当前目录到Python路径，确保可以导入config模块
-sys.path.append(os.path.dirname(__file__))
 
 from config import settings  # 导入应用配置对象，包含应用的基本配置信息
 from src.api import router as api_router  # 导入API路由器，包含所有API接口路由
@@ -21,10 +19,10 @@ from src.api import router as api_router  # 导入API路由器，包含所有API
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # 启动时执行的操作，打印应用启动信息
-    print(f"[START] {settings.APP_NAME} v{settings.APP_VERSION} 正在启动...")
+    print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} 正在启动...")
     yield  # 暂停执行，等待应用关闭
     # 关闭时执行的操作，打印应用关闭信息
-    print("[STOP] 应用正在关闭...")
+    print("👋 应用正在关闭...")
 
 # 创建自定义JSON响应类，继承自FastAPI的JSONResponse类
 class UTF8JSONResponse(JSONResponse):
