@@ -1,21 +1,26 @@
-# backend/main.py 2026-02-15 10:00:00
+# backend/main.py 2026-02-27 10:00:00
 # 功能：FastAPI应用主入口
 
 import sys  # 导入sys模块，用于Python路径管理
 import os  # 导入os模块，用于路径操作
-from fastapi import FastAPI  # 导入FastAPI类，用于创建Web应用
+from fastapi import FastAPI, Request  # 导入FastAPI类，用于创建Web应用
 from fastapi.middleware.cors import CORSMiddleware  # 导入CORS中间件，用于处理跨域请求
+from fastapi.staticfiles import StaticFiles  # 导入StaticFiles，用于静态文件服务
 from contextlib import asynccontextmanager  # 导入asynccontextmanager，用于管理应用生命周期
 from fastapi.responses import JSONResponse  # 导入JSONResponse类，用于自定义JSON响应
 import json  # 导入json模块，用于JSON序列化
+import logging  # 导入logging模块，用于日志记录
 
-# 添加src目录到Python路径，确保可以导入src目录下的模块
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-# 添加当前目录到Python路径，确保可以导入config模块
+# 配置日志
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# 移除对src目录的路径添加，因为我们已经重构了目录结构
+# 添加当前目录到Python路径，确保可以导入config模块和app模块
 sys.path.append(os.path.dirname(__file__))
 
 from config import settings  # 导入应用配置对象，包含应用的基本配置信息
-from src.api import router as api_router  # 导入API路由器，包含所有API接口路由
+from app.api import api_router  # 导入API路由器，包含所有API接口路由
 
 # 定义应用生命周期管理器，使用异步上下文管理器装饰器
 @asynccontextmanager
@@ -54,11 +59,26 @@ app = FastAPI(
 # 配置CORS中间件，允许前端跨域访问后端API
 app.add_middleware(
     CORSMiddleware,  # CORS中间件类
-    allow_origins=settings.BACKEND_CORS_ORIGINS,  # 允许的源列表，从配置中读取
+    allow_origins=["*"],  # 允许所有源
     allow_credentials=True,  # 允许携带凭证（如Cookie）
     allow_methods=["*"],  # 允许所有HTTP方法（GET、POST、PUT、DELETE等）
     allow_headers=["*"],  # 允许所有请求头
 )
+
+# 导入并注册修复后的中间件
+# from app.middleware.rate_limit import rate_limit_middleware
+# from app.middleware.validation import security_validation_middleware
+
+# 注册频率限制中间件
+# app.middleware("http")(rate_limit_middleware)
+
+# 注册安全参数验证中间件
+# app.middleware("http")(security_validation_middleware)
+
+# 挂载静态文件服务
+if not os.path.exists("uploads"):
+    os.makedirs("uploads")
+app.mount("/static", StaticFiles(directory="uploads"), name="static")
 
 # 包含API路由器，将所有API接口注册到应用中
 app.include_router(api_router, prefix=settings.API_V1_STR)  # 使用配置中的API版本路径作为前缀
@@ -77,14 +97,20 @@ async def root():
 async def health_check():
     return {"status": "healthy"}  # 返回健康状态，表示应用正常运行
 
+# 定义测试路径（/test）的POST请求处理函数，用于测试POST请求
+@app.post("/test")
+async def test_post(request: Request):
+    body = await request.body()
+    return {"body": body.decode("utf-8"), "status": "ok"}
+
 # 主程序入口，当直接运行main.py时执行
 if __name__ == "__main__":
     import uvicorn  # 导入uvicorn服务器，用于运行FastAPI应用
     # 使用uvicorn服务器运行FastAPI应用
     uvicorn.run(
         "main:app",  # 应用位置，格式为模块:应用
-        host="0.0.0.0",  # 监听所有网络接口，允许外部访问
-        port=8000,  # 监听端口号8000
+        host=settings.SERVER_HOST,  # 监听所有网络接口，允许外部访问
+        port=settings.SERVER_PORT,  # 监听端口号，从配置中读取
         reload=settings.DEBUG,  # 调试模式下启用热重载，代码修改后自动重启
         log_level="info"  # 日志级别为info，记录重要信息
     )

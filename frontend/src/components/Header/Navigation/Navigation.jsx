@@ -3,19 +3,22 @@
  * @description     圆运阁顶部导航栏组件，包含Logo、菜单和用户操作按钮
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-07 11:10:00
- * @lastModified    2026-02-16 21:23:13
+ * @lastModified    2026-02-27 15:00:00
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect } from 'react'; // 导入React核心库和Hooks
+import { useNavigate } from 'react-router-dom'; // 导入useNavigate钩子
 import './Navigation.css'; // 导入Navigation组件样式
 import Logo from '../Logo/Logo'; // 导入Logo组件
 import MenuItem from '../MenuItem/MenuItem'; // 导入MenuItem组件
 import Button from '../Button/Button'; // 导入Button组件
 import { menuItems } from '../menuConfig';
+import { isLoggedIn } from '../../../utils/storage'; // 导入登录状态检查
 
 // 定义Navigation组件
 const Navigation = () => {
+  const navigate = useNavigate(); // 获取导航实例
   const [isScrolled, setIsScrolled] = useState(false); // 定义滚动状态，默认为false
   const [activeMenu, setActiveMenu] = useState('广场'); // 定义激活菜单状态，默认为'广场'
 
@@ -35,6 +38,25 @@ const Navigation = () => {
   // 定义菜单点击处理函数
   const handleMenuClick = (menuName) => {
     setActiveMenu(menuName); // 设置激活菜单
+  };
+
+  // 定义登录按钮点击处理函数
+  const handleLoginClick = () => {
+    if (!isLoggedIn()) {
+      navigate('/login'); // 跳转到登录页面
+    } else {
+      navigate('/user'); // 跳转到用户中心
+    }
+  };
+
+  // 定义免费试用按钮点击处理函数
+  const handleTryClick = () => {
+    if (!isLoggedIn()) {
+      navigate('/login'); // 未登录时跳转到登录页面
+    } else {
+      // 已登录时的处理逻辑
+      console.log('免费试用');
+    }
   };
 
   // 返回JSX
@@ -67,8 +89,18 @@ const Navigation = () => {
           </div> {/* 结束导航工具区域 */}
 
           <div className="navigation-actions"> {/* 渲染导航操作区域 */}
-            <Button variant="secondary">登录</Button> {/* 渲染登录按钮 */}
-            <Button variant="primary">免费试用</Button> {/* 渲染免费试用按钮 */}
+            <Button 
+              variant="secondary" 
+              onClick={handleLoginClick}
+            >
+              {isLoggedIn() ? '用户中心' : '登录'}
+            </Button> {/* 渲染登录按钮 */}
+            <Button 
+              variant="primary" 
+              onClick={handleTryClick}
+            >
+              免费试用
+            </Button> {/* 渲染免费试用按钮 */}
           </div> {/* 结束导航操作区域 */}
           
         </div> {/* 结束右侧导航区域 */}

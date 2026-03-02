@@ -1,0 +1,49 @@
+#
+# * @file            .gitignore
+# * @description     
+# * @author          Gordon <gordon_cao@qq.com>
+# * @createTime      2026-03-02 14:53:50
+# * @lastModified    2026-03-02 14:53:51
+# * Copyright © All rights reserved
+#
+
+Thumbs.db
+.DS_Store
+
+# 日志文件夹
+console.log/
+
+# IDE配置
+.vscode/
+.idea/
+
+# 环境变量
+.env
+.env.local
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv/
+
+# 构建产物
+dist/
+build/
+*.egg-info/
+
+# 测试相关
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 数据库文件
+*.db
+*.sqlite

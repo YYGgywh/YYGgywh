@@ -3,15 +3,20 @@
 # * @description     后端项目依赖文件，使用预编译版本避免编译问题
 # * @author          Gordon <gordon_cao@qq.com>
 # * @createTime      2026-02-24 10:00:00
-# * @lastModified    2026-02-24 12:26:31
+# * @lastModified    2026-02-27 11:23:19
 # * Copyright © All rights reserved
 #
 
 # Web 框架相关
-fastapi==0.104.1        # FastAPI Web 框架，用于构建 RESTful API
+fastapi>=0.133.0        # FastAPI Web 框架，用于构建 RESTful API
 uvicorn==0.24.0         # ASGI 服务器，用于运行 FastAPI 应用
-pydantic==1.10.12        # 数据验证和序列化库，使用稳定版本避免编译问题
+pydantic>=2.12.5        # 数据验证和序列化库，使用稳定版本避免编译问题
 python-dotenv==1.0.0     # 环境变量管理库，用于加载 .env 文件中的配置
+
+# 数据库相关
+sqlalchemy==2.0.31       # ORM 框架，用于数据库操作（兼容 Python 3.14）
+python-jose[cryptography]==3.3.0  # JWT 库，用于生成和验证 Token
+passlib[bcrypt]==1.7.4   # 密码哈希库，用于密码加密
 
 # 易学算法相关
 lunar-python==1.4.8       # 中国农历和干支计算库，用于历法转换和六爻排盘算法
