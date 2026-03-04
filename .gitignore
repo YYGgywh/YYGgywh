@@ -3,7 +3,7 @@
 # * @description     
 # * @author          Gordon <gordon_cao@qq.com>
 # * @createTime      2026-03-02 14:53:50
-# * @lastModified    2026-03-02 14:53:51
+# * @lastModified    2026-03-04 19:23:16
 # * Copyright © All rights reserved
 #
 
@@ -45,5 +45,5 @@ __pycache__/
 .Python
 
 # 数据库文件
-*.db
+# *.db
 *.sqlite
