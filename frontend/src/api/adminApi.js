@@ -79,6 +79,16 @@ export const getPanRecordList = async (params) => {
   }
 };
 
+// 获取排盘记录详情
+export const getPanRecordDetail = async (recordId) => {
+  try {
+    const response = await api.get(`/admin/pan-records/${recordId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // 审核排盘记录
 export const auditPanRecord = async (recordId, data) => {
   try {
@@ -93,6 +103,90 @@ export const auditPanRecord = async (recordId, data) => {
 export const deletePanRecord = async (recordId) => {
   try {
     const response = await api.delete(`/admin/pan-records/${recordId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 批量删除排盘记录
+export const batchDeletePanRecords = async (recordIds) => {
+  try {
+    const response = await api.post('/admin/pan-records/batch-delete', {
+      record_ids: recordIds
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 批量审核排盘记录
+export const batchAuditPanRecords = async (recordIds, auditStatus, auditRemark = '') => {
+  try {
+    const response = await api.post('/admin/pan-records/batch-audit', {
+      record_ids: recordIds,
+      audit_status: auditStatus,
+      audit_remark: auditRemark
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 导出排盘记录
+export const exportPanRecords = async (format, filters = {}, recordIds = null) => {
+  try {
+    const response = await api.post('/admin/pan-records/export', {
+      format,
+      filters,
+      record_ids: recordIds
+    }, {
+      responseType: 'blob' // 重要：设置响应类型为blob
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取已删除排盘记录列表
+export const getDeletedPanRecordList = async (params) => {
+  try {
+    const response = await api.get('/admin/pan-records/deleted', { params });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 恢复已删除排盘记录
+export const restorePanRecord = async (recordId) => {
+  try {
+    const response = await api.put(`/admin/pan-records/${recordId}/restore`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 永久删除排盘记录
+export const permanentDeletePanRecord = async (recordId) => {
+  try {
+    const response = await api.delete(`/admin/pan-records/${recordId}/permanent`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 批量永久删除排盘记录
+export const batchPermanentDeletePanRecords = async (recordIds) => {
+  try {
+    const response = await api.post('/admin/pan-records/batch-permanent-delete', {
+      record_ids: recordIds
+    });
     return response;
   } catch (error) {
     throw error;

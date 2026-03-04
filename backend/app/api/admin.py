@@ -2,7 +2,10 @@
 # 功能：后台管理API路由
 
 import time
+import csv
+from io import BytesIO, StringIO
 from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, and_
@@ -17,6 +20,14 @@ from app.utils.password import verify_password, hash_password
 from app.utils.token import create_access_token
 from app.utils.response_formatter import create_success_response, create_error_response
 from app.utils.logger import log_system_action
+
+# 尝试导入openpyxl，如果失败则使用CSV作为备选
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, Alignment
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
 
 router = APIRouter()
 
@@ -609,6 +620,39 @@ async def get_pan_record_list(
     })
 
 
+@router.get("/pan-records/{record_id}")
+async def get_pan_record_detail(
+    record_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """获取排盘记录详情"""
+    record = db.query(PanRecord).filter(
+        PanRecord.id == record_id,
+        PanRecord.deleted_at.is_(None)
+    ).first()
+    
+    if not record:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    return create_success_response({
+        "id": record.id,
+        "user_id": record.user_id,
+        "pan_type": record.pan_type,
+        "pan_params": record.pan_params,
+        "pan_result": record.pan_result,
+        "audit_status": record.audit_status,
+        "audit_remark": record.audit_remark,
+        "audit_time": record.audit_time,
+        "audit_user_id": record.audit_user_id,
+        "is_visible": record.is_visible,
+        "supplement": record.supplement,
+        "create_time": record.create_time,
+        "update_time": record.update_time,
+        "deleted_at": record.deleted_at
+    })
+
+
 class AuditPanRecordRequest(BaseModel):
     audit_status: int
     audit_remark: Optional[str] = None
@@ -658,6 +702,356 @@ async def delete_pan_record(
     db.commit()
     
     return create_success_response(None, "删除成功")
+
+
+# ==================== 批量操作 ====================
+
+class BatchDeleteRequest(BaseModel):
+    record_ids: List[int] = Field(..., description="要删除的记录ID列表")
+
+
+class BatchAuditRequest(BaseModel):
+    record_ids: List[int] = Field(..., description="要审核的记录ID列表")
+    audit_status: int = Field(..., description="审核状态：1-通过，2-拒绝")
+    audit_remark: Optional[str] = Field(None, description="审核备注")
+
+
+@router.post("/pan-records/batch-delete")
+async def batch_delete_pan_records(
+    request: BatchDeleteRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """批量删除排盘记录（软删除）"""
+    if not request.record_ids:
+        raise HTTPException(status_code=400, detail="记录ID列表不能为空")
+    
+    # 查询所有有效的记录
+    records = db.query(PanRecord).filter(
+        PanRecord.id.in_(request.record_ids),
+        PanRecord.deleted_at.is_(None)
+    ).all()
+    
+    if not records:
+        raise HTTPException(status_code=404, detail="未找到有效的排盘记录")
+    
+    current_time = int(time.time())
+    deleted_count = 0
+    
+    for record in records:
+        record.deleted_at = current_time
+        deleted_count += 1
+    
+    db.commit()
+    
+    return create_success_response(
+        {"deleted_count": deleted_count},
+        f"成功删除 {deleted_count} 条记录"
+    )
+
+
+@router.post("/pan-records/batch-audit")
+async def batch_audit_pan_records(
+    request: BatchAuditRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """批量审核排盘记录"""
+    if not request.record_ids:
+        raise HTTPException(status_code=400, detail="记录ID列表不能为空")
+    
+    if request.audit_status not in [1, 2]:
+        raise HTTPException(status_code=400, detail="审核状态必须是1（通过）或2（拒绝）")
+    
+    # 查询所有待审核的记录
+    records = db.query(PanRecord).filter(
+        PanRecord.id.in_(request.record_ids),
+        PanRecord.deleted_at.is_(None),
+        PanRecord.audit_status == 0
+    ).all()
+    
+    if not records:
+        raise HTTPException(status_code=404, detail="未找到待审核的排盘记录")
+    
+    current_time = int(time.time())
+    audited_count = 0
+    
+    for record in records:
+        record.audit_status = request.audit_status
+        record.audit_remark = request.audit_remark
+        record.audit_time = current_time
+        record.audit_user_id = current_user.id
+        audited_count += 1
+    
+    db.commit()
+    
+    status_text = "通过" if request.audit_status == 1 else "拒绝"
+    return create_success_response(
+        {"audited_count": audited_count},
+        f"成功审核 {audited_count} 条记录，状态：{status_text}"
+    )
+
+
+# ==================== 已删除记录管理 ====================
+
+class DeletedPanRecordListQuery(BaseModel):
+    page: int = 1
+    page_size: int = 20
+    keyword: Optional[str] = None
+
+
+@router.get("/pan-records/deleted")
+async def get_deleted_pan_record_list(
+    query: DeletedPanRecordListQuery = Depends(),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """获取已删除的排盘记录列表"""
+    query_obj = db.query(PanRecord).filter(PanRecord.deleted_at.isnot(None))
+    
+    if query.keyword:
+        query_obj = query_obj.filter(
+            or_(
+                PanRecord.user_id == query.keyword,
+                PanRecord.pan_type.ilike(f"%{query.keyword}%")
+            )
+        )
+    
+    total = query_obj.count()
+    offset = (query.page - 1) * query.page_size
+    records = query_obj.order_by(PanRecord.deleted_at.desc()).offset(offset).limit(query.page_size).all()
+    
+    result = []
+    for record in records:
+        result.append({
+            "id": record.id,
+            "user_id": record.user_id,
+            "pan_type": record.pan_type,
+            "audit_status": record.audit_status,
+            "supplement": record.supplement,
+            "create_time": record.create_time,
+            "update_time": record.update_time,
+            "deleted_at": record.deleted_at
+        })
+    
+    return create_success_response({
+        "list": result,
+        "total": total,
+        "page": query.page,
+        "page_size": query.page_size
+    })
+
+
+@router.put("/pan-records/{record_id}/restore")
+async def restore_pan_record(
+    record_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """恢复已删除的排盘记录"""
+    record = db.query(PanRecord).filter(
+        PanRecord.id == record_id,
+        PanRecord.deleted_at.isnot(None)
+    ).first()
+    
+    if not record:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    record.deleted_at = None
+    record.update_time = int(time.time())
+    db.commit()
+    
+    return create_success_response(None, "恢复成功")
+
+
+@router.delete("/pan-records/{record_id}/permanent")
+async def permanent_delete_pan_record(
+    record_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """永久删除排盘记录"""
+    record = db.query(PanRecord).filter(
+        PanRecord.id == record_id,
+        PanRecord.deleted_at.isnot(None)
+    ).first()
+    
+    if not record:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    db.delete(record)
+    db.commit()
+    
+    return create_success_response(None, "永久删除成功")
+
+
+@router.post("/pan-records/batch-permanent-delete")
+async def batch_permanent_delete_pan_records(
+    request: BatchDeleteRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """批量永久删除排盘记录"""
+    if not request.record_ids:
+        raise HTTPException(status_code=400, detail="记录ID列表不能为空")
+    
+    # 查询所有已删除的记录
+    records = db.query(PanRecord).filter(
+        PanRecord.id.in_(request.record_ids),
+        PanRecord.deleted_at.isnot(None)
+    ).all()
+    
+    if not records:
+        raise HTTPException(status_code=404, detail="未找到已删除的排盘记录")
+    
+    deleted_count = 0
+    
+    for record in records:
+        db.delete(record)
+        deleted_count += 1
+    
+    db.commit()
+    
+    return create_success_response(
+        {"deleted_count": deleted_count},
+        f"成功永久删除 {deleted_count} 条记录"
+    )
+
+
+# ==================== 数据导出 ====================
+
+class ExportRequest(BaseModel):
+    format: str = Field(..., description="导出格式：excel 或 csv")
+    filters: Optional[dict] = Field(None, description="筛选条件")
+    record_ids: Optional[List[int]] = Field(None, description="要导出的记录ID列表，为空则导出所有符合条件的记录")
+
+
+@router.post("/pan-records/export")
+async def export_pan_records(
+    request: ExportRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """导出排盘记录"""
+    # 构建查询
+    query_obj = db.query(PanRecord).filter(PanRecord.deleted_at.is_(None))
+    
+    # 优先按记录ID导出
+    if request.record_ids:
+        query_obj = query_obj.filter(PanRecord.id.in_(request.record_ids))
+    else:
+        # 应用筛选条件
+        if request.filters:
+            if request.filters.get("keyword"):
+                query_obj = query_obj.filter(
+                    or_(
+                        PanRecord.user_id == request.filters["keyword"],
+                        PanRecord.pan_type.ilike(f"%{request.filters['keyword']}%")
+                    )
+                )
+            if request.filters.get("audit_status") is not None:
+                query_obj = query_obj.filter(
+                    PanRecord.audit_status == request.filters["audit_status"]
+                )
+            if request.filters.get("pan_type"):
+                query_obj = query_obj.filter(
+                    PanRecord.pan_type == request.filters["pan_type"]
+                )
+    
+    # 获取所有记录
+    records = query_obj.all()
+    
+    if not records:
+        raise HTTPException(status_code=404, detail="没有符合条件的记录")
+    
+    if request.format == "excel" and HAS_OPENPYXL:
+        return export_to_excel(records)
+    else:
+        return export_to_csv(records)
+
+
+def export_to_excel(records):
+    """导出为Excel文件"""
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "排盘记录"
+    
+    # 设置表头
+    headers = ["ID", "用户ID", "排盘类型", "审核状态", "创建时间", "更新时间", "审核时间"]
+    for col, header in enumerate(headers, 1):
+        cell = ws.cell(row=1, column=col)
+        cell.value = header
+        cell.font = Font(bold=True)
+        cell.alignment = Alignment(horizontal="center", vertical="center")
+    
+    # 填充数据
+    for row, record in enumerate(records, 2):
+        status_map = {0: "待审核", 1: "已通过", 2: "已拒绝"}
+        pan_type_map = {"liuyao": "六爻", "bazi": "八字", "ziwei": "紫微斗数", "qimen": "奇门遁甲"}
+        
+        ws.cell(row=row, column=1, value=record.id)
+        ws.cell(row=row, column=2, value=record.user_id)
+        ws.cell(row=row, column=3, value=pan_type_map.get(record.pan_type, record.pan_type))
+        ws.cell(row=row, column=4, value=status_map.get(record.audit_status, "未知"))
+        ws.cell(row=row, column=5, value=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.create_time)) if record.create_time else "")
+        ws.cell(row=row, column=6, value=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.update_time)) if record.update_time else "")
+        ws.cell(row=row, column=7, value=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.audit_time)) if record.audit_time else "")
+    
+    # 调整列宽
+    for col in range(1, len(headers) + 1):
+        ws.column_dimensions[chr(64 + col)].width = 20
+    
+    # 保存到内存
+    buffer = BytesIO()
+    wb.save(buffer)
+    buffer.seek(0)
+    
+    import urllib.parse
+    filename = f"排盘记录_{time.strftime('%Y%m%d_%H%M%S')}.xlsx"
+    encoded_filename = urllib.parse.quote(filename)
+    return StreamingResponse(
+        buffer,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={
+            "Content-Disposition": f"attachment; filename={encoded_filename}; filename*=UTF-8''{encoded_filename}"
+        }
+    )
+
+
+def export_to_csv(records):
+    """导出为CSV文件"""
+    output = StringIO()
+    writer = csv.writer(output)
+    
+    # 写入表头
+    writer.writerow(["ID", "用户ID", "排盘类型", "审核状态", "创建时间", "更新时间", "审核时间"])
+    
+    # 写入数据
+    for record in records:
+        status_map = {0: "待审核", 1: "已通过", 2: "已拒绝"}
+        pan_type_map = {"liuyao": "六爻", "bazi": "八字", "ziwei": "紫微斗数", "qimen": "奇门遁甲"}
+        
+        writer.writerow([
+            record.id,
+            record.user_id,
+            pan_type_map.get(record.pan_type, record.pan_type),
+            status_map.get(record.audit_status, "未知"),
+            time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.create_time)) if record.create_time else "",
+            time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.update_time)) if record.update_time else "",
+            time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(record.audit_time)) if record.audit_time else ""
+        ])
+    
+    output.seek(0)
+    import urllib.parse
+    filename = f"排盘记录_{time.strftime('%Y%m%d_%H%M%S')}.csv"
+    encoded_filename = urllib.parse.quote(filename)
+    return StreamingResponse(
+        output,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename={encoded_filename}; filename*=UTF-8''{encoded_filename}"
+        }
+    )
 
 
 # ==================== 评论管理 ====================

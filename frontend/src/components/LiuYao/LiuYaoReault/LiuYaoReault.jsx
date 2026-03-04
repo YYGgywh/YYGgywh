@@ -3,12 +3,12 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-23 14:22:33
+ * @lastModified    2026-03-03 12:30:00
  * Copyright © All rights reserved
 */
 
 // 导入React核心库和相关hooks
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 // 导入样式文件
 import './LiuYaoReault.css';
 // 导入四柱展示组件
@@ -19,6 +19,12 @@ import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInf
 import LiuYaoGridDisplay from './LiuYaoGridDisplay';
 // 导入显示控制组件
 import DisplayControl from '../../common/DisplayControl';
+// 导入排盘API
+import { savePan } from '../../../api/panApi';
+// 导入登录状态检查工具
+import { isLoggedIn } from '../../../utils/storage';
+// 导入起卦方式映射工具
+import { methodToEnglish } from '../../../utils/methodMapping';
 
 /**
  * 解析占卜数据
@@ -102,6 +108,80 @@ const LiuYaoReault = React.memo(() => {
   const [hasInitialized, setHasInitialized] = useState(false);
   // 显示控制状态，存储激活的按钮ID
   const [activeButtons, setActiveButtons] = useState(['liuqin', 'fuchen', 'yinyang', 'colorChange']);
+  // 保存状态，跟踪排盘记录是否已保存
+  const [hasSaved, setHasSaved] = useState(false);
+  // 保存中状态
+  const [saving, setSaving] = useState(false);
+  // 使用ref确保只有一个保存请求正在执行
+  const saveInProgress = useRef(false);
+
+  /**
+   * 自动保存排盘记录
+   * @param {Object} panResult - 排盘结果数据
+   * @param {Object} panFormData - 排盘表单数据
+   */
+  const autoSavePanRecord = async (panResult, panFormData) => {
+    // 使用ref锁防止并发调用
+    if (saveInProgress.current || hasSaved) {
+      console.log('排盘记录正在保存或已保存，避免重复调用');
+      return;
+    }
+
+    saveInProgress.current = true;
+    setSaving(true);
+
+    try {
+      // 从localStorage获取完整数据，确保保存所有信息
+      const originalData = localStorage.getItem('divinationResult');
+      let requestData = {};
+      
+      if (originalData) {
+        try {
+          const parsedData = JSON.parse(originalData);
+          requestData = parsedData.requestData || {};
+        } catch (err) {
+          console.error('解析原始数据失败:', err);
+        }
+      }
+
+      // 使用映射工具将中文起卦方式转换为英文标识
+      const mappedMethod = methodToEnglish(panFormData?.method) || 'number';
+
+      // 构建完整的排盘参数（避免数据重复）
+      const panParams = {
+        method: mappedMethod,
+        numbers: requestData?.numbers || [], // 起卦三位数数组
+        time: {
+          year: requestData?.year,
+          month: requestData?.month,
+          day: requestData?.day,
+          hour: requestData?.hour,
+          minute: requestData?.minute,
+          second: requestData?.second
+        }, // 起卦时间
+        form_data: panFormData || {} // 完整表单数据
+      };
+
+      console.log('保存的排盘参数:', panParams);
+
+      // 调用保存API
+      const response = await savePan(
+        'liuyao', // 排盘类型
+        panParams, // 排盘参数（完整数据）
+        panResult, // 排盘结果
+        panFormData?.question || '' // 补充说明
+      );
+
+      console.log('排盘记录保存成功:', response);
+      setHasSaved(true);
+    } catch (err) {
+      console.error('自动保存排盘记录失败:', err);
+      // 保存失败不影响用户查看结果，只在控制台记录错误
+    } finally {
+      saveInProgress.current = false;
+      setSaving(false);
+    }
+  };
 
   /**
    * 处理显示控制按钮点击事件
@@ -143,6 +223,11 @@ const LiuYaoReault = React.memo(() => {
               // 数据验证通过，更新组件状态
               setDivinationData(validatedData);
               setFormData(result.formData);
+              
+              // 自动保存排盘记录（仅在用户登录时）
+              if (isLoggedIn()) {
+                autoSavePanRecord(validatedData, result.formData);
+              }
             } else {
               // 数据格式不正确，设置错误状态
               setError(new Error('排盘数据格式不正确'));
@@ -161,8 +246,6 @@ const LiuYaoReault = React.memo(() => {
           console.log('　B-排盘结果:', null);
         }
         
-        // 清理localStorage中的数据，避免重复读取
-        localStorage.removeItem('divinationResult');
       } catch (err) {
         // 捕获并处理数据读取异常
         console.error('读取排盘结果数据失败:', err);
@@ -171,8 +254,15 @@ const LiuYaoReault = React.memo(() => {
       
       // 标记组件已初始化，防止重复执行
       setHasInitialized(true);
+      // 不要立即删除localStorage，以便在保存时能获取完整数据
+      // 延迟删除，确保保存逻辑能获取到数据
+      setTimeout(() => {
+        localStorage.removeItem('divinationResult');
+      }, 1000);
     }
-  }, [hasInitialized]);
+  }, [hasInitialized]); // 移除hasSaved依赖，防止重复执行
+
+
 
   /**
    * 错误状态渲染

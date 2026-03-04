@@ -1,0 +1,54 @@
+/*
+ * @file            frontend/src/components/UserCenter/MainContentArea.css
+ * @description     主要内容区域容器样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:45:00
+ * @lastModified    2026-03-03 21:50:00
+ * Copyright © All rights reserved
+*/
+
+/* 主要内容区域容器 */
+.main-content-area {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-height: 600px;
+}
+
+/* 内容区域主体 */
+.main-content-body {
+  padding: 24px;
+}
+
+/* 加载状态 */
+.main-content-body--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* 加载动画容器 */
+.main-content-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #999;
+}
+
+/* 加载动画 */
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

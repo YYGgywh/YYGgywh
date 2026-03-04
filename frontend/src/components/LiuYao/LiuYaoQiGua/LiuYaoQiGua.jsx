@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件，协调各子组件的状态和布局
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-19 19:19:49
+ * @lastModified    2026-03-03 11:51:33
  * Copyright © All rights reserved
 */
 
@@ -420,8 +420,14 @@ const LiuYaoQiGua = () => {
       
       // 5. 存储数据到 localStorage
       // 所有数据对象
+      // 添加起卦方式到formData中
+      const formDataWithMethod = {
+        ...collectedFormData,
+        method: selectedMethod  // 添加起卦方式
+      };
+      
       const allData = {
-        formData: collectedFormData,  // 表单数据
+        formData: formDataWithMethod,  // 包含起卦方式的表单数据
         requestData,  // 请求数据
         divineResult  // 排盘结果
       };

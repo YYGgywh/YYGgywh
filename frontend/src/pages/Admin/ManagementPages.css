@@ -28,9 +28,38 @@
 
 .filter-bar {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
+}
+
+/* 标签页导航样式 */
+.tab-navigation {
+  display: flex;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.tab-btn:hover {
+  color: #1890ff;
+}
+
+.tab-btn.active {
+  color: #1890ff;
+  border-bottom-color: #1890ff;
+  background: rgba(24, 144, 255, 0.05);
 }
 
 .filter-input,
@@ -62,6 +91,14 @@
 
 .filter-btn:hover {
   opacity: 0.9;
+}
+
+.filter-btn.success {
+  background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+}
+
+.filter-btn.warning {
+  background: linear-gradient(135deg, #faad14 0%, #d48806 100%);
 }
 
 .table-container {
@@ -167,6 +204,70 @@
 
 .small-btn.danger {
   background: #ff4d4f;
+}
+
+/* 批量操作栏样式 */
+.batch-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: #f6f8fa;
+  border-radius: 6px;
+  border: 1px solid #e1e4e8;
+  flex-wrap: wrap;
+}
+
+.batch-export-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .batch-export-buttons {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}
+
+.batch-info {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  margin-right: auto;
+}
+
+.batch-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.batch-btn:hover {
+  opacity: 0.8;
+}
+
+.batch-btn.success {
+  background: #52c41a;
+  color: white;
+}
+
+.batch-btn.warning {
+  background: #faad14;
+  color: white;
+}
+
+.batch-btn.danger {
+  background: #ff4d4f;
+  color: white;
 }
 
 .inline-select {

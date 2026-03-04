@@ -104,6 +104,36 @@ export const getLoginNameLimitInfo = async () => {
   }
 };
 
+// 获取姓名修改限制信息
+export const getNameLimitInfo = async () => {
+  try {
+    const response = await api.get('/user/get_name_limit_info');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取性别修改限制信息
+export const getGenderLimitInfo = async () => {
+  try {
+    const response = await api.get('/user/get_gender_limit_info');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取生时修改限制信息
+export const getBirthTimeLimitInfo = async () => {
+  try {
+    const response = await api.get('/user/get_birth_time_limit_info');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // 修改登录名
 export const updateLoginName = async (newLoginName) => {
   try {

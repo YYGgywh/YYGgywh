@@ -82,7 +82,7 @@ class CalendarAlgorithmCore:
                 "lunar_year_in_Zhi": lunar_date.getYearZhi(),  # 农历年地支：获取农历年份（以正月初一起算）的地支 "巳"
                 "lunar_year_shengxiao": lunar_date.getYearShengXiao(),  # 农历年生肖：获取农历年份对应的生肖 "蛇"
                 "lunar_year_shengxiao_by_lichun": lunar_date.getYearShengXiaoByLiChun(),  # 农历年立春生肖：按立春划分的生肖 "蛇"
-                "lunar_month": lunar_date.getMonth(),  # 农历月份：获取农历对象的月份 11
+                "lunar_month": lunar_date.getMonth(),  # 农历月份：获取农历对象的月份 11（闰月为负数）
                 "lunar_month_in_Chinese": lunar_date.getMonthInChinese(),  # 农历月份中文：获取农历月份的中文表示 "冬"
                 "lunar_month_days": LunarMonth.fromYm(lunar_date.getYear(), lunar_date.getMonth()).getDayCount() if lunar_date else 0,  # 农历月份天数：获取该农历月的总天数 30
                 "lunar_day": lunar_date.getDay(),  # 农历日期：获取农历对象的日期 13

@@ -1,0 +1,290 @@
+{
+    "ben_gua_body": [ /* 本卦卦体 */
+        {
+            "fu_gan": "", /* 伏天干 */
+            "fu_qin": "", /* 伏六亲 */
+            "fu_zhi": "", /* 伏地支 */
+            "liu_qin": "父母", /* 六亲 */
+            "liu_shen": "勾陈", /* 六神 */
+            "na_gan": "辛", /* 纳天干 */
+            "na_zhi": "卯", /* 纳地支 */
+            "position": 6, /* 爻位 */
+            "shi_ying": "", /* 世应 */
+            "yao_nature": "阳" /* 爻的阴阳性质 */
+        },
+        {
+            "fu_gan": "",
+            "fu_qin": "",
+            "fu_zhi": "",
+            "liu_qin": "父母",
+            "liu_shen": "勾陈",
+            "na_gan": "辛",
+            "na_zhi": "卯",
+            "position": 6,
+            "shi_ying": "",
+            "yao_nature": "阳"
+        },
+        {
+            "fu_gan": "",
+            "fu_qin": "",
+            "fu_zhi": "",
+            "liu_qin": "兄弟",
+            "liu_shen": "朱雀",
+            "na_gan": "辛",
+            "na_zhi": "巳",
+            "position": 5,
+            "shi_ying": "世",
+            "yao_nature": "阳"
+        },
+        {
+            "fu_gan": "己",
+            "fu_qin": "妻财",
+            "fu_zhi": "酉",
+            "liu_qin": "子孙",
+            "liu_shen": "青龙",
+            "na_gan": "辛",
+            "na_zhi": "未",
+            "position": 4,
+            "shi_ying": "",
+            "yao_nature": "阴"
+        },
+        {
+            "fu_gan": "己",
+            "fu_qin": "官鬼",
+            "fu_zhi": "亥",
+            "liu_qin": "兄弟",
+            "liu_shen": "玄武",
+            "na_gan": "戊",
+            "na_zhi": "午",
+            "position": 3,
+            "shi_ying": "",
+            "yao_nature": "阴"
+        },
+        {
+            "fu_gan": "",
+            "fu_qin": "",
+            "fu_zhi": "",
+            "liu_qin": "子孙",
+            "liu_shen": "白虎",
+            "na_gan": "戊",
+            "na_zhi": "辰",
+            "position": 2,
+            "shi_ying": "应",
+            "yao_nature": "阳"
+        },
+        {
+            "fu_gan": "",
+            "fu_qin": "",
+            "fu_zhi": "",
+            "liu_qin": "父母",
+            "liu_shen": "螣蛇",
+            "na_gan": "戊",
+            "na_zhi": "寅",
+            "position": 1,
+            "shi_ying": "",
+            "yao_nature": "阴"
+        }
+    ],
+    "ben_gua_head": { /* 本卦卦头 */
+        "chong_he": "", /* 冲合属性 */
+        "code": "010011", /* 六十四卦对应编号 */
+        "fu_shen_wei_list": [ /* 伏神爻位 */
+            3,
+            4
+        ], 
+        "lower": "坎", /* 下卦 */
+        "month_body": "辰", /* 月卦身 */
+        "name": "风水涣", /* 本（主）卦名 */
+        "nature": "五世", /* 宫内属性（几世、游魂、归魂） */
+        "palace": "离", /* 所属卦宫 */
+        "shi_body": "上爻", /* 世卦身 */
+        "shi_position": 5, /* 世爻爻位 */
+        "upper": "巽", /* 上卦 */
+        "ying_position": 2 /* 应爻爻位 */
+    },
+    "bian_gua_body": [ /* 变卦卦体 */
+        {
+            "liu_qin": "子孙", /* 六亲 */
+            "na_gan": "壬", /* 纳天干 */
+            "na_zhi": "戌", /* 纳地支 */
+            "position": 6, /* 爻位 */
+            "shi_ying": "", /* 世应 */
+            "yao_nature": "阳" /* 爻的阴阳性质 */
+        },
+        {
+            "liu_qin": "妻财",
+            "na_gan": "壬",
+            "na_zhi": "申",
+            "position": 5,
+            "shi_ying": "",
+            "yao_nature": "阳"
+        },
+        {
+            "liu_qin": "兄弟",
+            "na_gan": "壬",
+            "na_zhi": "午",
+            "position": 4,
+            "shi_ying": "世",
+            "yao_nature": "阳"
+        },
+        {
+            "liu_qin": "兄弟",
+            "na_gan": "戊",
+            "na_zhi": "午",
+            "position": 3,
+            "shi_ying": "",
+            "yao_nature": "阴"
+        },
+        {
+            "liu_qin": "子孙",
+            "na_gan": "戊",
+            "na_zhi": "辰",
+            "position": 2,
+            "shi_ying": "",
+            "yao_nature": "阳"
+        },
+        {
+            "liu_qin": "父母",
+            "na_gan": "戊",
+            "na_zhi": "寅",
+            "position": 1,
+            "shi_ying": "应",
+            "yao_nature": "阴"
+        }
+    ],
+    "bian_gua_head": { /* 变卦卦头 */
+        "chong_he": "", /* 冲合属性 */
+        "code": "010111", /* 六十四卦对应编号 */
+        "lower": "坎", /* 下卦 */
+        "month_body": "酉", /* 月卦身 */
+        "name": "天水讼", /* 变（之）卦名 */
+        "nature": "游魂", /* 宫位属性（几世、游魂、归魂） */
+        "palace": "离", /* 所属卦宫 */
+        "shi_position": 4, /* 世爻爻位 */
+        "upper": "乾", /* 上卦 */
+        "ying_position": 1 /* 应爻爻位 */
+    },
+    "calendar_info": { /* 占卜时间公历、农历详细信息 */
+        "conversion_type": "from_solar_to_info", /* 转换类型（从公历到农历详细信息） */
+        "ganzhi_info": { /* 农历详细信息 */
+            "lunar_day_in_gan_exact": "己", /* 农历日天干（晚子时日柱算明天） */
+            "lunar_day_in_gan_exact2": "己", /* 农历日天干（晚子时日柱算当天） */
+            "lunar_day_in_ganzhi_exact": "己丑", /* 农历日天干地支（晚子时日柱算明天） */
+            "lunar_day_in_ganzhi_exact2": "己丑", /* 农历日天干地支（晚子时日柱算当天） */
+            "lunar_day_in_zhi_exact": "丑", /* 农历日地支（晚子时日柱算明天） */
+            "lunar_day_in_zhi_exact2": "丑", /* 农历日地支（晚子时日柱算当天） */
+            "lunar_month_gan_exact": "甲", /* 农历月天干（新的一月以节交接准确时刻起算） */
+            "lunar_month_in_ganzhi_exact": "甲申", /* 农历月天干地支（新的一月以节交接准确时刻起算） */
+            "lunar_month_zhi_exact": "申", /* 农历月地支（新的一月以节交接准确时刻起算） */
+            "lunar_time_in_gan_exact": "甲", /* 农历时天干（晚子时日柱算明天） */
+            "lunar_time_in_ganzhi_exact": "甲戌", /* 农历时天干地支（晚子时日柱算明天） */
+            "lunar_time_in_zhi_exact": "戌", /* 农历时地支（晚子时日柱算明天） */
+            "lunar_year_gan_exact": "乙", /* 农历年天干（新的一年以立春准确时刻起算） */
+            "lunar_year_in_ganzhi_exact": "乙酉", /* 农历年天干地支（新的一年以立春准确时刻起算） */
+            "lunar_year_zhi_exact": "酉" /* 农历年地支（新的一年以立春准确时刻起算） */
+        },
+        "input_type": "solar", /* 日期类型（公历） */
+        "jieqi_info": { /* 节气详细信息 */
+            "jieqi_result_a": { /* 节气结果a */
+                "new": { /* 占时 */
+                    "name": "占时",
+                    "time": "2005-09-02 19:54:34"
+                },
+                "next_jie": { /* 占时的下节气 */
+                    "name": "白露",
+                    "time": "2005-09-07 20:56:40"
+                },
+                "next_qi": { /* 占时的下节气 */
+                    "name": "秋分",
+                    "time": "2005-09-23 06:23:11"
+                },
+                "prev_jie": { /* 占时的上节气 */
+                    "name": "立秋",
+                    "time": "2005-08-07 18:03:21"
+                },
+                "prev_qi": { /* 占时的上节气 */
+                    "name": "处暑",
+                    "time": "2005-08-23 08:45:27"
+                }
+            }
+        },
+        "lunar_info": { /* 农历详细信息 */
+            "lunar_day": 29, /* 农历日 */
+            "lunar_day_in_Chinese": "廿九", /* 农历日（中文） */
+            "lunar_festivals": [], /* 农历节日 */
+            "lunar_full_string": "二〇〇五年七月廿九 乙酉(鸡)年 甲申(猴)月 己丑(牛)日 戌(狗)时 纳音[泉中水 泉中水 霹雳火 山头火] 星期五 (地藏节) 西方白虎 星宿[娄金狗](吉) 彭祖百忌[己不破券二比并亡 丑不冠带主不还乡] 喜神方位[艮](东北) 阳贵神方位[坎](正北) 阴贵神方位[坤](西南) 福神方位[坎](正北) 财神方位[坎](正北) 冲[(癸未)羊] 煞[东]", /* 农历详细字符串 */
+            "lunar_month": 7, /* 农历月（闰月为负数） */
+            "lunar_month_days": 30, /* 农历月天数 */
+            "lunar_month_in_Chinese": "七", /* 农历月（中文） */
+            "lunar_other_festivals": [ /* 农历其他节日 */
+                "地藏节"
+            ],
+            "lunar_string": "二〇〇五年七月廿九", /* 农历日期字符串 */
+            "lunar_time_Zhi": "戌", /* 农历时地支 */
+            "lunar_year": 2005, /* 农历年 */
+            "lunar_year_in_Chinese": "二〇〇五", /* 农历年（中文） */
+            "lunar_year_in_Gan": "乙", /* 农历年天干（以正月初一起算） */
+            "lunar_year_in_GanZhi": "乙酉", /* 农历年天干地支（以正月初一起算） */
+            "lunar_year_in_Zhi": "酉", /* 农历年地支（以正月初一起算） */
+            "lunar_year_shengxiao": "鸡", /* 农历年生肖（以正月初一起算） */
+            "lunar_year_shengxiao_by_lichun": "鸡" /* 农历年生肖（按立春起算） */
+        },
+        "solar_info": { /* 公历详细信息 */
+            "solar_FullString": "2005-09-02 19:54:34 星期五 处女座", /* 公历详细字符串 */
+            "solar_String": "2005-09-02", /* 公历日期字符串 */
+            "solar_Ymd": "2005-09-02", /* 公历日期（年-月-日） */
+            "solar_YmdHms": "2005-09-02 19:54:34", /* 公历日期时间（年-月-日 时:分:秒） */
+            "solar_day": 2, /* 公历日 */
+            "solar_festivals": [], /* 公历节日 */
+            "solar_hour": 19, /* 公历时 */
+            "solar_leap_year": false, /* 是否闰年 */
+            "solar_minute": 54, /* 公历分 */
+            "solar_month": 9, /* 公历月 */
+            "solar_other_festivals": [], /* 公历其他节日 */
+            "solar_second": 34, /* 公历秒 */
+            "solar_week": 5, /* 公历周（1-7，1表示周一） */
+            "solar_week_chinese": "五", /* 公历周（中文） */
+            "solar_year": 2005 /* 公历年 */
+        },
+        "success": true, /* 是否成功 */
+        "valid": true /* 是否有效 */
+    },
+    "dong_yao_info": {
+        "count": 1, /* 动爻数量 */
+        "details": [ /* 动爻详细信息 */
+            {
+                "position": 6,
+                "symbol": "",
+                "yao_nature": "阳"
+            },
+            {
+                "position": 5,
+                "symbol": "",
+                "yao_nature": "阳"
+            },
+            {
+                "position": 4,
+                "symbol": "×→",
+                "yao_nature": "阴"
+            },
+            {
+                "position": 3,
+                "symbol": "",
+                "yao_nature": "阴"
+            },
+            {
+                "position": 2,
+                "symbol": "",
+                "yao_nature": "阳"
+            },
+            {
+                "position": 1,
+                "symbol": "",
+                "yao_nature": "阴"
+            }
+        ],
+        "positions": [ /* 动爻爻位 */
+            4
+        ]
+    }
+}

@@ -5,7 +5,7 @@
  *                  使用全局主题变量（variables.css），确保设计一致性
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 00:00:00
- * @lastModified    2026-02-25 00:00:00
+ * @lastModified    2026-03-03 13:00:00
  * Copyright © All rights reserved
 */
 
@@ -76,6 +76,7 @@
 .location-label,
 .question-label,
 .divination-type-label,
+.method-label,
 .solar-label,
 .lunar-label,
 .prev-jie-label,
@@ -86,6 +87,12 @@
 
 .name-label {
   font-size: 14px;
+}
+
+
+.method-info-container {
+  display: flex;
+  align-items: center;
 }
 
 

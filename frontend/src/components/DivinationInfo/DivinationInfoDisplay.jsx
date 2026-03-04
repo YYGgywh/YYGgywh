@@ -3,14 +3,13 @@
  * @description     占卜信息展示组件，用于展示求测者信息、占题、占类、时间和节气
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-22 16:00:00
- * @lastModified    2026-02-25 22:00:26
+ * @lastModified    2026-03-03 13:00:00
  * Copyright © All rights reserved
 */
 
-// 导入 React 核心库，用于创建组件和使用 React Hooks
 import React from 'react';
-// 导入 PropTypes 库，用于组件 props 的类型检查，提升代码健壮性
 import PropTypes from 'prop-types';
+import { methodToChinese } from '../../utils/methodMapping';
 // 导入时间格式化工具函数，用于将原始数据格式化为可读的日期时间字符串
 import {
   formatSolarDate,    // 格式化西历日期（如：2025年08月10日）
@@ -65,9 +64,10 @@ const validateDivinationData = (divinationData) => {
 //   - location (string): 属地，默认值为空字符串
 //   - divinationType (string): 占类，默认值为空字符串
 //   - subType (string): 子类型，默认值为空字符串
-const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', birthYear = '', location = '', divinationType = '', subType = '' }) => {
+const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', birthYear = '', location = '', divinationType = '', subType = '', method = '' }) => {
   const fullName = React.useMemo(() => `${firstName}${lastName}`.trim(), [firstName, lastName]);
   const displayType = React.useMemo(() => subType ? `${divinationType}·${subType}` : divinationType, [divinationType, subType]);
+  const displayMethod = React.useMemo(() => methodToChinese(method), [method]);
   
   // 返回 JSX 元素，渲染求测者信息容器
   // role="list"：ARIA 角色，表示这是一个列表
@@ -109,6 +109,15 @@ const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', bir
         {/* 占类信息，显示格式化后的占类（可能包含子类型） */}
         <span className="divination-type-info">{displayType}</span>
       </div>
+      {/* 起卦方式信息容器 */}
+      {displayMethod && (
+        <div className="method-info-container">
+          {/* 起卦方式标签，显示"起卦：" */}
+          <span className="method-label">起卦：</span>
+          {/* 起卦方式信息，显示格式化后的起卦方式 */}
+          <span className="method-info">{displayMethod}</span>
+        </div>
+      )}
     </div>
   );
 });
@@ -116,13 +125,14 @@ const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', bir
 // 为 SeekerInfo 组件添加 PropTypes 类型定义
 // 这有助于在开发阶段捕获类型错误，并提供更好的 IDE 智能提示
 SeekerInfo.propTypes = {
-  firstName: PropTypes.string,    // firstName 必须是字符串类型
-  lastName: PropTypes.string,     // lastName 必须是字符串类型
-  gender: PropTypes.string,       // gender 必须是字符串类型
-  birthYear: PropTypes.string,    // birthYear 必须是字符串类型
-  location: PropTypes.string,      // location 必须是字符串类型
-  divinationType: PropTypes.string, // divinationType 必须是字符串类型
-  subType: PropTypes.string       // subType 必须是字符串类型
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  gender: PropTypes.string,
+  birthYear: PropTypes.string,
+  location: PropTypes.string,
+  divinationType: PropTypes.string,
+  subType: PropTypes.string,
+  method: PropTypes.string
 };
 
 // 为 SeekerInfo 组件添加 displayName，便于在 React DevTools 中调试
@@ -347,8 +357,9 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
     birthYear: formData.birthYear,
     location: formData.location,
     divinationType: formData.divinationType,
-    subType: formData.subType
-  }), [formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.location, formData.divinationType, formData.subType]);
+    subType: formData.subType,
+    method: formData.method
+  }), [formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.location, formData.divinationType, formData.subType, formData.method]);
   
   const divinationQueryProps = React.useMemo(() => ({
     question: formData.question
@@ -434,7 +445,8 @@ DivinationInfoDisplay.propTypes = {
     location: PropTypes.string,
     question: PropTypes.string,
     divinationType: PropTypes.string,
-    subType: PropTypes.string
+    subType: PropTypes.string,
+    method: PropTypes.string
   }),
   divinationData: PropTypes.shape({
     calendar_info: PropTypes.shape({

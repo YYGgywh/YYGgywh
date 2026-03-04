@@ -123,12 +123,19 @@ const Login = () => {
         // 存储token和用户信息
         setToken(response.data.token);
         setUserInfo({
+          id: response.data.user_id,
           user_id: response.data.user_id,
           phone: response.data.phone,
           login_name: response.data.login_name,
           nickname: response.data.nickname,
           avatar: response.data.avatar,
-          email: response.data.email
+          email: response.data.email,
+          role: response.data.role,
+          create_time: response.data.create_time,
+          update_time: response.data.update_time,
+          last_login_time: response.data.last_login_time,
+          last_login_ip: response.data.last_login_ip,
+          login_count: response.data.login_count
         });
         // 跳转到用户中心
         navigate('/user');

@@ -225,7 +225,7 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"注册失败: {str(e)}")
 
 @router.post("/login", response_model=LoginResponse)
-async def login(request: LoginRequest, db: Session = Depends(get_db)):
+async def login(request: LoginRequest, db: Session = Depends(get_db), fastapi_request: Request = None):
     """
     用户登录
     支持：手机号/登录名 + 验证码/密码
@@ -252,6 +252,15 @@ async def login(request: LoginRequest, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=400, detail="请提供验证码或密码")
     
+    # 更新登录信息
+    import time
+    current_time = int(time.time())
+    user.last_login_time = current_time
+    user.last_login_ip = fastapi_request.client.host if fastapi_request else ''
+    user.login_count += 1
+    db.commit()
+    db.refresh(user)
+    
     # 生成Token
     access_token = create_access_token(
         data={"user_id": user.id, "phone": user.phone, "login_name": user.login_name},
@@ -266,7 +275,13 @@ async def login(request: LoginRequest, db: Session = Depends(get_db)):
             "nickname": user.nickname,
             "avatar": user.avatar,
             "phone": mask_phone(user.phone),
-            "email": mask_email(user.email) if user.email else None
+            "email": mask_email(user.email) if user.email else None,
+            "role": user.role,
+            "create_time": user.create_time,
+            "update_time": user.update_time,
+            "last_login_time": user.last_login_time,
+            "last_login_ip": user.last_login_ip,
+            "login_count": user.login_count
         }
     )
 
@@ -341,6 +356,7 @@ async def update_login_name(
     current_user.login_name = request.new_login_name
     current_user.login_name_modify_count += 1
     current_user.login_name_modify_time = current_time
+    current_user.update_time = current_time  # 手动更新 update_time
     
     db.commit()
     db.refresh(current_user)
@@ -349,6 +365,8 @@ async def update_login_name(
 
 class UpdateUserInfoRequest(BaseModel):
     nickname: str | None = Field(None, min_length=1, max_length=20, description="昵称")
+    last_name: str | None = Field(None, min_length=1, max_length=10, description="姓")
+    first_name: str | None = Field(None, min_length=1, max_length=10, description="名")
     email: str | None = Field(None, pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", description="邮箱地址")
     gender: int | None = Field(None, ge=0, le=2, description="性别：0=男, 1=女, 2=保密")
 
@@ -433,12 +451,56 @@ async def update_user_info(
     if request.gender is not None:
         current_user.gender = request.gender
     
+    # 更新姓名字段
+    if request.last_name is not None:
+        import time
+        current_time = int(time.time())
+        one_year_ago = current_time - 365 * 24 * 3600
+        
+        # 如果是第一次修改或者已经过了一年，重置修改次数
+        if current_user.name_modify_time < one_year_ago:
+            current_user.name_modify_count = 0
+        
+        # 检查姓名修改次数限制（每年最多2次）
+        if current_user.name_modify_count >= 2:
+            raise HTTPException(status_code=400, detail="一年最多只能修改2次姓名")
+        
+        current_user.last_name = request.last_name
+        current_user.first_name = request.first_name
+        current_user.name_modify_count += 1
+        current_user.name_modify_time = current_time
+    
+    # 更新性别字段
+    if request.gender is not None:
+        import time
+        current_time = int(time.time())
+        one_year_ago = current_time - 365 * 24 * 3600
+        
+        # 如果是第一次修改或者已经过了一年，重置修改次数
+        if current_user.gender_modify_time < one_year_ago:
+            current_user.gender_modify_count = 0
+        
+        # 检查性别修改次数限制（每年最多2次）
+        if current_user.gender_modify_count >= 2:
+            raise HTTPException(status_code=400, detail="一年最多只能修改2次性别")
+        
+        current_user.gender = request.gender
+        current_user.gender_modify_count += 1
+        current_user.gender_modify_time = current_time
+    
+    # 如果有任何信息被修改，手动更新 update_time
+    if request.nickname or request.email or request.gender is not None or request.last_name or request.first_name:
+        import time
+        current_user.update_time = int(time.time())
+    
     db.commit()
     db.refresh(current_user)
     
     return UpdateUserInfoResponse(
         data={
             "nickname": current_user.nickname,
+            "last_name": current_user.last_name,
+            "first_name": current_user.first_name,
             "email": mask_email(current_user.email) if current_user.email else None,
             "gender": current_user.gender
         }
@@ -523,6 +585,123 @@ async def get_login_name_limit_info(
     })
 
 
+@router.get("/get_name_limit_info", response_model=dict)
+async def get_name_limit_info(
+    authorization: str = Header(None, description="Bearer Token"),
+    db: Session = Depends(get_db)
+):
+    """获取姓名修改限制信息"""
+    from app.utils.token import decode_access_token
+    from app.utils.response_formatter import create_success_response
+    
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    import time
+    current_time = int(time.time())
+    one_year_ago = current_time - 365 * 24 * 3600
+    
+    # 如果是第一次修改或者已经过了一年，重置修改次数
+    if current_user.name_modify_time < one_year_ago:
+        current_user.name_modify_count = 0
+        db.commit()
+        db.refresh(current_user)
+    
+    return create_success_response({
+        "name_modify_count": current_user.name_modify_count,
+        "name_modify_time": current_user.name_modify_time,
+        "remaining_count": max(0, 2 - current_user.name_modify_count)
+    })
+
+
+@router.get("/get_gender_limit_info", response_model=dict)
+async def get_gender_limit_info(
+    authorization: str = Header(None, description="Bearer Token"),
+    db: Session = Depends(get_db)
+):
+    """获取性别修改限制信息"""
+    from app.utils.token import decode_access_token
+    from app.utils.response_formatter import create_success_response
+    
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    import time
+    current_time = int(time.time())
+    one_year_ago = current_time - 365 * 24 * 3600
+    
+    # 如果是第一次修改或者已经过了一年，重置修改次数
+    if current_user.gender_modify_time < one_year_ago:
+        current_user.gender_modify_count = 0
+        db.commit()
+        db.refresh(current_user)
+    
+    return create_success_response({
+        "gender_modify_count": current_user.gender_modify_count,
+        "gender_modify_time": current_user.gender_modify_time,
+        "remaining_count": max(0, 2 - current_user.gender_modify_count)
+    })
+
+
+@router.get("/get_birth_time_limit_info", response_model=dict)
+async def get_birth_time_limit_info(
+    authorization: str = Header(None, description="Bearer Token"),
+    db: Session = Depends(get_db)
+):
+    """获取生时修改限制信息"""
+    from app.utils.token import decode_access_token
+    from app.utils.response_formatter import create_success_response
+    
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    import time
+    current_time = int(time.time())
+    one_year_ago = current_time - 365 * 24 * 3600
+    
+    # 如果是第一次修改或者已经过了一年，重置修改次数
+    if current_user.birth_time_modify_time < one_year_ago:
+        current_user.birth_time_modify_count = 0
+        db.commit()
+        db.refresh(current_user)
+    
+    return create_success_response({
+        "birth_time_modify_count": current_user.birth_time_modify_count,
+        "birth_time_modify_time": current_user.birth_time_modify_time,
+        "remaining_count": max(0, 2 - current_user.birth_time_modify_count)
+    })
+
+
 @router.post("/upload_avatar", response_model=UploadAvatarResponse)
 def upload_avatar(
     file: UploadFile = None,
@@ -559,7 +738,9 @@ def upload_avatar(
         raise HTTPException(status_code=400, detail=result)
     
     # 保存头像路径
+    import time
     current_user.avatar = get_file_url(result)
+    current_user.update_time = int(time.time())  # 手动更新 update_time
     db.commit()
     db.refresh(current_user)
     

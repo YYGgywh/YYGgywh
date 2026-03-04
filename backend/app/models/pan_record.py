@@ -1,9 +1,16 @@
-# backend/app/models/pan_record.py 2026-02-26 14:15:00
-# 功能：排盘记录数据模型
+"""
+ * @file            backend/app/models/pan_record.py
+ * @description     排盘记录数据模型
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-26 14:15:00
+ * @lastModified    2026-03-02 17:02:00
+ * Copyright © All rights reserved
+"""
 
 from sqlalchemy import Column, Integer, String, ForeignKey, func, Index
 from sqlalchemy.orm import relationship
 from app.db.database import Base
+import time
 
 class PanRecord(Base):
     __tablename__ = "pan_record"
@@ -13,7 +20,8 @@ class PanRecord(Base):
     pan_type = Column(String(20), default='liuyao')
     pan_params = Column(String, nullable=False)
     pan_result = Column(String, nullable=False)
-    create_time = Column(Integer, default=lambda: int(func.now().timestamp()))
+    create_time = Column(Integer, default=lambda: int(time.time()))
+    update_time = Column(Integer, default=lambda: int(time.time()), onupdate=lambda: int(time.time()))
     supplement = Column(String, nullable=True)
     audit_status = Column(Integer, default=0)
     audit_time = Column(Integer, nullable=True)
