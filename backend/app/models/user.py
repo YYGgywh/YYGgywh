@@ -19,6 +19,7 @@ class User(Base):
     avatar = Column(String(255), nullable=True)  # 头像URL
     wechat_openid = Column(String(100), unique=True, index=True, nullable=True)  # 微信OpenID
     gender = Column(Integer, default=2)  # 性别：0=男, 1=女, 2=保密
+    virtual_gender = Column(Integer, default=2)  # 虚拟性别：0=男, 1=女, 2=保密
     birth_calendar_type = Column(Integer, default=0)  # 日历类型：0=公历, 1=农历
     birth_year = Column(Integer, nullable=True)  # 出生年
     birth_month = Column(Integer, nullable=True)  # 出生月
@@ -37,6 +38,8 @@ class User(Base):
     login_name_modify_time = Column(Integer, default=0)  # 最后修改登录名时间
     nickname_modify_count = Column(Integer, default=0)  # 昵称修改次数
     nickname_modify_time = Column(Integer, default=0)  # 最后修改昵称时间
+    virtual_gender_modify_count = Column(Integer, default=0)  # 虚拟性别修改次数
+    virtual_gender_modify_time = Column(Integer, default=0)  # 最后修改虚拟性别时间
     is_old_user = Column(Boolean, default=False)  # 老用户标记
     password = Column(String(255), nullable=True)  # 前台登录密码
     admin_password = Column(String(255), nullable=True)  # 后台登录密码（仅管理员/超级管理员使用）

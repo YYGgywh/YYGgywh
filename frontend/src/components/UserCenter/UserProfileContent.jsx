@@ -3,14 +3,14 @@
  * @description     用户中心内容组件，采用表格布局，包含基本信息和安全中心选项卡
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:48:00
- * @lastModified    2026-03-04 13:51:25
+ * @lastModified    2026-03-04 14:56:32
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect } from 'react';
 import './UserProfileContent.css';
 import CalendarService from '../../services/calendarService';
-import { updateUserInfo, getNameLimitInfo, getGenderLimitInfo, getBirthTimeLimitInfo } from '../../api/userApi';
+import { updateUserInfo, getNameLimitInfo, getGenderLimitInfo, getBirthTimeLimitInfo, getVirtualGenderLimitInfo } from '../../api/userApi';
 
 // 选项卡配置
 const TABS = [
@@ -49,6 +49,27 @@ const getRoleText = (role) => {
       return '管理员';
     case 2:
       return '超级管理员';
+    default:
+      return '-';
+  }
+};
+
+/**
+ * 获取性别文本
+ * @param {number} gender - 性别值
+ * @returns {string} 性别文本
+ */
+const getGenderText = (gender) => {
+  if (gender === null || gender === undefined || gender === '') {
+    return '-';
+  }
+  switch (parseInt(gender)) {
+    case 0:
+      return '男';
+    case 1:
+      return '女';
+    case 2:
+      return '保密';
     default:
       return '-';
   }
@@ -114,6 +135,11 @@ const UserProfileContent = ({
   const [newGender, setNewGender] = useState('');
   const [genderError, setGenderError] = useState('');
   
+  // 虚拟性别编辑状态
+  const [editingVirtualGender, setEditingVirtualGender] = useState(false);
+  const [newVirtualGender, setNewVirtualGender] = useState('');
+  const [virtualGenderError, setVirtualGenderError] = useState('');
+  
   // 处理性别编辑
   const handleGenderEdit = () => {
     setNewGender(userInfo.gender !== undefined && userInfo.gender !== null ? userInfo.gender.toString() : '');
@@ -160,6 +186,59 @@ const UserProfileContent = ({
   const handleGenderChange = (value) => {
     setNewGender(value);
     setGenderError('');
+  };
+  
+  // 处理虚拟性别编辑
+  const handleVirtualGenderEdit = async () => {
+    await fetchVirtualGenderLimitInfo();
+    if (!canModifyVirtualGender()) {
+      alert('您已达到本年度虚拟性别修改次数上限（4次），请明年再试');
+      return;
+    }
+    setNewVirtualGender(userInfo.virtual_gender !== undefined && userInfo.virtual_gender !== null ? userInfo.virtual_gender.toString() : '');
+    setEditingVirtualGender(true);
+    setVirtualGenderError('');
+  };
+  
+  // 处理虚拟性别保存
+  const handleVirtualGenderSave = async () => {
+    if (newVirtualGender === '') {
+      setVirtualGenderError('请选择虚拟性别');
+      return;
+    }
+    
+    try {
+      const response = await updateUserInfo({ virtual_gender: parseInt(newVirtualGender) });
+      
+      if (response.code === 200) {
+        // 更新本地用户信息
+        const updatedUserInfo = { ...userInfo, virtual_gender: parseInt(newVirtualGender) };
+        if (onUserInfoUpdate) {
+          onUserInfoUpdate(updatedUserInfo);
+        }
+        setEditingVirtualGender(false);
+        setVirtualGenderError('');
+        alert('虚拟性别修改成功');
+      } else {
+        setVirtualGenderError(response.msg || '保存失败');
+      }
+    } catch (error) {
+      console.error('保存虚拟性别失败:', error);
+      setVirtualGenderError('网络错误，请稍后重试');
+    }
+  };
+  
+  // 处理虚拟性别取消
+  const handleVirtualGenderCancel = () => {
+    setEditingVirtualGender(false);
+    setNewVirtualGender('');
+    setVirtualGenderError('');
+  };
+  
+  // 处理虚拟性别变化
+  const handleVirtualGenderChange = (value) => {
+    setNewVirtualGender(value);
+    setVirtualGenderError('');
   };
   
   // 姓名编辑状态
@@ -416,6 +495,11 @@ const UserProfileContent = ({
     birth_time_modify_time: 0,
     remaining_count: 2
   });
+  const [virtualGenderLimitInfo, setVirtualGenderLimitInfo] = useState({
+    virtual_gender_modify_count: 0,
+    virtual_gender_modify_time: 0,
+    remaining_count: 4
+  });
   
   // 获取各项命理信息修改限制
   const fetchNameLimitInfo = async () => {
@@ -451,10 +535,22 @@ const UserProfileContent = ({
     }
   };
   
+  const fetchVirtualGenderLimitInfo = async () => {
+    try {
+      const response = await getVirtualGenderLimitInfo();
+      if (response.code === 200) {
+        setVirtualGenderLimitInfo(response.data);
+      }
+    } catch (error) {
+      console.error('获取虚拟性别修改限制失败:', error);
+    }
+  };
+  
   // 检查是否可以修改某项命理信息
   const canModifyName = () => nameLimitInfo.remaining_count > 0;
   const canModifyGender = () => genderLimitInfo.remaining_count > 0;
   const canModifyBirthTime = () => birthTimeLimitInfo.remaining_count > 0;
+  const canModifyVirtualGender = () => virtualGenderLimitInfo.remaining_count > 0;
   
   // 处理命理信息编辑（带独立限制检查）
   const handleFortuneEdit = async (editType) => {
@@ -487,6 +583,7 @@ const UserProfileContent = ({
     fetchNameLimitInfo();
     fetchGenderLimitInfo();
     fetchBirthTimeLimitInfo();
+    fetchVirtualGenderLimitInfo();
   }, []);
 
   if (!userInfo) {
@@ -564,7 +661,19 @@ const UserProfileContent = ({
                 type="text"
                 value={newLoginName}
                 onChange={(e) => onLoginNameChange(e.target.value)}
-                className="edit-input"
+                onDoubleClick={(e) => {
+                  e.preventDefault();
+                  onLoginNameChange('');
+                  // 添加视觉反馈
+                  const input = e.target;
+                  input.style.borderColor = '#2196f3';
+                  input.style.boxShadow = '0 0 0 2px rgba(33, 150, 243, 0.2)';
+                  setTimeout(() => {
+                    input.style.borderColor = '';
+                    input.style.boxShadow = '';
+                  }, 500);
+                }}
+                className="edit-input name-input"
                 maxLength="20"
                 placeholder="请输入登录名"
               />
@@ -621,7 +730,19 @@ const UserProfileContent = ({
                 type="text"
                 value={newNickname}
                 onChange={(e) => onNicknameChange(e.target.value)}
-                className="edit-input"
+                onDoubleClick={(e) => {
+                  e.preventDefault();
+                  onNicknameChange('');
+                  // 添加视觉反馈
+                  const input = e.target;
+                  input.style.borderColor = '#2196f3';
+                  input.style.boxShadow = '0 0 0 2px rgba(33, 150, 243, 0.2)';
+                  setTimeout(() => {
+                    input.style.borderColor = '';
+                    input.style.boxShadow = '';
+                  }, 500);
+                }}
+                className="edit-input name-input"
                 maxLength="20"
                 placeholder="请输入昵称"
               />
@@ -661,6 +782,78 @@ const UserProfileContent = ({
               className="action-btn action-btn--primary"
               onClick={onNicknameEdit}
               disabled={nicknameLimitInfo?.remaining_count === 0}
+            >
+              修改
+            </button>
+          )}
+        </div>
+    </div>
+
+      {/* 虚拟性别 */}
+      <div className="profile-row">
+        <div className="profile-label">虚拟性别</div>
+        <div className="profile-value">
+          {editingVirtualGender ? (
+            <div className="edit-mode">
+              <select
+                value={newVirtualGender}
+                onChange={(e) => handleVirtualGenderChange(e.target.value)}
+                onDoubleClick={(e) => {
+                  e.preventDefault();
+                  handleVirtualGenderChange('');
+                  // 添加视觉反馈
+                  const select = e.target;
+                  select.style.borderColor = '#2196f3';
+                  select.style.boxShadow = '0 0 0 2px rgba(33, 150, 243, 0.2)';
+                  setTimeout(() => {
+                    select.style.borderColor = '';
+                    select.style.boxShadow = '';
+                  }, 500);
+                }}
+                className="edit-input edit-select"
+              >
+                <option value="">请选择</option>
+                <option value="0">男</option>
+                <option value="1">女</option>
+                <option value="2">保密</option>
+              </select>
+              {virtualGenderError && (
+                <span className="edit-hint edit-hint--error">{virtualGenderError}</span>
+              )}
+              <span className={`edit-hint ${virtualGenderLimitInfo.remaining_count === 0 ? 'edit-hint--exceeded' : ''}`}>
+                {getYearEndDate()}前修改次数：{virtualGenderLimitInfo.virtual_gender_modify_count}/4次
+                {virtualGenderLimitInfo.remaining_count === 0 && '（已达上限）'}
+              </span>
+            </div>
+          ) : (
+            <div className="value-with-limit">
+              <span className="value-text">
+                {userInfo.virtual_gender !== undefined && userInfo.virtual_gender !== null ? getGenderText(userInfo.virtual_gender) : '-'}
+              </span>
+              <div className="limit-info-inline">
+                <span className={`limit-text ${virtualGenderLimitInfo.remaining_count === 0 ? 'limit-text--exceeded' : ''}`}>
+                  {getYearEndDate()}前修改次数：{virtualGenderLimitInfo.virtual_gender_modify_count}/4次
+                  {virtualGenderLimitInfo.remaining_count === 0 && '（已达上限）'}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="profile-action">
+          {editingVirtualGender ? (
+            <div className="action-group">
+              <button className="action-btn action-btn--text-cancel" onClick={handleVirtualGenderCancel}>
+                取消
+              </button>
+              <button className="action-btn action-btn--text-save" onClick={handleVirtualGenderSave}>
+                保存
+              </button>
+            </div>
+          ) : (
+            <button
+              className="action-btn action-btn--primary"
+              onClick={handleVirtualGenderEdit}
+              disabled={virtualGenderLimitInfo.remaining_count === 0}
             >
               修改
             </button>
@@ -791,22 +984,7 @@ const UserProfileContent = ({
       return { date: '-', time: '' };
     };
     
-    // 处理性别显示
-    const getGenderText = (gender) => {
-      if (gender === null || gender === undefined || gender === '') {
-        return '-';
-      }
-      switch (parseInt(gender)) {
-        case 0:
-          return '男';
-        case 1:
-          return '女';
-        case 2:
-          return '保密';
-        default:
-          return '-';
-      }
-    };
+
     
     return (
       <div className="profile-table">
@@ -1111,6 +1289,18 @@ const UserProfileContent = ({
                 <select
                   value={newGender}
                   onChange={(e) => handleGenderChange(e.target.value)}
+                  onDoubleClick={(e) => {
+                    e.preventDefault();
+                    handleGenderChange('');
+                    // 添加视觉反馈
+                    const select = e.target;
+                    select.style.borderColor = '#2196f3';
+                    select.style.boxShadow = '0 0 0 2px rgba(33, 150, 243, 0.2)';
+                    setTimeout(() => {
+                      select.style.borderColor = '';
+                      select.style.boxShadow = '';
+                    }, 500);
+                  }}
                   className="edit-input edit-select"
                 >
                   <option value="">请选择</option>

@@ -276,6 +276,8 @@ async def login(request: LoginRequest, db: Session = Depends(get_db), fastapi_re
             "avatar": user.avatar,
             "phone": mask_phone(user.phone),
             "email": mask_email(user.email) if user.email else None,
+            "gender": user.gender,
+            "virtual_gender": user.virtual_gender,
             "role": user.role,
             "create_time": user.create_time,
             "update_time": user.update_time,
@@ -367,8 +369,9 @@ class UpdateUserInfoRequest(BaseModel):
     nickname: str | None = Field(None, min_length=1, max_length=20, description="昵称")
     last_name: str | None = Field(None, min_length=1, max_length=10, description="姓")
     first_name: str | None = Field(None, min_length=1, max_length=10, description="名")
-    email: str | None = Field(None, pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", description="邮箱地址")
+    email: str | None = Field(None, pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", description="邮箱地址")
     gender: int | None = Field(None, ge=0, le=2, description="性别：0=男, 1=女, 2=保密")
+    virtual_gender: int | None = Field(None, ge=0, le=2, description="虚拟性别：0=男, 1=女, 2=保密")
 
 class UpdateUserInfoResponse(BaseModel):
     code: int = 200
@@ -488,8 +491,26 @@ async def update_user_info(
         current_user.gender_modify_count += 1
         current_user.gender_modify_time = current_time
     
+    # 更新虚拟性别字段
+    if request.virtual_gender is not None:
+        import time
+        current_time = int(time.time())
+        one_year_ago = current_time - 365 * 24 * 3600
+        
+        # 如果是第一次修改或者已经过了一年，重置修改次数
+        if current_user.virtual_gender_modify_time < one_year_ago:
+            current_user.virtual_gender_modify_count = 0
+        
+        # 检查虚拟性别修改次数限制（每年最多4次）
+        if current_user.virtual_gender_modify_count >= 4:
+            raise HTTPException(status_code=400, detail="一年最多只能修改4次虚拟性别")
+        
+        current_user.virtual_gender = request.virtual_gender
+        current_user.virtual_gender_modify_count += 1
+        current_user.virtual_gender_modify_time = current_time
+    
     # 如果有任何信息被修改，手动更新 update_time
-    if request.nickname or request.email or request.gender is not None or request.last_name or request.first_name:
+    if request.nickname or request.email or request.gender is not None or request.virtual_gender is not None or request.last_name or request.first_name:
         import time
         current_user.update_time = int(time.time())
     
@@ -502,7 +523,8 @@ async def update_user_info(
             "last_name": current_user.last_name,
             "first_name": current_user.first_name,
             "email": mask_email(current_user.email) if current_user.email else None,
-            "gender": current_user.gender
+            "gender": current_user.gender,
+            "virtual_gender": current_user.virtual_gender
         }
     )
 
@@ -699,6 +721,45 @@ async def get_birth_time_limit_info(
         "birth_time_modify_count": current_user.birth_time_modify_count,
         "birth_time_modify_time": current_user.birth_time_modify_time,
         "remaining_count": max(0, 2 - current_user.birth_time_modify_count)
+    })
+
+
+@router.get("/get_virtual_gender_limit_info", response_model=dict)
+async def get_virtual_gender_limit_info(
+    authorization: str = Header(None, description="Bearer Token"),
+    db: Session = Depends(get_db)
+):
+    """获取虚拟性别修改限制信息"""
+    from app.utils.token import decode_access_token
+    from app.utils.response_formatter import create_success_response
+    
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    import time
+    current_time = int(time.time())
+    one_year_ago = current_time - 365 * 24 * 3600
+    
+    # 如果是第一次修改或者已经过了一年，重置修改次数
+    if current_user.virtual_gender_modify_time < one_year_ago:
+        current_user.virtual_gender_modify_count = 0
+        db.commit()
+        db.refresh(current_user)
+    
+    return create_success_response({
+        "virtual_gender_modify_count": current_user.virtual_gender_modify_count,
+        "virtual_gender_modify_time": current_user.virtual_gender_modify_time,
+        "remaining_count": max(0, 4 - current_user.virtual_gender_modify_count)
     })
 
 

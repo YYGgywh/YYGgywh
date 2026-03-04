@@ -134,6 +134,16 @@ export const getBirthTimeLimitInfo = async () => {
   }
 };
 
+// 获取虚拟性别修改限制信息
+export const getVirtualGenderLimitInfo = async () => {
+  try {
+    const response = await api.get('/user/get_virtual_gender_limit_info');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // 修改登录名
 export const updateLoginName = async (newLoginName) => {
   try {

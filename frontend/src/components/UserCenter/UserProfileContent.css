@@ -3,7 +3,7 @@
  * @description     用户中心内容组件样式，采用表格布局，与参考图片一致
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:48:00
- * @lastModified    2026-03-04 14:27:15
+ * @lastModified    2026-03-04 15:00:32
  * Copyright © All rights reserved
 */
 
@@ -183,17 +183,29 @@
 
 /* 编辑输入框 */
 .edit-input {
-  padding: 8px 12px;
+  padding: 0 8px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 14px;
   width: 200px;
-  transition: border-color 0.3s;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background-color: #fff;
 }
 
 .edit-input:focus {
   outline: none;
   border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.edit-input::placeholder {
+  color: #999;
+  font-size: 14px;
+  opacity: 0.8;
 }
 
 /* 姓名输入框容器 */
@@ -205,23 +217,7 @@
 
 /* 姓名输入框 - 复制DivinationInfo样式 */
 .name-input {
-  width: 80px;
-  height: 30px;
-  padding: 0 8px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  background-color: #fff;
-}
-
-.name-input:focus {
-  outline: none;
-  border-color: #2196f3;
-  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  width: 130px;
 }
 
 .name-input::placeholder {
@@ -234,33 +230,70 @@
 .edit-select {
   width: 100px;
   height: 30px;
-  padding: 0 8px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: #fff;
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background-color: var(--bg-white);
   cursor: pointer;
   display: flex;
   align-items: center;
   text-align: center;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 8px center;
   background-size: 12px;
   padding-right: 28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.edit-select:hover {
+  border-color: var(--border-hover);
 }
 
 .edit-select:focus {
   outline: none;
-  border-color: #2196f3;
-  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-focus);
+}
+
+.edit-select:disabled {
+  background-color: var(--bg-gray-medium);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  border-color: var(--border-disabled);
 }
 
 .edit-select option {
   padding: 8px;
-  font-size: 14px;
+  font-size: var(--font-size-base);
+  background-color: var(--bg-white);
+  color: var(--text-primary);
+}
+
+.edit-select option:hover {
+  background-color: var(--bg-gray-light);
+  color: var(--primary-color);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .edit-select {
+    width: 80px;
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-select {
+    width: 70px;
+    padding: 0 var(--spacing-xs);
+    padding-right: 24px;
+  }
 }
 
 /* 生时输入框容器 */
