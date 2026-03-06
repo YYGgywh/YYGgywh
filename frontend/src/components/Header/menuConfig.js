@@ -8,7 +8,7 @@
 */
 
 export const menuItems = [
-  { name: '广场', hasDropdown: false },
+  { name: '广场', hasDropdown: false, href: '/' },
   {
     name: '排盘',
     hasDropdown: true,
@@ -36,7 +36,7 @@ export const menuItems = [
           items: [
             {
               title: '六爻',
-              href: '#',
+              href: '/divination/liuyao',
               icon: '★'
             },
             {

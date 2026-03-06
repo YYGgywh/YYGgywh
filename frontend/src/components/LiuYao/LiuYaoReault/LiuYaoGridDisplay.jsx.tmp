@@ -1,0 +1,16 @@
+  // 使用 React.useMemo 缓存网格列数的计算结果
+  // 依赖项：showLiuShen, shouldShowFuShen, showShiYing, hasDongYao
+  // 优化目的：避免每次渲染都计算网格列数
+  const gridColumns = React.useMemo(() => {
+    let columns = 0;
+    if (showLiuShen) columns++;
+    if (shouldShowFuShen) columns++;
+    columns += 1; // 本卦主体列
+    if (showShiYing) columns++; // 本卦世应列
+    if (hasDongYao) {
+      columns += 1; // 动爻符号列
+      columns += 1; // 变卦主体列
+      if (showShiYing) columns++; // 变卦世应列
+    }
+    return columns;
+  }, [showLiuShen, shouldShowFuShen, showShiYing, hasDongYao]);

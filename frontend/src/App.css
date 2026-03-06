@@ -25,3 +25,78 @@
   grid-area: main; 
   padding: 20px; 
 }
+
+/* 空白占位组件样式 */
+.placeholder-container {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.placeholder-container h1 {
+  color: #333333;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.placeholder-container p {
+  color: #666666;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.placeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.placeholder-item {
+  background-color: #f9f9f9;
+  padding: 30px 20px;
+  border-radius: 8px;
+  border: 2px dashed #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.placeholder-item:hover {
+  border-color: #4CAF50;
+  background-color: #f0f9f0;
+  transform: translateY(-2px);
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.placeholder-item h3 {
+  color: #333333;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.placeholder-item p {
+  color: #666666;
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    padding: 10px;
+  }
+  
+  .placeholder-container {
+    padding: 40px 15px;
+  }
+  
+  .placeholder-grid {
+    grid-template-columns: 1fr;
+  }
+}

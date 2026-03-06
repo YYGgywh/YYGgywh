@@ -3,7 +3,7 @@
  * @description     六爻排盘网格展示组件，负责展示主卦、变卦及每爻的详细信息
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-22 19:00:00
- * @lastModified    2026-02-22 21:16:24
+ * @lastModified    2026-03-06 15:25:43
  * Copyright © All rights reserved
 */
 
@@ -30,7 +30,11 @@ const getYaoSymbol = (yaoNature) => {
 // props 参数说明：
 //   - divinationData (object): 占卜数据对象，包含本卦、变卦、动爻等信息
 //   - isColorMode (boolean): 是否启用彩色模式
-const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) => {
+//   - showAccessory (boolean): 是否显示卦身信息等附件内容
+//   - showLiuShen (boolean): 是否显示六神列
+//   - showShiYing (boolean): 是否显示世应列
+//   - showFuShen (boolean): 是否显示伏神列
+const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, showAccessory = true, showLiuShen = true, showShiYing = true, showFuShen = true }) => {
   // 使用 React.useMemo 缓存是否有伏神的判断结果
   // 依赖项：divinationData.ben_gua_head?.fu_shen_wei_list
   // 优化目的：避免每次渲染都判断是否有伏神
@@ -68,15 +72,25 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
     [dongYaoPositionSet]
   );
 
+  // 计算实际需要显示的伏神列
+  const shouldShowFuShen = showFuShen && hasFuShen;
+  
   // 使用 React.useMemo 缓存网格列数的计算结果
-  // 依赖项：hasFuShen, hasDongYao
+  // 依赖项：showLiuShen, shouldShowFuShen, showShiYing, hasDongYao
   // 优化目的：避免每次渲染都计算网格列数
   const gridColumns = React.useMemo(() => {
-    if (hasFuShen && hasDongYao) return 7;
-    if (hasFuShen && !hasDongYao) return 4;
-    if (!hasFuShen && hasDongYao) return 6;
-    return 3;
-  }, [hasFuShen, hasDongYao]);
+    let columns = 0;
+    if (showLiuShen) columns++;
+    if (shouldShowFuShen) columns++;
+    columns += 1; // 本卦主体列
+    if (showShiYing) columns++; // 本卦世应列
+    if (hasDongYao) {
+      columns += 1; // 动爻符号列
+      columns += 1; // 变卦主体列
+      if (showShiYing) columns++; // 变卦世应列
+    }
+    return columns;
+  }, [showLiuShen, shouldShowFuShen, showShiYing, hasDongYao]);
 
   // 优化 3：使用 React.useMemo 缓存变卦爻映射表
   // 依赖项：hasDongYao, divinationData.bian_gua_body?.length
@@ -138,25 +152,25 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
           <div className={`liu-yao-grid columns-${gridColumns}`}>
             {/* 卦宫行 */}
             <div className="grid-row head-gua-palace-row">
-              <div className="grid-cell liu-shen-cell"></div>
-              {hasFuShen && <div className="grid-cell fu-shen-cell"></div>}
+              {showLiuShen && <div className="grid-cell liu-shen-cell"></div>}
+              {shouldShowFuShen && <div className="grid-cell fu-shen-cell"></div>}
               <div className="grid-cell ben-body-cell">
                 <span className="ben_gua_palace">{divinationData.ben_gua_head?.palace || ''}宫{divinationData.ben_gua_head?.nature || ''}</span>
               </div>
-              <div className="grid-cell ben-si-ying-cell"></div>
+              {showShiYing && <div className="grid-cell ben-si-ying-cell"></div>}
               {hasDongYao && <div key="dong-symbol-1" className="grid-cell dong-symbol-cell"></div>}
               {hasDongYao && (
                 <div key="bian-body-1" className="grid-cell bian-body-cell">
                   <span className="bian_gua_palace">{divinationData.bian_gua_head?.palace || ''}宫{divinationData.bian_gua_head?.nature || ''}</span>
                 </div>
               )}
-              {hasDongYao && <div key="bian-si-ying-1" className="grid-cell bian-si-ying-cell"></div>}
+              {hasDongYao && showShiYing && <div key="bian-si-ying-1" className="grid-cell bian-si-ying-cell"></div>}
             </div>
 
             {/* 卦名行 */}
             <div className="grid-row head-gua-name-row">
-              <div className="grid-cell liu-shen-cell"></div>
-              {hasFuShen && <div className="grid-cell fu-shen-cell"></div>}
+              {showLiuShen && <div className="grid-cell liu-shen-cell"></div>}
+              {shouldShowFuShen && <div className="grid-cell fu-shen-cell"></div>}
               <div className="grid-cell ben-body-cell">
                 <p className="ben_gua_name">
                   <span className="chong-he">{chongHePlaceholder}</span>
@@ -164,7 +178,7 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
                   <span className="chong-he">{chongHeLastChar}</span>
                 </p>
               </div>
-              <div className="grid-cell ben-si-ying-cell"></div>
+              {showShiYing && <div className="grid-cell ben-si-ying-cell"></div>}
               {hasDongYao && <div key="dong-symbol-2" className="grid-cell dong-symbol-cell"></div>}
               {hasDongYao && (
                 <div key="bian-body-2" className="grid-cell bian-body-cell">
@@ -175,7 +189,7 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
                   </p>
                 </div>
               )}
-              {hasDongYao && <div key="bian-si-ying-2" className="grid-cell bian-si-ying-cell"></div>}
+              {hasDongYao && showShiYing && <div key="bian-si-ying-2" className="grid-cell bian-si-ying-cell"></div>}
             </div>
 
             {/* 六爻行 */}
@@ -183,10 +197,12 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
               const bianYao = hasDongYao ? bianYaoMap[yao.position] : null;
               return (
                 <div key={`ben-yao-${index}`} className={`grid-row position-${yao.position}`}>
-                  <div className="grid-cell liu-shen-cell">
-                    <span className={`liu-shen position-${yao.position}`} data-element={yao.liu_shen || ''}>{yao.liu_shen || ''}</span>
-                  </div>
-                  {hasFuShen && (
+                  {showLiuShen && (
+                    <div className="grid-cell liu-shen-cell">
+                      <span className={`liu-shen position-${yao.position}`} data-element={yao.liu_shen || ''}>{yao.liu_shen || ''}</span>
+                    </div>
+                  )}
+                  {shouldShowFuShen && (
                     <div className="grid-cell fu-shen-cell">
                       <span className="fu-qin">{yao.fu_qin || ''}</span>
                       <span className="fu-gan" data-element={yao.fu_gan || ''}>{yao.fu_gan || ''}</span>
@@ -199,9 +215,11 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
                     <span className={`yao-gan position-${yao.position}`} data-element={yao.na_gan || ''}>{yao.na_gan || ''}</span>
                     <span className={`yao-zhi position-${yao.position}`} data-element={yao.na_zhi || ''}>{yao.na_zhi || ''}</span>
                   </div>
-                  <div className="grid-cell ben-si-ying-cell">
-                    <span className={`yao-si-yin position-${yao.position}`}>{yao.shi_ying || ''}</span>
-                  </div>
+                  {showShiYing && (
+                    <div className="grid-cell ben-si-ying-cell">
+                      <span className={`yao-si-yin position-${yao.position}`}>{yao.shi_ying || ''}</span>
+                    </div>
+                  )}
                   {hasDongYao && (
                     <div className="grid-cell dong-symbol-cell">
                       <span className={`dong-yao position-${yao.position}`}>{dongYaoSymbolMap[yao.position] || ''}</span>
@@ -219,7 +237,7 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
                       )}
                     </div>
                   )}
-                  {hasDongYao && (
+                  {hasDongYao && showShiYing && (
                     <div className="grid-cell bian-si-ying-cell">
                       {bianYao && (
                         <span className={`yao-si-yin position-${yao.position}`}>{bianYao.shi_ying || ''}</span>
@@ -232,11 +250,13 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false }) =
           </div>
         </div>
 
-        <div className="liu-yao-accessory" role="complementary" aria-label="主卦补充信息">
-          <p>
-            主卦{shiBodyInfo}
-          </p>
-        </div>
+        {showAccessory && (
+          <div className="liu-yao-accessory" role="complementary" aria-label="主卦补充信息">
+            <p>
+              主卦{shiBodyInfo}
+            </p>
+          </div>
+        )}
       </>
     );
   } catch (error) {
@@ -313,7 +333,11 @@ LiuYaoGridDisplay.propTypes = {
       }))
     })
   }),
-  isColorMode: PropTypes.bool
+  isColorMode: PropTypes.bool, /* 是否启用颜色模式 */
+  showAccessory: PropTypes.bool, /* 是否显示补充信息 */
+  showLiuShen: PropTypes.bool, /* 是否显示六神 */
+  showShiYing: PropTypes.bool, /* 是否显示四运 */
+  showFuShen: PropTypes.bool /* 是否显示福神 */
 };
 
 // 为 LiuYaoGridDisplay 组件添加 displayName，便于在 React DevTools 中调试

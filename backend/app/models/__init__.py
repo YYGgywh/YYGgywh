@@ -14,6 +14,8 @@ from .dto_models import (
 from .user import User
 from .pan_record import PanRecord
 from .comment import Comment
+from .pan_like import PanLike
+from .pan_collect import PanCollect
 from .admin_permission import AdminPermission
 from .system_log import SystemLog
 from .system_config import SystemConfig
@@ -30,6 +32,8 @@ __all__ = [
     'User',
     'PanRecord',
     'Comment',
+    'PanLike',
+    'PanCollect',
     'AdminPermission',
     'SystemLog',
     'SystemConfig'

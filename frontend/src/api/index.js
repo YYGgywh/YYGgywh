@@ -145,3 +145,9 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+// 导出API模块
+export * as panApi from './panApi';
+export * as userApi from './userApi';
+export * as adminApi from './adminApi';
+export * as commentApi from './commentApi';

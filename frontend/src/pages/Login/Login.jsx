@@ -8,7 +8,7 @@
 */
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Login.css';
 import { sendCode, sendEmailCode, register, registerByEmail, login as loginApi } from '../../api/userApi';
 import { validateForm } from '../../utils/validate';
@@ -16,6 +16,7 @@ import { setToken, setUserInfo } from '../../utils/storage';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('login'); // 'login' 或 'register'
   const [loginMethod, setLoginMethod] = useState('code'); // 'code' 或 'password'
   const [registerMethod, setRegisterMethod] = useState('phone'); // 'phone' 或 'email'
@@ -137,8 +138,9 @@ const Login = () => {
           last_login_ip: response.data.last_login_ip,
           login_count: response.data.login_count
         });
-        // 跳转到用户中心
-        navigate('/user');
+        // 如果有来源页面，登录后返回原页面；否则跳转到用户中心
+        const from = location.state?.from || '/user';
+        navigate(from);
       }
     } catch (err) {
       setError(err.message || '操作失败');

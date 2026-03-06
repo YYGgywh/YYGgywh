@@ -69,3 +69,73 @@ export const deletePan = async (recordId) => {
     throw error;
   }
 };
+
+// 获取公开排盘记录列表
+export const getPublicPanList = async (params) => {
+  try {
+    const response = await api.get('/pan/public/list', {
+      params
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取排盘记录详情
+export const getPanDetail = async (recordId) => {
+  try {
+    const response = await api.get(`/pan/detail/${recordId}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 点赞/取消点赞
+export const toggleLike = async (panId) => {
+  try {
+    const response = await api.post('/pan/like/toggle', {
+      pan_id: panId
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取点赞状态
+export const getLikeStatus = async (panId) => {
+  try {
+    const response = await api.get('/pan/like/status', {
+      params: { pan_id: panId }
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 收藏/取消收藏
+export const toggleCollect = async (panId) => {
+  try {
+    const response = await api.post('/pan/collect/toggle', {
+      pan_id: panId
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取收藏状态
+export const getCollectStatus = async (panId) => {
+  try {
+    const response = await api.get('/pan/collect/status', {
+      params: { pan_id: panId }
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

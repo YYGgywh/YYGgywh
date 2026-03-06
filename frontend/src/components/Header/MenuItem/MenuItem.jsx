@@ -11,8 +11,8 @@ import React, { useState, useRef, useEffect } from 'react'; // 导入React核心
 import './MenuItem.css'; // 导入MenuItem组件样式
 import DropdownMenu from '../DropdownMenu/DropdownMenu'; // 导入下拉菜单组件
 
-// 定义MenuItem组件，接收name、hasDropdown、dropdownItems、dropdownConfig、isActive、onClick参数
-const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfig = null, isActive = false, onClick }) => {
+// 定义MenuItem组件，接收name、hasDropdown、dropdownItems、dropdownConfig、isActive、onClick、href参数
+const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfig = null, isActive = false, onClick, href }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownTimerRef = useRef(null); // 定义下拉菜单定时器引用
 
@@ -82,12 +82,17 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
 
       {/* 渲染链接元素 */}
       <a
-        href="#" // 设置链接地址
+        href={href || '#'} // 设置链接地址，优先使用传入的href属性
         className={`menu-link ${isActive ? 'active' : ''}`} // 设置动态类名，激活时添加active类
         // 绑定点击事件
         onClick={(e) => {
-          e.preventDefault(); // 阻止默认行为
-          onClick(); // 调用onClick回调函数
+          if (href) {
+            // 如果有href属性，使用默认行为导航
+            // 不阻止默认行为，让浏览器正常导航
+          } else {
+            e.preventDefault(); // 阻止默认行为
+            onClick(); // 调用onClick回调函数
+          }
         }} // 结束点击事件处理
       > {/* 结束a元素开始 */}
       

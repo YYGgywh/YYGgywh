@@ -15,6 +15,7 @@ from app.models.pan_record import PanRecord
 from app.models.user import User
 from app.middleware.auth import get_current_user
 from app.utils.dependencies import rate_limit_dependency, security_validation_dependency
+from app.services.pan_service import PanService
 import json
 import time
 
@@ -64,15 +65,13 @@ class ListPanResponse(BaseModel):
     data: list[PanRecordResponse]
 
 # 根据payload获取当前用户
-def get_current_user_from_payload(payload: dict = Depends(get_current_user), db: Session = Depends(get_db)):
-    """根据payload获取当前用户"""
-    user_id = payload.get("user_id")
+def get_current_user_from_payload(payload: dict = Depends(get_current_user, use_cache=False), db: Session = Depends(get_db)):
+    """根据payload获取当前用户（可选）"""
+    user_id = payload.get("user_id") if payload else None
     if not user_id:
-        raise HTTPException(status_code=401, detail="用户未认证")
+        return None
     
     user = db.query(User).filter(User.id == user_id).first()
-    if not user:
-        raise HTTPException(status_code=401, detail="用户不存在")
     return user
 
 @router.post("/save", response_model=SavePanResponse)
@@ -221,3 +220,64 @@ async def delete_pan(
     db.commit()
     
     return DeletePanResponse(data={"record_id": record_id})
+
+@router.get("/public/list")
+async def get_public_pan_list(
+    pan_type: str = Query(default="liuyao", description="排盘类型"),
+    page: int = Query(default=1, ge=1, description="页码"),
+    size: int = Query(default=12, ge=1, le=50, description="每页数量"),
+    sort: str = Query(default="newest", description="排序方式：newest=最新，hottest=最热"),
+    current_user: User = Depends(get_current_user_from_payload, use_cache=False),
+    db: Session = Depends(get_db),
+    req: Request = Depends(rate_limit_dependency)
+):
+    """
+    获取公开排盘记录列表
+    """
+    # 获取当前用户ID（可选）
+    user_id = current_user.id if current_user else None
+    
+    # 调用服务层
+    pan_service = PanService(db)
+    data = pan_service.get_public_pan_list(
+        pan_type=pan_type,
+        page=page,
+        size=size,
+        sort=sort,
+        user_id=user_id
+    )
+    
+    return {
+        "code": 200,
+        "msg": "查询成功",
+        "data": data
+    }
+
+@router.get("/detail/{record_id}")
+async def get_pan_detail(
+    record_id: int,
+    current_user: User = Depends(get_current_user_from_payload),
+    db: Session = Depends(get_db),
+    req: Request = Depends(rate_limit_dependency)
+):
+    """
+    获取排盘记录详情
+    """
+    # 获取当前用户ID（可选）
+    user_id = current_user.id if current_user else None
+    
+    # 调用服务层
+    pan_service = PanService(db)
+    data = pan_service.get_pan_detail(
+        record_id=record_id,
+        user_id=user_id
+    )
+    
+    if not data:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    return {
+        "code": 200,
+        "msg": "查询成功",
+        "data": data
+    }

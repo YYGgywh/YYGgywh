@@ -19,7 +19,8 @@ import LiuYaoReault from './components/LiuYao/LiuYaoReault/LiuYaoReault' // 导�
 import { AppProvider } from './contexts/AppContext' // 导入应用全局上下文提供者
 import { LiuyaoProvider } from './contexts/LiuyaoContext' // 导入六爻排盘上下文提供者
 
-// 导入登录/注册和用户中心页面（稍后创建）
+// 导入页面组件
+import HomePage from './pages/HomePage' // 首页
 import Login from './pages/Login/Login' // 登录/注册页面
 import UserCenter from './pages/User/UserCenter' // 用户中心页面
 
@@ -35,8 +36,8 @@ import SensitiveWordManagement from './pages/Admin/SensitiveWordManagement'
 import SystemLogManagement from './pages/Admin/SystemLogManagement'
 import SystemConfigManagement from './pages/Admin/SystemConfigManagement'
 
-// 定义主页面组件
-const HomePage = () => (
+// 定义六爻排盘页面组件
+const LiuYaoPage = () => (
   <div className="app-container">
     <header className="app-header">
       <Navigation />
@@ -70,6 +71,7 @@ export default function App() {
             <Routes>
               {/* 前台路由 */}
               <Route path="/" element={<HomePage />} />
+              <Route path="/divination/liuyao" element={<LiuYaoPage />} />
               <Route path="/divination-result" element={<ResultPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/user" element={<UserCenter />} />

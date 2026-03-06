@@ -8,7 +8,7 @@
 */
 
 import React, { useState, useEffect } from 'react'; // 导入React核心库和Hooks
-import { useNavigate } from 'react-router-dom'; // 导入useNavigate钩子
+import { useNavigate, useLocation } from 'react-router-dom'; // 导入useNavigate和useLocation钩子
 import './Navigation.css'; // 导入Navigation组件样式
 import Logo from '../Logo/Logo'; // 导入Logo组件
 import MenuItem from '../MenuItem/MenuItem'; // 导入MenuItem组件
@@ -19,8 +19,16 @@ import { isLoggedIn } from '../../../utils/storage'; // 导入登录状态检查
 // 定义Navigation组件
 const Navigation = () => {
   const navigate = useNavigate(); // 获取导航实例
+  const location = useLocation(); // 获取当前路由位置
   const [isScrolled, setIsScrolled] = useState(false); // 定义滚动状态，默认为false
   const [activeMenu, setActiveMenu] = useState('广场'); // 定义激活菜单状态，默认为'广场'
+
+  // URL路径到菜单项的映射
+  const pathToMenuMap = {
+    '/': '广场',
+    '/divination/liuyao': '排盘',
+    '/divination-result': '排盘'
+  };
 
   // 定义副作用Hook
   useEffect(() => {
@@ -34,6 +42,14 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll); // 返回清理函数，移除滚动事件监听
 
   }, []); // 空依赖数组，仅在组件挂载和卸载时执行
+
+  // 监听路由变化，根据URL更新激活菜单
+  useEffect(() => {
+    const currentPath = location.pathname;
+    // 查找当前路径对应的菜单项
+    const menuName = pathToMenuMap[currentPath] || '广场';
+    setActiveMenu(menuName);
+  }, [location]); // 依赖于location对象
 
   // 定义菜单点击处理函数
   const handleMenuClick = (menuName) => {
@@ -75,6 +91,7 @@ const Navigation = () => {
                 hasDropdown={item.hasDropdown} // 传递是否有下拉菜单
                 dropdownItems={item.dropdownItems} // 传递下拉菜单项
                 dropdownConfig={item.dropdownConfig} // 传递下拉菜单配置
+                href={item.href} // 传递链接地址
                 isActive={activeMenu === item.name} // 传递是否激活
                 onClick={() => handleMenuClick(item.name)} // 传递点击事件处理函数
               /> // 结束MenuItem组件

@@ -16,27 +16,16 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         credentials: HTTPBearer凭证
     
     Returns:
-        用户信息（payload）
-    
-    Raises:
-        HTTPException: Token验证失败时抛出异常
+        用户信息（payload）或None（未登录）
     """
     if not credentials:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="缺少Authorization头",
-            headers={"WWW-Authenticate": "Bearer"}
-        )
+        return {}
     
     token = credentials.credentials
     
     payload = decode_access_token(token)
     if not payload:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token无效或已过期",
-            headers={"WWW-Authenticate": "Bearer"}
-        )
+        return {}
     
     return payload
 
@@ -61,6 +50,8 @@ async def verify_token_middleware(request: Request, call_next):
         "/api/v1/user/register",
         "/api/v1/user/login",
         "/api/v1/admin/login",
+        "/api/v1/pan/public/list",
+        "/api/v1/pan/detail",
         "/docs",
         "/redoc",
         "/openapi.json",

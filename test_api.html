@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API接口测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            overflow: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .status-code {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status-200 {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API接口测试</h1>
+        <p>测试地址: http://localhost:8000/api/v1/pan/public/list</p>
+        <button class="button" onclick="testAPI()">测试API</button>
+        <div id="status" class="status-code" style="display: none;"></div>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const button = document.querySelector('.button');
+            const statusDiv = document.getElementById('status');
+            const resultDiv = document.getElementById('result');
+
+            // 禁用按钮，显示加载状态
+            button.disabled = true;
+            button.textContent = '测试中...';
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status-code';
+            statusDiv.textContent = '正在请求...';
+            resultDiv.style.display = 'none';
+
+            try {
+                // 发送请求
+                const response = await fetch('http://localhost:8000/api/v1/pan/public/list?page=1&size=12&sort=newest&pan_type=liuyao');
+                
+                // 显示状态码
+                statusDiv.textContent = `状态码: ${response.status}`;
+                if (response.ok) {
+                    statusDiv.className = 'status-code status-200';
+                } else {
+                    statusDiv.className = 'status-code status-error';
+                }
+
+                // 显示响应内容
+                const data = await response.json();
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+
+                // 检查返回的数据量
+                if (data.code === 200 && Array.isArray(data.data)) {
+                    const recordCount = data.data.length;
+                    const countDiv = document.createElement('div');
+                    countDiv.innerHTML = `<strong>返回的记录数量:</strong> ${recordCount}`;
+                    resultDiv.insertBefore(countDiv, resultDiv.firstChild);
+                    
+                    if (recordCount > 0) {
+                        countDiv.style.color = '#28a745';
+                    } else {
+                        countDiv.style.color = '#dc3545';
+                    }
+                }
+
+            } catch (error) {
+                statusDiv.className = 'status-code status-error';
+                statusDiv.textContent = '请求失败: ' + error.message;
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = '错误详细信息: ' + error.stack;
+            } finally {
+                // 重新启用按钮
+                button.disabled = false;
+                button.textContent = '测试API';
+            }
+        }
+    </script>
+</body>
+</html>

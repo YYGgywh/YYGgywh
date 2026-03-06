@@ -806,3 +806,48 @@ def upload_avatar(
     db.refresh(current_user)
     
     return UploadAvatarResponse(data={"avatar": current_user.avatar})
+
+class GetUserInfoResponse(BaseModel):
+    code: int = 200
+    msg: str = "查询成功"
+    data: dict
+
+@router.get("/info", response_model=GetUserInfoResponse)
+async def get_user_info(
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    获取当前用户信息
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    return GetUserInfoResponse(
+        data={
+            "id": current_user.id,
+            "username": current_user.login_name,
+            "nickname": current_user.nickname,
+            "avatar_url": current_user.avatar,
+            "email": mask_email(current_user.email) if current_user.email else None,
+            "phone": mask_phone(current_user.phone) if current_user.phone else None,
+            "gender": current_user.gender,
+            "virtual_gender": current_user.virtual_gender,
+            "create_time": current_user.create_time,
+            "update_time": current_user.update_time
+        }
+    )

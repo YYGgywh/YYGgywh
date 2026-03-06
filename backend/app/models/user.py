@@ -57,3 +57,5 @@ class User(Base):
     # 关联关系
     pan_records = relationship("PanRecord", foreign_keys="PanRecord.user_id", back_populates="user", cascade="all, delete-orphan")
     comments = relationship("Comment", foreign_keys="Comment.user_id", back_populates="user", cascade="all, delete-orphan")
+    likes = relationship("PanLike", back_populates="user", cascade="all, delete-orphan")
+    collects = relationship("PanCollect", back_populates="user", cascade="all, delete-orphan")

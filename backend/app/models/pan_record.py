@@ -29,13 +29,23 @@ class PanRecord(Base):
     audit_remark = Column(String, nullable=True)
     is_visible = Column(Integer, default=1)
     deleted_at = Column(Integer, nullable=True)
+    like_count = Column(Integer, default=0)
+    collect_count = Column(Integer, default=0)
+    view_count = Column(Integer, default=0)
+    comment_count = Column(Integer, default=0)
+    is_public = Column(Integer, default=1)
     
     # 关联关系
     user = relationship("User", foreign_keys=[user_id], back_populates="pan_records")
     audit_user = relationship("User", foreign_keys=[audit_user_id])
     comments = relationship("Comment", back_populates="pan_record", cascade="all, delete-orphan")
+    likes = relationship("PanLike", back_populates="pan_record", cascade="all, delete-orphan")
+    collects = relationship("PanCollect", back_populates="pan_record", cascade="all, delete-orphan")
     
     # 联合索引
     __table_args__ = (
         Index('idx_pan_user_type', 'user_id', 'pan_type'),
+        Index('idx_pan_record_public', 'is_public', 'audit_status', 'is_visible', 'deleted_at'),
+        Index('idx_pan_record_time', 'create_time'),
+        Index('idx_pan_record_hot', 'like_count', 'create_time'),
     )
