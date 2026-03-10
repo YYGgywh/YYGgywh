@@ -1,0 +1,162 @@
+/*
+ * @file            frontend/src/components/common/EmptyState.desktop.module.css
+ * @description     空状态组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 19:30:00
+ * @lastModified    2026-03-07 19:58:07
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 空状态组件级变量
+   定义空状态组件特有的样式变量，引用全局变量并添加 fallback 值
+   ============================================ */
+
+/* 空状态容器变量定义 */
+.emptyState {
+  /* ===== 颜色变量 - 引用全局变量 ===== */
+  /* 图标颜色 - 引用全局浅灰背景色 */
+  --empty-icon-color: var(--bg-gray-light, #e8e8e8);
+  /* 图标透明度 - 使用自定义值 */
+  --empty-icon-opacity: 0.5;
+  /* 消息文本颜色 - 引用全局次要文本色 */
+  --empty-message-color: var(--text-secondary, #999999);
+  /* 操作按钮背景色 - 引用全局主色 */
+  --empty-action-bg: var(--primary-color, #1890ff);
+  /* 操作按钮文本色 - 引用全局白色背景 */
+  --empty-action-text: var(--bg-white, #ffffff);
+  /* 操作按钮悬停背景色 - 使用自定义浅色值 */
+  --empty-action-hover-bg: #40a9ff;
+  
+  /* ===== 尺寸变量 - 引用全局间距系统 ===== */
+  /* 容器高度 - 使用自定义值 */
+  --empty-container-height: 300px;
+  /* 容器内边距 - 使用自定义值 */
+  --empty-container-padding: 20px;
+  /* 图标底部外边距 - 使用自定义值 */
+  --empty-icon-margin-bottom: 20px;
+  /* 图标尺寸 - 使用自定义值 */
+  --empty-icon-size: 64px;
+  /* 图标描边宽度 - 使用自定义值 */
+  --empty-icon-stroke-width: 2px;
+  /* 消息底部外边距 - 使用自定义值 */
+  --empty-message-margin-bottom: 24px;
+  /* 操作按钮水平内边距 - 使用自定义值 */
+  --empty-action-padding-x: 24px;
+  /* 操作按钮垂直内边距 - 引用全局极小间距 */
+  --empty-action-padding-y: var(--spacing-xs, 8px);
+  
+  /* ===== 字体变量 - 引用全局字体系统 ===== */
+  /* 消息字体大小 - 引用全局大字体 */
+  --empty-message-font-size: var(--font-size-lg, 1rem);
+  /* 消息行高 - 引用全局基础行高 */
+  --empty-message-line-height: var(--line-height-base, 1.5);
+  /* 操作按钮字体大小 - 引用全局基础字体 */
+  --empty-action-font-size: var(--font-size-base, 0.875rem);
+  
+  /* ===== 边框和圆角变量 ===== */
+  /* 操作按钮圆角 - 引用全局小圆角 */
+  --empty-action-border-radius: var(--radius-sm, 4px);
+  /* 操作按钮边框 - 无边框 */
+  --empty-action-border: none;
+  
+  /* ===== 动画变量 - 引用全局动画系统 ===== */
+  /* 操作按钮过渡动画时长 - 引用全局正常过渡 */
+  --empty-action-transition-duration: var(--transition-normal, 0.3s);
+  
+  /* ===== 布局属性 ===== */
+  /* 显示方式 - 使用 Flexbox 布局 */
+  display: flex;
+  /* 主轴方向 - 垂直排列 */
+  flex-direction: column;
+  /* 交叉轴居中对齐 */
+  align-items: center;
+  /* 主轴居中对齐 */
+  justify-content: center;
+  /* 高度 - 引用变量 */
+  height: var(--empty-container-height);
+  /* 宽度 - 占满父容器 */
+  width: 100%;
+  /* 文本对齐 - 居中 */
+  text-align: center;
+  /* 内边距 - 引用变量 */
+  padding: var(--empty-container-padding);
+}
+
+/* ============================================
+   空状态图标样式
+   定义空状态图标的布局和外观
+   ============================================ */
+
+.emptyIcon {
+  /* ===== 间距属性 ===== */
+  /* 底部外边距 - 引用变量，与消息文本保持距离 */
+  margin-bottom: var(--empty-icon-margin-bottom);
+  /* 透明度 - 引用变量，降低视觉权重 */
+  opacity: var(--empty-icon-opacity);
+}
+
+/* ============================================
+   空状态消息文本样式
+   定义空状态提示消息的文本样式
+   ============================================ */
+
+.emptyMessage {
+  /* ===== 间距属性 ===== */
+  /* 外边距 - 重置默认外边距，设置底部间距 */
+  margin: 0 0 var(--empty-message-margin-bottom) 0;
+  
+  /* ===== 字体属性 ===== */
+  /* 字体大小 - 引用变量 */
+  font-size: var(--empty-message-font-size);
+  /* 文本颜色 - 引用变量 */
+  color: var(--empty-message-color);
+  /* 行高 - 引用变量 */
+  line-height: var(--empty-message-line-height);
+}
+
+/* ============================================
+   空状态操作按钮样式
+   定义空状态操作按钮的样式，用于引导用户操作
+   ============================================ */
+
+.emptyAction {
+  /* ===== 间距属性 ===== */
+  /* 内边距 - 垂直和水平内边距 */
+  padding: var(--empty-action-padding-y) var(--empty-action-padding-x);
+  
+  /* ===== 颜色属性 ===== */
+  /* 背景色 - 引用变量 */
+  background-color: var(--empty-action-bg);
+  /* 文本颜色 - 引用变量 */
+  color: var(--empty-action-text);
+  
+  /* ===== 边框属性 ===== */
+  /* 边框 - 引用变量，无边框 */
+  border: var(--empty-action-border);
+  /* 圆角 - 引用变量 */
+  border-radius: var(--empty-action-border-radius);
+  
+  /* ===== 交互属性 ===== */
+  /* 鼠标指针 - 指针样式表示可点击 */
+  cursor: pointer;
+  
+  /* ===== 字体属性 ===== */
+  /* 字体大小 - 引用变量 */
+  font-size: var(--empty-action-font-size);
+  
+  /* ===== 动画属性 ===== */
+  /* 过渡动画 - 背景色变化应用过渡效果 */
+  transition: background-color var(--empty-action-transition-duration);
+}
+
+/* ============================================
+   空状态操作按钮悬停状态
+   定义操作按钮鼠标悬停时的交互效果
+   ============================================ */
+
+.emptyAction:hover {
+  /* ===== 背景颜色变化 ===== */
+  /* 悬停背景色 - 引用变量，颜色变浅 */
+  background-color: var(--empty-action-hover-bg);
+}

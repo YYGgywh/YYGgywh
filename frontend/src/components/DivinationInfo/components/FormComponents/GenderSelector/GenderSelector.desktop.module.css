@@ -1,0 +1,259 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/FormComponents/GenderSelector/GenderSelector.desktop.module.css
+ * @description     性别选择组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 18:45:00
+ * @lastModified    2026-03-09 19:28:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 组件专用变量定义
+ * 定义性别选择组件的专用变量，便于统一管理和调整
+ */
+.genderRadioContainer {
+  /* 间距变量 */
+  --gender-selector-gap: 16px; /* 单选按钮组之间的间距 */
+  --gender-selector-label-gap: 6px; /* 单选按钮和文本之间的间距 */
+  --gender-selector-padding: 4px 0; /* 标签上下内边距 */
+  
+  /* 尺寸变量 */
+  --gender-selector-radio-size: 16px; /* 单选按钮大小 */
+  --gender-selector-dot-size: 8px; /* 选中状态圆点大小 */
+  --gender-selector-border-width: 1px; /* 边框宽度 */
+  
+  /* 变体比例变量 */
+  --gender-selector-compact-scale: 0.875; /* 紧凑变体缩放比例 */
+  --gender-selector-large-scale: 1.125; /* 宽松变体缩放比例 */
+}
+
+/**
+ * 性别选择组件基础容器样式
+ * 定义性别选择组件的基本布局
+ */
+.genderRadioContainer {
+  /* 布局属性 */
+  display: inline-flex; /* 使用flex布局，便于水平排列 */
+  align-items: center; /* 垂直居中对齐 */
+  box-sizing: border-box; /* 盒模型为border-box */
+  padding: 0; /* 无内边距 */
+  margin: 0; /* 无外边距 */
+}
+
+/**
+ * 单选按钮组样式
+ * 定义单选按钮的布局
+ */
+.radioGroup {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--gender-selector-label-gap); /* 按钮之间的间距，使用变量 */
+}
+
+/**
+ * 单选按钮标签样式
+ * 定义每个单选按钮的容器样式
+ */
+.radioLabel {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--gender-selector-label-gap); /* 输入框和文本之间的间距，使用变量 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  user-select: none; /* 禁止文本选择 */
+  position: relative; /* 相对定位，为自定义单选按钮提供定位基准 */
+  padding: var(--gender-selector-padding); /* 上下内边距，使用变量 */
+  transition: all var(--transition-fast); /* 过渡效果 */
+}
+
+/**
+ * 原生单选按钮样式
+ * 隐藏原生单选按钮，使用自定义样式
+ */
+.radioInput {
+  /* 布局属性 */
+  position: absolute; /* 绝对定位 */
+  opacity: 0; /* 完全透明 */
+  width: 0; /* 宽度为0 */
+  height: 0; /* 高度为0 */
+  margin: 0; /* 无外边距 */
+  padding: 0; /* 无内边距 */
+}
+
+/**
+ * 自定义单选按钮样式
+ * 定义单选按钮的外观
+ */
+.radioCustom {
+  /* 布局属性 */
+  position: relative; /* 相对定位 */
+  width: var(--gender-selector-radio-size); /* 宽度，使用变量 */
+  height: var(--gender-selector-radio-size); /* 高度，使用变量 */
+  border: var(--gender-selector-border-width) solid var(--border-color); /* 边框，宽度使用变量 */
+  border-radius: 50%; /* 圆形边框 */
+  background-color: var(--bg-white); /* 白色背景 */
+  transition: all var(--transition-fast); /* 过渡效果 */
+  flex-shrink: 0; /* 不允许收缩 */
+}
+
+/**
+ * 单选按钮选中状态样式
+ * 当单选按钮被选中时的样式
+ */
+.radioInput:checked + .radioCustom {
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+  background-color: var(--bg-white); /* 白色背景 */
+}
+
+/**
+ * 单选按钮选中状态的内部圆点
+ * 当单选按钮被选中时显示的圆点
+ */
+.radioInput:checked + .radioCustom::after {
+  /* 内容 */
+  content: ''; /* 空内容，用于创建圆点 */
+  /* 布局属性 */
+  position: absolute; /* 绝对定位 */
+  top: 50%; /* 垂直居中 */
+  left: 50%; /* 水平居中 */
+  transform: translate(-50%, -50%); /* 居中对齐 */
+  width: var(--gender-selector-dot-size); /* 圆点宽度，使用变量 */
+  height: var(--gender-selector-dot-size); /* 圆点高度，使用变量 */
+  border-radius: 50%; /* 圆形圆点 */
+  background-color: var(--primary-color); /* 圆点颜色为主题色 */
+  transition: all var(--transition-fast); /* 过渡效果 */
+}
+
+/**
+ * 单选按钮hover状态
+ * 当鼠标悬停在单选按钮上时的样式
+ */
+.radioLabel:hover .radioCustom {
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+}
+
+/**
+ * 单选按钮禁用状态
+ * 当单选按钮被禁用时的样式
+ */
+.radioInput:disabled + .radioCustom {
+  border-color: var(--border-color); /* 边框颜色变为默认边框色 */
+  background-color: var(--bg-gray-light); /* 背景色变为浅灰色 */
+  cursor: not-allowed; /* 鼠标指针变为禁止状态 */
+}
+
+/**
+ * 单选按钮禁用且选中状态
+ * 当单选按钮被禁用且选中时的样式
+ */
+.radioInput:disabled:checked + .radioCustom::after {
+  background-color: var(--text-disabled); /* 圆点颜色变为禁用文本色 */
+}
+
+/**
+ * 单选按钮文本样式
+ * 定义单选按钮文本的样式
+ */
+.radioText {
+  /* 字体属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-primary); /* 主文本颜色 */
+  line-height: 1.5; /* 行高1.5 */
+  font-family: var(--font-family-base); /* 基础字体 */
+  transition: all var(--transition-fast); /* 过渡效果 */
+}
+
+/**
+ * 单选按钮hover时的文本样式
+ * 当鼠标悬停在单选按钮上时的文本样式
+ */
+.radioLabel:hover .radioText {
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+}
+
+/**
+ * 单选按钮禁用时的文本样式
+ * 当单选按钮被禁用时的文本样式
+ */
+.radioInput:disabled ~ .radioText {
+  color: var(--text-disabled); /* 文本颜色变为禁用文本色 */
+  cursor: not-allowed; /* 鼠标指针变为禁止状态 */
+}
+
+/**
+ * 性别选择组件变体样式
+ * 定义不同样式变体的性别选择组件
+ */
+
+/* 紧凑变体 */
+.genderRadioContainer.compact {
+  padding: 0; /* 无内边距 */
+}
+
+.genderRadioContainer.compact .radioGroup {
+  gap: calc(var(--gender-selector-gap) * var(--gender-selector-compact-scale)); /* 按钮之间的间距，使用相对变量 */
+}
+
+.genderRadioContainer.compact .radioLabel {
+  gap: calc(var(--gender-selector-label-gap) * var(--gender-selector-compact-scale)); /* 输入框和文本之间的间距，使用相对变量 */
+  padding: calc(var(--gender-selector-padding) * var(--gender-selector-compact-scale)); /* 上下内边距，使用相对变量 */
+}
+
+.genderRadioContainer.compact .radioCustom {
+  width: calc(var(--gender-selector-radio-size) * var(--gender-selector-compact-scale)); /* 宽度，使用相对变量 */
+  height: calc(var(--gender-selector-radio-size) * var(--gender-selector-compact-scale)); /* 高度，使用相对变量 */
+}
+
+.genderRadioContainer.compact .radioInput:checked + .radioCustom::after {
+  width: calc(var(--gender-selector-dot-size) * var(--gender-selector-compact-scale)); /* 圆点宽度，使用相对变量 */
+  height: calc(var(--gender-selector-dot-size) * var(--gender-selector-compact-scale)); /* 圆点高度，使用相对变量 */
+}
+
+.genderRadioContainer.compact .radioText {
+  font-size: var(--font-size-sm); /* 字体大小更小 */
+}
+
+/* 宽松变体 */
+.genderRadioContainer.large {
+  padding: 0; /* 无内边距 */
+}
+
+.genderRadioContainer.large .radioGroup {
+  gap: calc(var(--gender-selector-gap) * var(--gender-selector-large-scale)); /* 按钮之间的间距，使用相对变量 */
+}
+
+.genderRadioContainer.large .radioLabel {
+  gap: calc(var(--gender-selector-label-gap) * var(--gender-selector-large-scale)); /* 输入框和文本之间的间距，使用相对变量 */
+  padding: calc(var(--gender-selector-padding) * var(--gender-selector-large-scale)); /* 上下内边距，使用相对变量 */
+}
+
+.genderRadioContainer.large .radioCustom {
+  width: calc(var(--gender-selector-radio-size) * var(--gender-selector-large-scale)); /* 宽度，使用相对变量 */
+  height: calc(var(--gender-selector-radio-size) * var(--gender-selector-large-scale)); /* 高度，使用相对变量 */
+}
+
+.genderRadioContainer.large .radioInput:checked + .radioCustom::after {
+  width: calc(var(--gender-selector-dot-size) * var(--gender-selector-large-scale)); /* 圆点宽度，使用相对变量 */
+  height: calc(var(--gender-selector-dot-size) * var(--gender-selector-large-scale)); /* 圆点高度，使用相对变量 */
+}
+
+.genderRadioContainer.large .radioText {
+  font-size: var(--font-size-lg); /* 字体大小更大 */
+}
+
+/* 垂直排列变体 */
+.genderRadioContainer.vertical {
+  display: block; /* 块级元素 */
+}
+
+.genderRadioContainer.vertical .radioGroup {
+  flex-direction: column; /* 垂直排列 */
+  align-items: flex-start; /* 左对齐 */
+  gap: calc(var(--gender-selector-gap) * 0.5); /* 按钮之间的垂直间距，使用相对变量 */
+}
+
+.genderRadioContainer.vertical .radioLabel {
+  width: 100%; /* 宽度100% */
+  justify-content: flex-start; /* 左对齐 */
+}

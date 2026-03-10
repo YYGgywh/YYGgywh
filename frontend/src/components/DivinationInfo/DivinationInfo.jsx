@@ -3,7 +3,7 @@
  * @description     占卜信息收集表单，包含姓名、性别、生年、属地、占类、占题和时间戳
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-02-18 20:28:29
+ * @lastModified    2026-03-09 18:28:46
  * Copyright © All rights reserved
 */
 
@@ -12,13 +12,13 @@ import React, {
   useState   // 状态管理钩子，用于声明和更新组件内部状态
 } from 'react';
 import './DivinationInfo.css'; // 导入占卜信息表单样式
-import TimestampModal from './timestamp/TimestampModal'; // 导入时间戳设置弹窗组件
+import TimestampModal from './components/TimeComponents/TimestampModal/TimestampModal'; // 导入时间戳设置弹窗组件
 import { useApp } from '../../contexts/AppContext'; // 导入应用全局上下文Hook
-import FormInput from '../FormInput'; // 导入可复用的输入框组件
-import GenderSelector from '../GenderSelector'; // 导入性别选择组件
-import DivinationTypeDropdown from '../DivinationTypeDropdown'; // 导入占类下拉选择组件
-import NumberInput from '../NumberInput'; // 导入通用数字输入组件
-import TimestampDisplay from '../TimestampDisplay'; // 导入时间戳显示组件
+import FormInput from './components/FormComponents/FormInput/FormInput'; // 导入可复用的输入框组件
+import GenderSelector from './components/FormComponents/GenderSelector/GenderSelector'; // 导入性别选择组件
+import DivinationTypeDropdown from './components/FormComponents/DivinationTypeDropdown/DivinationTypeDropdown'; // 导入占类下拉选择组件
+import NumberInput from './components/FormComponents/NumberInput/NumberInput'; // 导入可复用的数字输入框组件
+import TimestampDisplay from './components/TimeComponents/TimestampDisplay/TimestampDisplay'; // 导入时间戳显示组件
 
 // 定义占卜信息表单组件
 const DivinationInfo = () => {
@@ -102,6 +102,7 @@ const DivinationInfo = () => {
             onChange={handleChange} // 姓输入框值改变时的处理函数，用于更新表单数据
             onDoubleClick={() => handleDoubleClick('firstName')} // 双击姓输入框时的处理函数，用于清空输入框
             className="first-name-input" // 姓输入框的类名，用于样式化
+            variant="firstName" // 姓输入框的样式变体，用于设置宽度
           />
           {/* 名输入框 */}
           <FormInput
@@ -111,6 +112,7 @@ const DivinationInfo = () => {
             onChange={handleChange} // 名输入框值改变时的处理函数，用于更新表单数据
             onDoubleClick={() => handleDoubleClick('lastName')} // 双击名输入框时的处理函数，用于清空输入框
             className="last-name-input" // 名输入框的类名，用于样式化
+            variant="lastName" // 名输入框的样式变体，用于设置宽度
           />
 
           <GenderSelector
@@ -129,6 +131,7 @@ const DivinationInfo = () => {
             minValue={1}
             padLength={4}
             placeholder="生年"
+            variant="birthYear" // 生年输入框的样式变体，用于设置宽度
           />
           {/* 月日输入框 */}
           <FormInput
@@ -138,6 +141,7 @@ const DivinationInfo = () => {
             onChange={handleChange} // 月日输入框值改变时的处理函数，用于更新表单数据
             onDoubleClick={() => handleDoubleClick('location')} // 双击月日输入框时的处理函数，用于清空输入框
             className="location-input" // 月日输入框的类名，用于样式化
+            variant="location" // 月日输入框的样式变体，用于设置宽度
           />
           <div className="form-row form-row-timestamp"> {/* 占题时间戳行 */}
             <TimestampDisplay
@@ -161,6 +165,7 @@ const DivinationInfo = () => {
             onChange={handleChange} // 自建子类输入框值改变时的处理函数，用于更新表单数据
             onDoubleClick={() => handleDoubleClick('subType')} // 双击自建子类输入框时的处理函数，用于清空输入框
             className="sub-type-input" // 自建子类输入框的类名，用于样式化
+            variant="subType" // 自建子类输入框的样式变体，用于设置宽度
           />
           {/* 占题输入框 */}
           <FormInput
@@ -170,6 +175,7 @@ const DivinationInfo = () => {
             onChange={handleChange} // 占题输入框值改变时的处理函数，用于更新表单数据
             onDoubleClick={() => handleDoubleClick('question')} // 双击占题输入框时的处理函数，用于清空输入框
             className="question-textarea" // 占题输入框的类名，用于样式化
+            variant="question" // 占题输入框的样式变体，用于设置宽度
           />
         </div>
 

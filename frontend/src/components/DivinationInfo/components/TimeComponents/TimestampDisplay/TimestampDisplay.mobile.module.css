@@ -1,0 +1,133 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/TimestampDisplay/TimestampDisplay.mobile.module.css
+ * @description     时间戳显示组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-10 14:30:00
+ * @lastModified    2026-03-10 14:30:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 时间戳容器
+ * 包含时间戳显示和刷新按钮的容器
+ */
+.timestampContainer {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--spacing-sm); /* 元素之间的间距为小间距 */
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-xs) var(--spacing-md); /* 上下内边距为小间距，左右内边距为中间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  border: 1px solid var(--border-color); /* 1px边框 */
+}
+
+/**
+ * 时间戳显示区域
+ * 显示格式化时间戳的区域
+ */
+.timestamp {
+  /* 视觉属性 */
+  color: var(--text-primary); /* 主文本颜色 */
+  font-size: var(--font-size-sm); /* 小字体大小 */
+  font-weight: 400; /* 正常字体粗细 */
+  line-height: 1.5; /* 行高1.5 */
+  
+  /* 交互属性 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  transition: color var(--transition-fast); /* 颜色过渡效果 */
+  user-select: none; /* 禁止文本选择 */
+  
+  /* 字体属性 */
+  font-family: var(--font-family-base); /* 基础字体 */
+}
+
+/**
+ * 时间戳悬停状态
+ * 当鼠标悬停在时间戳上时的样式
+ */
+.timestamp:hover {
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+}
+
+/**
+ * 刷新按钮容器
+ * 包含刷新图标的容器
+ */
+.timestampRefresh {
+  /* 视觉属性 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  transition: color var(--transition-fast); /* 颜色过渡效果 */
+  
+  /* 交互属性 */
+  padding: var(--spacing-xs); /* 内边距为小间距 */
+  border-radius: var(--radius-sm); /* 小圆角 */
+}
+
+/**
+ * 刷新按钮悬停状态
+ * 当鼠标悬停在刷新按钮上时的样式
+ */
+.timestampRefresh:hover {
+  background-color: var(--bg-gray-medium); /* 背景色变为中灰色 */
+  transform: rotate(180deg); /* 鼠标移入时旋转180度 */
+  transition: all var(--transition-fast); /* 所有属性的过渡效果 */
+}
+
+/**
+ * 刷新图标
+ * 刷新按钮中的图标样式
+ */
+.icon {
+  /* 布局属性 */
+  display: block; /* 块级元素 */
+  width: 16px; /* 宽度16px */
+  height: 16px; /* 高度16px */
+  
+  /* 视觉属性 */
+  color: var(--primary-color); /* 主题色 */
+  transition: color var(--transition-fast); /* 颜色过渡效果 */
+}
+
+/**
+ * 刷新按钮悬停状态下的图标颜色
+ * 当鼠标悬停在刷新按钮上时的图标颜色
+ */
+.timestampRefresh:hover .icon {
+  color: var(--primary-color); /* 图标颜色变为主题色 */
+}
+
+/**
+ * 响应式设计
+ * 针对不同屏幕尺寸的样式调整
+ */
+@media (max-width: 768px) {
+  .timestamp {
+    font-size: 12px; /* 字体大小调整为12px */
+  }
+  
+  .icon {
+    width: 14px; /* 图标宽度调整为14px */
+    height: 14px; /* 图标高度调整为14px */
+  }
+}
+
+@media (max-width: 480px) {
+  .timestampContainer {
+    padding: var(--spacing-xs); /* 内边距调整为小间距 */
+    gap: var(--spacing-xs); /* 元素间距调整为小间距 */
+  }
+  
+  .timestamp {
+    font-size: 11px; /* 字体大小调整为11px */
+  }
+  
+  .icon {
+    width: 12px; /* 图标宽度调整为12px */
+    height: 12px; /* 图标高度调整为12px */
+  }
+}

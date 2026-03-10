@@ -1,0 +1,137 @@
+/*
+ * @file            frontend/src/pages/HomePage.mobile.module.css
+ * @description     首页样式 - 移动端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 18:00:00
+ * @lastModified    2026-03-07 18:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 移动端专用
+   这些变量会覆盖桌面端的默认值
+   ============================================ */
+:root {
+  /* ===== 移动端尺寸变量 ===== */
+  /* 容器内边距 - 移动端 */
+  --container-padding: 16px;
+  /* 卡片内边距 - 移动端 */
+  --card-content-padding: 10px;
+  /* 卡片标题字体大小 - 移动端 */
+  --card-title-font-size: 12px;
+  /* 卡片统计信息字体大小 - 移动端 */
+  --card-stats-font-size: 10px;
+  /* 卡片间距 - 移动端 */
+  --card-gap: 12px;
+  
+  /* ===== 小屏幕尺寸变量 ===== */
+  /* 小屏幕卡片内边距 */
+  --card-content-padding-small: 8px;
+  /* 小屏幕卡片标题字体大小 */
+  --card-title-font-size-small: 11px;
+  /* 小屏幕卡片统计信息字体大小 */
+  --card-stats-font-size-small: 8px;
+  /* 小屏幕卡片间距 */
+  --card-gap-small: 10px;
+  /* 小屏幕统计图标字体大小 */
+  --stat-icon-font-size-small: 11px;
+  /* 小屏幕统计数字字体大小 */
+  --stat-count-font-size-small: 8px;
+  /* 小屏幕统计项间距 */
+  --stat-gap-small: 8px;
+}
+
+/* ============================================
+   移动端样式
+   适用于移动设备的样式规则
+   ============================================ */
+
+/* 首页容器样式 - 移动端 */
+.homeContainer {
+  /* 最大宽度 - 100% */
+  max-width: 100%;
+  /* 内边距 - 使用变量 */
+  padding: var(--container-padding);
+}
+
+/* 瀑布流网格布局 - 中屏幕 */
+@media (max-width: 768px) {
+  /* 调整网格列数 */
+  .waterfallGrid {
+    /* 网格列数 - 2列 */
+    grid-template-columns: repeat(2, 1fr);
+    /* 网格间距 - 使用变量 */
+    gap: var(--card-gap);
+  }
+  
+  /* 卡片内容区域 - 移动端 */
+  .cardContent {
+    /* 内边距 - 使用变量 */
+    padding: var(--card-content-padding);
+  }
+  
+  /* 卡片标题样式 - 移动端 */
+  .cardTitle {
+    /* 字体大小 - 使用变量 */
+    font-size: var(--card-title-font-size);
+  }
+  
+  /* 卡片统计信息区域 - 移动端 */
+  .cardStats {
+    /* 间距 */
+    gap: 10px;
+  }
+  
+  /* 统计图标 - 移动端 */
+  .statIcon {
+    /* 字体大小 */
+    font-size: 12px;
+  }
+  
+  /* 统计数字 - 移动端 */
+  .statCount {
+    /* 字体大小 */
+    font-size: 9px;
+  }
+}
+
+/* 瀑布流网格布局 - 小屏幕 */
+@media (max-width: 480px) {
+  /* 调整网格列数 */
+  .waterfallGrid {
+    /* 网格列数 - 1列 */
+    grid-template-columns: 1fr;
+    /* 网格间距 - 使用变量 */
+    gap: var(--card-gap-small);
+  }
+  
+  /* 卡片内容区域 - 小屏幕 */
+  .cardContent {
+    /* 内边距 - 使用变量 */
+    padding: var(--card-content-padding-small);
+  }
+  
+  /* 卡片标题样式 - 小屏幕 */
+  .cardTitle {
+    /* 字体大小 - 使用变量 */
+    font-size: var(--card-title-font-size-small);
+  }
+  
+  /* 卡片统计信息区域 - 小屏幕 */
+  .cardStats {
+    /* 间距 - 使用变量 */
+    gap: var(--stat-gap-small);
+  }
+  
+  /* 统计图标 - 小屏幕 */
+  .statIcon {
+    /* 字体大小 - 使用变量 */
+    font-size: var(--stat-icon-font-size-small);
+  }
+  
+  /* 统计数字 - 小屏幕 */
+  .statCount {
+    /* 字体大小 - 使用变量 */
+    font-size: var(--stat-count-font-size-small);
+  }
+}

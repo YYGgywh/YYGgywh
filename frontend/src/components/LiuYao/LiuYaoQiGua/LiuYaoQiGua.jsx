@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件，协调各子组件的状态和布局
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-03 11:51:33
+ * @lastModified    2026-03-09 13:16:50
  * Copyright © All rights reserved
 */
 
@@ -13,9 +13,9 @@ import React, {
   useRef, // ref Hook，用于创建对 DOM 元素或值的引用
   useEffect // 副作用 Hook，用于处理组件挂载、更新和卸载时的操作
 } from 'react';  
-import './LiuYaoQiGua.css';  // 导入组件样式文件
-import NavigationSidebar from '../components/NavigationSidebar';  // 导入侧边导航组件
-import MethodContent from '../components/MethodContent';  // 导入方法内容组件
+import styles from './LiuYaoQiGua.desktop.module.css';  // 导入桌面端样式文件（CSS Modules）
+import NavigationSidebar from './components/NavigationSidebar/NavigationSidebar';  // 导入侧边导航组件
+import MethodContent from './components/MethodContent/MethodContent';  // 导入方法内容组件
 import LiuYaoService from '../../../services/liuyaoService';  // 导入六爻服务层
 import { useApp } from '../../../contexts/AppContext';  // 导入应用全局上下文 Hook
 import { useLiuyao } from '../../../contexts/LiuyaoContext';  // 导入六爻排盘上下文 Hook
@@ -445,15 +445,15 @@ const LiuYaoQiGua = () => {
 
   // 7. 返回 JSX 元素
   return (
-    <div className="liu-yao-wrapper"> {/* 六爻起卦外层容器 */}
-      <div className="liu-yao-container"> {/* 六爻起卦主容器 */}
+    <div className={styles.liuYaoWrapper}> {/* 六爻起卦外层容器 */}
+      <div className={styles.liuYaoContainer}> {/* 六爻起卦主容器 */}
         {/* 侧边导航组件 */}
         <NavigationSidebar
           methods={divinationMethods} // 起卦方法数组
           selectedMethod={selectedMethod} // 当前选中的起卦方法
           onMethodSelect={handleMethodSelect} // 方法选择回调函数
         />
-        <div className="liu-yao-content"> {/* 起卦内容容器 */}
+        <div className={styles.liuYaoContent}> {/* 起卦内容容器 */}
           {/* 起卦方法内容组件 */}
           <MethodContent
             selectedMethod={selectedMethod} // 当前选中的起卦方法
@@ -470,10 +470,10 @@ const LiuYaoQiGua = () => {
           />
         </div>
       </div>
-      <div className="divination-button-container"> {/* 排盘按钮容器 */}
+      <div className={styles.divinationButtonContainer}> {/* 排盘按钮容器 */}
           {/* 排盘按钮 */}
           <button 
-            className="divination-button" // 排盘按钮类名
+            className={styles.divinationButton} // 排盘按钮类名
             disabled={!isDivinationButtonEnabled} // 是否禁用排盘按钮
             onClick={handleStartDivination} // 点击事件处理，调用 handleStartDivination 回调
           >

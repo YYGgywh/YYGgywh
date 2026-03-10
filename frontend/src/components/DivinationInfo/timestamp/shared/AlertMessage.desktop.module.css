@@ -1,0 +1,113 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/timestamp/shared/AlertMessage.desktop.module.css
+ * @description     警告提示组件桌面端样式 - CSS Modules
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 14:30:00
+ * @lastModified    2026-03-09 14:51:01
+ * Copyright © All rights reserved
+*/
+
+/* ===== 警告提示遮罩层 ===== */
+/* 警告提示遮罩层样式 - 覆盖全屏的半透明背景 */
+.alertOverlay {
+  /* ===== 布局变量定义 ===== */
+  --overlay-position: fixed;
+  
+  /* ===== 尺寸变量定义 ===== */
+  --overlay-top: 0;
+  --overlay-left: 0;
+  --overlay-right: 0;
+  --overlay-bottom: 0;
+  
+  /* ===== 颜色变量定义 ===== */
+  --overlay-bg: var(--overlay-bg, rgba(0, 0, 0, 0.5));
+  
+  /* ===== 布局属性 ===== */
+  position: var(--overlay-position);
+  top: var(--overlay-top);
+  left: var(--overlay-left);
+  right: var(--overlay-right);
+  bottom: var(--overlay-bottom);
+  background-color: var(--overlay-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-alert);
+}
+
+/* ===== 警告提示内容区 ===== */
+/* 警告提示内容区样式 - 实际的警告内容 */
+.alertContent {
+  /* ===== 尺寸变量定义 ===== */
+  --alert-padding: var(--spacing-3xl, 24px);
+  --alert-max-width: 400px;
+  --alert-width: 90%;
+  
+  /* ===== 颜色变量定义 ===== */
+  --alert-bg: var(--bg-white, #FFFFFF);
+  --alert-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.15));
+  
+  /* ===== 布局属性 ===== */
+  background-color: var(--alert-bg);
+  border-radius: var(--radius-lg, 8px);
+  box-shadow: var(--alert-shadow);
+  padding: var(--alert-padding);
+  max-width: var(--alert-max-width);
+  width: var(--alert-width);
+  text-align: center;
+}
+
+/* ===== 警告消息文本 ===== */
+/* 警告消息文本样式 - 显示警告或错误信息 */
+.alertMessage {
+  /* ===== 尺寸变量定义 ===== */
+  --message-margin-bottom: var(--spacing-2xl, 16px);
+  --message-line-height: 1.5;
+  
+  /* ===== 颜色变量定义 ===== */
+  --message-color: var(--text-primary, #333333);
+  
+  /* ===== 字体变量定义 ===== */
+  --message-font-size: var(--font-size-lg, 16px);
+  
+  /* ===== 样式属性 ===== */
+  font-size: var(--message-font-size);
+  color: var(--message-color);
+  margin-bottom: var(--message-margin-bottom);
+  line-height: var(--message-line-height);
+}
+
+/* ===== 警告关闭按钮 ===== */
+/* 警告关闭按钮样式 - 用于关闭警告弹窗 */
+.alertClose {
+  /* ===== 尺寸变量定义 ===== */
+  --close-padding: var(--spacing-sm, 6px) var(--spacing-3xl, 24px);
+  --close-border-radius: var(--radius-md, 6px);
+  
+  /* ===== 颜色变量定义 ===== */
+  --close-bg: var(--btn-warning-bg, #FF4D4F);
+  --close-text-color: var(--bg-white, #FFFFFF);
+  
+  /* ===== 字体变量定义 ===== */
+  --close-font-size: var(--font-size-base, 14px);
+  
+  /* ===== 动画变量定义 ===== */
+  --close-transition: var(--transition-fast, 0.2s);
+  
+  /* ===== 样式属性 ===== */
+  background-color: var(--close-bg);
+  color: var(--close-text-color);
+  border: none;
+  border-radius: var(--close-border-radius);
+  padding: var(--close-padding);
+  font-size: var(--close-font-size);
+  cursor: pointer;
+  transition: background-color var(--close-transition);
+}
+
+/* ===== 警告关闭按钮悬停状态 ===== */
+/* 警告关闭按钮悬停状态样式 */
+.alertClose:hover {
+  --close-hover-bg: var(--btn-warning-hover, #FF7875);
+  background-color: var(--close-hover-bg);
+}

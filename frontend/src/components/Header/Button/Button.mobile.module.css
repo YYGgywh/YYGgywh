@@ -1,0 +1,193 @@
+/*
+ * @file            frontend/src/components/Header/Button/Button.mobile.module.css
+ * @description     按钮组件样式 - 移动端专用（CSS Modules版本）
+ *                  针对移动设备优化，调整尺寸和间距
+ *                  使用全局主题变量，确保设计一致性
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 19:00:00
+ * @lastModified    2026-03-07 19:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 移动端覆盖
+   覆盖桌面端的变量值，适应移动设备
+   所有变量引用全局变量，提供 fallback 值确保兼容性
+   ============================================ */
+
+/* 按钮基础样式变量定义 - 移动端 */
+.button {
+  /* ===== 尺寸变量 - 移动端调整 ===== */
+  /* 按钮高度 - 移动端减小，使用自定义值 */
+  --btn-height: 36px;
+  /* 按钮水平内边距 - 移动端减小，引用全局小间距 */
+  --btn-padding-x: var(--spacing-sm, 12px);
+  
+  /* ===== 字体变量 - 移动端调整 ===== */
+  /* 按钮字体大小 - 移动端减小，引用全局小字体 */
+  --btn-font-size: var(--font-size-sm, 0.8125rem);
+  
+  /* ===== 间距变量 - 移动端调整 ===== */
+  /* 悬停位移距离 - 移动端减小，使用自定义值 */
+  --btn-hover-translate-y: -0.5px;
+}
+
+/* ============================================
+   按钮基础样式
+   移动端按钮基础样式，继承桌面端布局和交互属性
+   ============================================ */
+
+.button {
+  /* ===== 布局属性 ===== */
+  /* 显示方式 - 使用 Flexbox 布局实现居中对齐 */
+  display: inline-flex;
+  /* 垂直居中对齐 - Flexbox 属性 */
+  align-items: center;
+  /* 水平居中对齐 - Flexbox 属性 */
+  justify-content: center;
+  
+  /* ===== 尺寸属性 ===== */
+  /* 按钮高度 - 引用变量（移动端调整） */
+  height: var(--btn-height);
+  /* 水平内边距 - 引用变量（移动端调整） */
+  padding: 0 var(--btn-padding-x);
+  
+  /* ===== 字体属性 ===== */
+  /* 字体大小 - 引用变量（移动端调整） */
+  font-size: var(--btn-font-size);
+  /* 字体粗细 - 引用变量 */
+  font-weight: var(--btn-font-weight, 600);
+  
+  /* ===== 边框和圆角 ===== */
+  /* 圆角 - 引用变量 */
+  border-radius: var(--btn-border-radius, var(--radius-md, 6px));
+  /* 边框样式 - 透明边框，为次要按钮预留 */
+  border: var(--btn-border-width, 2px) solid transparent;
+  
+  /* ===== 交互属性 ===== */
+  /* 鼠标指针 - 指针样式表示可点击 */
+  cursor: pointer;
+  /* 过渡动画 - 所有属性变化都应用过渡效果 */
+  transition: all var(--btn-transition-duration, var(--transition-fast, 0.2s));
+  /* 移除默认轮廓 - 使用自定义焦点样式 */
+  outline: none;
+}
+
+/* ============================================
+   按钮焦点状态
+   移动端按钮焦点状态，提升可访问性
+   ============================================ */
+
+.button:focus {
+  /* ===== 焦点轮廓 ===== */
+  /* 轮廓样式 - 实线轮廓 */
+  outline: var(--btn-focus-outline-width, 2px) solid var(--btn-focus-outline, var(--primary-color, #1890ff));
+  /* 轮廓偏移 - 避免与按钮内容重叠 */
+  outline-offset: var(--btn-focus-outline-offset, 2px);
+}
+
+/* ============================================
+   主要按钮样式
+   移动端主要按钮样式，用于主要操作
+   ============================================ */
+
+.buttonPrimary {
+  /* ===== 背景和文本颜色 ===== */
+  /* 背景色 - 引用变量 */
+  background-color: var(--btn-primary-bg, var(--primary-color, #1890ff));
+  /* 文本颜色 - 引用变量 */
+  color: var(--btn-primary-text, var(--bg-white, #ffffff));
+  
+  /* ===== 阴影效果 ===== */
+  /* 盒阴影 - 引用变量，增加立体感 */
+  box-shadow: var(--btn-primary-box-shadow, 0 2px 4px rgba(24, 144, 255, 0.2));
+}
+
+/* ============================================
+   主要按钮悬停状态
+   移动端主要按钮悬停状态（移动端可能较少使用悬停效果）
+   ============================================ */
+
+.buttonPrimary:hover {
+  /* ===== 背景颜色变化 ===== */
+  /* 悬停背景色 - 引用变量，加深颜色 */
+  background-color: var(--btn-primary-hover-bg, #0D7ACC);
+  
+  /* ===== 阴影和位移效果 ===== */
+  /* 悬停阴影 - 引用变量，增强立体感 */
+  box-shadow: var(--btn-primary-hover-box-shadow, 0 4px 8px rgba(24, 144, 255, 0.3));
+  /* 向上位移 - 引用变量（移动端调整） */
+  transform: translateY(var(--btn-hover-translate-y));
+}
+
+/* ============================================
+   主要按钮激活状态
+   移动端主要按钮激活状态，点击按下时的交互效果
+   ============================================ */
+
+.buttonPrimary:active {
+  /* ===== 背景颜色变化 ===== */
+  /* 激活背景色 - 引用变量，进一步加深颜色 */
+  background-color: var(--btn-primary-active-bg, #0A6BB8);
+  
+  /* ===== 位移效果 ===== */
+  /* 恢复位移 - 回到原始位置 */
+  transform: translateY(0);
+}
+
+/* ============================================
+   次要按钮样式
+   移动端次要按钮样式，用于次要操作
+   ============================================ */
+
+.buttonSecondary {
+  /* ===== 背景和文本颜色 ===== */
+  /* 背景色 - 引用变量 */
+  background-color: var(--btn-secondary-bg, var(--bg-white, #ffffff));
+  /* 文本颜色 - 引用变量 */
+  color: var(--btn-secondary-text, var(--primary-color, #1890ff));
+  
+  /* ===== 边框样式 ===== */
+  /* 边框颜色 - 引用变量 */
+  border-color: var(--btn-secondary-border, var(--primary-color, #1890ff));
+}
+
+/* ============================================
+   次要按钮悬停状态
+   移动端次要按钮悬停状态（移动端可能较少使用悬停效果）
+   ============================================ */
+
+.buttonSecondary:hover {
+  /* ===== 背景颜色变化 ===== */
+  /* 悬停背景色 - 引用变量，浅色背景 */
+  background-color: var(--btn-secondary-hover-bg, #F0F7FF);
+  
+  /* ===== 边框和文本颜色变化 ===== */
+  /* 悬停边框色 - 引用变量，加深边框 */
+  border-color: var(--btn-secondary-hover-border, #0D7ACC);
+  /* 悬停文本色 - 引用变量，加深文本 */
+  color: var(--btn-secondary-hover-text, #0D7ACC);
+}
+
+/* ============================================
+   次要按钮激活状态
+   移动端次要按钮激活状态，点击按下时的交互效果
+   ============================================ */
+
+.buttonSecondary:active {
+  /* ===== 背景颜色变化 ===== */
+  /* 激活背景色 - 引用变量，更浅的背景 */
+  background-color: var(--btn-secondary-active-bg, #E6F2FF);
+}
+
+/* ============================================
+   全宽按钮样式
+   移动端全宽按钮样式，用于需要占据整个容器宽度的场景
+   移动端更常使用全宽按钮以提升触摸体验
+   ============================================ */
+
+.buttonFullWidth {
+  /* ===== 宽度属性 ===== */
+  /* 宽度 - 100% 占满父容器 */
+  width: 100%;
+}

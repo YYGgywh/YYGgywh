@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect } from 'react'; // 导入React核心库和Hooks
 import { useNavigate, useLocation } from 'react-router-dom'; // 导入useNavigate和useLocation钩子
-import './Navigation.css'; // 导入Navigation组件样式
+import styles from './Navigation.desktop.module.css'; // 导入Navigation组件样式（CSS Modules）
 import Logo from '../Logo/Logo'; // 导入Logo组件
 import MenuItem from '../MenuItem/MenuItem'; // 导入MenuItem组件
 import Button from '../Button/Button'; // 导入Button组件
@@ -77,11 +77,11 @@ const Navigation = () => {
 
   // 返回JSX
   return (
-    <nav className={`navigation ${isScrolled ? 'scrolled' : ''}`}> {/* 渲染导航元素，设置动态类名 */}
-      <div className="navigation-container"> {/* 渲染导航容器 */}
-        <div className="navigation-left"> {/* 渲染左侧导航区域 */}
+    <nav className={`${styles.navigation} ${isScrolled ? styles.scrolled : ''}`}> {/* 渲染导航元素，设置动态类名 */}
+      <div className={styles.navigationContainer}> {/* 渲染导航容器 */}
+        <div className={styles.navigationLeft}> {/* 渲染左侧导航区域 */}
           <Logo /> {/* 渲染Logo组件 */}
-          <ul className="navigation-menu"> {/* 渲染导航菜单列表 */}
+          <ul className={styles.navigationMenu}> {/* 渲染导航菜单列表 */}
             {/* 遍历菜单项数组，渲染每个菜单项 */}
             {menuItems.map((item) => (
               // 渲染MenuItem组件
@@ -99,13 +99,13 @@ const Navigation = () => {
           </ul> {/* 结束导航菜单列表 */}
         </div> {/* 结束左侧导航区域 */}
 
-        <div className="navigation-right"> {/* 渲染右侧导航区域 */}
-          <div className="navigation-utils"> {/* 渲染导航工具区域 */}
-            <a href="#" className="navigation-link">帮助中心</a> {/* 渲染帮助中心链接 */}
-            <a href="#" className="navigation-link">中文/EN</a> {/* 渲染语言切换链接 */}
+        <div className={styles.navigationRight}> {/* 渲染右侧导航区域 */}
+          <div className={styles.navigationUtils}> {/* 渲染导航工具区域 */}
+            <a href="#" className={styles.navigationLink}>帮助中心</a> {/* 渲染帮助中心链接 */}
+            <a href="#" className={styles.navigationLink}>中文/EN</a> {/* 渲染语言切换链接 */}
           </div> {/* 结束导航工具区域 */}
 
-          <div className="navigation-actions"> {/* 渲染导航操作区域 */}
+          <div className={styles.navigationActions}> {/* 渲染导航操作区域 */}
             <Button 
               variant="secondary" 
               onClick={handleLoginClick}

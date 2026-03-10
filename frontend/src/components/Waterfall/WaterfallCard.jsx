@@ -1,14 +1,24 @@
+/*
+ * @file            frontend/src/components/Waterfall/WaterfallCard.jsx
+ * @description     瀑布流卡片组件，用于显示排盘记录
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 16:30:00
+ * @lastModified    2026-03-07 16:30:00
+ * Copyright © All rights reserved
+*/
+
 import React, { useState } from 'react';
 import { useImageLazyLoad } from '../../hooks';
 import { formatRelativeTime } from '../../utils';
 import LikeButton from '../common/LikeButton';
-import './WaterfallCard.css';
+import styles from './WaterfallCard.desktop.module.css';
 
 /**
  * 瀑布流卡片组件
  * @param {Object} props 组件属性
  * @param {Object} props.item 排盘记录数据
  * @param {Function} props.onClick 点击回调
+ * @returns {JSX.Element} 瀑布流卡片组件
  */
 const WaterfallCard = ({ item, onClick }) => {
   const [isLiked, setIsLiked] = useState(item.is_liked || false);
@@ -43,8 +53,8 @@ const WaterfallCard = ({ item, onClick }) => {
   };
   
   return (
-    <div className="waterfall-card" onClick={onClick}>
-      <div className="card-image-container">
+    <div className={styles.waterfallCard} onClick={onClick}>
+      <div className={styles.cardImageContainer}>
         <img
           ref={imgRef}
           src={src}
@@ -53,26 +63,26 @@ const WaterfallCard = ({ item, onClick }) => {
           className={isLoaded ? 'loaded' : 'loading'}
         />
         {!isLoaded && (
-          <div className="image-loading">
-            <div className="loading-spinner"></div>
+          <div className={styles.imageLoading}>
+            <div className={styles.loadingSpinner}></div>
           </div>
         )}
       </div>
       
-      <div className="card-content">
-        <h3 className="card-title">
+      <div className={styles.cardContent}>
+        <h3 className={styles.cardTitle}>
           {truncateTitle(item.title || '未命名卦象')}
         </h3>
         
-        <div className="card-meta">
-          <div className="user-info">
-            <div className="user-avatar">
+        <div className={styles.cardMeta}>
+          <div className={styles.userInfo}>
+            <div className={styles.userAvatar}>
               <img
                 src={item.user_avatar || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2212%22%3E用户%3C/text%3E%3C/svg%3E'}
                 alt={item.user_nickname || '用户'}
               />
             </div>
-            <span className="user-name">
+            <span className={styles.userName}>
               {item.user_nickname || '匿名用户'}
             </span>
           </div>
@@ -82,7 +92,7 @@ const WaterfallCard = ({ item, onClick }) => {
           </span>
         </div>
         
-        <div className="card-stats">
+        <div className={styles.cardStats}>
           <LikeButton
             isLiked={isLiked}
             likeCount={likeCount}
@@ -94,14 +104,14 @@ const WaterfallCard = ({ item, onClick }) => {
             }}
           />
           
-          <div className={`stat-item ${isCollected ? 'collected' : ''}`} onClick={handleCollect}>
-            <span className="stat-icon">⭐</span>
-            <span className="stat-count">{item.collect_count || 0}</span>
+          <div className={`${styles.statItem} ${isCollected ? styles.collected : ''}`} onClick={handleCollect}>
+            <span className={styles.statIcon}>⭐</span>
+            <span className={styles.statCount}>{item.collect_count || 0}</span>
           </div>
           
-          <div className="stat-item">
-            <span className="stat-icon">👁</span>
-            <span className="stat-count">{item.view_count || 0}</span>
+          <div className={styles.statItem}>
+            <span className={styles.statIcon}>👁</span>
+            <span className={styles.statCount}>{item.view_count || 0}</span>
           </div>
         </div>
       </div>

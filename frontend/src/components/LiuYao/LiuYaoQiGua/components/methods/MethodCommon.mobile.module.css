@@ -1,0 +1,196 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/methods/MethodCommon.mobile.module.css
+ * @description     起卦方法通用样式文件 - 移动端，适用于所有起卦方法组件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 12:30:00
+ * @lastModified    2026-03-09 12:46:29
+ * Copyright © All rights reserved
+*/
+
+/* ===== 方法组件根容器 ===== */
+/* 方法组件根容器样式 - 移动端适配 */
+.methodContainer {
+  /* ===== 布局变量定义 ===== */
+  /* 定义组件内部元素间距，移动端适当减小 */
+  --method-gap: var(--spacing-md, 12px);
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，垂直方向排列子元素 */
+  display: flex;
+  /* 设置主轴方向为垂直方向 */
+  flex-direction: column;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--method-gap);
+  /* 移动端添加内边距 */
+  padding: var(--spacing-sm, 8px);
+}
+
+/* ===== 内容行容器 ===== */
+/* 内容行容器样式 - 移动端垂直排列 */
+.contentRow {
+  /* ===== 布局变量定义 ===== */
+  /* 定义内容行内部元素间距 */
+  --content-row-gap: var(--spacing-md, 12px);
+  /* 移动端单列布局，不需要占比变量 */
+  --child-min-width: 0;
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，垂直方向排列子元素 */
+  display: flex;
+  flex-direction: column;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--content-row-gap);
+}
+
+/* ===== 信息区域容器 ===== */
+/* 信息区域容器样式 - 移动端适配 */
+.liuYaoInfo {
+  /* ===== 布局属性 ===== */
+  /* 移动端占满宽度 */
+  flex: 1;
+  /* 设置最小宽度为0 */
+  min-width: var(--child-min-width);
+  /* 移除阴影效果 */
+  box-shadow: none;
+  
+  /* ===== Flex 容器设置 ===== */
+  /* 设置为Flex容器，垂直方向排列子元素 */
+  display: flex;
+  flex-direction: column;
+  /* 移动端不需要固定高度 */
+  min-height: auto;
+}
+
+/* ===== 内容容器 ===== */
+/* 内容容器样式 - 移动端适配 */
+.contentContainer {
+  /* 允许内容容器伸展 */
+  flex: 1;
+  /* 保持内部元素的正常布局 */
+  display: flex;
+  flex-direction: column;
+  /* 设置内部元素间距，移动端减小 */
+  gap: var(--spacing-sm, 8px);
+}
+
+/* ===== 爻位展示区域 ===== */
+/* 爻位展示区域样式 - 移动端适配 */
+.yaoDisplay {
+  /* ===== 布局属性 ===== */
+  /* 移动端占满宽度 */
+  flex: 1;
+  /* 设置最小宽度为0 */
+  min-width: var(--child-min-width);
+  /* 移动端添加上边距 */
+  margin-top: var(--spacing-md, 12px);
+}
+
+/* ===== 信息区域标题 ===== */
+/* 信息区域标题样式 - 移动端适配 */
+.liuYaoInfo h3 {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义标题下边距，移动端减小 */
+  --h3-margin-bottom: var(--spacing-sm, 8px);
+  /* 定义标题字体大小，移动端适当减小 */
+  --h3-font-size: var(--font-size-base, 14px);
+  /* 定义标题字体粗细 */
+  --h3-font-weight: 600;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义标题文本颜色 */
+  --h3-color: var(--text-primary, #333333);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距 */
+  margin: 0 0 var(--h3-margin-bottom) 0;
+  /* 设置字体大小 */
+  font-size: var(--h3-font-size);
+  /* 设置字体粗细 */
+  font-weight: var(--h3-font-weight);
+  /* 设置文本颜色 */
+  color: var(--h3-color);
+}
+
+/* ===== 信息区域描述文本 ===== */
+/* 信息区域描述文本样式 - 移动端适配 */
+.liuYaoInfo p {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义段落下边距，移动端减小 */
+  --p-margin-bottom: var(--spacing-sm, 8px);
+  /* 定义段落字体大小，移动端适当减小 */
+  --p-font-size: var(--font-size-sm, 12px);
+  /* 定义段落行高 */
+  --p-line-height: 1.5;
+  /* 移动端减少首行缩进 */
+  --p-text-indent: 1.5em;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义段落文本颜色 */
+  --p-color: var(--text-secondary, #666666);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距 */
+  margin: 0 0 var(--p-margin-bottom) 0;
+  /* 设置字体大小 */
+  font-size: var(--p-font-size);
+  /* 设置行高 */
+  line-height: var(--p-line-height);
+  /* 设置文本颜色 */
+  color: var(--p-color);
+  /* 设置首行缩进 */
+  text-indent: var(--p-text-indent);
+}
+
+/* ===== 信息区域有序列表 ===== */
+/* 信息区域有序列表样式 - 移动端适配 */
+.liuYaoInfo ol {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义列表字体大小，移动端适当减小 */
+  --ol-font-size: var(--font-size-sm, 12px);
+  /* 定义列表行高 */
+  --ol-line-height: 1.5;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义列表文本颜色 */
+  --ol-color: var(--text-secondary, #666666);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距为0 */
+  margin: 0;
+  /* 移动端添加左内边距 */
+  padding-left: var(--spacing-md, 16px);
+  /* 设置字体大小 */
+  font-size: var(--ol-font-size);
+  /* 设置行高 */
+  line-height: var(--ol-line-height);
+  /* 设置文本颜色 */
+  color: var(--ol-color);
+  /* 移动端左对齐，更易阅读 */
+  text-align: left;
+}
+
+/* ===== 信息区域列表项 ===== */
+/* 信息区域列表项样式 - 移动端适配 */
+.liuYaoInfo li {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义列表项下边距 */
+  --li-margin-bottom: 2px;
+  
+  /* ===== 样式属性 ===== */
+  /* 设置下外边距 */
+  margin-bottom: var(--li-margin-bottom);
+}
+
+/* ===== 操作按钮区域容器 ===== */
+/* 操作按钮区域容器样式 - 移动端适配 */
+.divinationActions {
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，水平方向排列按钮 */
+  display: flex;
+  /* 移动端按钮间距适当减小 */
+  justify-content: space-around;
+  /* 设置下外边距，移动端减小 */
+  margin-bottom: var(--spacing-md, 12px);
+  /* 移动端添加上边距 */
+  margin-top: var(--spacing-md, 12px);
+}

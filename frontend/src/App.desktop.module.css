@@ -1,0 +1,42 @@
+/*
+ * @file            frontend/src/App.desktop.module.css
+ * @description     应用根组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 18:30:00
+ * @lastModified    2026-03-07 19:06:41
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   应用容器样式
+   应用的根容器，使用 Grid 布局
+   依赖全局变量：--layout-min-height, --layout-main-padding
+   ============================================ */
+.appContainer {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main";
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+/* ============================================
+   应用头部样式
+   顶部导航栏容器，使用粘性定位实现吸顶效果
+   ============================================ */
+.appHeader {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ============================================
+   应用主内容区域样式
+   主要内容容器，占据剩余空间
+   ============================================ */
+.appMain {
+  grid-area: main;
+  padding: var(--spacing-2xl, 20px);
+}

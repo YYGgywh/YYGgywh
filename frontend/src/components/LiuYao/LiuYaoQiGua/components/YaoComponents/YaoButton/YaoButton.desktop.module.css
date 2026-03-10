@@ -1,0 +1,341 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/YaoComponents/YaoButton/YaoButton.desktop.module.css
+ * @description     阴阳爻选择按钮组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-08 17:00:00
+ * @lastModified    2026-03-10 17:08:17
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   组件容器样式
+   定义按钮的基础布局和变量
+   ============================================ */
+
+/**
+ * @description     阴阳爻按钮基础样式
+ *                   所有爻按钮共有的基础样式
+ *                   使用 CSS 变量实现样式差异化配置
+ */
+.yaoButton {
+  /* ===== 布局变量 ===== */
+  /* 按钮宽度，使用固定尺寸确保一致性 */
+  --yao-btn-width: 25px;
+  /* 按钮高度，与宽度相同形成正方形 */
+  --yao-btn-height: 25px;
+  /* 内边距为0，因为按钮内容居中 */
+  --yao-btn-padding: 0;
+  
+  /* ===== 边框变量 ===== */
+  /* 边框宽度 */
+  --yao-btn-border-width: 1px;
+  /* 边框圆角，使用全局变量或默认值6px */
+  --yao-btn-border-radius: var(--border-radius-md, 6px);
+  
+  /* ===== 字体变量 ===== */
+  /* 字体大小 */
+  --yao-btn-font-size: 14px;
+  /* 字体粗细，中等粗细 */
+  --yao-btn-font-weight: 500;
+  /* 按钮不透明度，默认0.6 */
+  --yao-btn-opacity: 0.6;
+  
+  /* ===== 动画变量 ===== */
+  /* 过渡动画，所有属性变化使用0.2秒缓动 */
+  --yao-btn-transition: all 0.2s ease;
+  
+  /* ===== 尺寸与布局 ===== */
+  /* 应用宽度变量 */
+  width: var(--yao-btn-width);
+  /* 应用高度变量 */
+  height: var(--yao-btn-height);
+  /* 应用内边距变量 */
+  padding: var(--yao-btn-padding);
+  /* 使用 Flexbox 布局 */
+  display: flex;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  justify-content: center;
+
+  /* ===== 边框样式 ===== */
+  /* 应用边框宽度 */
+  border-width: var(--yao-btn-border-width);
+  /* 实线边框 */
+  border-style: solid;
+  /* 应用圆角变量 */
+  border-radius: var(--yao-btn-border-radius);
+  
+  /* ===== 字体样式 ===== */
+  /* 应用字体大小 */
+  font-size: var(--yao-btn-font-size);
+  /* 应用字体粗细 */
+  font-weight: var(--yao-btn-font-weight);
+  
+  /* ===== 交互样式 ===== */
+  /* 鼠标指针样式为手型 */
+  cursor: pointer;
+  /* 应用过渡动画 */
+  transition: var(--yao-btn-transition);
+  
+  /* ===== 其他 ===== */
+  /* 移除默认 outline，使用自定义焦点样式 */
+  outline: none;
+}
+
+/* ============================================
+   阳爻按钮样式（红色主题）
+   ============================================ */
+
+/**
+ * @description     阳爻按钮未选中状态
+ *                   默认状态，白色背景，灰色边框
+ */
+.yangButton {
+  /* ===== 颜色变量 ===== */
+  /* 边框颜色 */
+  --btn-yao-border-color: #D1D5DB;
+  /* ===== 颜色应用 ===== */
+  /* 应用背景色 */
+  background-color: var(--bg-gray-light, #F9FAFB);
+  /* 应用文字颜色 */
+  color: var(--text-secondary, #666666);
+  /* 应用边框颜色 */
+  border-color: var(--btn-yao-border-color, #D1D5DB);
+}
+
+/**
+ * @description     阳爻按钮选中状态（静）
+ *                   白色背景，红色边框，红色文字
+ *                   显示脉冲动画效果
+ */
+.yangButtonSelected {
+  /* ===== 颜色变量 ===== */
+  /* 背景色保持白色 */
+  --btn-yang-Selected-bg: #FFFFFF;
+  /* 文字颜色为红色 */
+  --btn-yang-Selected-text-color: #C00000;
+  /* 边框颜色为红色 */
+  --btn-yang-Selected-border-color: #C00000;
+  /* 阴影颜色，使用红色带透明度 */
+  --btn-yang-Selected-shadow-color: rgba(192, 0, 0, 0.15);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-yang-Selected-bg, #FFFFFF);
+  color: var(--btn-yang-Selected-text-color, #C00000);
+  border-color: var(--btn-yang-Selected-border-color, #C00000);
+  
+  /* ===== 阴影效果 ===== */
+  /* 外发光效果，使用红色阴影 */
+  box-shadow: 0 0 0 3px var(--btn-yang-Selected-shadow-color, rgba(192, 0, 0, 0.15));
+  
+  /* ===== 动画效果 ===== */
+  /* 应用脉冲动画，2秒循环，无限次 */
+  animation: pulseYang 2s infinite;
+}
+
+/**
+ * @description     阳爻按钮激活状态（动）
+ *                   红色背景，白色文字，红色边框
+ *                   表示该爻为动爻，会发生变化
+ *                   显示脉冲动画效果
+ */
+.yangButtonActive {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为暗红色 */
+  --btn-active-yang-bg: #C00000;
+  /* 文字颜色为白色 */
+  --btn-active-yang-text-color: #FFFFFF;
+  /* 边框颜色为暗红色 */
+  --btn-active-yang-border: #C00000;
+
+  /* 阴影颜色 */
+  --btn-yang-active-shadow-color: rgba(192, 0, 0, 0.15);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-active-yang-bg, #C00000);
+  color: var(--btn-active-yang-text-color, #FFFFFF);
+  border-color: var(--btn-active-yang-border, #C00000);
+  
+  /* ===== 阴影效果 ===== */
+  /* 外发光效果，使用暗红色阴影 */
+  box-shadow: 0 0 0 3px var(--btn-yang-active-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYang 2s infinite;
+}
+
+/**
+ * @description     阳爻按钮悬停效果（未选中状态）
+ *                   鼠标悬停时显示浅红色背景
+ *                   不适用于已选中或已激活状态
+ */
+.yangButton:hover:not(.yangButtonSelected):not(.yangButtonActive) {
+  /* ===== 颜色变量 ===== */
+  /* 悬停背景色为浅红色 */
+  --btn-yang-hover-bg: #FFF5F5; 
+  /* 悬停边框颜色为浅红色 */
+  --btn-yang-hover-border: #FFCCCC;
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-yang-hover-bg, #FFF5F5);
+  border-color: var(--btn-yang-hover-border, #FFCCCC);
+}
+
+/* ============================================
+   阴爻按钮样式（蓝色主题）
+   ============================================ */
+
+/**
+ * @description     阴爻按钮未选中状态
+ *                   默认状态，白色背景，灰色边框
+ */
+.yinButton {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为白色 */
+  --btn-yin-bg: #FFFFFF;
+  /* 文字颜色为深灰色 */
+  --btn-yin-text-color: #666666;
+  /* 边框颜色为浅灰色 */
+  --btn-yin-border-color: #D1D5DB;
+  
+  /* ===== 颜色应用 ===== */
+  /* 应用背景色 */
+  background-color: var(--bg-gray-light, #F9FAFB);
+  /* 应用文字颜色 */
+  color: var(--btn-yin-text-color, #666666);
+  /* 应用边框颜色 */
+  border-color: var(--btn-yin-border-color, #D1D5DB);
+}
+
+/**
+ * @description     阴爻按钮选中状态（静）
+ *                   白色背景，蓝色边框，蓝色文字
+ *                   显示脉冲动画效果
+ */
+.yinButtonSelected {
+  /* ===== 颜色变量 ===== */
+  /* 背景色保持白色 */
+  --btn-yin-selected-bg: #FFFFFF;
+  /* 文字颜色为深蓝色 */
+  --btn-yin-selected-text-color: #0070C0;
+  /* 边框颜色为深蓝色 */
+  --btn-yin-selected-border-color: #0070C0;
+  /* 阴影颜色，使用蓝色带透明度 */
+  --btn-yin-selected-shadow-color: rgba(0, 32, 96, 0.15);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-yin-selected-bg);
+  color: var(--btn-yin-selected-text-color);
+  border-color: var(--btn-yin-selected-border-color);
+  
+  /* ===== 阴影效果 ===== */
+  box-shadow: 0 0 0 3px var(--btn-yin-selected-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYin 2s infinite;
+}
+
+/**
+ * @description     阴爻按钮激活状态（动）
+ *                   蓝色背景，白色文字，蓝色边框
+ *                   表示该爻为动爻，会发生变化
+ *                   显示脉冲动画效果
+ */
+.yinButtonActive {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为深蓝色 */
+  --btn-active-yin-bg: #0070C0;
+  /* 文字颜色为白色 */
+  --btn-active-yin-text-color: #FFFFFF;
+  /* 边框颜色为深蓝色 */
+  --btn-active-yin-border-color: #0070C0;
+  /* 阴影颜色 */
+  --btn-active-yin-shadow-color: rgba(0, 32, 96, 0.15);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-active-yin-bg, #0070C0);
+  color: var(--btn-active-yin-text-color, #FFFFFF);
+  border-color: var(--btn-active-yin-border-color, #0070C0);  
+  
+  /* ===== 阴影效果 ===== */
+  box-shadow: 0 0 0 3px var(--btn-active-yin-shadow-color, rgba(0, 32, 96, 0.15));
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYin 2s infinite;
+}
+
+/**
+ * @description     阴爻按钮悬停效果（未选中状态）
+ *                   鼠标悬停时显示浅蓝色背景
+ *                   不适用于已选中或已激活状态
+ */
+.yinButton:hover:not(.yinButtonSelected):not(.yinButtonActive) {
+  /* ===== 颜色变量 ===== */
+  /* 悬停背景色为浅蓝色 */
+  --btn-yin-hover-bg: #F0F5FF;
+  /* 悬停边框颜色为浅蓝色 */
+  --btn-yin-hover-border-color: #B3C6FF;
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--btn-yin-hover-bg, #F0F5FF);
+  border-color: var(--btn-yin-hover-border-color, #B3C6FF);  
+}
+
+/* ============================================
+   焦点样式
+   ============================================ */
+
+/**
+ * @description     按钮焦点样式
+ *                   使用键盘导航时的焦点指示
+ *                   移除默认 outline，使用自定义样式
+ */
+.yaoButton:focus {
+  /* 移除默认焦点 outline */
+  outline: none;
+}
+
+/* ============================================
+   动画定义
+   ============================================ */
+
+/**
+ * @description     阳爻脉冲动画
+ *                   用于选中状态和激活状态的视觉反馈
+ *                   通过阴影大小的变化产生脉冲效果
+ */
+@keyframes pulseYang {
+  /* 动画开始：初始阴影大小 */
+  0% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+  /* 动画中间：阴影扩大 */
+  50% {
+    box-shadow: 0 0 0 6px rgba(192, 0, 0, 0.1);
+  }
+  /* 动画结束：回到初始阴影大小 */
+  100% {
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
+  }
+}
+
+/**
+ * @description     阴爻脉冲动画
+ *                   用于选中状态和激活状态的视觉反馈
+ *                   通过阴影大小的变化产生脉冲效果
+ */
+@keyframes pulseYin {
+  /* 动画开始：初始阴影大小 */
+  0% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+  /* 动画中间：阴影扩大 */
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 32, 96, 0.1);
+  }
+  /* 动画结束：回到初始阴影大小 */
+  100% {
+    box-shadow: 0 0 0 3px rgba(0, 32, 96, 0.15);
+  }
+}

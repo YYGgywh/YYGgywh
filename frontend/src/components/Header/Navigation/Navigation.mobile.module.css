@@ -1,0 +1,157 @@
+/*
+ * @file            frontend/src/components/Header/Navigation/Navigation.mobile.module.css
+ * @description     导航栏组件样式 - 移动端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 17:00:00
+ * @lastModified    2026-03-07 17:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 移动端适配
+   覆盖桌面端变量值，适配小屏幕设备
+   ============================================ */
+.navigation {
+  /* ===== 尺寸变量 - 移动端优化 ===== */
+  /* 导航栏高度 - 移动端更紧凑 */
+  --nav-height: 56px;
+  /* 容器水平内边距 - 移动端减少边距 */
+  --nav-container-padding-x: 16px;
+  /* 左侧区域间距 - 移动端减少间距 */
+  --nav-left-gap: 16px;
+  /* 菜单项间距 - 移动端减少间距 */
+  --nav-menu-gap: 16px;
+  /* 右侧区域间距 - 移动端减少间距 */
+  --nav-right-gap: 12px;
+  /* 工具区域间距 - 移动端减少间距 */
+  --nav-utils-gap: 12px;
+  /* 操作按钮区域间距 - 移动端减少间距 */
+  --nav-actions-gap: 8px;
+  /* 链接字体大小 - 移动端字体更小 */
+  --nav-link-font-size: 0.75rem;
+  
+  /* ===== 布局变量 - 移动端优化 ===== */
+  /* 容器最大宽度 - 移动端不需要限制 */
+  --nav-container-max-width: 100%;
+}
+
+/* ============================================
+   导航栏容器样式 - 移动端适配
+   适应小屏幕的容器布局
+   ============================================ */
+.navigationContainer {
+  /* 最大宽度 - 使用变量 */
+  max-width: var(--nav-container-max-width);
+  /* 水平居中 */
+  margin: 0 auto;
+  /* 水平内边距 - 使用变量 */
+  padding: 0 var(--nav-container-padding-x);
+  /* 高度 - 100% */
+  height: 100%;
+  /* 布局 - 弹性布局，两端对齐 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ============================================
+   左侧导航区域样式 - 移动端适配
+   移动端可能隐藏部分菜单项或使用折叠菜单
+   ============================================ */
+.navigationLeft {
+  /* 布局 - 弹性布局，居中对齐 */
+  display: flex;
+  align-items: center;
+  /* 间距 - 使用变量 */
+  gap: var(--nav-left-gap);
+}
+
+/* ============================================
+   导航菜单样式 - 移动端适配
+   移动端可能需要隐藏或转换为下拉菜单
+   ============================================ */
+.navigationMenu {
+  /* 布局 - 弹性布局 */
+  display: flex;
+  /* 间距 - 使用变量 */
+  gap: var(--nav-menu-gap);
+}
+
+/* ============================================
+   右侧导航区域样式 - 移动端适配
+   移动端可能隐藏部分工具链接
+   ============================================ */
+.navigationRight {
+  /* 布局 - 弹性布局，居中对齐 */
+  display: flex;
+  align-items: center;
+  /* 间距 - 使用变量 */
+  gap: var(--nav-right-gap);
+}
+
+/* ============================================
+   导航工具区域样式 - 移动端适配
+   移动端可能隐藏语言切换链接
+   ============================================ */
+.navigationUtils {
+  /* 布局 - 弹性布局 */
+  display: flex;
+  /* 间距 - 使用变量 */
+  gap: var(--nav-utils-gap);
+}
+
+/* ============================================
+   导航链接样式 - 移动端适配
+   移动端链接字体更小
+   ============================================ */
+.navigationLink {
+  /* 文本颜色 - 使用变量 */
+  color: var(--nav-link-color);
+  /* 字体大小 - 使用变量 */
+  font-size: var(--nav-link-font-size);
+  /* 字体粗细 - 使用变量 */
+  font-weight: var(--nav-link-font-weight);
+  /* 过渡动画 - 使用变量 */
+  transition: color var(--nav-link-transition-duration) var(--nav-transition-timing);
+}
+
+/* ============================================
+   导航链接悬停效果 - 移动端适配
+   移动端可能不需要悬停效果
+   ============================================ */
+.navigationLink:hover {
+  /* 文本颜色 - 使用变量 */
+  color: var(--nav-link-hover-color);
+}
+
+/* ============================================
+   导航操作区域样式 - 移动端适配
+   移动端按钮间距更紧凑
+   ============================================ */
+.navigationActions {
+  /* 布局 - 弹性布局 */
+  display: flex;
+  /* 间距 - 使用变量 */
+  gap: var(--nav-actions-gap);
+}
+
+/* ============================================
+   移动端响应式断点处理
+   在小屏幕设备上隐藏部分元素
+   ============================================ */
+
+/* 在超小屏幕上隐藏工具链接 */
+@media (max-width: 480px) {
+  .navigationUtils {
+    /* 隐藏工具区域 */
+    display: none;
+  }
+}
+
+/* 在小屏幕上隐藏导航菜单，使用汉堡菜单替代 */
+@media (max-width: 768px) {
+  .navigationMenu {
+    /* 隐藏导航菜单 */
+    display: none;
+  }
+}

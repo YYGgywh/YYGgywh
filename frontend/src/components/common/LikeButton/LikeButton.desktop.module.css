@@ -1,0 +1,167 @@
+/*
+ * @file            frontend/src/components/common/LikeButton/LikeButton.desktop.module.css
+ * @description     点赞按钮组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-05 17:00:00
+ * @lastModified    2026-03-07 19:20:36
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 支持主题切换
+   基于全局变量，提供组件特有的默认值
+   父组件可以通过传入 className 来覆盖这些变量值
+   ============================================ */
+.likeButton {
+  /* ===== 颜色变量 - 引用全局变量 ===== */
+  /* 主题色 - 引用全局主色，使用警告色作为 fallback */
+  --like-btn-primary-color: var(--warning-color, #ff4d4f);
+  /* 悬停背景色 - 半透明主题色 */
+  --like-btn-primary-hover-bg: rgba(255, 77, 79, 0.1);
+  /* 默认描边色 - 引用全局次要文本色 */
+  --like-btn-default-stroke: var(--text-secondary, #666666);
+  /* 文字颜色 - 引用全局主要文本色 */
+  --like-btn-text-color: var(--text-primary, #333333);
+  /* 背景颜色 - 透明 */
+  --like-btn-bg-color: transparent;
+  
+  /* ===== 尺寸变量 - 引用全局间距系统 ===== */
+  /* 内边距 - 使用全局极小间距 */
+  --like-btn-padding: var(--spacing-xs, 4px) var(--spacing-sm, 8px);
+  /* 圆角 - 引用全局小圆角 */
+  --like-btn-border-radius: var(--radius-sm, 4px);
+  /* 元素间距 - 使用全局极小间距 */
+  --like-btn-gap: var(--spacing-xs, 4px);
+  
+  /* ===== 字体变量 - 引用全局字体系统 ===== */
+  /* 字体大小 - 引用全局基础字体大小 */
+  --like-btn-font-size: var(--font-size-base, 0.875rem);
+  /* 字体粗细 - 正常 */
+  --like-btn-font-weight: normal;
+  /* 最小宽度 - 固定值 */
+  --like-btn-min-width: 20px;
+  
+  /* ===== 动画变量 - 引用全局动画系统 ===== */
+  /* 过渡动画时长 - 引用全局正常过渡 */
+  --like-btn-transition-duration: var(--transition-normal, 0.25s);
+  /* 关键帧动画时长 */
+  --like-btn-animation-duration: 0.3s;
+  
+  /* ===== 状态变量 ===== */
+  /* 加载状态透明度 */
+  --like-btn-loading-opacity: 0.7;
+  /* 禁用状态透明度 */
+  --like-btn-disabled-opacity: 0.5;
+  /* 未登录状态透明度 */
+  --like-btn-unlogin-opacity: 0.8;
+  
+  /* ===== 布局属性 ===== */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--like-btn-gap);
+  cursor: pointer;
+  padding: var(--like-btn-padding);
+  border-radius: var(--like-btn-border-radius);
+  transition: all var(--like-btn-transition-duration) ease;
+  user-select: none;
+  background-color: var(--like-btn-bg-color);
+}
+
+/* ============================================
+   未点赞状态样式
+   ============================================ */
+.likeButton:not(.liked) .heartPath {
+  stroke: var(--like-btn-default-stroke);
+  fill: none;
+}
+
+.likeButton:not(.liked):hover {
+  background-color: transparent;
+}
+
+.likeButton:not(.liked):hover .heartPath {
+  stroke: var(--like-btn-primary-color);
+}
+
+/* ============================================
+   已点赞状态样式
+   ============================================ */
+.liked {
+  background-color: transparent;
+}
+
+.liked .heartPath {
+  stroke: var(--like-btn-primary-color);
+  fill: var(--like-btn-primary-color);
+}
+
+.liked:hover {
+  background-color: transparent;
+}
+
+/* ============================================
+   点赞计数样式
+   ============================================ */
+.likeCount {
+  font-size: var(--like-btn-font-size);
+  font-weight: var(--like-btn-font-weight);
+  min-width: var(--like-btn-min-width);
+  text-align: center;
+  color: var(--like-btn-text-color);
+  transition: transform var(--like-btn-transition-duration) ease;
+}
+
+/* ============================================
+   心形图标样式
+   ============================================ */
+.heartIcon {
+  flex-shrink: 0;
+  transition: transform var(--like-btn-transition-duration) ease;
+}
+
+.heartPath {
+  transition: all var(--like-btn-transition-duration) ease;
+}
+
+/* ============================================
+   点赞动画
+   ============================================ */
+.animating .heartIcon {
+  animation: heartBeat var(--like-btn-animation-duration) ease;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   计数变化动画
+   ============================================ */
+.animating .likeCount {
+  animation: countPulse var(--like-btn-animation-duration) ease;
+}
+
+@keyframes countPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   状态样式
+   ============================================ */
+.loading {
+  opacity: var(--like-btn-loading-opacity);
+  cursor: wait;
+}
+
+.disabled {
+  opacity: var(--like-btn-disabled-opacity);
+  cursor: not-allowed;
+}
+
+.unlogin {
+  opacity: var(--like-btn-unlogin-opacity);
+}

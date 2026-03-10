@@ -1,0 +1,187 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/FormComponents/FormInput/FormInput.desktop.module.css
+ * @description     表单输入框组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 15:30:00
+ * @lastModified    2026-03-09 20:42:10
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 表单输入框基础样式
+ * 定义输入框的基本外观和行为
+ */
+.formInput {
+  /* 布局属性 */
+  display: inline-flex; /* 使用flex布局，便于对齐和调整 */
+  box-sizing: border-box; /* 盒模型为border-box，确保padding和border不影响宽度 */
+  width: 100%; /* 默认宽度为100%，可通过变体调整 */
+  height: 30px; /* 默认高度30px */
+  
+  /* 盒模型属性 */
+  padding: 0 var(--spacing-sm); /* 左右内边距为小间距 */
+  margin: 0; /* 无外边距 */
+  
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  line-height: 1.5; /* 行高1.5 */
+  color: var(--text-primary); /* 主文本颜色 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border: 1px solid var(--border-color); /* 1px边框，使用边框颜色变量 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  
+  /* 交互属性 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast); /* 边框和阴影过渡效果 */
+  outline: none; /* 移除默认轮廓 */
+  text-align: center; /* 文本居中 */
+  align-items: center; /* 垂直居中 */
+  
+  /* 字体属性 */
+  font-family: var(--font-family-base); /* 基础字体 */
+}
+
+/**
+ * 输入框占位符样式
+ * 定义占位符文本的外观
+ */
+.formInput::placeholder {
+  color: var(--text-placeholder); /* 占位符文本颜色 */
+  font-size: var(--font-size-base); /* 占位符字体大小 */
+  opacity: 0.8; /* 占位符透明度 */
+}
+
+/**
+ * 输入框聚焦状态
+ * 当输入框获得焦点时的样式
+ */
+.formInput:focus {
+  outline: none; /* 移除默认轮廓 */
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+  box-shadow: 0 0 0 2px var(--primary-focus); /* 添加主题色焦点阴影 */
+}
+
+/**
+ * 输入框hover状态
+ * 当鼠标悬停在输入框上时的样式
+ */
+.formInput:hover {
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+}
+
+/**
+ * 输入框禁用状态
+ * 当输入框被禁用时的样式
+ */
+.formInput:disabled {
+  color: var(--text-disabled); /* 禁用状态文本颜色 */
+  background-color: var(--bg-gray-light); /* 禁用状态背景色 */
+  border-color: var(--border-color); /* 边框颜色保持默认 */
+  cursor: not-allowed; /* 鼠标指针变为禁止状态 */
+}
+
+/**
+ * 输入框错误状态
+ * 当输入框内容有误时的样式
+ */
+.formInput.error {
+  border-color: var(--error-color); /* 边框颜色变为错误色 */
+}
+
+/**
+ * 输入框只读状态
+ * 当输入框为只读时的样式
+ */
+.formInput[readonly] {
+  background-color: var(--bg-gray-light); /* 只读状态背景色 */
+  cursor: default; /* 鼠标指针变为默认状态 */
+}
+
+/**
+ * 输入框大小变体
+ * 定义不同大小的输入框样式
+ */
+/* 小尺寸输入框 */
+.formInput.small {
+  height: 28px; /* 高度28px */
+  padding: 0 8px; /* 左右内边距8px */
+  font-size: 12px; /* 字体大小12px */
+}
+
+/* 大尺寸输入框 */
+.formInput.large {
+  height: 42px; /* 高度42px */
+  padding: 0 16px; /* 左右内边距16px */
+  font-size: 16px; /* 字体大小16px */
+}
+
+/**
+ * 输入框宽度变体
+ * 定义不同宽度的输入框样式
+ */
+/* 全宽输入框 */
+.formInput.fullWidth {
+  width: 100%; /* 宽度100% */
+}
+
+/* 半宽输入框 */
+.formInput.halfWidth {
+  width: 50%; /* 宽度50% */
+}
+
+/**
+ * 特定用途输入框样式
+ * 为不同用途的输入框定义特定样式
+ */
+/* 姓输入框 */
+.formInput.firstName {
+  width: 80px; /* 宽度80px */
+  padding: 0 var(--spacing-sm); /* 左右内边距为小间距 */
+}
+
+/* 名输入框 */
+.formInput.lastName {
+  width: 80px; /* 宽度80px */
+  padding: 0 var(--spacing-sm); /* 左右内边距为小间距 */
+}
+
+/* 出生年份输入框 */
+.formInput.birthYear {
+  width: 50px; /* 宽度50px */
+  padding: 0 var(--spacing-sm); /* 左右内边距为小间距 */
+}
+
+/* 地点输入框 */
+.formInput.location {
+  flex: 1 1 100px; /* 弹性布局，基础尺寸100px，可伸缩 */
+  min-width: 100px; /* 最小宽度100px */
+}
+
+/* 子类型输入框 */
+.formInput.subType {
+  width: 80px; /* 宽度80px */
+  padding: 0 var(--spacing-sm); /* 左右内边距为小间距 */
+}
+
+/* 问题输入框 */
+.formInput.question {
+  flex: 1; /* 弹性布局，占满剩余空间 */
+}
+
+/* 时间戳输入框 */
+.formInput.timestamp {
+  padding: 0 var(--spacing-lg); /* 左右内边距为大间距 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景 */
+  text-align: center; /* 文本居中 */
+  color: var(--text-secondary); /* 次要文本颜色 */
+  justify-content: center; /* 内容居中 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  will-change: background-color, color; /* 优化动画性能 */
+  width: fit-content; /* 宽度适应内容 */
+  margin: 0 auto; /* 水平居中 */
+}
+
+/* 时间戳输入框hover状态 */
+.formInput.timestamp:hover {
+  background-color: var(--bg-gray-medium); /* 背景色变为中灰色 */
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+}

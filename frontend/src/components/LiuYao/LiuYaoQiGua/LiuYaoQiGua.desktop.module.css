@@ -1,0 +1,157 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/LiuYaoQiGua.desktop.module.css
+ * @description     六爻起卦主容器组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 13:30:00
+ * @lastModified    2026-03-09 14:13:05
+ * Copyright © All rights reserved
+*/
+
+/* ===== 六爻起卦外层容器 ===== */
+/* 外层容器样式 - 定义整个六爻起卦组件的包装容器 */
+.liuYaoWrapper {
+  /* ===== 布局变量定义 ===== */
+  /* 定义容器内部元素间距 */
+  --wrapper-gap: var(--spacing-xl, 20px);
+  /* 定义容器最大宽度 */
+  --wrapper-max-width: 800px;
+  /* 定义容器内边距 */
+  --wrapper-padding: var(--spacing-md, 10px);
+  /* 定义容器边框颜色 */
+  --wrapper-border-color: #1890FF;
+  /* 定义容器圆角 */
+  --wrapper-border-radius: var(--border-radius-xl, 16px);
+  /* 定义容器顶部外边距 */
+  --wrapper-margin-top: var(--spacing-md, 10px);
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，垂直方向排列子元素 */
+  display: flex;
+  /* 设置主轴方向为垂直方向 */
+  flex-direction: column;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--wrapper-gap);
+  /* 设置最大宽度 */
+  max-width: var(--wrapper-max-width);
+  /* 水平居中 */
+  margin: var(--wrapper-margin-top) auto 0;
+  /* 设置内边距 */
+  padding: var(--wrapper-padding);
+  /* 设置边框 */
+  border: 1px solid var(--wrapper-border-color);
+  /* 设置圆角 */
+  border-radius: var(--wrapper-border-radius);
+  /* 确保盒模型计算正确 */
+  box-sizing: border-box;
+}
+
+/* ===== 六爻起卦主容器 ===== */
+/* 主容器样式 - 包含侧边导航和起卦内容区域 */
+.liuYaoContainer {
+  /* ===== 布局变量定义 ===== */
+  /* 定义容器内部元素间距 */
+  --container-gap: var(--spacing-xl, 20px);
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，水平方向排列子元素 */
+  display: flex;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--container-gap);
+}
+
+/* ===== 起卦内容容器 ===== */
+/* 内容容器样式 - 包裹起卦方法内容组件 */
+.liuYaoContent {
+  /* ===== 布局变量定义 ===== */
+  /* 定义容器边框颜色 */
+  --content-border-color: #E5E7EB;
+  /* 定义容器圆角 */
+  --content-border-radius: var(--border-radius-lg, 12px);
+  /* 定义容器内边距 */
+  --content-padding: var(--spacing-xl, 20px);
+  /* 定义容器背景色 */
+  --content-bg-color: #FFFFFF;
+  /* 定义容器阴影 */
+  --content-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  
+  /* ===== 布局属性 ===== */
+  /* 占据剩余空间 */
+  flex: 1;
+  /* 设置边框 */
+  border: 1px solid var(--content-border-color);
+  /* 设置圆角 */
+  border-radius: var(--content-border-radius);
+  /* 设置内边距 */
+  padding: var(--content-padding);
+  /* 设置背景色 */
+  background-color: var(--content-bg-color);
+  /* 设置阴影 */
+  box-shadow: var(--content-box-shadow);
+}
+
+/* ===== 排盘按钮容器 ===== */
+/* 按钮容器样式 - 包裹开始排盘按钮 */
+.divinationButtonContainer {
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局 */
+  display: flex;
+  /* 水平居中 */
+  justify-content: center;
+}
+
+/* ===== 排盘按钮 ===== */
+/* 排盘按钮样式 - 开始排盘操作的主要按钮 */
+.divinationButton {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义按钮内边距 */
+  --button-padding-y: var(--spacing-lg, 12px);
+  --button-padding-x: var(--spacing-4xl, 32px);
+  /* 定义按钮背景色 */
+  --button-bg-color: #1890FF;
+  /* 定义按钮文字颜色 */
+  --button-text-color: #FFFFFF;
+  /* 定义按钮圆角 */
+  --button-border-radius: var(--border-radius-lg, 8px);
+  /* 定义按钮字体大小 */
+  --button-font-size: var(--font-size-lg, 16px);
+  /* 定义按钮字体粗细 */
+  --button-font-weight: 500;
+  
+  /* ===== 样式属性 ===== */
+  /* 设置内边距 */
+  padding: var(--button-padding-y) var(--button-padding-x);
+  /* 设置背景色 */
+  background-color: var(--button-bg-color);
+  /* 设置文字颜色 */
+  color: var(--button-text-color);
+  /* 移除边框 */
+  border: none;
+  /* 设置圆角 */
+  border-radius: var(--button-border-radius);
+  /* 设置字体大小 */
+  font-size: var(--button-font-size);
+  /* 设置字体粗细 */
+  font-weight: var(--button-font-weight);
+  /* 设置鼠标样式 */
+  cursor: pointer;
+  /* 设置过渡效果 */
+  transition: all 0.2s ease;
+}
+
+/* 排盘按钮悬停状态 */
+.divinationButton:hover {
+  /* 悬停时背景色变亮 */
+  background-color: #40A9FF;
+  /* 添加阴影效果 */
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+/* 排盘按钮禁用状态 */
+.divinationButton:disabled {
+  /* 禁用状态下背景色变为灰色 */
+  background-color: #9CA3AF;
+  /* 禁用鼠标交互 */
+  cursor: not-allowed;
+  /* 移除阴影 */
+  box-shadow: none;
+}

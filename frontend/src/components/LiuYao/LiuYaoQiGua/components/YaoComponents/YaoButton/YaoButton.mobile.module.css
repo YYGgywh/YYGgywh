@@ -1,0 +1,361 @@
+/*
+ * @file            frontend/src/components/LiuYao/components/YaoButton/YaoButton.mobile.module.css
+ * @description     阴阳爻选择按钮组件移动端样式
+ *                   针对移动设备优化触摸区域和视觉反馈
+ *                   增大按钮尺寸以适应手指触摸
+ *                   保持与桌面端一致的状态和动画效果
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-08 17:00:00
+ * @lastModified    2026-03-08 17:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   组件容器样式
+   定义按钮的基础布局和变量（移动端适配版）
+   ============================================ */
+
+/**
+ * @description     阴阳爻按钮基础样式（移动端）
+ *                   相比桌面端，增大了按钮尺寸以适应手指触摸
+ *                   增大了字体大小以提高可读性
+ *                   保持了相同的颜色主题和动画效果
+ */
+.yaoButton {
+  /* ===== 布局变量 ===== */
+  /* 按钮宽度，移动端增大到32px以适应手指触摸 */
+  /* 根据 WCAG 2.1 建议，触摸目标最小尺寸为 44x44px，
+     但考虑到布局紧凑性，使用 32px 作为折中方案 */
+  --yao-btn-width: 32px;
+  /* 按钮高度，与宽度相同形成正方形 */
+  --yao-btn-height: 32px;
+  /* 内边距为0 */
+  --yao-btn-padding: 0;
+  
+  /* ===== 边框变量 ===== */
+  /* 边框宽度，移动端略微增加以提高可见性 */
+  --yao-btn-border-width: 1.5px;
+  /* 边框圆角，移动端略微增大 */
+  --yao-btn-border-radius: var(--border-radius-lg, 8px);
+  
+  /* ===== 字体变量 ===== */
+  /* 字体大小，移动端增大到16px以提高可读性 */
+  --yao-btn-font-size: 16px;
+  /* 字体粗细保持中等 */
+  --yao-btn-font-weight: 500;
+  
+  /* ===== 动画变量 ===== */
+  /* 过渡动画，移动端使用更快的响应时间 */
+  --yao-btn-transition: all 0.15s ease;
+  
+  /* ===== 尺寸与布局 ===== */
+  /* 应用宽度变量 */
+  width: var(--yao-btn-width);
+  /* 应用高度变量 */
+  height: var(--yao-btn-height);
+  /* 应用内边距变量 */
+  padding: var(--yao-btn-padding);
+  /* 使用 Flexbox 布局 */
+  display: flex;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
+  justify-content: center;
+  
+  /* ===== 边框样式 ===== */
+  /* 应用边框宽度 */
+  border-width: var(--yao-btn-border-width);
+  /* 实线边框 */
+  border-style: solid;
+  /* 应用圆角变量 */
+  border-radius: var(--yao-btn-border-radius);
+  
+  /* ===== 字体样式 ===== */
+  /* 应用字体大小 */
+  font-size: var(--yao-btn-font-size);
+  /* 应用字体粗细 */
+  font-weight: var(--yao-btn-font-weight);
+  
+  /* ===== 交互样式 ===== */
+  /* 鼠标指针样式为手型 */
+  cursor: pointer;
+  /* 应用过渡动画 */
+  transition: var(--yao-btn-transition);
+  
+  /* ===== 触摸优化 ===== */
+  /* 移除移动端点击时的蓝色高亮效果 */
+  -webkit-tap-highlight-color: transparent;
+  /* 移除默认 outline */
+  outline: none;
+}
+
+/* ============================================
+   阳爻按钮样式（红色主题）
+   ============================================ */
+
+/**
+ * @description     阳爻按钮未选中状态（移动端）
+ *                   默认状态，白色背景，灰色边框
+ *                   与桌面端保持一致的颜色方案
+ */
+.yangButton {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为白色 */
+  --yang-btn-bg: var(--bg-white, #FFFFFF);
+  /* 文字颜色为深灰色 */
+  --yang-btn-text-color: var(--text-primary, #333333);
+  /* 边框颜色为浅灰色 */
+  --yang-btn-border-color: var(--border-color, #E5E7EB);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yang-btn-bg);
+  color: var(--yang-btn-text-color);
+  border-color: var(--yang-btn-border-color);
+}
+
+/**
+ * @description     阳爻按钮选中状态（静）（移动端）
+ *                   白色背景，红色边框，红色文字
+ *                   显示脉冲动画效果
+ *                   移动端增大了阴影范围以提高可见性
+ */
+.yangButtonSelected {
+  /* ===== 颜色变量 ===== */
+  /* 背景色保持白色 */
+  --yang-btn-bg: var(--bg-white, #FFFFFF);
+  /* 文字颜色为红色 */
+  --yang-btn-text-color: var(--color-danger, #C00000);
+  /* 边框颜色为红色 */
+  --yang-btn-border-color: var(--color-danger, #C00000);
+  /* 阴影颜色，移动端使用更大的范围和透明度 */
+  --yang-btn-shadow-color: rgba(192, 0, 0, 0.2);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yang-btn-bg);
+  color: var(--yang-btn-text-color);
+  border-color: var(--yang-btn-border-color);
+  
+  /* ===== 阴影效果 ===== */
+  /* 移动端增大阴影范围到 4px */
+  box-shadow: 0 0 0 4px var(--yang-btn-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  /* 应用脉冲动画，2秒循环，无限次 */
+  animation: pulseYang 2s infinite;
+}
+
+/**
+ * @description     阳爻按钮激活状态（动）（移动端）
+ *                   红色背景，白色文字，红色边框
+ *                   表示该爻为动爻，会发生变化
+ *                   显示脉冲动画效果
+ */
+.yangButtonActive {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为红色 */
+  --yang-btn-bg: var(--color-danger, #C00000);
+  /* 文字颜色为白色 */
+  --yang-btn-text-color: var(--text-white, #FFFFFF);
+  /* 边框颜色为红色 */
+  --yang-btn-border-color: var(--color-danger, #C00000);
+  /* 阴影颜色 */
+  --yang-btn-shadow-color: rgba(192, 0, 0, 0.2);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yang-btn-bg);
+  color: var(--yang-btn-text-color);
+  border-color: var(--yang-btn-border-color);
+  
+  /* ===== 阴影效果 ===== */
+  box-shadow: 0 0 0 4px var(--yang-btn-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYang 2s infinite;
+}
+
+/**
+ * @description     阳爻按钮触摸效果（未选中状态）（移动端）
+ *                   触摸时显示浅红色背景
+ *                   替代桌面端的悬停效果
+ *                   使用 :active 伪类响应触摸事件
+ */
+.yangButton:active:not(.yangButtonSelected):not(.yangButtonActive) {
+  /* ===== 颜色变量 ===== */
+  /* 触摸背景色为浅红色 */
+  --yang-btn-active-bg: var(--color-danger-light, #FFF5F5);
+  /* 触摸边框颜色为浅红色 */
+  --yang-btn-active-border-color: #FFCCCC;
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yang-btn-active-bg);
+  border-color: var(--yang-btn-active-border-color);
+  /* 触摸时轻微缩小，提供触觉反馈 */
+  transform: scale(0.95);
+}
+
+/* ============================================
+   阴爻按钮样式（蓝色主题）
+   ============================================ */
+
+/**
+ * @description     阴爻按钮未选中状态（移动端）
+ *                   默认状态，白色背景，灰色边框
+ *                   与桌面端保持一致的颜色方案
+ */
+.yinButton {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为白色 */
+  --yin-btn-bg: var(--bg-white, #FFFFFF);
+  /* 文字颜色为深灰色 */
+  --yin-btn-text-color: var(--text-primary, #333333);
+  /* 边框颜色为浅灰色 */
+  --yin-btn-border-color: var(--border-color, #E5E7EB);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yin-btn-bg);
+  color: var(--yin-btn-text-color);
+  border-color: var(--yin-btn-border-color);
+}
+
+/**
+ * @description     阴爻按钮选中状态（静）（移动端）
+ *                   白色背景，蓝色边框，蓝色文字
+ *                   显示脉冲动画效果
+ *                   移动端增大了阴影范围以提高可见性
+ */
+.yinButtonSelected {
+  /* ===== 颜色变量 ===== */
+  /* 背景色保持白色 */
+  --yin-btn-bg: var(--bg-white, #FFFFFF);
+  /* 文字颜色为深蓝色 */
+  --yin-btn-text-color: var(--color-primary-dark, #002060);
+  /* 边框颜色为深蓝色 */
+  --yin-btn-border-color: var(--color-primary-dark, #002060);
+  /* 阴影颜色，移动端使用更大的范围和透明度 */
+  --yin-btn-shadow-color: rgba(0, 32, 96, 0.2);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yin-btn-bg);
+  color: var(--yin-btn-text-color);
+  border-color: var(--yin-btn-border-color);
+  
+  /* ===== 阴影效果 ===== */
+  box-shadow: 0 0 0 4px var(--yin-btn-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYin 2s infinite;
+}
+
+/**
+ * @description     阴爻按钮激活状态（动）（移动端）
+ *                   蓝色背景，白色文字，蓝色边框
+ *                   表示该爻为动爻，会发生变化
+ *                   显示脉冲动画效果
+ */
+.yinButtonActive {
+  /* ===== 颜色变量 ===== */
+  /* 背景色为深蓝色 */
+  --yin-btn-bg: var(--color-primary-dark, #002060);
+  /* 文字颜色为白色 */
+  --yin-btn-text-color: var(--text-white, #FFFFFF);
+  /* 边框颜色为深蓝色 */
+  --yin-btn-border-color: var(--color-primary-dark, #002060);
+  /* 阴影颜色 */
+  --yin-btn-shadow-color: rgba(0, 32, 96, 0.2);
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yin-btn-bg);
+  color: var(--yin-btn-text-color);
+  border-color: var(--yin-btn-border-color);
+  
+  /* ===== 阴影效果 ===== */
+  box-shadow: 0 0 0 4px var(--yin-btn-shadow-color);
+  
+  /* ===== 动画效果 ===== */
+  animation: pulseYin 2s infinite;
+}
+
+/**
+ * @description     阴爻按钮触摸效果（未选中状态）（移动端）
+ *                   触摸时显示浅蓝色背景
+ *                   替代桌面端的悬停效果
+ *                   使用 :active 伪类响应触摸事件
+ */
+.yinButton:active:not(.yinButtonSelected):not(.yinButtonActive) {
+  /* ===== 颜色变量 ===== */
+  /* 触摸背景色为浅蓝色 */
+  --yin-btn-active-bg: var(--color-primary-light, #F0F5FF);
+  /* 触摸边框颜色为浅蓝色 */
+  --yin-btn-active-border-color: #B3C6FF;
+  
+  /* ===== 颜色应用 ===== */
+  background-color: var(--yin-btn-active-bg);
+  border-color: var(--yin-btn-active-border-color);
+  /* 触摸时轻微缩小，提供触觉反馈 */
+  transform: scale(0.95);
+}
+
+/* ============================================
+   焦点样式（移动端）
+   ============================================ */
+
+/**
+ * @description     按钮焦点样式（移动端）
+ *                   使用键盘导航时的焦点指示
+ *                   移动端使用更明显的焦点样式
+ */
+.yaoButton:focus {
+  /* 移除默认焦点 outline */
+  outline: none;
+  /* 添加自定义焦点样式，使用外边框 */
+  outline: 2px solid var(--color-primary, #1890ff);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   动画定义（移动端）
+   ============================================ */
+
+/**
+ * @description     阳爻脉冲动画（移动端）
+ *                   用于选中状态和激活状态的视觉反馈
+ *                   移动端增大了阴影变化范围以提高可见性
+ */
+@keyframes pulseYang {
+  /* 动画开始：初始阴影大小 */
+  0% {
+    /* 移动端起始阴影更大 */
+    box-shadow: 0 0 0 4px rgba(192, 0, 0, 0.2);
+  }
+  /* 动画中间：阴影扩大 */
+  50% {
+    /* 移动端最大阴影扩大到 8px */
+    box-shadow: 0 0 0 8px rgba(192, 0, 0, 0.1);
+  }
+  /* 动画结束：回到初始阴影大小 */
+  100% {
+    box-shadow: 0 0 0 4px rgba(192, 0, 0, 0.2);
+  }
+}
+
+/**
+ * @description     阴爻脉冲动画（移动端）
+ *                   用于选中状态和激活状态的视觉反馈
+ *                   移动端增大了阴影变化范围以提高可见性
+ */
+@keyframes pulseYin {
+  /* 动画开始：初始阴影大小 */
+  0% {
+    /* 移动端起始阴影更大 */
+    box-shadow: 0 0 0 4px rgba(0, 32, 96, 0.2);
+  }
+  /* 动画中间：阴影扩大 */
+  50% {
+    /* 移动端最大阴影扩大到 8px */
+    box-shadow: 0 0 0 8px rgba(0, 32, 96, 0.1);
+  }
+  /* 动画结束：回到初始阴影大小 */
+  100% {
+    box-shadow: 0 0 0 4px rgba(0, 32, 96, 0.2);
+  }
+}

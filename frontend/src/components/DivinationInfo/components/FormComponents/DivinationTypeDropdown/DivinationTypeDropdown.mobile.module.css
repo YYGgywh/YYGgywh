@@ -1,0 +1,276 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/FormComponents/DivinationTypeDropdown/DivinationTypeDropdown.mobile.module.css
+ * @description     占类下拉选择组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 20:30:00
+ * @lastModified    2026-03-09 20:30:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 占类下拉选择组件容器
+ * 定义整个下拉选择组件的容器样式
+ */
+.divinationTypeContainer {
+  /* 布局属性 */
+  display: inline-flex; /* 使用flex布局，便于对齐和调整 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--spacing-md); /* 元素之间的间距，移动端稍大 */
+}
+
+/**
+ * 占类下拉选择组件标签
+ * 定义占类标签的样式
+ */
+.typeLabel {
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-primary); /* 主文本颜色 */
+  margin-right: var(--spacing-md); /* 右边距为中间距 */
+}
+
+/**
+ * 占类下拉选择组件容器
+ * 定义下拉选择框的容器样式
+ */
+.dropdownContainer {
+  /* 布局属性 */
+  position: relative; /* 相对定位，为下拉菜单提供定位参考 */
+  display: inline-block; /* 行内块级元素 */
+}
+
+/**
+ * 占类下拉选择组件选择框
+ * 定义下拉选择框的样式
+ */
+.dropdownSelect {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: space-between; /* 内容两端对齐 */
+  box-sizing: border-box; /* 盒模型为border-box，确保padding和border不影响宽度 */
+  width: 140px; /* 宽度140px，移动端稍大以便触摸 */
+  height: 44px; /* 高度44px，符合触摸交互标准 */
+  
+  /* 盒模型属性 */
+  padding: 0 var(--spacing-md); /* 左右内边距为中间距 */
+  margin: 0; /* 无外边距 */
+  
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  line-height: 1.5; /* 行高1.5 */
+  color: var(--text-primary); /* 主文本颜色 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border: 1px solid var(--border-color); /* 1px边框，使用边框颜色变量 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  
+  /* 交互属性 */
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast); /* 边框和阴影过渡效果 */
+  outline: none; /* 移除默认轮廓 */
+  user-select: none; /* 禁止文本选择 */
+  -webkit-tap-highlight-color: transparent; /* 移除iOS触摸高亮效果 */
+  
+  /* 字体属性 */
+  font-family: var(--font-family-base); /* 基础字体 */
+}
+
+/**
+ * 占类下拉选择组件选择框聚焦状态
+ * 当选择框获得焦点时的样式
+ */
+.dropdownSelect:focus {
+  outline: none; /* 移除默认轮廓 */
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+  box-shadow: 0 0 0 3px var(--primary-focus); /* 添加主题色焦点阴影，移动端阴影范围更大 */
+}
+
+/**
+ * 占类下拉选择组件选择框悬停状态
+ * 当鼠标悬停在选择框上时的样式
+ */
+.dropdownSelect:hover {
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+}
+
+/**
+ * 占类下拉选择组件选择框下拉箭头
+ * 定义下拉箭头的样式
+ */
+.dropdownArrow {
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小，移动端稍大 */
+  color: var(--text-secondary); /* 次要文本颜色 */
+  margin-left: var(--spacing-md); /* 左边距为中间距 */
+  transition: transform var(--transition-fast); /* 旋转过渡效果 */
+}
+
+/**
+ * 占类下拉选择组件选择框展开状态下的箭头
+ * 当下拉菜单展开时，箭头旋转180度
+ */
+.dropdownSelect[aria-expanded="true"] .dropdownArrow {
+  transform: rotate(180deg); /* 箭头旋转180度 */
+}
+
+/**
+ * 占类下拉选择组件菜单
+ * 定义下拉菜单的样式
+ */
+.dropdownMenu {
+  /* 布局属性 */
+  position: absolute; /* 绝对定位，相对于下拉选择框容器 */
+  top: 100%; /* 位于选择框下方 */
+  left: 0; /* 左对齐 */
+  z-index: var(--z-dropdown); /* 下拉菜单层级 */
+  
+  /* 盒模型属性 */
+  margin-top: var(--spacing-sm); /* 上边距为小间距 */
+  padding: var(--spacing-sm) 0; /* 上下内边距为小间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border: 1px solid var(--border-color); /* 1px边框，使用边框颜色变量 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  box-shadow: var(--shadow-lg); /* 大阴影效果 */
+  min-width: 140px; /* 最小宽度140px */
+  max-height: 400px; /* 最大高度400px，移动端稍大 */
+  overflow-y: auto; /* 垂直滚动 */
+  
+  /* 交互属性 */
+  animation: dropdownFadeIn var(--transition-normal) ease; /* 淡入动画 */
+}
+
+/**
+ * 占类下拉选择组件菜单选项
+ * 定义下拉菜单选项的样式
+ */
+.dropdownItem {
+  /* 盒模型属性 */
+  padding: var(--spacing-md) var(--spacing-lg); /* 上下内边距为中间距，左右内边距为大间距 */
+  
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-primary); /* 主文本颜色 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  transition: background-color var(--transition-fast), color var(--transition-fast); /* 背景和颜色过渡效果 */
+  
+  /* 字体属性 */
+  font-family: var(--font-family-base); /* 基础字体 */
+}
+
+/**
+ * 占类下拉选择组件菜单选项悬停状态
+ * 当鼠标悬停在菜单选项上时的样式
+ */
+.dropdownItem:hover {
+  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+}
+
+/**
+ * 占类下拉选择组件菜单选项选中状态
+ * 当菜单选项被选中时的样式
+ */
+.dropdownItem.selected {
+  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+  font-weight: 500; /* 字体加粗 */
+}
+
+/**
+ * 占类下拉选择组件菜单选项焦点状态
+ * 当菜单选项获得焦点时的样式
+ */
+.dropdownItem:focus {
+  outline: none; /* 移除默认轮廓 */
+  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+}
+
+/**
+ * 占类下拉选择组件菜单选项激活状态
+ * 当菜单选项被激活时的样式
+ */
+.dropdownItem:active {
+  background-color: var(--primary-color); /* 背景色变为主题色 */
+  color: var(--text-white); /* 文本颜色变为白色 */
+}
+
+/**
+ * 下拉菜单淡入动画
+ * 定义下拉菜单的淡入动画效果
+ */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0; /* 初始透明度为0 */
+    transform: translateY(-10px); /* 初始向上偏移10px */
+  }
+  to {
+    opacity:1; /* 结束透明度为1 */
+    transform: translateY(0); /* 结束无偏移 */
+  }
+}
+
+/**
+ * 占类下拉选择组件禁用状态
+ * 当下拉选择组件被禁用时的样式
+ */
+.dropdownSelect.disabled {
+  color: var(--text-disabled); /* 禁用状态文本颜色 */
+  background-color: var(--bg-gray-light); /* 禁用状态背景色 */
+  border-color: var(--border-color); /* 边框颜色保持默认 */
+  cursor: not-allowed; /* 鼠标指针变为禁止状态 */
+}
+
+/**
+ * 占类下拉选择组件错误状态
+ * 当下拉选择组件内容有误时的样式
+ */
+.dropdownSelect.error {
+  border-color: var(--error-color); /* 边框颜色变为错误色 */
+}
+
+/**
+ * 触摸反馈优化
+ * 当用户点击下拉选择框时的反馈效果
+ */
+.dropdownSelect:active {
+  transform: scale(0.98); /* 点击时轻微缩小，提供触摸反馈 */
+}
+
+/**
+ * iOS 设备优化
+ * 针对iOS设备的特定样式调整
+ */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .dropdownSelect {
+    -webkit-appearance: none; /* 移除iOS默认下拉框样式 */
+    border-radius: 8px; /* 统一圆角大小 */
+  }
+  
+  .dropdownSelect:focus {
+    outline: none; /* 确保聚焦时无轮廓 */
+  }
+}
+
+/**
+ * 竖屏和横屏适配
+ * 根据设备方向调整下拉选择框样式
+ */
+/* 竖屏模式 */
+@media screen and (orientation: portrait) {
+  .dropdownSelect {
+    font-size: 16px; /* 竖屏时字体大小16px */
+    height: 44px; /* 竖屏时高度44px */
+  }
+}
+
+/* 横屏模式 */
+@media screen and (orientation: landscape) {
+  .dropdownSelect {
+    font-size: 14px; /* 横屏时字体大小14px */
+    height: 40px; /* 横屏时高度40px */
+    padding: 0 14px; /* 横屏时左右内边距14px */
+  }
+}

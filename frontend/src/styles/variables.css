@@ -3,7 +3,7 @@
  * @description     统一的主题变量文件，包含整个应用的设计系统变量
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-25 00:00:00
- * @lastModified    2026-02-26 10:00:00
+ * @lastModified    2026-03-10 16:51:31
  * Copyright © All rights reserved
 */
 
@@ -14,16 +14,23 @@
   ========================================= */
 :root {
   /* 主色调系统 - 用于主要交互元素和品牌色 */
+  --color-primary: #10b981;        /* 主色 - 绿色系，用于按钮、链接等主要交互元素 */
   --primary-color: #1890FF;          /* 主色 - 蓝色系，用于按钮、链接等主要交互元素 */
   --primary-hover: #40A9FF;          /* 主色悬停态 - 比主色稍亮，提供视觉反馈 */
   --primary-light: #E6F7FF;          /* 主色浅色 - 用于背景高亮、选中状态等 */
   --primary-focus: rgba(24, 144, 255, 0.1);  /* 主色焦点态 - 用于输入框聚焦时的外发光效果 */
+  --color-primary-hover: #059669;     /* 主色悬停态 - 比主色稍暗，提供视觉反馈 */
+  --color-primary-light: #D1FAE5;     /* 主色浅色 - 用于背景高亮、选中状态等 */
+  --color-primary-dark: #047857;      /* 主色深色 - 用于激活状态 */
+  --color-primary-darker: #065F46;    /* 主色更深色 - 用于激活状态 */
   
   /* 文本颜色系统 - 遵循无障碍设计标准，确保足够的对比度 */
   --text-primary: #333333;          /* 主要文本 - 用于标题、重要内容 */
   --text-secondary: #666666;        /* 次要文本 - 用于说明文字、辅助信息 */
+  --text-tertiary: #9CA3AF;        /* 第三级文本 - 用于占位符、禁用状态 */
   --text-placeholder: #9CA3AF;      /* 占位符文本 - 用于输入框提示文字 */
-  --text-disabled: #9CA3AF;          /* 禁用文本 - 用于禁用状态的文本 */
+  --text-disabled: #666;          /* 禁用文本 - 用于禁用状态的文本 */
+  --text-white: #FFFFFF;             /* 白色文本 - 用于深色背景上的文字 */
   --text-color: #333;               /* 通用文本颜色 - 兼容旧代码，建议使用 --text-primary */
   --light-text-color: #8e8e8e;     /* 浅色文本 - 用于次要信息 */
   --gray-text-color: #666;           /* 灰色文本 - 用于辅助信息 */
@@ -40,6 +47,23 @@
   --bg-gray-dark: #F0F0F0;          /* 深灰背景 - 用于特殊按钮、禁用按钮 */
   --bg-color: #f5f5f5;             /* 通用背景色 - 兼容旧代码 */
   --white-color: #fff;               /* 白色 - 兼容旧代码，建议使用 --bg-white */
+  
+  /* 按钮背景色系统 - 用于统一按钮样式 */
+  /* 按钮背景颜色 */
+  --btn-primary-bg: #1890FF;          /* 主要按钮背景 - 蓝色 */
+  --btn-primary-hover: #40A9FF;       /* 主要按钮悬停态 */
+  --btn-primary-active: #096DD9;      /* 主要按钮激活态 */
+  --btn-confirm-bg: #10D981;          /* 确认按钮背景 - 绿色 */
+  --btn-confirm-hover: #059669;       /* 确认按钮悬停态 */
+  --btn-confirm-active: #047857;      /* 确认按钮激活态 */
+  --btn-warning-bg: #ef4444;          /* 警告按钮背景 - 红色 */
+  --btn-warning-hover: #dc2626;       /* 警告按钮悬停态 */
+  --btn-warning-active: #b91c1c;      /* 警告按钮激活态 */
+  --btn-disabled-bg: #D1D5DB;         /* 禁用按钮背景 - 灰色 */
+  
+  /* 按钮文本颜色 */
+  --btn-text-color: #FFFFFF;             /* 按钮文本颜色 - 白色 */
+  --btn-disabled-text-color: #666666;    /* 禁用按钮文本颜色 - 灰色 */
   
   /* 语义化颜色系统 - 用于状态提示、操作反馈 */
   --success-color: #52C41A;         /* 成功色 - 绿色系，用于成功提示、确认按钮 */
@@ -59,9 +83,25 @@
   --spacing-xl: 16px;               /* 超大间距 - 用于区块之间 */
   --spacing-2xl: 20px;              /* 特大间距 - 用于主要区块 */
   --spacing-3xl: 24px;              /* 最大间距 - 用于页面级布局 */
+  --spacing-4xl: 32px;              /* 特大间距 - 用于主要区块 */
   
-  /* 字体族系统 - 确保跨平台一致性 */
-  --font-family-base: 'Noto Sans SC', 'Helvetica Neue', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei',  Arial, sans-serif;
+  /* 字体族系统 - 确保跨平台一致性（优化版）
+   * 字体栈设计原则：
+   * 1. 优先使用系统字体，提升渲染性能
+   * 2. 按平台分组，逻辑清晰
+   * 3. 中文字体优先使用系统默认，避免加载外部字体
+   */
+  --font-family-base: 
+    /* 第1层：首选字体（Google Fonts 或项目自定义字体） */
+    'Noto Sans SC',
+    /* 第2层：苹果系统字体（macOS/iOS） */
+    -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    /* 第3层：Windows 系统字体 */
+    'Segoe UI', 'Microsoft YaHei', 'Microsoft JhengHei',
+    /* 第4层：Android 系统字体 */
+    'Roboto',
+    /* 第5层：通用回退字体 */
+    Arial, 'Helvetica Neue', sans-serif;
   --font-family-code: 'Courier New', Courier, monospace;
   
   /* 字体大小系统 - 基于 rem 单位，支持响应式缩放 */
@@ -139,4 +179,10 @@
   --line-color-black: var(--element-water);
   --line-color-yellow: var(--element-earth);
   --line-color-blue: var(--element-metal);
+  
+  /* 全局字体颜色变量 */
+  --text-global: #C00000;       /* 全局字体颜色 - 深红色 */
+  
+  /* 组件特定变量 */
+  --item-min-height: 35px;      /* 爻位显示组件行高 */
 }

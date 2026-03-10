@@ -1,0 +1,419 @@
+/*
+ * @file            frontend/src/components/LiuYao/components/ActionButton/ActionButton.mobile.module.css
+ * @description     操作按钮组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-08 18:10:00
+ * @lastModified    2026-03-10 14:04:33
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   移动端默认样式
+   针对移动设备的触摸交互优化
+   ============================================ */
+
+/**
+ * @description     操作按钮基础样式（移动端）
+ *                   增大按钮尺寸以适应手指触摸
+ *                   增大字体大小以提高可读性
+ */
+.actionButton {
+  /* ===== 布局变量 ===== */
+  /* 增大内边距 */
+  --btn-padding-y: 10px;
+  --btn-padding-x: 20px;
+  /* 增大最小高度 */
+  --btn-min-height: 40px;
+  /* 增大圆角 */
+  --btn-border-radius: var(--border-radius-lg, 8px);
+  
+  /* ===== 字体变量 ===== */
+  /* 增大字体大小 */
+  --btn-font-size: 16px;
+  /* 字体权重 */
+  --btn-font-weight: 500;
+  /* 增大行高 */
+  --btn-line-height: 1.5;
+  
+  /* ===== 边框变量 ===== */
+  /* 略微增加边框宽度 */
+  --btn-border-width: 1.5px;
+  
+  /* ===== 颜色变量 ===== */
+  /* 文本颜色 */
+  --btn-text-color: var(--text-primary, #333333);
+  /* 背景颜色 */
+  --btn-bg-color: var(--bg-white, #FFFFFF);
+  /* 边框颜色 */
+  --btn-border-color: var(--border-color, #E5E7EB);
+  /* 悬停背景颜色 */
+  --btn-hover-bg: var(--bg-gray-100, #F3F4F6);
+  /* 悬停边框颜色 */
+  --btn-hover-border: var(--border-color-dark, #D1D5DB);
+  /* 激活背景颜色 */
+  --btn-active-bg: var(--bg-gray-200, #E5E7EB);
+  /* 激活边框颜色 */
+  --btn-active-border: var(--border-color-dark, #D1D5DB);
+  
+  /* ===== 过渡变量 ===== */
+  /* 过渡效果 */
+  --btn-transition: all 0.15s ease;
+  
+  /* ===== 尺寸与布局 ===== */
+  /* 应用内边距 */
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  /* 最小高度 */
+  min-height: var(--btn-min-height);
+  /* 行内块级元素，既可以设置宽高，又可以与其他元素在同一行 */
+  display: inline-flex;
+  /* 垂直居中 */
+  align-items: center;
+  /* 水平居中 */
+  justify-content: center;
+  /* 文本对齐 */
+  text-align: center;
+  
+  /* ===== 边框样式 ===== */
+  /* 边框宽度 */
+  border-width: var(--btn-border-width);
+  /* 实线边框 */
+  border-style: solid;
+  /* 边框颜色 */
+  border-color: var(--btn-border-color);
+  /* 圆角 */
+  border-radius: var(--btn-border-radius);
+  
+  /* ===== 字体样式 ===== */
+  /* 字体大小 */
+  font-size: var(--btn-font-size);
+  /* 字体权重 */
+  font-weight: var(--btn-font-weight);
+  /* 行高 */
+  line-height: var(--btn-line-height);
+  
+  /* ===== 颜色应用 ===== */
+  /* 文本颜色 */
+  color: var(--btn-text-color);
+  /* 背景颜色 */
+  background-color: var(--btn-bg-color);
+  
+  /* ===== 光标样式 ===== */
+  /* 指针光标，提示可点击 */
+  cursor: pointer;
+  
+  /* ===== 过渡效果 ===== */
+  /* 添加过渡效果，使状态变化更平滑 */
+  transition: var(--btn-transition);
+  
+  /* ===== 其他 ===== */
+  /* 移除默认 outline，使用自定义焦点样式 */
+  outline: none;
+  /* 移除默认的按钮外观 */
+  appearance: none;
+  /* 移除按钮的默认边框和内边距 */
+  margin: 0;
+  /* 确保按钮内容不会被选中 */
+  user-select: none;
+  /* 确保按钮不会被拖拽 */
+  -webkit-user-drag: none;
+  /* 禁用触摸高亮 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/**
+ * @description     按钮文本容器
+ *                   用于包裹按钮文本，确保加载指示器和文本正确对齐
+ */
+.buttonText {
+  /* 确保文本容器占据剩余空间 */
+  flex: 1;
+  /* 文本溢出时显示省略号 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/**
+ * @description     加载指示器容器
+ *                   用于包裹加载动画
+ */
+.loadingIndicator {
+  /* 相对定位，用于加载动画的绝对定位 */
+  position: relative;
+  /* 增大尺寸 */
+  width: 20px;
+  height: 20px;
+  /* 增大间距 */
+  margin-right: 10px;
+  /* 确保加载动画在文本之前显示 */
+  flex-shrink: 0;
+}
+
+/**
+ * @description     加载动画
+ *                   使用 CSS 动画实现旋转效果
+ */
+.loadingSpinner {
+  /* 绝对定位，居中显示 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* 增大尺寸 */
+  width: 20px;
+  height: 20px;
+  /* 边框样式 */
+  border: 2px solid currentColor;
+  /* 边框顶部颜色透明，形成扇形效果 */
+  border-top-color: transparent;
+  /* 圆角，形成圆形 */
+  border-radius: 50%;
+  /* 变换：居中 */
+  transform: translate(-50%, -50%);
+  /* 动画：旋转 */
+  animation: spin 0.8s linear infinite;
+  /* 透明度 */
+  opacity: 0.7;
+}
+
+/**
+ * @description     旋转动画
+ *                   用于加载指示器
+ */
+@keyframes spin {
+  /* 从 0 度旋转到 360 度 */
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ============================================
+   按钮类型样式
+   ============================================ */
+
+/**
+ * @description     主要按钮样式
+ *                   用于主要操作，如投掷、生成等
+ *                   使用主题色
+ */
+.actionButtonPrimary {
+  /* ===== 颜色变量覆盖 ===== */
+  /* 文本颜色：白色 */
+  --btn-text-color: var(--text-white, #FFFFFF);
+  /* 背景颜色：确认按钮主题色 */
+  --btn-bg-color: var(--btn-confirm-bg, #10D981);
+  /* 边框颜色：无边框 */
+  --btn-border-color: transparent;
+  /* 悬停背景颜色：主题色加深 */
+  --btn-hover-bg: var(--btn-confirm-hover, #059669);
+  /* 悬停边框颜色：无边框 */
+  --btn-hover-border: transparent;
+  /* 激活背景颜色：确认按钮主题色更深 */
+  --btn-active-bg: var(--btn-confirm-active, #047857);
+  /* 激活边框颜色：无边框 */
+  --btn-active-border: transparent;
+  
+  /* ===== 边框样式 ===== */
+  /* 移除边框 */
+  border: none;
+}
+
+/**
+ * @description     次要按钮样式
+ *                   用于次要操作，如重置、重新投掷等
+ *                   使用浅灰色
+ */
+.actionButtonSecondary {
+  /* ===== 颜色变量覆盖 ===== */
+  /* 文本颜色：主文本色 */
+  --btn-text-color: var(--text-primary, #333333);
+  /* 背景颜色：白色 */
+  --btn-bg-color: var(--bg-white, #FFFFFF);
+  /* 边框颜色：边框色 */
+  --btn-border-color: var(--border-color, #E5E7EB);
+  /* 悬停背景颜色：浅灰色 */
+  --btn-hover-bg: var(--bg-gray-100, #F3F4F6);
+  /* 悬停边框颜色：深边框色 */
+  --btn-hover-border: var(--border-color-dark, #D1D5DB);
+  /* 激活背景颜色：中灰色 */
+  --btn-active-bg: var(--bg-gray-200, #E5E7EB);
+  /* 激活边框颜色：深边框色 */
+  --btn-active-border: var(--border-color-dark, #D1D5DB);
+}
+
+/**
+ * @description     危险按钮样式
+ *                   用于危险操作，如清空数据等
+ *                   使用红色
+ */
+.actionButtonDanger {
+  /* ===== 颜色变量覆盖 ===== */
+  /* 文本颜色：白色 */
+  --btn-text-color: var(--text-white, #FFFFFF);
+  /* 背景颜色：危险色 */
+  --btn-bg-color: var(--color-danger, #FF4D4F);
+  /* 边框颜色：危险色 */
+  --btn-border-color: var(--color-danger, #FF4D4F);
+  /* 悬停背景颜色：危险色加深 */
+  --btn-hover-bg: var(--color-danger-dark, #CF1322);
+  /* 悬停边框颜色：危险色加深 */
+  --btn-hover-border: var(--color-danger-dark, #CF1322);
+  /* 激活背景颜色：危险色更深 */
+  --btn-active-bg: var(--color-danger-darker, #A8071A);
+  /* 激活边框颜色：危险色更深 */
+  --btn-active-border: var(--color-danger-darker, #A8071A);
+}
+
+/* ============================================
+   按钮大小样式
+   ============================================ */
+
+/**
+ * @description     小按钮样式
+ *                   用于空间有限的场景
+ */
+.actionButtonSmall {
+  /* ===== 布局变量覆盖 ===== */
+  /* 内边距 */
+  --btn-padding-y: 8px;
+  --btn-padding-x: 16px;
+  /* 最小高度 */
+  --btn-min-height: 32px;
+  /* 字体大小 */
+  --btn-font-size: 14px;
+}
+
+/**
+ * @description     中等按钮样式（默认）
+ *                   用于大多数场景
+ */
+.actionButtonMedium {
+  /* 中等大小使用基础样式，无需额外覆盖 */
+}
+
+/**
+ * @description     大按钮样式
+ *                   用于需要突出显示的操作
+ */
+.actionButtonLarge {
+  /* ===== 布局变量覆盖 ===== */
+  /* 增大内边距 */
+  --btn-padding-y: 12px;
+  --btn-padding-x: 24px;
+  /* 增大最小高度 */
+  --btn-min-height: 48px;
+  /* 增大字体大小 */
+  --btn-font-size: 18px;
+}
+
+/* ============================================
+   按钮状态样式
+   ============================================ */
+
+/**
+ * @description     禁用状态样式
+ *                   当按钮被禁用时应用
+ *                   使用浅灰色，提示不可点击
+ */
+.actionButtonDisabled {
+  /* ===== 颜色变量覆盖 ===== */
+  /* 文本颜色：次要文本色 */
+  --btn-text-color: var(--text-secondary, #6B7280);
+  /* 背景颜色：浅灰色 */
+  --btn-bg-color: var(--bg-gray-100, #F3F4F6);
+  /* 边框颜色：浅边框色 */
+  --btn-border-color: var(--border-color-light, #E5E7EB);
+  
+  /* ===== 光标样式 ===== */
+  /* 禁用光标，提示不可点击 */
+  cursor: not-allowed;
+  
+  /* ===== 其他 ===== */
+  /* 降低透明度 */
+  opacity: 0.7;
+}
+
+/**
+ * @description     加载状态样式
+ *                   当按钮处于加载状态时应用
+ *                   与禁用状态类似，但保持原有的颜色
+ */
+.actionButtonLoading {
+  /* ===== 光标样式 ===== */
+  /* 禁用光标，提示不可点击 */
+  cursor: not-allowed;
+  
+  /* ===== 其他 ===== */
+  /* 降低透明度 */
+  opacity: 0.8;
+}
+
+/**
+ * @description     触摸反馈（移动端）
+ *                   使用 :active 伪类响应触摸事件
+ *                   替代桌面端的悬停效果
+ */
+.actionButton:active:not(.actionButtonDisabled) {
+  /* 增强缩放效果 */
+  transform: scale(0.96);
+}
+
+/**
+ * @description     焦点状态样式（移动端）
+ *                   增强焦点指示，便于触摸设备识别
+ */
+.actionButton:focus:not(.actionButtonDisabled) {
+  /* 移动端使用更大的阴影 */
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.15);
+  /* 移除默认 outline */
+  outline: none;
+}
+
+/* ============================================
+   无障碍访问支持
+   ============================================ */
+
+/**
+ * @description     高对比度模式支持
+ *                   为视力障碍用户提供更好的对比度
+ */
+@media (prefers-contrast: high) {
+  .actionButton {
+    /* 高对比度模式下使用更深的边框颜色 */
+    --btn-border-width: 2px;
+    --btn-border-color: var(--text-primary, #333333);
+  }
+  
+  .actionButtonDisabled {
+    /* 高对比度模式下禁用状态使用虚线边框 */
+    border-style: dashed;
+  }
+}
+
+/**
+ * @description     减少动画偏好支持
+ *                   为不喜欢动画的用户禁用过渡效果
+ */
+@media (prefers-reduced-motion: reduce) {
+  .actionButton {
+    /* 禁用所有过渡动画 */
+    transition: none;
+  }
+  
+  .actionButton:active:not(.actionButtonDisabled) {
+    /* 禁用缩放动画 */
+    transform: none;
+  }
+  
+  .loadingSpinner {
+    /* 禁用加载动画 */
+    animation: none;
+    /* 使用静态样式 */
+    border-top-color: currentColor;
+    border-right-color: transparent;
+    border-bottom-color: currentColor;
+    border-left-color: transparent;
+  }
+}

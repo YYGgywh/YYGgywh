@@ -1,0 +1,50 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/YaoComponents/YaoDisplay/YaoDisplay.desktop.module.css
+ * @description     爻位显示组件样式 - 桌面端
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-08 20:15:00
+ * @lastModified    2026-03-08 21:06:29
+ * Copyright © All rights reserved
+*/
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  min-height: var(--item-min-height);
+}
+
+.label {
+  font-size: var(--font-size-base);
+  font-weight: 1000;
+  color: var(--text-primary);
+}
+
+.labelActive {
+  color: var(--text-global);
+  font-weight: 700;
+  text-shadow: 0 0 2px #c000004d;
+}
+
+.labelDisabled {
+  color: var(--text-disabled);
+  font-weight: 400;
+}
+
+.component {
+  display: flex;
+  align-items: center;
+  min-width: 60px;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: var(--spacing-md);
+}

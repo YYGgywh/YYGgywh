@@ -1,0 +1,131 @@
+/*
+ * @file            frontend/src/components/LiuYao/components/NavigationSidebar.mobile.module.css
+ * @description     侧边导航组件移动端样式 - CSS Modules
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-08 16:00:00
+ * @lastModified    2026-03-08 16:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ===== 侧边导航容器（移动端） ===== */
+/* 移动端侧边导航容器 - 水平排列以适应小屏幕 */
+.methodSidebar {
+  /* ===== 布局变量 ===== */
+  /* 移动端导航宽度 - 100% 占满容器 */
+  --nav-sidebar-width: 100%;
+  /* 子元素间距 - 引用全局小间距 */
+  --nav-sidebar-gap: var(--spacing-sm, 8px);
+  
+  /* ===== 尺寸变量 ===== */
+  width: var(--nav-sidebar-width);
+  
+  /* ===== Flexbox 布局 ===== */
+  display: flex;
+  /* 移动端改为水平排列 */
+  flex-direction: row;
+  /* 允许换行以适应不同屏幕 */
+  flex-wrap: wrap;
+  /* 子元素间距 */
+  gap: var(--nav-sidebar-gap);
+  /* 水平居中 */
+  justify-content: center;
+}
+
+/* ===== 导航项样式（移动端） ===== */
+/* 单个起卦方法选项的移动端样式 */
+.methodItem {
+  /* ===== 布局变量 ===== */
+  /* 移动端内边距 - 减小以适应小屏幕 */
+  --nav-item-padding-y: var(--spacing-sm, 8px);
+  --nav-item-padding-x: var(--spacing-md, 12px);
+  /* 边框圆角 - 引用全局中等圆角 */
+  --nav-item-border-radius: var(--border-radius-md, 8px);
+  /* 移动端固定宽度 - 适应两列布局 */
+  --nav-item-width: calc(50% - var(--spacing-xs, 4px));
+  
+  /* ===== 颜色变量 ===== */
+  /* 默认背景色 - 引用全局白色 */
+  --nav-item-bg: var(--bg-white, #ffffff);
+  /* 默认边框色 - 引用全局边框色 */
+  --nav-item-border-color: var(--border-color, #e5e7eb);
+  /* 默认文字颜色 - 引用全局主文字色 */
+  --nav-item-text-color: var(--text-primary, #333333);
+  
+  /* ===== 字体变量 ===== */
+  /* 移动端字体大小 - 引用全局小字体 */
+  --nav-item-font-size: var(--font-size-sm, 14px);
+  /* 字体粗细 - 中等粗细 */
+  --nav-item-font-weight: 500;
+  
+  /* ===== 动画变量 ===== */
+  /* 过渡动画时长 - 使用自定义值 */
+  --nav-item-transition: all 0.2s ease;
+  
+  /* ===== 尺寸与间距 ===== */
+  width: var(--nav-item-width);
+  padding: var(--nav-item-padding-y) var(--nav-item-padding-x);
+  
+  /* ===== 背景与边框 ===== */
+  background-color: var(--nav-item-bg);
+  border: 1px solid var(--nav-item-border-color);
+  border-radius: var(--nav-item-border-radius);
+  
+  /* ===== 文字排版 ===== */
+  text-align: center;
+  font-size: var(--nav-item-font-size);
+  font-weight: var(--nav-item-font-weight);
+  color: var(--nav-item-text-color);
+  
+  /* ===== 交互样式 ===== */
+  cursor: pointer;
+  transition: var(--nav-item-transition);
+  
+  /* ===== 防止文字溢出 ===== */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== 导航项悬停状态（移动端） ===== */
+/* 移动端触摸反馈样式 */
+.methodItem:hover {
+  /* 悬停背景色 - 引用全局浅灰背景 */
+  --nav-item-hover-bg: var(--bg-gray-light, #f3f4f6);
+  /* 悬停边框色 - 深灰色 */
+  --nav-item-hover-border-color: #d1d5db;
+  
+  background-color: var(--nav-item-hover-bg);
+  border-color: var(--nav-item-hover-border-color);
+}
+
+/* ===== 导航项选中状态（移动端） ===== */
+/* 当前选中的起卦方法移动端样式 */
+.methodItem.active {
+  /* 选中状态背景色 - 引用全局主题色 */
+  --nav-item-active-bg: var(--primary-color, #1890ff);
+  /* 选中状态文字颜色 - 白色 */
+  --nav-item-active-text-color: #ffffff;
+  /* 选中状态边框色 - 与背景色一致 */
+  --nav-item-active-border-color: var(--primary-color, #1890ff);
+  
+  /* 阴影变量 - 主题色阴影效果，移动端稍小 */
+  --nav-item-active-shadow: 0 1px 4px rgba(24, 144, 255, 0.3);
+  
+  background-color: var(--nav-item-active-bg);
+  color: var(--nav-item-active-text-color);
+  border-color: var(--nav-item-active-border-color);
+  box-shadow: var(--nav-item-active-shadow);
+}
+
+/* ===== 小屏幕适配（小于 375px） ===== */
+@media screen and (max-width: 375px) {
+  .methodItem {
+    /* 超小屏幕改为全宽 */
+    --nav-item-width: 100%;
+    /* 进一步减小内边距 */
+    --nav-item-padding-y: var(--spacing-xs, 6px);
+    --nav-item-padding-x: var(--spacing-sm, 10px);
+    /* 减小字体 */
+    --nav-item-font-size: var(--font-size-xs, 12px);
+  }
+}

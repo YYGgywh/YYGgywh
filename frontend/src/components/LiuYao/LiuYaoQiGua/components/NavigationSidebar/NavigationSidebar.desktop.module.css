@@ -1,0 +1,107 @@
+/*
+ * @file            frontend/src/components/LiuYao/components/NavigationSidebar.desktop.module.css
+ * @description     侧边导航组件桌面端样式 - CSS Modules（优化版）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-08 16:00:00
+ * @lastModified    2026-03-08 13:03:36
+ * Copyright © All rights reserved
+*/
+
+/* ===== 侧边导航容器 ===== */
+/* 侧边导航容器样式 - 用于显示和选择起卦方式 */
+.methodSidebar {
+  /* ===== 布局变量 ===== */
+  /* 侧边导航宽度 - 使用自定义固定值 */
+  --nav-sidebar-width: 100px;
+  /* 子元素间距 - 引用全局极小间距 */
+  --nav-sidebar-gap: var(--spacing-xs, 4px);
+  
+  /* ===== 尺寸变量 ===== */
+  width: var(--nav-sidebar-width);
+  
+  /* ===== Flexbox 布局 ===== */
+  display: flex;
+  /* 垂直方向排列 */
+  flex-direction: column;
+  /* 子元素间距 */
+  gap: var(--nav-sidebar-gap);
+}
+
+/* ===== 导航项样式 ===== */
+/* 单个起卦方法选项的样式 */
+.methodItem {
+  /* ===== 布局变量 ===== */
+  /* 内边距 - 引用全局中等间距 */
+  --nav-item-padding-y: var(--spacing-lg, 12px);
+  --nav-item-padding-x: var(--spacing-xl, 16px);
+  /* 边框圆角 - 引用全局中等圆角 */
+  --nav-item-border-radius: var(--radius-lg, 8px);
+  
+  /* ===== 颜色变量 ===== */
+  /* 默认背景色 - 引用全局白色 */
+  --nav-item-bg: var(--bg-white, #ffffff);
+  /* 默认边框色 - 引用全局边框色 */
+  --nav-item-border-color: var(--border-color, #e5e7eb);
+  /* 默认文字颜色 - 引用全局主文字色 */
+  --nav-item-text-color: var(--text-primary, #333333);
+  
+  /* ===== 字体变量 ===== */
+  /* 字体大小 - 引用全局小字体 */
+  --nav-item-font-size: var(--font-size-base, 14px);
+  /* 字体粗细 - 中等粗细 */
+  --nav-item-font-weight: 500;
+  
+  /* ===== 动画变量（优化）===== */
+  /* 过渡动画时长 - 引用全局快速过渡变量，保持动画一致性 */
+  --nav-item-transition: var(--transition-fast, all 0.2s ease);
+  
+  /* ===== 尺寸与间距 ===== */
+  padding: var(--nav-item-padding-y) var(--nav-item-padding-x);
+  
+  /* ===== 背景与边框 ===== */
+  background-color: var(--nav-item-bg);
+  border: 1px solid var(--nav-item-border-color);
+  border-radius: var(--nav-item-border-radius);
+  
+  /* ===== 文字排版 ===== */
+  text-align: center;
+  font-size: var(--nav-item-font-size);
+  font-weight: var(--nav-item-font-weight);
+  color: var(--nav-item-text-color);
+  
+  /* ===== 交互样式 ===== */
+  cursor: pointer;
+  transition: var(--nav-item-transition);
+}
+
+/* ===== 导航项悬停状态 ===== */
+/* 鼠标悬停时的样式变化 */
+.methodItem:hover {
+  /* 悬停背景色 - 引用全局浅灰背景 */
+  --nav-item-hover-bg: var(--bg-gray-light, #f3f4f6);
+  /* 悬停边框色（优化）- 引用全局悬停边框色，替代硬编码值 */
+  --nav-item-hover-border-color: var(--border-hover, #d1d5db);
+  
+  background-color: var(--nav-item-hover-bg);
+  border-color: var(--nav-item-hover-border-color);
+}
+
+/* ===== 导航项选中状态 ===== */
+/* 当前选中的起卦方法样式 */
+.methodItem.active {
+  /* 选中状态背景色 - 引用全局主题色 */
+  --nav-item-active-bg: var(--primary-color, #1890ff);
+  /* 选中状态文字颜色（优化）- 引用全局白色变量，替代硬编码值 */
+  --nav-item-active-text-color: var(--bg-white, #ffffff);
+  /* 选中状态边框色 - 与背景色一致 */
+  --nav-item-active-border-color: var(--primary-color, #1890ff);
+  
+  /* 阴影变量（优化）- 使用 CSS color-mix 函数结合全局主题色，实现动态阴影效果 */
+  /* color-mix 函数将主题色与透明色混合，透明度 30%，确保阴影颜色随主题变化 */
+  --nav-item-active-shadow: 0 2px 8px color-mix(in srgb, var(--primary-color, #1890ff) 30%, transparent);
+  
+  background-color: var(--nav-item-active-bg);
+  color: var(--nav-item-active-text-color);
+  border-color: var(--nav-item-active-border-color);
+  box-shadow: var(--nav-item-active-shadow);
+}

@@ -1,0 +1,25 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/YaoComponents/YaoDisplay/YaoDisplay.mobile.module.css
+ * @description     爻位显示组件样式 - 移动端
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-08 20:15:00
+ * @lastModified    2026-03-08 21:12:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  gap: var(--spacing-md);
+}
+
+.item {
+  gap: var(--spacing-md);
+  min-height: var(--item-min-height);
+}
+
+.label {
+  font-size: var(--font-size-sm);
+}
+
+.buttonsContainer {
+  gap: var(--spacing-sm);
+}

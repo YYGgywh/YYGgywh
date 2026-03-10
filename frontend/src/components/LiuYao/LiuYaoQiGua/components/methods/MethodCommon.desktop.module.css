@@ -1,0 +1,189 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/methods/MethodCommon.desktop.module.css
+ * @description     起卦方法通用样式文件，适用于所有起卦方法组件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 12:20:00
+ * @lastModified    2026-03-09 12:20:00
+ * Copyright © All rights reserved
+*/
+
+/* ===== 方法组件根容器 ===== */
+/* 方法组件根容器样式 - 定义起卦方法的整体布局结构 */
+.methodContainer {
+  /* ===== 布局变量定义 ===== */
+  /* 定义组件内部元素间距 */
+  --method-gap: var(--spacing-xl, 16px);
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，垂直方向排列子元素 */
+  display: flex;
+  /* 设置主轴方向为垂直方向 */
+  flex-direction: column;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--method-gap);
+}
+
+/* ===== 内容行容器 ===== */
+/* 内容行容器样式 - 将信息区域和爻位展示区域水平排列 */
+.contentRow {
+  /* ===== 布局变量定义 ===== */
+  /* 定义内容行内部元素间距 */
+  --content-row-gap: var(--spacing-lg, 12px);
+  /* 定义子元素占比变量 */
+  --info-flex: 3;
+  --display-flex: 2;
+  --child-min-width: 0;
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，水平方向排列子元素 */
+  display: flex;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--content-row-gap);
+}
+
+/* ===== 信息区域容器 ===== */
+/* 信息区域容器样式 - 包含标题、描述、步骤列表和操作按钮 */
+.liuYaoInfo {
+  /* ===== 布局属性 ===== */
+  /* 设置弹性比例 */
+  flex: var(--info-flex);
+  /* 设置最小宽度为0 */
+  min-width: var(--child-min-width);
+  /* 移除阴影效果 */
+  box-shadow: none;
+  
+  /* ===== Flex 容器设置 ===== */
+  /* 设置为Flex容器，垂直方向排列子元素 */
+  display: flex;
+  flex-direction: column;
+  /* 确保父元素占据足够高度 */
+  min-height: 100%;
+}
+
+/* ===== 内容容器 ===== */
+/* 内容容器样式 - 包裹标题、描述和步骤列表 */
+.contentContainer {
+  /* 允许内容容器伸展，占据剩余空间 */
+  flex: 1;
+  /* 保持内部元素的正常布局 */
+  display: flex;
+  flex-direction: column;
+  /* 设置内部元素间距 */
+  gap: var(--spacing-md, 12px);
+}
+
+/* ===== 爻位展示区域 ===== */
+/* 爻位展示区域占比设置 */
+.yaoDisplay {
+  /* ===== 布局属性 ===== */
+  /* 设置弹性比例 */
+  flex: var(--display-flex);
+  /* 设置最小宽度为0 */
+  min-width: var(--child-min-width);
+}
+
+/* ===== 信息区域标题 ===== */
+/* 信息区域标题样式 */
+.liuYaoInfo h3 {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义标题下边距 */
+  --h3-margin-bottom: var(--spacing-md, 12px);
+  /* 定义标题字体大小 */
+  --h3-font-size: var(--font-size-lg, 16px);
+  /* 定义标题字体粗细 */
+  --h3-font-weight: 600;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义标题文本颜色 */
+  --h3-color: var(--text-primary, #333333);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距 */
+  margin: 0 0 var(--h3-margin-bottom) 0;
+  /* 设置字体大小 */
+  font-size: var(--h3-font-size);
+  /* 设置字体粗细 */
+  font-weight: var(--h3-font-weight);
+  /* 设置文本颜色 */
+  color: var(--h3-color);
+}
+
+/* ===== 信息区域描述文本 ===== */
+/* 信息区域描述文本样式 */
+.liuYaoInfo p {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义段落下边距 */
+  --p-margin-bottom: var(--spacing-md, 16px);
+  /* 定义段落字体大小 */
+  --p-font-size: var(--font-size-base, 14px);
+  /* 定义段落行高 */
+  --p-line-height: 1.5;
+  /* 定义段落首行缩进 */
+  --p-text-indent: 2em;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义段落文本颜色 */
+  --p-color: var(--text-secondary, #666666);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距 */
+  margin: 0 0 var(--p-margin-bottom) 0;
+  /* 设置字体大小 */
+  font-size: var(--p-font-size);
+  /* 设置行高 */
+  line-height: var(--p-line-height);
+  /* 设置文本颜色 */
+  color: var(--p-color);
+  /* 设置首行缩进 */
+  text-indent: var(--p-text-indent);
+}
+
+/* ===== 信息区域有序列表 ===== */
+/* 信息区域有序列表样式 */
+.liuYaoInfo ol {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义列表字体大小 */
+  --ol-font-size: var(--font-size-base, 14px);
+  /* 定义列表行高 */
+  --ol-line-height: 1.6;
+  
+  /* ===== 颜色变量定义 ===== */
+  /* 定义列表文本颜色 */
+  --ol-color: var(--text-secondary, #666666);
+  
+  /* ===== 样式属性 ===== */
+  /* 设置外边距为0 */
+  margin: 0;
+  /* 设置字体大小 */
+  font-size: var(--ol-font-size);
+  /* 设置行高 */
+  line-height: var(--ol-line-height);
+  /* 设置文本颜色 */
+  color: var(--ol-color);
+  /* 设置文本居中 */
+  text-align: center;
+}
+
+/* ===== 信息区域列表项 ===== */
+/* 信息区域列表项样式 */
+.liuYaoInfo li {
+  /* ===== 尺寸变量定义 ===== */
+  /* 定义列表项下边距 */
+  --li-margin-bottom: 4px;
+  
+  /* ===== 样式属性 ===== */
+  /* 设置下外边距 */
+  margin-bottom: var(--li-margin-bottom);
+}
+
+/* ===== 操作按钮区域容器 ===== */
+/* 操作按钮区域容器样式 */
+.divinationActions {
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，水平方向排列按钮 */
+  display: flex;
+  /* 按钮均匀分布 */
+  justify-content: space-evenly;
+  /* 设置下外边距 */
+  margin-bottom: var(--spacing-lg, 12px);
+}

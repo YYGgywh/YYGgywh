@@ -1,0 +1,163 @@
+/*
+ * @file            frontend/src/components/Header/Navigation/Navigation.desktop.module.css
+ * @description     导航栏组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 17:00:00
+ * @lastModified    2026-03-07 20:10:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 支持主题切换
+   基于全局变量，提供组件特有的默认值
+   ============================================ */
+.navigation {
+  /* ===== 颜色变量 - 引用全局变量 ===== */
+  /* 导航栏背景色 - 引用全局白色背景 */
+  --nav-bg-color: var(--bg-white, #ffffff);
+  /* 导航栏滚动后背景色 - 半透明白色 */
+  --nav-bg-scrolled-color: rgba(255, 255, 255, 0.95);
+  /* 导航栏边框颜色 - 引用全局边框色 */
+  --nav-border-color: var(--border-color, #e5e7eb);
+  /* 导航栏阴影颜色 */
+  --nav-shadow-color: rgba(0, 0, 0, 0.05);
+  /* 导航链接文本颜色 - 引用全局主要文本色 */
+  --nav-link-color: var(--text-primary, #333333);
+  /* 导航链接悬停颜色 - 引用全局主色 */
+  --nav-link-hover-color: var(--primary-color, #1890ff);
+  
+  /* ===== 尺寸变量 - 引用全局间距系统 ===== */
+  /* 导航栏高度 */
+  --nav-height: 72px;
+  /* 导航栏边框宽度 */
+  --nav-border-width: 1px;
+  /* 容器最大宽度 */
+  --nav-container-max-width: 1440px;
+  /* 容器最小宽度 - 桌面端最小宽度 */
+  --nav-container-min-width: 1280px;
+  /* 容器水平内边距 - 使用全局特大间距 */
+  --nav-container-padding-x: var(--spacing-3xl, 24px);
+  /* 左侧区域间距 - 使用全局超大间距 */
+  --nav-left-gap: var(--spacing-3xl, 40px);
+  /* 菜单项间距 - 使用全局超大间距 */
+  --nav-menu-gap: var(--spacing-3xl, 32px);
+  /* 右侧区域间距 - 使用全局特大间距 */
+  --nav-right-gap: var(--spacing-3xl, 24px);
+  /* 工具区域间距 - 使用全局特大间距 */
+  --nav-utils-gap: var(--spacing-3xl, 24px);
+  /* 操作按钮区域间距 - 使用全局大间距 */
+  --nav-actions-gap: var(--spacing-lg, 12px);
+  /* 链接字体大小 - 引用全局基础字体 */
+  --nav-link-font-size: var(--font-size-base, 0.875rem);
+  /* 链接字体粗细 */
+  --nav-link-font-weight: 500;
+  
+  /* ===== 动画变量 - 引用全局动画系统 ===== */
+  /* 背景色过渡时长 - 引用全局正常过渡 */
+  --nav-bg-transition-duration: var(--transition-normal, 0.25s);
+  /* 阴影过渡时长 */
+  --nav-shadow-transition-duration: var(--transition-normal, 0.25s);
+  /* 链接颜色过渡时长 - 引用全局快速过渡 */
+  --nav-link-transition-duration: var(--transition-fast, 0.2s);
+  /* 过渡效果类型 */
+  --nav-transition-timing: ease;
+  /* 滚动后模糊效果 */
+  --nav-scrolled-blur: 10px;
+  
+  /* ===== 布局变量 ===== */
+  /* 导航栏层级 - 引用全局模态框层级 */
+  --nav-z-index: var(--z-modal, 1000);
+  
+  /* ===== 基础样式 ===== */
+  position: relative;
+  height: var(--nav-height);
+  background-color: var(--nav-bg-color);
+  border-bottom: var(--nav-border-width) solid var(--nav-border-color);
+  z-index: var(--nav-z-index);
+  transition: background-color var(--nav-bg-transition-duration) var(--nav-transition-timing),
+              box-shadow var(--nav-shadow-transition-duration) var(--nav-transition-timing);
+}
+
+/* ============================================
+   导航栏滚动后样式
+   ============================================ */
+.navigation.scrolled {
+  background-color: var(--nav-bg-scrolled-color);
+  backdrop-filter: blur(var(--nav-scrolled-blur));
+  box-shadow: 0 2px 8px var(--nav-shadow-color);
+}
+
+/* ============================================
+   导航栏容器样式
+   ============================================ */
+.navigationContainer {
+  min-width: var(--nav-container-min-width);
+  max-width: var(--nav-container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--nav-container-padding-x);
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* ============================================
+   左侧导航区域样式
+   ============================================ */
+.navigationLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-left-gap);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* ============================================
+   导航菜单样式
+   ============================================ */
+.navigationMenu {
+  display: flex;
+  gap: var(--nav-menu-gap);
+  flex-wrap: nowrap;
+}
+
+/* ============================================
+   右侧导航区域样式
+   ============================================ */
+.navigationRight {
+  display: flex;
+  align-items: center;
+  gap: var(--nav-right-gap);
+  flex-wrap: nowrap;
+}
+
+/* ============================================
+   导航工具区域样式
+   ============================================ */
+.navigationUtils {
+  display: flex;
+  gap: var(--nav-utils-gap);
+}
+
+/* ============================================
+   导航链接样式
+   ============================================ */
+.navigationLink {
+  color: var(--nav-link-color);
+  font-size: var(--nav-link-font-size);
+  font-weight: var(--nav-link-font-weight);
+  transition: color var(--nav-link-transition-duration) var(--nav-transition-timing);
+}
+
+.navigationLink:hover {
+  color: var(--nav-link-hover-color);
+}
+
+/* ============================================
+   导航操作区域样式
+   ============================================ */
+.navigationActions {
+  display: flex;
+  gap: var(--nav-actions-gap);
+}

@@ -1,0 +1,24 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/MethodContent/MethodContent.mobile.module.css
+ * @description     方法内容组件移动端样式，作为起卦方法内容的容器
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 13:00:00
+ * @lastModified    2026-03-09 13:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ===== 方法内容容器 ===== */
+/* 方法内容容器样式 - 作为所有起卦方法组件的容器，提供统一的布局结构（移动端） */
+.methodContent {
+  /* ===== 布局变量定义 ===== */
+  /* 定义容器内部元素间距，移动端使用较小的间距 */
+  --method-content-gap: var(--spacing-lg, 16px);
+  
+  /* ===== 布局属性 ===== */
+  /* 使用Flex布局，垂直方向排列子元素 */
+  display: flex;
+  /* 设置主轴方向为垂直方向 */
+  flex-direction: column;
+  /* 使用CSS变量定义子元素间距 */
+  gap: var(--method-content-gap);
+}

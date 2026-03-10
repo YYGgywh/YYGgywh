@@ -1,0 +1,506 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/TimestampModal/TimestampModal.mobile.module.css
+ * @description     时间戳设置弹窗组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-09 21:00:00
+ * @lastModified    2026-03-09 21:00:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 模态框遮罩层
+ * 定义弹窗的背景遮罩样式
+ */
+.modalOverlay {
+  /* 布局属性 */
+  position: fixed; /* 固定定位，覆盖整个视口 */
+  top: 0; /* 顶部对齐 */
+  left: 0; /* 左侧对齐 */
+  right: 0; /* 右侧对齐 */
+  bottom: 0; /* 底部对齐 */
+  z-index: var(--z-modal); /* 模态框层级 */
+  
+  /* 视觉属性 */
+  background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色背景，移动端稍深 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+  
+  /* 交互属性 */
+  animation: fadeIn var(--transition-fast) ease; /* 淡入动画 */
+}
+
+/**
+ * 模态框内容容器
+ * 定义弹窗内容的容器样式
+ */
+.modalContent {
+  /* 布局属性 */
+  position: relative; /* 相对定位 */
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 垂直排列 */
+  
+  /* 盒模型属性 */
+  width: 95%; /* 宽度95%，移动端更宽 */
+  max-width: 100%; /* 最大宽度100% */
+  max-height: 85vh; /* 最大高度85vh */
+  margin: var(--spacing-md); /* 外边距为中间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border-radius: var(--radius-lg); /* 大圆角 */
+  box-shadow: var(--shadow-xl); /* 超大阴影效果 */
+  overflow: hidden; /* 隐藏溢出内容 */
+  
+  /* 交互属性 */
+  animation: slideIn var(--transition-normal) ease; /* 滑入动画 */
+}
+
+/**
+ * 时间戳弹窗特定样式
+ * 定义时间戳弹窗的特定样式
+ */
+.timestampModal {
+  /* 布局属性 */
+  min-height: 300px; /* 最小高度300px */
+}
+
+/**
+ * 模态框头部区域
+ * 定义弹窗头部的样式
+ */
+.modalHeader {
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景 */
+  border-bottom: 1px solid var(--border-color); /* 底部边框 */
+}
+
+/**
+ * 选项卡容器
+ * 定义选项卡按钮的容器样式
+ */
+.timestampTabs {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  gap: var(--spacing-sm); /* 按钮之间的间距 */
+  justify-content: center; /* 居中对齐 */
+}
+
+/**
+ * 选项卡按钮
+ * 定义选项卡按钮的样式
+ */
+.tabButton {
+  /* 盒模型属性 */
+  padding: var(--spacing-sm) var(--spacing-md); /* 上下内边距为小间距，左右内边距为中间距 */
+  flex: 1; /* 弹性布局，占据相等空间 */
+  
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-secondary); /* 次要文本颜色 */
+  background-color: transparent; /* 透明背景 */
+  border: 1px solid var(--border-color); /* 1px边框 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  
+  /* 交互属性 */
+  transition: all var(--transition-fast); /* 所有属性过渡效果 */
+  -webkit-tap-highlight-color: transparent; /* 移除iOS触摸高亮效果 */
+}
+
+/**
+ * 选项卡按钮悬停状态
+ * 当鼠标悬停在选项卡按钮上时的样式
+ */
+.tabButton:hover {
+  color: var(--primary-color); /* 文本颜色变为主题色 */
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+}
+
+/**
+ * 选项卡按钮激活状态
+ * 当前选中的选项卡按钮样式
+ */
+.tabButton.active {
+  color: var(--text-white); /* 文本颜色变为白色 */
+  background-color: var(--primary-color); /* 背景色变为主题色 */
+  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+}
+
+/**
+ * 模态框主体区域
+ * 定义弹窗主体的样式
+ */
+.modalBody {
+  /* 布局属性 */
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 垂直滚动 */
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距 */
+}
+
+/**
+ * 时间戳弹窗主体区域
+ * 定义时间戳弹窗主体的特定样式
+ */
+.timestampModalBody {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 垂直排列 */
+  gap: var(--spacing-md); /* 元素之间的间距 */
+}
+
+/**
+ * 四柱结果列表容器
+ * 定义四柱计算结果的容器样式
+ */
+.solarListResult {
+  /* 布局属性 */
+  margin-top: var(--spacing-md); /* 上边距为中间距 */
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  border: 1px solid var(--border-color); /* 1px边框 */
+}
+
+/**
+ * 结果列表容器
+ * 定义结果列表的容器样式
+ */
+.resultList {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  flex-direction: column; /* 垂直排列 */
+  gap: var(--spacing-xs); /* 元素之间的间距为极小间距 */
+  
+  /* 盒模型属性 */
+  max-height: 250px; /* 最大高度250px，移动端稍大 */
+  overflow-y: auto; /* 垂直滚动 */
+}
+
+/**
+ * 结果项
+ * 定义单个结果项的样式
+ */
+.resultItem {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--spacing-sm); /* 元素之间的间距为小间距 */
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距，移动端更大以便触摸 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border-radius: var(--radius-sm); /* 小圆角 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  
+  /* 交互属性 */
+  transition: all var(--transition-fast); /* 所有属性过渡效果 */
+}
+
+/**
+ * 结果项悬停状态
+ * 当鼠标悬停在结果项上时的样式
+ */
+.resultItem:hover {
+  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+}
+
+/**
+ * 结果项选中状态
+ * 被选中的结果项样式
+ */
+.resultItem.selected {
+  background-color: var(--primary-color); /* 背景色变为主题色 */
+  color: var(--text-white); /* 文本颜色变为白色 */
+}
+
+/**
+ * 结果项索引
+ * 定义结果项索引的样式
+ */
+.resultIndex {
+  /* 视觉属性 */
+  font-size: var(--font-size-sm); /* 小字体大小 */
+  color: var(--text-secondary); /* 次要文本颜色 */
+  font-weight: 500; /* 字体加粗 */
+  min-width: 40px; /* 最小宽度40px */
+}
+
+/**
+ * 结果项内容
+ * 定义结果项内容的样式
+ */
+.resultContent {
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-primary); /* 主文本颜色 */
+  flex: 1; /* 占据剩余空间 */
+}
+
+/**
+ * 结果项选中状态下的索引和内容
+ * 被选中的结果项中的索引和内容样式
+ */
+.resultItem.selected .resultIndex,
+.resultItem.selected .resultContent {
+  color: var(--text-white); /* 文本颜色变为白色 */
+}
+
+/**
+ * 错误信息容器
+ * 定义错误信息的容器样式
+ */
+.resultError {
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距 */
+  
+  /* 视觉属性 */
+  color: var(--error-color); /* 错误文本颜色 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  text-align: center; /* 文本居中 */
+}
+
+/**
+ * 模态框底部区域
+ * 定义弹窗底部的样式
+ */
+.modalFooter {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  flex-wrap: wrap; /* 允许换行 */
+  justify-content: center; /* 居中对齐 */
+  gap: var(--spacing-sm); /* 按钮之间的间距 */
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-md); /* 内边距为中间距 */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景 */
+  border-top: 1px solid var(--border-color); /* 顶部边框 */
+}
+
+/**
+ * 时间戳弹窗底部区域
+ * 定义时间戳弹窗底部的特定样式
+ */
+.timestampModalFooter {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  justify-content: space-between; /* 两端对齐 */
+  align-items: center; /* 垂直居中对齐 */
+}
+
+/**
+ * 右侧按钮组
+ * 定义右侧按钮组的样式
+ */
+.rightButtonGroup {
+  /* 布局属性 */
+  display: flex; /* 使用flex布局 */
+  gap: var(--spacing-lg); /* 按钮之间的间距为大间距（12px） */
+}
+
+/**
+ * 模态框按钮
+ * 定义弹窗按钮的基础样式
+ */
+.modalButton {
+  /* 盒模型属性 */
+  padding: var(--spacing-sm) var(--spacing-md); /* 上下内边距为小间距，左右内边距为中间距 */
+  flex: 1; /* 弹性布局，占据相等空间 */
+  min-width: 80px; /* 最小宽度80px */
+  
+  /* 视觉属性 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  border-radius: var(--radius-md); /* 中等圆角 */
+  cursor: pointer; /* 鼠标指针变为指针状态 */
+  
+  /* 交互属性 */
+  transition: all var(--transition-fast); /* 所有属性过渡效果 */
+  -webkit-tap-highlight-color: transparent; /* 移除iOS触摸高亮效果 */
+}
+
+/**
+ * 取消按钮
+ * 定义取消按钮的样式
+ */
+.modalButton.cancel {
+  color: var(--text-secondary); /* 次要文本颜色 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border: 1px solid var(--border-color); /* 1px边框 */
+}
+
+/**
+ * 取消按钮悬停状态
+ * 当鼠标悬停在取消按钮上时的样式
+ */
+.modalButton.cancel:hover {
+  background-color: var(--bg-gray-light); /* 背景色变为浅灰色 */
+}
+
+/**
+ * 补全按钮
+ * 定义补全按钮的样式
+ */
+.modalButton.confirm {
+  color: var(--text-white); /* 文本颜色变为白色 */
+  background-color: var(--primary-color); /* 背景色变为主题色 */
+  border: 1px solid var(--primary-color); /* 1px边框，颜色为主题色 */
+}
+
+/**
+ * 补全按钮悬停状态
+ * 当鼠标悬停在补全按钮上时的样式
+ */
+.modalButton.confirm:hover {
+  background-color: var(--primary-hover); /* 背景色变为主题色悬停色 */
+  border-color: var(--primary-hover); /* 边框颜色变为主题色悬停色 */
+}
+
+/**
+ * 提交按钮
+ * 定义提交按钮的样式
+ */
+.modalButton.submit {
+  color: var(--text-white); /* 文本颜色变为白色 */
+  background-color: var(--success-color); /* 背景色变为成功色 */
+  border: 1px solid var(--success-color); /* 1px边框，颜色为成功色 */
+}
+
+/**
+ * 提交按钮悬停状态
+ * 当鼠标悬停在提交按钮上时的样式
+ */
+.modalButton.submit:hover {
+  background-color: var(--success-hover); /* 背景色变为成功色悬停色 */
+  border-color: var(--success-hover); /* 边框颜色变为成功色悬停色 */
+}
+
+/**
+ * 全清按钮
+ * 定义全清按钮的样式
+ */
+.modalButton.initialize {
+  color: var(--text-secondary); /* 次要文本颜色 */
+  background-color: var(--bg-white); /* 白色背景 */
+  border: 1px solid var(--border-color); /* 1px边框 */
+}
+
+/**
+ * 全清按钮非禁用状态
+ * 全清按钮可用时的样式
+ */
+.modalButton.initialize:not(:disabled) {
+  color: var(--warning-color); /* 警告文本颜色 */
+  border-color: var(--warning-color); /* 边框颜色为警告色 */
+}
+
+/**
+ * 全清按钮非禁用状态悬停
+ * 全清按钮可用时的悬停样式
+ */
+.modalButton.initialize:not(:disabled):hover {
+  background-color: var(--warning-color); /* 背景色变为警告色 */
+  color: var(--text-white); /* 文本颜色变为白色 */
+}
+
+/**
+ * 按钮禁用状态
+ * 定义按钮禁用时的样式
+ */
+.modalButton:disabled {
+  opacity: 0.6; /* 透明度60% */
+  cursor: not-allowed; /* 鼠标指针变为禁止状态 */
+}
+
+/**
+ * 触摸反馈优化
+ * 当用户点击按钮时的反馈效果
+ */
+.modalButton:active {
+  transform: scale(0.98); /* 点击时轻微缩小，提供触摸反馈 */
+}
+
+/**
+ * iOS 设备优化
+ * 针对iOS设备的特定样式调整
+ */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .tabButton,
+  .modalButton {
+    -webkit-appearance: none; /* 移除iOS默认按钮样式 */
+    border-radius: 8px; /* 统一圆角大小 */
+  }
+}
+
+/**
+ * 竖屏和横屏适配
+ * 根据设备方向调整弹窗样式
+ */
+/* 竖屏模式 */
+@media screen and (orientation: portrait) {
+  .modalContent {
+    width: 95%; /* 宽度95% */
+    margin: var(--spacing-sm); /* 外边距为小间距 */
+  }
+  
+  .timestampTabs {
+    flex-wrap: wrap; /* 允许换行 */
+  }
+  
+  .tabButton {
+    font-size: 14px; /* 字体大小14px */
+  }
+}
+
+/* 横屏模式 */
+@media screen and (orientation: landscape) {
+  .modalContent {
+    width: 80%; /* 宽度80% */
+    max-height: 80vh; /* 最大高度80vh */
+  }
+  
+  .modalBody {
+    padding: var(--spacing-sm); /* 内边距为小间距 */
+  }
+}
+
+/**
+ * 淡入动画
+ * 定义遮罩层的淡入动画效果
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* 初始透明度为0 */
+  }
+  to {
+    opacity: 1; /* 结束透明度为1 */
+  }
+}
+
+/**
+ * 滑入动画
+ * 定义内容容器的滑入动画效果
+ */
+@keyframes slideIn {
+  from {
+    opacity: 0; /* 初始透明度为0 */
+    transform: translateY(-20px); /* 初始向上偏移20px */
+  }
+  to {
+    opacity: 1; /* 结束透明度为1 */
+    transform: translateY(0); /* 结束无偏移 */
+  }
+}

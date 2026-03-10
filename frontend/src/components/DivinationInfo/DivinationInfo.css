@@ -3,7 +3,7 @@
  * @description     占卜信息组件样式文件，包含表单输入、模态框、时间选择器等UI元素的视觉样式
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 00:00:00
- * @lastModified    2026-02-25 18:56:16
+ * @lastModified    2026-03-09 20:39:49
  * Copyright © All rights reserved
 */
 
@@ -40,19 +40,7 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);  /* 快速过渡效果 - 标准属性 */
 }
 
-/* 输入框占位符样式 - 统一设置所有输入框的占位符样式 */
-.first-name-input::placeholder,
-.last-name-input::placeholder,
-.birth-year-input::placeholder,
-.location-input::placeholder,
-.question-textarea::placeholder,
-.sub-type-input::placeholder,
-.timestamp::placeholder,
-.time-input::placeholder {
-  color: var(--text-placeholder);    /* 使用变量定义的占位符颜色 */
-  font-size: var(--font-size-sm);  /* 使用与输入框相同的字体大小 */
-  opacity: 0.8;                      /* 调整透明度，使占位符与实际文本有区别 */
-}
+
 
 /* 基础输入框焦点状态 - 为所有基础输入框提供焦点效果 */
 .first-name-input:focus,
@@ -365,11 +353,12 @@
   width: 20px;                   /* 图标宽度 */
   height: 20px;                  /* 图标高度 */
   display: block;                /* 块级元素 */
+  filter: invert(48%) sepia(100%) saturate(3000%) hue-rotate(190deg) brightness(100%) contrast(100%); /* 转换为系统主蓝色 */
 }
 
 /* 时间戳刷新按钮悬停状态 */
 .timestamp-refresh:hover {
-  background-color: var(--bg-gray-medium);  /* 中灰背景，增强悬停反馈 */
+  background-color: transparent;  /* 中灰背景，增强悬停反馈 */
   -webkit-transform: rotate(180deg);  /* 旋转 180 度 - Webkit 浏览器 */
   -moz-transform: rotate(180deg);     /* 旋转 180 度 - Firefox 浏览器 */
   -ms-transform: rotate(180deg);      /* 旋转 180 度 - IE 浏览器 */
@@ -651,65 +640,7 @@
   opacity: 0.5;                  /* 半透明，进一步表示禁用 */
 }
 
-/*=========================================
-  警告弹窗组件 - 用于显示错误和警告信息
-  设计思路：使用固定定位覆盖全屏，居中显示警告内容
-  特点：高层级、简洁布局、单按钮操作
-  ========================================= */
 
-/* 警告弹窗遮罩层 - 覆盖全屏的半透明背景 */
-.alert-overlay {
-  position: fixed;               /* 固定定位，相对于视口 */
-  top: 0;                        /* 顶部对齐 */
-  left: 0;                       /* 左侧对齐 */
-  right: 0;                      /* 右侧对齐 */
-  bottom: 0;                     /* 底部对齐 */
-  background-color: var(--overlay-bg);  /* 半透明黑色背景，淡化背景内容 */
-  display: flex;                 /* 使用 Flexbox 布局 */
-  justify-content: center;       /* 水平居中 */
-  align-items: center;           /* 垂直居中 */
-  z-index: var(--z-alert);        /* 警告弹窗层级，确保在最上层 */
-}
-
-/* 警告弹窗内容区 - 实际的警告内容 */
-.alert-content {
-  background-color: var(--bg-white);       /* 白色背景 */
-  border-radius: var(--radius-lg);         /* 大圆角 */
-  -webkit-box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - Webkit 浏览器 */
-  -moz-box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - Firefox 浏览器 */
-  box-shadow: var(--shadow-md);            /* 中等阴影，营造层次感 - 标准属性 */
-  padding: var(--spacing-3xl);            /* 较大的内边距，提供舒适的阅读体验 */
-  max-width: 400px;              /* 最大宽度限制 */
-  width: 90%;                    /* 宽度占视口的 90% */
-  text-align: center;            /* 文本居中对齐 */
-}
-
-/* 警告消息文本 - 显示警告或错误信息 */
-.alert-message {
-  font-size: var(--font-size-lg);         /* 大字体，突出重要信息 */
-  color: var(--text-primary);             /* 主要文本颜色 */
-  margin-bottom: var(--spacing-2xl);      /* 底部间距，与按钮分开 */
-  line-height: 1.5;             /* 行高，提高可读性 */
-}
-
-/* 警告关闭按钮 - 用于关闭警告弹窗 */
-.alert-close {
-  background-color: var(--primary-color);  /* 主色背景 */
-  color: var(--bg-white);                  /* 白色文本 */
-  border: none;                            /* 无边框 */
-  border-radius: var(--radius-md);         /* 中等圆角 */
-  padding: var(--spacing-sm) var(--spacing-3xl);  /* 内边距，较大的左右内边距 */
-  font-size: var(--font-size-base);        /* 基础字体大小 */
-  cursor: pointer;               /* 鼠标指针，提示可点击 */
-  -webkit-transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Webkit 浏览器 */
-  -moz-transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - Firefox 浏览器 */
-  transition: background-color var(--transition-fast);   /* 快速过渡效果，指定具体属性 - 标准属性 */
-}
-
-/* 警告关闭按钮悬停状态 */
-.alert-close:hover {
-  background-color: var(--primary-hover);   /* 主色悬停态，增强交互反馈 */
-}
 
 /*=========================================
   时间戳显示区 - 显示阳历和阴历时间信息

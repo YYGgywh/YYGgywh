@@ -1,0 +1,76 @@
+/*
+ * @file            frontend/src/App.mobile.module.css
+ * @description     应用根组件样式 - 移动端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 18:30:00
+ * @lastModified    2026-03-07 18:30:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义 - 移动端覆盖
+   覆盖桌面端的变量值，适应移动设备
+   所有变量引用全局变量，提供 fallback 值确保兼容性
+   ============================================ */
+:root {
+  /* ===== 布局变量 - 移动端 ===== */
+  /* 主内容区域内边距 - 移动端减小，引用全局极小间距 */
+  --app-main-padding: var(--spacing-sm, 10px);
+  /* 占位容器最大宽度 - 移动端100% */
+  --placeholder-max-width: 100%;
+  /* 占位容器内边距 - 移动端减小，使用自定义值 */
+  --placeholder-padding: 30px 10px;
+  /* 占位网格间距 - 移动端减小，引用全局中等间距 */
+  --placeholder-grid-gap: var(--spacing-md, 15px);
+  /* 占位项目内边距 - 移动端减小，使用自定义值 */
+  --placeholder-item-padding: 20px 15px;
+  /* 占位项目边框颜色 - 引用全局边框色 */
+  --placeholder-item-border-color: var(--border-color, #e5e7eb);
+  
+  /* ===== 字体变量 - 移动端 ===== */
+  /* 占位标题字体大小 - 移动端减小，引用全局超大字体 */
+  --placeholder-title-font-size: var(--font-size-2xl, 20px);
+  /* 占位描述字体大小 - 移动端减小，引用全局基础字体 */
+  --placeholder-desc-font-size: var(--font-size-base, 14px);
+  /* 占位项目标题字体大小 - 移动端减小，引用全局大字体 */
+  --placeholder-item-title-font-size: var(--font-size-lg, 16px);
+  /* 占位项目描述字体大小 - 移动端减小，引用全局小字体 */
+  --placeholder-item-desc-font-size: var(--font-size-sm, 13px);
+  /* 占位图标字体大小 - 移动端减小，使用自定义值 */
+  --placeholder-icon-font-size: 36px;
+  /* 占位图标字体大小（小） - 移动端进一步减小 */
+  --placeholder-icon-font-size-sm: 32px;
+  
+  /* ===== Grid 布局变量 - 移动端 ===== */
+  /* 占位网格最小列宽 - 移动端单列 */
+  --placeholder-grid-min-width: 100%;
+  
+  /* ===== 间距变量 - 移动端 ===== */
+  /* 占位图标底部外边距 - 移动端减小，引用全局小间距 */
+  --placeholder-icon-margin-bottom: var(--spacing-sm, 12px);
+}
+
+/* ============================================
+   移动端特定样式
+   针对移动设备的特殊样式调整
+   ============================================ */
+
+/* 占位网格布局 - 移动端强制单列 */
+.placeholderGrid {
+  /* 网格列数 - 单列 */
+  grid-template-columns: 1fr;
+}
+
+/* 占位项目 - 移动端优化 */
+.placeholderItem {
+  /* 边框 - 移动端虚线，引用变量 */
+  border: 1px dashed var(--placeholder-item-border-color);
+}
+
+/* 占位图标 - 移动端优化 */
+.placeholderIcon {
+  /* 字体大小 - 移动端进一步减小，引用变量 */
+  font-size: var(--placeholder-icon-font-size-sm);
+  /* 底部外边距 - 移动端减小，引用变量 */
+  margin-bottom: var(--placeholder-icon-margin-bottom);
+}
