@@ -3,7 +3,7 @@
  * @description     操作按钮组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-08 18:10:00
- * @lastModified    2026-03-10 13:08:03
+ * @lastModified    2026-03-11 09:26:00
  * Copyright © All rights reserved
 */
 
@@ -22,13 +22,13 @@
   --btn-padding-y: 10px;
   --btn-padding-x: 24px;
   /* 最小高度，确保按钮高度一致 */
-  --btn-min-height: 36px;
+  --btn-min-height: 32px;
   /* 边框圆角 */
-  --btn-border-radius: var(--border-radius-md, 6px);
+  --btn-border-radius: 6px;
   
   /* ===== 字体变量 ===== */
   /* 字体大小 */
-  --btn-font-size: 14px;
+  --btn-font-size: var(--font-size-base, 14px);
   /* 字体权重 */
   --btn-font-weight: 500;
   /* 行高 */
@@ -186,11 +186,11 @@
   /* 文本颜色：白色 */
   --btn-text-color: var(--text-white, #FFFFFF);
   /* 背景颜色：确认按钮背景色 */
-  --btn-bg-color: var(--btn-confirm-bg, #10b981);
+  --btn-bg-color: #10b981;
   /* 悬停背景颜色：确认按钮悬停态 */
-  --btn-hover-bg: var(--btn-confirm-hover, #059669);
+  --btn-hover-bg: #059669;
   /* 激活背景颜色：确认按钮激活态 */
-  --btn-active-bg: var(--btn-confirm-active, #047857);
+  --btn-active-bg: #047857;
 }
 
 /**
@@ -203,11 +203,11 @@
   /* 文本颜色：主文本色 */
   --btn-text-color: var(--text-white, #ffffff);
   /* 背景颜色：危险色 */
-  --btn-bg-color: var(--btn-warning-bg, #ef4444);
+  --btn-bg-color: #ef4444;
   /* 悬停背景颜色：危险色加深 */
-  --btn-hover-bg: var(--btn-warning-hover, #dc2626);
+  --btn-hover-bg: #dc2626;
   /* 激活背景颜色：危险色加深 */
-  --btn-active-bg: var(--btn-warning-active, #b91c1c);
+  --btn-active-bg: #b91c1c;
 }
 
 /**
@@ -220,11 +220,11 @@
   /* 文本颜色：白色 */
   --btn-text-color: var(--text-white, #FFFFFF);
   /* 背景颜色：危险色 */
-  --btn-bg-color: var(--btn-warning-bg, #ef4444);
+  --btn-bg-color: #ef4444;
   /* 悬停背景颜色：危险色加深 */
-  --btn-hover-bg: var(--btn-warning-hover, #dc2626);
+  --btn-hover-bg: #dc2626;
   /* 激活背景颜色：危险色更深 */
-  --btn-active-bg: var(--color-danger-darker, #A8071A);
+  --btn-active-bg: #b91c1c;
 }
 
 /* ============================================
@@ -243,21 +243,13 @@
   /* 减小最小高度 */
   --btn-min-height: 28px;
   /* 减小圆角 */
-  --btn-border-radius: var(--border-radius-sm, 4px);
+  --btn-border-radius: 4px;
   
   /* ===== 字体变量覆盖 ===== */
   /* 减小字体大小 */
-  --btn-font-size: 12px;
+  --btn-font-size: var(--font-size-sm, 12px);
   /* 减小行高 */
   --btn-line-height: 1.4;
-}
-
-/**
- * @description     中等按钮样式（默认）
- *                   用于大多数场景
- */
-.actionButtonMedium {
-  /* 中等大小使用基础样式，无需额外覆盖 */
 }
 
 /**
@@ -293,9 +285,9 @@
 .actionButtonDisabled {
   /* ===== 颜色变量覆盖 ===== */
   /* 文本颜色：禁用文本色 */
-  --btn-text-color: var(--btn-disabled-text-color, #666666);
+  --btn-text-color: #666666;
   /* 背景颜色：禁用灰色 */
-  --btn-bg-color: var(--btn-disabled-bg, #D1D5DB);
+  --btn-bg-color: #D1D5DB;
   
   /* ===== 光标样式 ===== */
   /* 禁用光标，提示不可点击 */

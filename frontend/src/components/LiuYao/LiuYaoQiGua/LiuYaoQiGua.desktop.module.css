@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 13:30:00
- * @lastModified    2026-03-09 14:13:05
+ * @lastModified    2026-03-11 09:34:12
  * Copyright © All rights reserved
 */
 
@@ -104,34 +104,34 @@
 .divinationButton {
   /* ===== 尺寸变量定义 ===== */
   /* 定义按钮内边距 */
-  --button-padding-y: var(--spacing-lg, 12px);
-  --button-padding-x: var(--spacing-4xl, 32px);
+  --btn-padding-y: 12px;
+  --btn-padding-x: 32px;
   /* 定义按钮背景色 */
-  --button-bg-color: #1890FF;
+  --btn-bg-color: #1890FF;
   /* 定义按钮文字颜色 */
-  --button-text-color: #FFFFFF;
+  --btn-text-color: #FFFFFF;
   /* 定义按钮圆角 */
-  --button-border-radius: var(--border-radius-lg, 8px);
+  --btn-border-radius: 8px;
   /* 定义按钮字体大小 */
-  --button-font-size: var(--font-size-lg, 16px);
+  --btn-font-size: var(--font-size-lg, 16px);
   /* 定义按钮字体粗细 */
-  --button-font-weight: 500;
+  --btn-font-weight: 500;
   
   /* ===== 样式属性 ===== */
   /* 设置内边距 */
-  padding: var(--button-padding-y) var(--button-padding-x);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
   /* 设置背景色 */
-  background-color: var(--button-bg-color);
+  background-color: var(--btn-bg-color);
   /* 设置文字颜色 */
-  color: var(--button-text-color);
+  color: var(--btn-text-color);
   /* 移除边框 */
   border: none;
   /* 设置圆角 */
-  border-radius: var(--button-border-radius);
+  border-radius: var(--btn-border-radius);
   /* 设置字体大小 */
-  font-size: var(--button-font-size);
+  font-size: var(--btn-font-size);
   /* 设置字体粗细 */
-  font-weight: var(--button-font-weight);
+  font-weight: var(--btn-font-weight);
   /* 设置鼠标样式 */
   cursor: pointer;
   /* 设置过渡效果 */

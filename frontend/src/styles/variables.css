@@ -3,7 +3,7 @@
  * @description     统一的主题变量文件，包含整个应用的设计系统变量
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-25 00:00:00
- * @lastModified    2026-03-10 16:51:31
+ * @lastModified    2026-03-10 21:38:57
  * Copyright © All rights reserved
 */
 
@@ -53,7 +53,7 @@
   --btn-primary-bg: #1890FF;          /* 主要按钮背景 - 蓝色 */
   --btn-primary-hover: #40A9FF;       /* 主要按钮悬停态 */
   --btn-primary-active: #096DD9;      /* 主要按钮激活态 */
-  --btn-confirm-bg: #10D981;          /* 确认按钮背景 - 绿色 */
+  --btn-confirm-bg: #10B981;          /* 确认按钮背景 - 绿色 */
   --btn-confirm-hover: #059669;       /* 确认按钮悬停态 */
   --btn-confirm-active: #047857;      /* 确认按钮激活态 */
   --btn-warning-bg: #ef4444;          /* 警告按钮背景 - 红色 */

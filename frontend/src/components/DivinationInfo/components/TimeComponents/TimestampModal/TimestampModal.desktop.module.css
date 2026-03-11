@@ -3,7 +3,7 @@
  * @description     时间戳设置弹窗组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 21:00:00
- * @lastModified    2026-03-10 11:34:06
+ * @lastModified    2026-03-11 11:12:18
  * Copyright © All rights reserved
 */
 
@@ -114,9 +114,11 @@
  * 当鼠标悬停在选项卡按钮上时的样式
  */
 .tabButton:hover {
-  color: var(--primary-color); /* 文本颜色变为主题色 */
-  border-color: var(--primary-color); /* 边框颜色变为主题色 */
-  background-color: var(--primary-light); /* 背景色变为主题色浅色 */
+  --btn-text-hover: #40A9FF;
+  --btn-hover-bg: #E6F7FF;
+  color: var(--btn-text-hover); /* 文本颜色变为主题色 */
+  /* border-color: var(--primary-color); 边框颜色变为主题色 */
+  background-color: var(--btn-hover-bg); /* 背景色变为主题色浅色 */
 }
 
 /**
@@ -124,9 +126,10 @@
  * 当前选中的选项卡按钮样式
  */
 .tabButton.active {
+  --btn-primary-bg: #1890FF;
   color: var(--text-white); /* 文本颜色变为白色 */
-  background-color: var(--primary-color); /* 背景色变为主题色 */
-  border-color: var(--primary-color); /* 边框颜色变为主题色 */
+  background-color: var(--btn-primary-bg); /* 背景色变为主题色 */
+  /* border-color: var(--primary-color); 边框颜色变为主题色 */
   font-weight: 500; /* 中等字体粗细 */
 }
 
@@ -315,14 +318,21 @@
  * 定义弹窗按钮的基础样式
  */
 .modalButton {
+  /* ===== 布局变量覆盖 ===== */
+  --btn-padding-y: 4px;
+  --btn-padding-x: 12px;
+  --btn-font-size: 16px; /* 基础字体大小 */
+  --btn-border-radius: 6px; /* 中等圆角 */
+  
+  /* 按键宽高 */
   width: 72px;
   height: 32px;
   /* 盒模型属性 */
-  padding: var(--spacing-xs) var(--spacing-lg); /* 上下内边距为小间距，左右内边距为中间距 */
+  padding: var(--btn-padding-y) var(--btn-padding-x); /* 上下内边距为小间距，左右内边距为中间距 */
   
   /* 视觉属性 */
-  font-size: var(--font-size-base); /* 基础字体大小 */
-  border-radius: var(--radius-md); /* 中等圆角 */
+  font-size: var(--btn-font-size); /* 基础字体大小 */
+  border-radius: var(--btn-border-radius); /* 中等圆角 */
   cursor: pointer; /* 鼠标指针变为指针状态 */
   
   /* 交互属性 */
@@ -352,9 +362,11 @@
  * 定义补全按钮的样式
  */
 .modalButton.confirm {
+  --btn-primary-bg: #1890FF;          /* 主要按钮背景 - 蓝色 */
   color: var(--text-white); /* 文本颜色变为白色 */
-  background-color: var(--primary-color); /* 背景色变为主题色 */
-  border: 1px solid var(--primary-color); /* 1px边框，颜色为主题色 */
+  background-color: var(--btn-primary-bg); /* 背景色变为主要按钮背景 */
+  /* border: 1px solid var(--primary-color); 1px边框，颜色为主题色 */
+  border: none;
 }
 
 /**
@@ -362,8 +374,9 @@
  * 当鼠标悬停在补全按钮上时的样式
  */
 .modalButton.confirm:not(:disabled):hover {
-  background-color: var(--primary-hover); /* 背景色变为主题色悬停色 */
-  border-color: var(--primary-hover); /* 边框颜色变为主题色悬停色 */
+  --btn-primary-hover: #40a9ff; /* 主要按钮悬停色 - 蓝色 */
+  background-color: var(--btn-primary-hover); /* 背景色变为主要按钮悬停色 */
+  /* border-color: var(--btn-primary-hover); 边框颜色变为主要按钮悬停色 */
 }
 
 /**
@@ -371,9 +384,11 @@
  * 定义提交按钮的样式
  */
 .modalButton.submit {
+  --btn-submit-bg: #10B981;          /* 提交按钮背景 - 成功色 */
   color: var(--text-white); /* 文本颜色变为白色 */
-  background-color: var(--success-color); /* 背景色变为成功色 */
-  border: 1px solid var(--success-color); /* 1px边框，颜色为成功色 */
+  background-color: var(--btn-submit-bg); /* 背景色变为提交按钮背景 */
+  /* border: 1px solid var(--success-color); 1px边框，颜色为成功色 */
+  border: none;
 }
 
 /**
@@ -381,8 +396,9 @@
  * 当鼠标悬停在提交按钮上时的样式
  */
 .modalButton.submit:not(:disabled):hover {
-  background-color: var(--success-hover); /* 背景色变为成功色悬停色 */
-  border-color: var(--success-hover); /* 边框颜色变为成功色悬停色 */
+  --btn-submit-hover-bg: #059669; /* 提交按钮悬停色 - 成功色 */
+  background-color: var(--btn-submit-hover-bg); /* 背景色变为提交按钮悬停色 */
+  /* border-color: var(--btn-submit-hover-bg); 边框颜色变为提交按钮悬停色 */
 }
 
 /**
@@ -391,8 +407,9 @@
  */
 .modalButton.initialize {
   color: var(--text-secondary); /* 次要文本颜色 */
-  background-color: var(--btn-disabled-bg); /* 白色背景 */
-  border: 1px solid var(--border-disabled); /* 1px边框 */
+  background-color: var(--bg-white); /* 白色背景 */
+  /* border: 1px solid var(--border-disabled); 1px边框 */
+  border: none;
 }
 
 /**
@@ -400,9 +417,10 @@
  * 全清按钮可用时的样式
  */
 .modalButton.initialize:not(:disabled) {
+  --btn-initialize-bg: #EF4444;          /* 全清按钮背景 - 警告色 */
   color: var(--text-white); /* 文本颜色变为白色 */
-  border-color: var(--warning-color); /* 边框颜色为警告色 */
-  background-color: var(--warning-color); /* 背景色变为警告色 */
+  background-color: var(--btn-initialize-bg); /* 背景色变为警告色 */
+  /* border-color: var(--btn-initialize-bg); 边框颜色为警告色 */
 }
 
 /**
@@ -410,7 +428,8 @@
  * 全清按钮可用时的悬停样式
  */
 .modalButton.initialize:not(:disabled):hover {
-  background-color: var(--warning-color); /* 背景色变为警告色 */
+  --btn-initialize-hover-bg: #DC2626; /* 全清按钮悬停色 - 警告色 */
+  background-color: var(--btn-initialize-hover-bg); /* 背景色变为警告色 */
   color: var(--text-white); /* 文本颜色变为白色 */
 }
 
@@ -419,10 +438,12 @@
  * 定义按钮禁用时的样式
  */
 .modalButton:disabled {
-  opacity: 1; /* 恢复完全不透明度 */
+  --btn-disabled-bg: #D1D5DB;
+  /* opacity: 1; 恢复完全不透明度 */
   cursor: not-allowed; /* 鼠标指针变为禁止状态 */
   background-color: var(--btn-disabled-bg); /* 禁用背景色 */
-  border: 0px solid var(--border-disabled); /* 禁用边框 */
+  /* border: 1px solid var(--border-disabled); 禁用边框 */
+  border: none;
   color: var(--text-secondary); /* 禁用文本颜色 */
   opacity: 0.6;
 }

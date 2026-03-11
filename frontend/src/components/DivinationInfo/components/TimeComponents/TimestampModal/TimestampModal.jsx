@@ -259,7 +259,7 @@ const TimestampModal = ({ onClose, onSubmit }) => {
           second: now.getSeconds() // 当前秒
         };
         
-        const CalendarService = require('../../../services/calendarService').default; // 导入日历服务
+        const CalendarService = require('../../../../../services/calendarService').default; // 导入日历服务
         
         const result = CalendarService.getFullCalendarInfo(currentSolarTime); // 获取完整的历法信息
         // 如果获取成功
@@ -404,7 +404,7 @@ const TimestampModal = ({ onClose, onSubmit }) => {
     // 如果是农历选项卡
     if (activeTab === 'lunar') { 
       try { // 尝试转换农历时间为公历时间
-        const CalendarService = require('../../../services/calendarService').default; // 导入日历服务
+        const CalendarService = require('../../../../../services/calendarService').default; // 导入日历服务
         const result = CalendarService.getFullCalendarInfo(submittedTime); // 获取完整的历法信息        
         // 如果转换成功
         if (result.success && result.data && result.data.solar) {
@@ -449,7 +449,7 @@ const TimestampModal = ({ onClose, onSubmit }) => {
       }
       // 尝试转换四柱时间为公历时间
       try {
-        const CalendarService = require('../../../services/calendarService').default; // 导入日历服务
+        const CalendarService = require('../../../../../services/calendarService').default; // 导入日历服务
         const result = CalendarService.getFullCalendarInfo(submittedTime); // 获取完整的历法信息
         // 如果获取成功
         if (result.success && result.data && result.data.solar) {
