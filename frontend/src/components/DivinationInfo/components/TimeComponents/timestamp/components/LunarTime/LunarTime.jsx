@@ -18,6 +18,8 @@ import React, {
 import CalendarService from '../../../../../../../services/calendarService'; // 导入日历服务模块,用于处理日历转换和计算
 import AlertMessage from '../../shared/AlertMessage'; // 导入错误提示组件
 import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组件
+import DateInputGroup from '../DateInput/DateInputGroup'; // 导入日期输入框组组件
+import DateInput from '../DateInput/DateInput'; // 导入日期输入框组件
 import desktopStyles from './LunarTime.desktop.module.css'; // 导入桌面端样式
 
 // 导入验证工具函数集合
@@ -297,6 +299,15 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
     }
   };
   
+  // 处理输入框获取焦点事件
+  const handleFocus = (e, fieldName) => {
+    // 这里可以添加获取焦点时的逻辑，比如高亮、选择文本等
+    if (inputRefs.current[fieldName]) {
+      // 可以添加获取焦点时的处理，比如自动选择文本
+      // inputRefs.current[fieldName].select();
+    }
+  };
+
   // 处理输入框双击事件,用于清空输入框
   const handleDoubleClick = (e, fieldName) => {
     e.preventDefault(); // 阻止默认行为
@@ -753,121 +764,40 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
   // 返回JSX渲染结果
   return (
     <div className={styles.lunarTimeContainer}> {/* 农历时间容器 */}
-      {/* 农历输入区域 */}
-      <div className={styles.timestampInputs}> {/* 时间戳输入区域 */}
-        {/* 农历年份输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.lunar_year = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="lunar_year" // 输入框名称
-          placeholder="年" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputYear} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.lunar_year} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'lunar_year')} // 双击事件处理
-          disabled={disabledFields.lunar_year} // 禁用状态
-          min="1" // 最小值
-          max="9999" // 最大值
-        />
-        {/* 闰月切换按钮 */}
-        <button
-          type="button" // 按钮类型
-          ref={(el) => (inputRefs.current.leapMonthToggle = el)} // 设置按钮引用
-          className={`${styles.leapMonthToggle} ${timeData.is_leap_month ? styles.active : ''}`} // CSS类名,根据闰月状态添加active类
-          onClick={handleLeapMonthToggle} // 点击事件处理
-          onKeyDown={handleLeapMonthKeyDown} // 键盘事件处理
-          aria-pressed={timeData.is_leap_month} // ARIA属性,表示按钮是否被按下
-          aria-label="闰月切换" // ARIA标签,用于辅助功能
-          disabled={disabledFields.leap_month} // 禁用状态
-          style={{
-            color: timeData.is_leap_month ? '' : '#666666' // 根据闰月状态设置颜色
-          }}
-        >
-          闰 {/* 按钮文本 */}
-        </button>
-        {/* 农历月份输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.lunar_month = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="lunar_month" // 输入框名称
-          placeholder="月" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.lunar_month} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'lunar_month')} // 双击事件处理
-          disabled={disabledFields.lunar_month} // 禁用状态
-          min="1" // 最小值
-          max="12" // 最大值
-        />
-        {/* 农历日期输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.lunar_day = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="lunar_day" // 输入框名称
-          placeholder="日" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.lunar_day} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'lunar_day')} // 双击事件处理
-          disabled={disabledFields.lunar_day} // 禁用状态
-          min="1" // 最小值
-          max="30" // 最大值
-        />
-        {/* 小时输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.hour = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="hour" // 输入框名称
-          placeholder="时" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.hour} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'hour')} // 双击事件处理
-          disabled={disabledFields.hour} // 禁用状态
-          min="0" // 最小值
-          max="23" // 最大值
-        />
-        {/* 分钟输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.minute = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="minute" // 输入框名称
-          placeholder="分" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.minute} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'minute')} // 双击事件处理
-          disabled={disabledFields.minute} // 禁用状态
-          min="0" // 最小值
-          max="59" // 最大值
-        />
-        {/* 秒输入框 */}
-        <input 
-          ref={(el) => (inputRefs.current.second = el)} // 设置输入框引用
-          type="number" // 输入类型为数字
-          name="second" // 输入框名称
-          placeholder="秒" // 占位符文本
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
-          value={timeData.second} // 输入框值
-          onChange={handleChange} // 值变化事件处理
-          onBlur={handleBlur} // 失焦事件处理
-          onKeyDown={handleNumberInputKeyDown} // 键盘事件处理
-          onDoubleClick={(e) => handleDoubleClick(e, 'second')} // 双击事件处理
-          disabled={disabledFields.second} // 禁用状态
-          min="0" // 最小值
-          max="59" // 最大值
-        />
-      </div> {/* 结束时间戳输入区域 */}
+      {/* 农历输入区域 - 使用统一的日期输入框组组件 */}
+      <DateInputGroup
+        type="lunar"
+        value={timeData}
+        onChange={handleChange}
+        onFocus={(e) => {
+          const { name } = e.target;
+          if (name === 'lunar_year') handleFocus(e, 'lunar_year');
+          if (name === 'lunar_month') handleFocus(e, 'lunar_month');
+          if (name === 'lunar_day') handleFocus(e, 'lunar_day');
+          if (name === 'hour') handleFocus(e, 'hour');
+          if (name === 'minute') handleFocus(e, 'minute');
+          if (name === 'second') handleFocus(e, 'second');
+        }}
+        onBlur={(e) => {
+          const { name } = e.target;
+          if (name === 'lunar_year') handleBlur(e, 'lunar_year');
+          if (name === 'lunar_month') handleBlur(e, 'lunar_month');
+          if (name === 'lunar_day') handleBlur(e, 'lunar_day');
+          if (name === 'hour') handleBlur(e, 'hour');
+          if (name === 'minute') handleBlur(e, 'minute');
+          if (name === 'second') handleBlur(e, 'second');
+        }}
+        onDoubleClick={(e) => {
+          const { name } = e.target;
+          handleDoubleClick(e, name);
+        }}
+        onKeyDown={handleNumberInputKeyDown}
+        disabledFields={disabledFields}
+        styles={styles}
+        inputRefs={inputRefs.current}
+        onLeapMonthToggle={handleLeapMonthToggle}
+        isLeapMonth={timeData.is_leap_month}
+      />
       
       {/* 时间显示区域 - 使用统一的时间显示组件 */}
       <TimeDisplay

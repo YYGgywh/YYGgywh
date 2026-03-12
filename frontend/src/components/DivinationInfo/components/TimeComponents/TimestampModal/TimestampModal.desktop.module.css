@@ -3,7 +3,7 @@
  * @description     时间戳设置弹窗组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 21:00:00
- * @lastModified    2026-03-11 11:12:18
+ * @lastModified    2026-03-12 14:55:57
  * Copyright © All rights reserved
 */
 
@@ -41,9 +41,10 @@
   flex-direction: column; /* 垂直排列 */
   
   /* 盒模型属性 */
-  width: 90%; /* 宽度90% */
-  max-width: 600px; /* 最大宽度600px */
-  max-height: 90vh; /* 最大高度90vh */
+  min-width: 600px; /* 宽度600px */
+  /* width: 90%; 宽度90% */
+  /* max-width: 600px; 最大宽度600px */
+  /* max-height: 90vh; 最大高度90vh */
   
   /* 视觉属性 */
   background-color: var(--bg-white); /* 白色背景 */
@@ -62,6 +63,16 @@
 .timestampModal {
   /* 布局属性 */
   /* min-height: 400px; 最小高度400px */
+}
+
+/**
+ * 四柱结果列表容器
+ * 定义结果列表的容器样式，使其在模态框主体外部正确显示
+ */
+.timestampModal .SolarListResult_desktop_solarListResult__ {
+  margin: var(--spacing-md) var(--spacing-lg); /* 与上下区域保持间距 */
+  border-top: 1px solid var(--border-color); /* 顶部边框，分隔内容 */
+  padding-top: var(--spacing-md); /* 顶部内边距 */
 }
 
 /**

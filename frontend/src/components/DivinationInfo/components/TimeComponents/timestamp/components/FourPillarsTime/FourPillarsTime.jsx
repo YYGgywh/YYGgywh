@@ -3,7 +3,7 @@
  * @description     四柱时间输入和显示组件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-06 10:00:00
- * @lastModified    2026-03-11 18:39:43
+ * @lastModified    2026-03-12 17:37:22
  * Copyright © All rights reserved
 */
 
@@ -16,6 +16,7 @@ import { getTianGanList, validateYearGanInput, validateYearZhiInput, validateDay
 import GanZhiSelector from '../GanZhiSelector/GanZhiSelector'; // 导入天干地支选择器组件
 import CalendarService from '../../../../../../../services/calendarService'; // 导入日历服务模块
 import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组件
+import DateInputGroup from '../DateInput/DateInputGroup'; // 导入日期输入框组组件
 
 // 定义四柱时间组件
 const FourPillarsTime = ({ // 组件参数解构
@@ -354,7 +355,7 @@ const FourPillarsTime = ({ // 组件参数解构
     const containerCenter = containerRect ? containerRect.left + containerRect.width / 2 : rect.left + rect.width / 2; // 计算容器中心位置,如果容器不存在则使用输入框中心
     
     // 根据菜单类型设置不同的垂直偏移量
-    const verticalOffset = menuType === 'zhi' ? +34 : -40; // 地支菜单向下移动34px,天干菜单向上移动40px
+    const verticalOffset = menuType === 'zhi' ? +35 : -36.5; // 地支菜单向下移动34px,天干菜单向上移动40px
     
     return { // 返回菜单位置对象
       top: rect.top + window.scrollY + verticalOffset, // 设置顶部位置,包含滚动偏移和垂直偏移
@@ -555,112 +556,42 @@ const FourPillarsTime = ({ // 组件参数解构
   // 渲染组件的 JSX 结构
   return (
     <div className={styles.fourPillarsTimeContainer} ref={containerRef}> {/* 四柱时间组件最外层容器，用于整体布局和定位 */}
-      {/* 四柱输入区域 */}      
-      <div className={`${styles.timestampInputs} ${styles.tianganInputs}`}> {/* 天干输入区域：用于输入年、月、日、时的天干 */}
-        {/* 年干输入框：用于输入或显示年柱的天干，支持手动输入、双击清空及获取焦点时弹出对应天干菜单 */}
-        <input 
-          ref={yearGanRef} // 绑定DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型
-          name="yearGan" // 字段名，与timeData中的key对应
-          placeholder="年" // 占位提示文字，提示用户输入年干
-          className={styles.timeInput} // 统一样式类名
-          value={timeData.yearGan} // 当前绑定的年干值
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleYearGanFocus} // 获取焦点时根据已有年支动态显示天干菜单
-          onBlur={handleYearGanBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前字段
-        />
-        {/* 月干输入框：仅用于展示自动计算出的月干，禁止手动输入，双击可清空 */}
-        <input 
-          type="text" // 输入框类型为普通文本，用于输入单个天干或地支字符
-          name="monthGan" // 月干字段，仅用于展示自动计算出的月干
-          placeholder="月" // 占位提示文字，提示用户该输入框对应月柱的天干
-          className={styles.timeInput} // 统一样式类名
-          value={timeData.monthGan} // 绑定自动计算后的月干值
-          onChange={handleChange} // 输入变化时触发统一校验（实际被禁用，不会触发）
-          onDoubleClick={handleDoubleClick} // 双击可清空当前字段
-          disabled // 禁止手动输入，由年干与月支自动计算
-        />
-        {/* 日干输入框：仅用于展示自动计算出的日干，禁止手动输入，双击可清空 */}
-        <input 
-          ref={dayGanRef} // 绑定日干输入框的DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型，仅允许输入单个天干字符
-          name="dayGan" // 字段名，与timeData中的dayGhan字段对应
-          placeholder="日" // 占位提示文字，提示用户输入日干
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.dayGan} // 当前绑定的日干值，受控组件
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleDayGanFocus} // 获取焦点时根据已有日支动态显示天干菜单
-          onBlur={handleDayGanBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前日干字段
-        />
-        {/* 时干输入框：仅用于展示自动计算出的时干，禁止手动输入，双击可清空 */}
-        <input 
-          type="text" // 输入框类型为普通文本，仅用于展示单个天干字符
-          name="hourGan" // 字段名，与timeData中的hourGan字段对应，表示时柱天干
-          placeholder="时" // 占位提示文字，提示用户该输入框对应时辰的天干
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.hourGan} // 当前绑定的时干值，受控组件，由日干和时支自动计算得出
-          onChange={handleChange} // 输入变化时触发统一校验（实际被禁用，不会触发）
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前时干字段
-          disabled // 禁止手动输入，时干由程序根据日干和时支自动计算并展示
-        />
-      </div>
-      
-      <div className={`${styles.timestampInputs} ${styles.dizhiInputs}`}> {/* 地支输入区域：用于输入年、月、日、时的地支 */}
-        {/* 年支输入框：用于输入或显示年柱的地支，支持手动输入、双击清空及获取焦点时弹出对应地支菜单 */}
-        <input 
-          ref={yearZhiRef} // 绑定DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型
-          name="yearZhi" // 字段名，与timeData中的yearZhi字段对应
-          placeholder="年" // 占位提示文字，提示用户输入年支
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.yearZhi} // 当前绑定的年支值，受控组件
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleYearZhiFocus} // 获取焦点时根据已有年干动态显示地支菜单
-          onBlur={handleYearZhiBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前年支字段
-        />
-        {/* 月支输入框：仅用于展示自动计算出的月支，禁止手动输入，双击可清空 */}
-        <input 
-          ref={monthZhiRef} // 绑定月支输入框的DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型，仅允许输入单个地支字符
-          name="monthZhi" // 字段名，与timeData中的monthZhi字段对应，表示月柱地支
-          placeholder="月" // 占位提示文字，提示用户输入月支
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.monthZhi} // 当前绑定的月支值，受控组件
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleMonthZhiFocus} // 获取焦点时显示四季地支菜单
-          onBlur={handleMonthZhiBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前月支字段
-        />
-        {/* 日支输入框：仅用于展示自动计算出的日支，禁止手动输入，双击可清空 */}
-        <input 
-          ref={dayZhiRef} // 绑定日支输入框的DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型，仅允许输入单个地支字符
-          name="dayZhi" // 字段名，与timeData中的dayZhi字段对应，表示日柱地支
-          placeholder="日" // 占位提示文字，提示用户输入日支
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.dayZhi} // 当前绑定的日支值，受控组件，由程序根据已有数据自动计算得出
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleDayZhiFocus} // 获取焦点时根据已有日干动态显示地支菜单
-          onBlur={handleDayZhiBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前日支字段
-        />
-        {/* 时支输入框：仅用于展示自动计算出的时支，禁止手动输入，双击可清空 */}
-        <input 
-          ref={hourZhiRef} // 绑定时支输入框的DOM引用，便于后续获取位置或操作
-          type="text" // 文本输入类型，仅允许输入单个地支字符
-          name="hourZhi" // 字段名，与timeData中的hourZhi字段对应，表示时柱地支
-          placeholder="时" // 占位提示文字，提示用户输入时支
-          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
-          value={timeData.hourZhi} // 当前绑定的时支值，受控组件，由程序根据已有数据自动计算得出
-          onChange={handleChange} // 输入变化时触发统一校验与更新
-          onFocus={handleHourZhiFocus} // 获取焦点时根据已有时干动态显示地支菜单
-          onBlur={handleHourZhiBlur} // 失去焦点时由外部点击逻辑控制菜单关闭
-          onDoubleClick={handleDoubleClick} // 双击快速清空当前时支字段
-        />
-      </div>
+      {/* 四柱输入区域 - 使用统一的日期输入框组组件 */}
+      <DateInputGroup
+        type="four-pillars"
+        value={timeData}
+        onChange={handleChange}
+        onFocus={(e) => {
+          // 根据输入框名称处理焦点事件
+          const { name } = e.target;
+          if (name === 'yearGan') handleYearGanFocus(e);
+          if (name === 'dayGan') handleDayGanFocus(e);
+          if (name === 'yearZhi') handleYearZhiFocus(e);
+          if (name === 'monthZhi') handleMonthZhiFocus(e);
+          if (name === 'dayZhi') handleDayZhiFocus(e);
+          if (name === 'hourZhi') handleHourZhiFocus(e);
+        }}
+        onBlur={(e) => {
+          // 根据输入框名称处理失去焦点事件
+          const { name } = e.target;
+          if (name === 'yearGan') handleYearGanBlur(e);
+          if (name === 'dayGan') handleDayGanBlur(e);
+          if (name === 'yearZhi') handleYearZhiBlur(e);
+          if (name === 'monthZhi') handleMonthZhiBlur(e);
+          if (name === 'dayZhi') handleDayZhiBlur(e);
+          if (name === 'hourZhi') handleHourZhiBlur(e);
+        }}
+        onDoubleClick={handleDoubleClick}
+        styles={styles}
+        inputRefs={{
+          yearGan: yearGanRef,
+          dayGan: dayGanRef,
+          yearZhi: yearZhiRef,
+          monthZhi: monthZhiRef,
+          dayZhi: dayZhiRef,
+          hourZhi: hourZhiRef
+        }}
+      />
       
       {/* 天干选择菜单 */}
       <div ref={ganMenuRef}> {/* 天干选择菜单外层容器，用于定位及点击外部关闭菜单的引用 */}

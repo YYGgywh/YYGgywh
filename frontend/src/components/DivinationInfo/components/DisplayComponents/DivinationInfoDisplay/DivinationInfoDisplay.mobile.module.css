@@ -1,0 +1,217 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay.mobile.module.css
+ * @description     占卜信息展示组件移动端样式，负责展示用户输入的占卜信息
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-12 15:00:00
+ * @lastModified    2026-03-12 15:00:00
+ * Copyright © All rights reserved
+*/
+
+.divinationInfo {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.divinationInfo:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.infoTop {
+  margin-bottom: 8px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: flex-start;
+  -moz-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoTopLeft {
+  width: 100%;
+}
+
+.infoTopRight {
+  width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seekerInfo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.nameLabel,
+.genderLabel,
+.birthYearLabel,
+.locationLabel,
+.questionLabel,
+.divinationTypeLabel,
+.methodLabel,
+.solarLabel,
+.lunarLabel,
+.prevJieLabel,
+.nextJieLabel {
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.nameLabel {
+  font-size: 14px;
+}
+
+.methodInfoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.infoMiddle {
+  margin-bottom: 8px;
+}
+
+.divinationQuery {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.infoBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.datetimeContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendarRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 8px;
+}
+
+.calendarLabel {
+  font-weight: bold;
+  min-width: auto;
+  color: var(--text-color);
+  display: inline-block;
+}
+
+.calendarItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.jieqiLabel {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.timeLabel {
+  font-weight: bold;
+  color: #C00000;
+}
+
+.dateInfo {
+  display: inline-block;
+  min-width: auto;
+  text-align: left;
+  flex: 1;
+}
+
+.timeInfo {
+  display: inline-block;
+  width: auto;
+  text-align: left;
+}
+
+.solarRow {
+  background-color: rgba(240, 240, 240, 0.5);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  padding: 8px;
+}
+
+.solarRow:hover {
+  background-color: rgba(220, 220, 240, 0.8);
+}
+
+.divinationInfo.error {
+  border-color: var(--error-color);
+  color: var(--error-color);
+  text-align: center;
+  padding: 16px;
+  font-weight: 500;
+}
+
+.divinationInfo.loading {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.divinationInfo.brief {
+  padding: 0px 8px 5px 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+@media screen and (max-width: 480px) {
+  .divinationInfo {
+    padding: 6px;
+  }
+
+  .infoTop {
+    gap: 8px;
+  }
+
+  .seekerInfo,
+  .divinationQuery {
+    gap: 6px;
+  }
+
+  .infoBottom {
+    gap: 12px;
+  }
+
+  .solarRow {
+    padding: 6px;
+  }
+}

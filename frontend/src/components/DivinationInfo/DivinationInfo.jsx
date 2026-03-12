@@ -11,7 +11,7 @@
 import React, {
   useState   // 状态管理钩子，用于声明和更新组件内部状态
 } from 'react';
-import './DivinationInfo.css'; // 导入占卜信息表单样式
+import styles from './DivinationInfo.desktop.module.css'; // 导入占卜信息表单样式
 import TimestampModal from './components/TimeComponents/TimestampModal/TimestampModal'; // 导入时间戳设置弹窗组件
 import { useApp } from '../../contexts/AppContext'; // 导入应用全局上下文Hook
 import FormInput from './components/FormComponents/FormInput/FormInput'; // 导入可复用的输入框组件
@@ -91,9 +91,9 @@ const DivinationInfo = () => {
 
   // 返回JSX
   return (
-    <div className="divination-info-container"> {/* 包含整个占卜信息表单的容器 */}
-      <form className="divination-form" onSubmit={handleSubmit}> {/* 占卜信息表单 */}
-        <div className="form-row"> {/* 姓名行 */}
+    <div className={styles.divinationInfoContainer}> {/* 包含整个占卜信息表单的容器 */}
+      <form className={styles.divinationForm} onSubmit={handleSubmit}> {/* 占卜信息表单 */}
+        <div className={styles.formRow}> {/* 姓名行 */}
           {/* 姓输入框 */}
           <FormInput
             name="firstName" // 姓输入框的名称，用于表单提交时识别
@@ -143,7 +143,7 @@ const DivinationInfo = () => {
             className="location-input" // 月日输入框的类名，用于样式化
             variant="location" // 月日输入框的样式变体，用于设置宽度
           />
-          <div className="form-row form-row-timestamp"> {/* 占题时间戳行 */}
+          <div className={`${styles.formRow} ${styles.formRowTimestamp}`}> {/* 占题时间戳行 */}
             <TimestampDisplay
               timestamp={submittedTimestamp}
               onClick={handleTimestampClick}
@@ -152,7 +152,7 @@ const DivinationInfo = () => {
           </div>
         </div>
 
-        <div className="form-row"> {/* 占类选择行 */}
+        <div className={styles.formRow}> {/* 占类选择行 */}
           <DivinationTypeDropdown
             selectedType={formData.divinationType}
             onTypeSelect={handleTypeSelect}

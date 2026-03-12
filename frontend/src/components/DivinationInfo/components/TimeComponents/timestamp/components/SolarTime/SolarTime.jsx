@@ -3,7 +3,7 @@
  * @description     公历时间输入和显示组件，支持公历转农历转换
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-17 10:00:00
- * @lastModified    2026-03-11 19:08:39
+ * @lastModified    2026-03-12 11:38:23
  * Copyright © All rights reserved
 */
 
@@ -12,6 +12,7 @@ import CalendarService from '../../../../../../../services/calendarService'; // 
 import { formatInputValue, handleInputValidation, validateInputData, padValue, handleNumberInputKeyDown } from '../../../../../../../utils/validationUtils'; // 导入输入验证工具函数
 import AlertMessage from '../../shared/AlertMessage'; // 导入错误提示组件
 import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组件
+import DateInputGroup from '../DateInput/DateInputGroup'; // 导入日期输入框组组件
 import desktopStyles from './SolarTime.desktop.module.css'; // 导入桌面端样式
 
 /**
@@ -588,99 +589,19 @@ const SolarTime = ({ onTimeChange, confirmedTime }) => {
 
   return ( // 返回JSX结构
     <div className={styles.gregorianTimeContainer}> {/* 公历时间容器 */}
-      {/* 时间输入区域 */}
-      <div className={styles.timestampInputs}> {/* 时间输入框容器 */}
-        <input // 年份输入框
-          ref={(el) => (inputRefs.current.year = el)} // 设置年份输入框引用
-          type="number" // 输入类型为数字
-          name="year" // 输入框名称为year
-          placeholder="年" // 占位符为"年"
-          className={`${styles.timeInput} ${styles.timeInputYear} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.year} // 绑定年份值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'year')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.year} // 绑定禁用状态
-          min="1" // 最小值为1
-          max="9999" // 最大值为9999
-        />
-        <input // 月份输入框
-          ref={(el) => (inputRefs.current.month = el)} // 设置月份输入框引用
-          type="number" // 输入类型为数字
-          name="month" // 输入框名称为month
-          placeholder="月" // 占位符为"月"
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.month} // 绑定月份值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'month')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.month} // 绑定禁用状态
-          min="1" // 最小值为1
-          max="12" // 最大值为12
-        />
-        <input // 日期输入框
-          ref={(el) => (inputRefs.current.day = el)} // 设置日期输入框引用
-          type="number" // 输入类型为数字
-          name="day" // 输入框名称为day
-          placeholder="日" // 占位符为"日"
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.day} // 绑定日期值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'day')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.day} // 绑定禁用状态
-          min="1" // 最小值为1
-          max="31" // 最大值为31
-        />
-        <input // 小时输入框
-          ref={(el) => (inputRefs.current.hour = el)} // 设置小时输入框引用
-          type="number" // 输入类型为数字
-          name="hour" // 输入框名称为hour
-          placeholder="时" // 占位符为"时"
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.hour} // 绑定小时值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'hour')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.hour} // 绑定禁用状态
-          min="0" // 最小值为0
-          max="23" // 最大值为23
-        />
-        <input // 分钟输入框
-          ref={(el) => (inputRefs.current.minute = el)} // 设置分钟输入框引用
-          type="number" // 输入类型为数字
-          name="minute" // 输入框名称为minute
-          placeholder="分" // 占位符为"分"
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.minute} // 绑定分钟值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'minute')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.minute} // 绑定禁用状态
-          min="0" // 最小值为0
-          max="59" // 最大值为59
-        />
-        <input // 秒输入框
-          ref={(el) => (inputRefs.current.second = el)} // 设置秒输入框引用
-          type="number" // 输入类型为数字
-          name="second" // 输入框名称为second
-          placeholder="秒" // 占位符为"秒"
-          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // 设置样式类名
-          value={timeData.second} // 绑定秒值
-          onChange={handleChange} // 绑定输入变化处理函数
-          onBlur={handleBlur} // 绑定失去焦点处理函数
-          onDoubleClick={(e) => handleDoubleClick(e, 'second')} // 绑定双击清空处理函数
-          onKeyDown={handleNumberInputKeyDown} // 绑定键盘事件处理函数
-          disabled={disabledFields.second} // 绑定禁用状态
-          min="0" // 最小值为0
-          max="59" // 最大值为59
-        />
-      </div> {/* 时间输入框容器结束 */}
+      {/* 时间输入区域 - 使用统一的日期输入框组组件 */}
+      <DateInputGroup
+        type="solar"
+        value={timeData}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        onDoubleClick={handleDoubleClick}
+        onKeyDown={handleNumberInputKeyDown}
+        disabledFields={disabledFields}
+        styles={styles}
+        className=""
+        inputRefs={inputRefs.current}
+      />
       
       {/* 时间显示区域 - 使用统一的时间显示组件 */}
       <TimeDisplay

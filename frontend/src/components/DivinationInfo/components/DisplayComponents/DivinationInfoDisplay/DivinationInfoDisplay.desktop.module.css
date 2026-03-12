@@ -1,21 +1,13 @@
-
 /*
- * @file            frontend/src/components/DivinationInfo/DivinationInfoDisplay.css
- * @description     占卜信息展示组件样式，负责展示用户输入的占卜信息
- *                  使用全局主题变量（variables.css），确保设计一致性
- * @author          Gordon <gordon_cao@qq.com>
- * @createTime      2026-02-23 00:00:00
- * @lastModified    2026-03-03 13:00:00
+ * @file            frontend/src/components/DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay.desktop.module.css
+ * @description     占卜信息展示组件桌面端样式，负责展示用户输入的占卜信息
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-12 15:00:00
+ * @lastModified    2026-03-12 15:00:00
  * Copyright © All rights reserved
 */
 
-/* ========================================
-   占卜信息展示组件样式
-   设计思路：使用全局主题变量，确保与整个应用的设计风格一致
-   特点：卡片式布局、信息展示、悬停效果
-   ======================================== */
-
-.divination-info {
+.divinationInfo {
   max-width: 800px;
   margin: 0 auto;
   padding: 10px;
@@ -25,12 +17,11 @@
   transition: all 0.3s ease;
 }
 
-.divination-info:hover {
+.divinationInfo:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-.info-top {
+.infoTop {
   margin-bottom: 7px;
   display: -webkit-box;
   display: -moz-box;
@@ -43,11 +34,11 @@
   gap: 20px;
 }
 
-.info-top-left {
+.infoTopLeft {
   flex-shrink: 0;
 }
 
-.info-top-right {
+.infoTopRight {
   flex: 1;
   display: -webkit-box;
   display: -moz-box;
@@ -62,80 +53,73 @@
   gap: 7px;
 }
 
-
-.seeker-info {
+.seekerInfo {
   display: flex;
   width: 100%;
   gap: 28px;
 }
 
-
-.name-label,
-.gender-label,
-.birth-year-label,
-.location-label,
-.question-label,
-.divination-type-label,
-.method-label,
-.solar-label,
-.lunar-label,
-.prev-jie-label,
-.next-jie-label {
+.nameLabel,
+.genderLabel,
+.birthYearLabel,
+.locationLabel,
+.questionLabel,
+.divinationTypeLabel,
+.methodLabel,
+.solarLabel,
+.lunarLabel,
+.prevJieLabel,
+.nextJieLabel {
   color: var(--text-color);
   font-weight: bold;
 }
 
-.name-label {
+.nameLabel {
   font-size: 14px;
 }
 
-
-.method-info-container {
+.methodInfoContainer {
   display: flex;
   align-items: center;
 }
 
-
-.info-middle {
+.infoMiddle {
   margin-bottom: 7px;
 }
 
-
-.divination-query {
+.divinationQuery {
   display: flex;
   width: 100%;
   gap: 28px;
 }
 
-
-.info-bottom {
+.infoBottom {
   display: flex;
   gap: 100px;
 }
 
-
-.datetime-container {
+.datetimeContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.calendar-row {
+.calendarRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.calendar-label {
+.calendarLabel {
   font-weight: bold;
   min-width: 60px;
   color: var(--text-color);
   display: inline-block;
 }
 
-.calendar-item {
+.calendarItem {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -143,41 +127,40 @@
   flex-shrink: 0;
 }
 
-.jieqi-label {
+.jieqiLabel {
   font-weight: bold;
   color: var(--text-color);
 }
 
-.time-label {
+.timeLabel {
   font-weight: bold;
   color: #C00000;
 }
 
-.date-info {
+.dateInfo {
   display: inline-block;
   min-width: 115px;
   text-align: center;
 }
 
-.time-info {
+.timeInfo {
   display: inline-block;
   width: 60px;
   text-align: center;
 }
 
-.solar-row {
+.solarRow {
   background-color: rgba(240, 240, 240, 0.5);
   border-radius: 4px;
   cursor: pointer;
   transition: background-color var(--transition-fast);
 }
 
-.solar-row:hover {
+.solarRow:hover {
   background-color: rgba(220, 220, 240, 0.8);
 }
 
-
-.divination-info.error {
+.divinationInfo.error {
   border-color: var(--error-color);
   color: var(--error-color);
   text-align: center;
@@ -185,15 +168,14 @@
   font-weight: 500;
 }
 
-.divination-info.loading {
+.divinationInfo.loading {
   text-align: center;
   padding: 20px;
   color: var(--text-color);
   font-weight: 500;
 }
 
-
-.divination-info.brief {
+.divinationInfo.brief {
   padding: 0px 8px 5px 8px;
   margin-bottom: 10px;
   font-size: 14px;

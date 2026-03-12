@@ -1,39 +1,18 @@
-/*
- * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/LunarTime/LunarTime.desktop.module.css
- * @description     农历时间输入和显示组件桌面端样式
+﻿/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/DateInput/DateInput.desktop.module.css
+ * @description     统一的时间输入框组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
- * @createTime      2026-03-11 15:40:00
- * @lastModified    2026-03-12 13:06:57
+ * @createTime      2026-03-12 15:00:00
+ * @lastModified    2026-03-12 13:12:06
  * Copyright © All rights reserved
 */
-
-/**
- * 农历时间容器 - 主容器
- */
-.lunarTimeContainer {
-  display: flex;
-  flex-direction: column;
-  /* gap: var(--spacing-lg); */
-  /* padding: var(--spacing-lg); */
-}
-
-/**
- * 时间输入框容器 - 包含所有时间输入框
- */
-.timestampInputs {
-  display: flex;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
 
 /**
  * 基础时间输入框 - 通用输入框样式
  */
 .timeInput {
   height: 30px;
+  width: 30px;
   padding: 0 var(--spacing-xs);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -150,83 +129,15 @@
 }
 
 /**
- * 时间显示容器 - 包含农历和公历时间信息
+ * 天干输入区域 - 用于四柱场景的天干输入框
  */
-.timestampDisplay {
-  background-color: var(--bg-gray-light);
-  padding: 15px;
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+.tianganInputs {
+  margin-bottom: var(--spacing-sm);
 }
 
 /**
- * 农历信息 - 显示农历日期和时间
+ * 地支输入区域 - 用于四柱场景的地支输入框
  */
-.lunarInfo {
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-base);
-}
-
-/**
- * 公历信息 - 显示公历日期和时间
- */
-.solarInfo {
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-base);
-}
-
-/**
- * 农历和公历信息的最后一个元素 - 移除底部间距
- */
-.lunarInfo:last-child,
-.solarInfo:last-child {
-  margin-bottom: 0;
-}
-
-/**
- * 时间显示组件样式 - 用于 TimeDisplay 组件的容器
- */
-.timeDisplay {
-  /* 样式定义 */
-}
-
-/**
- * 农历标签 - 农历信息的标签文本
- */
-.lunarLabel {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: var(--font-size-base);
-}
-
-/**
- * 公历标签 - 公历信息的标签文本
- */
-.solarLabel {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: var(--font-size-base);
-}
-
-/**
- * 日期值 - 显示具体的日期
- */
-.dateValue {
-  color: var(--text-primary);
-  display: inline-block;
-  width: 120px;
-  font-size: var(--font-size-base);
-}
-
-/**
- * 时间值 - 显示具体的时间
- */
-.timeValue {
-  color: var(--text-primary);
-  display: inline-block;
-  width: 60px;
-  font-size: var(--font-size-base);
+.dizhiInputs {
+  margin-top: var(--spacing-sm);
 }

@@ -1,0 +1,107 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/SolarListResult/SolarListResult.desktop.module.css
+ * @description     四柱计算结果列表显示组件 - 桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-12 16:00:00
+ * @lastModified    2026-03-12 14:45:56
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 四柱计算结果列表容器 - 主要容器样式
+ * 负责整体布局和边框样式
+ */
+.solarListResult {
+  margin-top: var(--spacing-md); /* 与上方内容保持中间间距 */
+  padding: var(--spacing-md); /* 内部间距 */
+  background-color: var(--bg-gray-light); /* 浅灰色背景，提高可读性 */
+  /* border-radius: var(--radius-md); 中等圆角，柔和边框 */
+  border: 1px solid var(--border-color); /* 灰色边框，与主题一致 */
+  margin: 0 var(--spacing-lg); /* 与其他内容保持中间间距 */
+}
+
+/**
+ * 结果列表容器 - 列表内容样式
+ * 处理列表项的布局和溢出问题
+ */
+.resultList {
+  max-height: 200px; /* 限制最大高度，防止弹窗过大 */
+  overflow-y: auto; /* 内容溢出时显示垂直滚动条 */
+  display: flex; /* 使用Flex布局 */
+  flex-direction: column; /* 垂直排列列表项 */
+  gap: var(--spacing-xs); /* 列表项之间的小间距 */
+}
+
+/**
+ * 结果列表项 - 单个结果项样式
+ * 定义结果项的外观和交互
+ */
+.resultItem {
+  display: flex; /* 水平布局 */
+  align-items: center; /* 垂直居中对齐 */
+  gap: var(--spacing-sm); /* 内容之间的小间距 */
+  padding: var(--spacing-sm) var(--spacing-md); /* 内部间距，增强点击区域 */
+  background-color: var(--bg-white); /* 白色背景，与容器形成对比 */
+  border-radius: var(--radius-sm); /* 小圆角，柔和效果 */
+  cursor: pointer; /* 指针样式，表明可交互 */
+  transition: background-color var(--transition-fast); /* 背景色过渡动画 */
+  margin-right: var(--spacing-md); /* 与其他列表项保持间距 */
+}
+
+/**
+ * 结果列表项悬停状态 - 鼠标悬停时的样式
+ * 提供视觉反馈，改善用户体验
+ */
+.resultItem:hover {
+  background-color: var(--primary-light); /* 主题色浅色背景 */
+}
+
+/**
+ * 结果列表项选中状态 - 选中结果项的样式
+ * 明确显示当前选中的项目
+ */
+.resultItem.selected {
+  background-color: var(--primary-color); /* 主题色背景 */
+  color: var(--text-white); /* 白色文本，提高对比度 */
+}
+
+/**
+ * 结果项索引 - 显示结果项索引的样式
+ * 提供上下文信息，帮助用户定位
+ */
+.resultIndex {
+  font-size: var(--font-size-sm); /* 小字体 */
+  color: var(--text-secondary); /* 次要文本颜色 */
+  font-weight: 500; /* 中等粗细，提高可读性 */
+  min-width: 40px; /* 固定最小宽度，保持布局一致性 */
+}
+
+/**
+ * 结果项内容 - 显示结果文本的样式
+ * 突出显示计算结果
+ */
+.resultContent {
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  color: var(--text-primary); /* 主要文本颜色 */
+  flex: 1; /* 占据剩余空间，实现响应式布局 */
+}
+
+/**
+ * 结果项选中状态下的索引和内容 - 选中状态的文本样式
+ * 确保在深色背景下的可读性
+ */
+.resultItem.selected .resultIndex,
+.resultItem.selected .resultContent {
+  color: var(--text-white); /* 白色文本，与深色背景形成对比 */
+}
+
+/**
+ * 错误信息容器 - 显示计算失败信息的样式
+ * 提供错误反馈
+ */
+.resultError {
+  padding: var(--spacing-md); /* 内部间距 */
+  color: var(--error-color); /* 红色文本，表明错误状态 */
+  font-size: var(--font-size-base); /* 基础字体大小 */
+  text-align: center; /* 文本居中 */
+}

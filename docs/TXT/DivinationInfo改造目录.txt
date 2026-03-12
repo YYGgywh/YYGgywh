@@ -1,0 +1,65 @@
+f:\Project\YYG_paipan_Project\frontend\src\components\DivinationInfo\
+├── components/                    # 子组件目录
+│   ├── FormComponents/           # 表单相关组件 ✅
+│   │   ├── FormInput/            # 通用表单输入组件 ✅
+│   │   │   ├── FormInput.jsx
+│   │   │   ├── FormInput.desktop.module.css
+│   │   │   └── FormInput.mobile.module.css
+│   │   ├── NumberInput/          # 数字输入组件 ✅
+│   │   │   ├── NumberInput.jsx
+│   │   │   ├── NumberInput.desktop.module.css
+│   │   │   └── NumberInput.mobile.module.css
+│   │   ├── GenderSelector/       # 性别选择组件 ✅
+│   │   │   ├── GenderSelector.jsx
+│   │   │   ├── GenderSelector.desktop.module.css
+│   │   │   └── GenderSelector.mobile.module.css
+│   │   └── DivinationTypeDropdown/  # 占类选择组件 ✅
+│   │       ├── DivinationTypeDropdown.jsx
+│   │       ├── DivinationTypeDropdown.desktop.module.css
+│   │       └── DivinationTypeDropdown.mobile.module.css
+│   ├── TimeComponents/           # 时间相关组件
+│   │   ├── TimestampModal/       # 时间戳设置弹窗 ✅
+│   │   │   ├── TimestampModal.jsx
+│   │   │   ├── TimestampModal.desktop.module.css
+│   │   │   └── TimestampModal.mobile.module.css
+│   │   ├── TimestampDisplay/     # 时间戳显示组件 ✅
+│   │   │   ├── TimestampDisplay.jsx
+│   │   │   ├── TimestampDisplay.desktop.module.css
+│   │   │   └── TimestampDisplay.mobile.module.css
+│   │   └── timestamp/            # 时间选择器组件
+│   │       ├── components/       # 时间选择器子组件
+│   │       │   ├── SolarTime/    # 公历时间选择
+│   │       │   │   ├── SolarTime.jsx
+│   │       │   │   ├── SolarTime.desktop.module.css
+│   │       │   │   └── SolarTime.mobile.module.css
+│   │       │   ├── LunarTime/    # 农历时间选择
+│   │       │   │   ├── LunarTime.jsx
+│   │       │   │   ├── LunarTime.desktop.module.css
+│   │       │   │   └── LunarTime.mobile.module.css
+│   │       │   ├── FourPillarsTime/  # 四柱时间选择
+│   │       │   │   ├── FourPillarsTime.jsx
+│   │       │   │   ├── FourPillarsTime.desktop.module.css
+│   │       │   │   └── FourPillarsTime.mobile.module.css
+│   │       │   └── GanZhiSelector/  # 干支选择器
+│   │       │       ├── GanZhiSelector.jsx
+│   │       │       ├── GanZhiSelector.desktop.module.css
+│   │       │       └── GanZhiSelector.mobile.module.css
+│   │       └── shared/           # 时间选择器共享组件
+│   │           ├── AlertMessage/ # 警告信息组件
+│   │           │   ├── AlertMessage.jsx
+│   │           │   ├── AlertMessage.desktop.module.css
+│   │           │   └── AlertMessage.mobile.module.css
+│   └── DisplayComponents/        # 展示组件
+│       └── DivinationInfoDisplay/  # 占卜信息展示组件
+│           ├── DivinationInfoDisplay.jsx
+│           ├── DivinationInfoDisplay.desktop.module.css
+│           └── DivinationInfoDisplay.mobile.module.css
+├── styles/                       # 样式文件目录
+│   ├── variables.css            # 全局样式变量
+│   ├── DivinationInfo.desktop.module.css
+│   └── DivinationInfo.mobile.module.css
+├── utils/                        # 工具函数目录
+│   ├── validation.js            # 表单验证工具
+│   └── formatUtils.js           # 格式化工具
+├── DivinationInfo.jsx           # 主组件文件
+└── BriefDivinationQuery.usage.md # 使用说明文档

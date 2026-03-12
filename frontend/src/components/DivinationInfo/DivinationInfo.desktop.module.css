@@ -1,0 +1,47 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/DivinationInfo.desktop.module.css
+ * @description     占卜信息组件桌面端样式文件，包含表单输入、模态框、时间选择器等UI元素的视觉样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-12 15:00:00
+ * @lastModified    2026-03-12 15:58:31
+ * Copyright © All rights reserved
+*/
+
+.divinationInfoContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-xl);
+}
+
+.divinationForm {
+  border-radius: var(--radius-xl);
+  padding: 10px;
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow-md);
+}
+
+.formRow {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.formRow:last-child {
+  margin-bottom: 0;
+}
+
+.formRowTimestamp {
+  margin-bottom: 0;
+  width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

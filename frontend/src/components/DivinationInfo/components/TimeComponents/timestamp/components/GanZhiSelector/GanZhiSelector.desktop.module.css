@@ -1,38 +1,42 @@
 /*
  * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/GanZhiSelector/GanZhiSelector.desktop.module.css
  * @description     天干地支选择器组件桌面端样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-11 00:00:00
- * @lastModified    2026-03-11 00:00:00
+ * @lastModified    2026-03-12 17:23:02
  * Copyright © All rights reserved
 */
 
 /* 选择器容器 */
 .selector {
-  position: fixed;
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  position: fixed; /* 固定定位，确保在页面上固定位置 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; /* 确保选择器在其他元素之上 */
+  background-color: var(--bg-white, #FFFFFF);
+  border: 1px solid var(--border-color, #E5E7EB);
+  border-radius: var(--border-sm, 4px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  min-width: 200px;
+  padding: 0 6px;
+  /* min-width: 200px; */
+  overflow: hidden;
 }
 
 /* 行容器 */
 .row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 
 /* 菜单项 */
 .item {
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 4px;
+  --item-padding: 4px;
+  padding: var(--item-padding);
+  cursor: pointer; /* 鼠标悬停时显示为指针 */
+  /* border-radius: 4px; */
   transition: all 0.3s ease;
-  font-size: 16px;
+  font-size: var(--font-size-base,14px);
   font-weight: 500;
 }
 

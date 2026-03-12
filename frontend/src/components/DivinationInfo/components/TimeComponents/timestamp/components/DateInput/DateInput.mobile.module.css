@@ -1,0 +1,142 @@
+﻿/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/DateInput/DateInput.mobile.module.css
+ * @description     统一的时间输入框组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-12 15:00:00
+ * @lastModified    2026-03-12 15:00:00
+ * Copyright  All rights reserved
+*/
+
+/**
+ * 基础时间输入框 - 通用输入框样式（移动端）
+ */
+.timeInput {
+  height: 24px;
+  padding: 0 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  text-align: center;
+}
+
+/**
+ * 时间输入框焦点状态 - 获得焦点时的样式（移动端）
+ */
+.timeInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-focus);
+}
+
+/**
+ * 年份输入框 - 较宽的宽度（移动端）
+ */
+.timeInputYear {
+  width: 50px;
+}
+
+/**
+ * 小尺寸时间输入框 - 用于月、日、时等（移动端）
+ */
+.timeInputSmall {
+  width: 35px;
+}
+
+/**
+ * 隐藏数字输入框的增减按钮
+ */
+.noSpinButtons {
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
+/**
+ * 时间输入框禁用状态（移动端）
+ */
+.timeInput:disabled {
+  background-color: var(--bg-gray-medium);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  border-color: var(--border-color);
+}
+
+/**
+ * 闰月切换按钮 - 用于切换闰月状态的特殊按钮（移动端）
+ */
+.leapMonthToggle {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--toggle-border-color);
+  border-radius: 4px;
+  background-color: var(--bg-gray-dark);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-top: 8px;
+}
+
+/**
+ * 闰月切换按钮悬停状态（移动端）
+ */
+.leapMonthToggle:hover {
+  background-color: var(--toggle-bg-color);
+  border-color: #B0B0B0;
+}
+
+/**
+ * 闰月切换按钮激活状态 - 表示闰月已开启（移动端）
+ */
+.leapMonthToggle.active {
+  background-color: var(--toggle-active-bg);
+  border-color: var(--toggle-active-border);
+  color: var(--text-primary);
+}
+
+/**
+ * 闰月切换按钮激活状态的悬停效果（移动端）
+ */
+.leapMonthToggle.active:hover {
+  background-color: var(--toggle-active-hover-bg);
+  border-color: var(--toggle-active-hover-border);
+}
+
+/**
+ * 闰月切换按钮禁用状态（移动端）
+ */
+.leapMonthToggle:disabled {
+  background-color: var(--border-disabled);
+  border-color: var(--border-disabled);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/**
+ * 天干输入区域 - 用于四柱场景的天干输入框（移动端）
+ */
+.tianganInputs {
+  margin-bottom: var(--spacing-xs);
+}
+
+/**
+ * 地支输入区域 - 用于四柱场景的地支输入框（移动端）
+ */
+.dizhiInputs {
+  margin-top: var(--spacing-xs);
+}

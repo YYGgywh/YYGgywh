@@ -23,7 +23,7 @@ import {
 } from '../../../../../utils/formatTimeUtils';
 
 // 导入组件样式文件，定义组件的视觉样式
-import './DivinationInfoDisplay.css';
+import styles from './DivinationInfoDisplay.desktop.module.css';
 
 const formatDateTimeInfo = (solarInfo, lunarInfo) => ({
   solarDate: formatSolarDate(solarInfo),
@@ -74,49 +74,49 @@ const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', bir
   // role="list"：ARIA 角色，表示这是一个列表
   // aria-label="求测者信息"：为屏幕阅读器提供描述信息
   return (
-    <div className="seeker-info" role="list" aria-label="求测者信息">
+    <div className={styles.seekerInfo} role="list" aria-label="求测者信息">
       {/* 姓名信息容器 */}
-      <div className="name-info-container">
+      <div className={styles.nameInfoContainer}>
         {/* 姓名标签，显示"姓名：" */}
-        <span className="name-label">姓名：</span>
+        <span className={styles.nameLabel}>姓名：</span>
         {/* 姓名信息，显示拼接后的完整姓名 */}
-        <span className="name-info">{fullName}</span>
+        <span className={styles.nameInfo}>{fullName}</span>
       </div>
       {/* 性别信息容器 */}
-      <div className="gender-info-container">
+      <div className={styles.genderInfoContainer}>
         {/* 性别标签，显示"性别：" */}
-        <span className="gender-label">性别：</span>
+        <span className={styles.genderLabel}>性别：</span>
         {/* 性别信息，显示性别 */}
-        <span className="gender-info">{gender}</span>
+        <span className={styles.genderInfo}>{gender}</span>
       </div>
       {/* 出生年份信息容器 */}
-      <div className="birth-year-info-container">
+      <div className={styles.birthYearInfoContainer}>
         {/* 出生年份标签，显示"生年：" */}
-        <span className="birth-year-label">生年：</span>
+        <span className={styles.birthYearLabel}>生年：</span>
         {/* 出生年份信息，显示出生年份 */}
-        <span className="birth-year-info">{birthYear}</span>
+        <span className={styles.birthYearInfo}>{birthYear}</span>
       </div>
       {/* 属地信息容器 */}
-      <div className="location-info-container">
+      <div className={styles.locationInfoContainer}>
         {/* 属地标签，显示"属地：" */}
-        <span className="location-label">属地：</span>
+        <span className={styles.locationLabel}>属地：</span>
         {/* 属地信息，显示属地 */}
-        <span className="location-info">{location}</span>
+        <span className={styles.locationInfo}>{location}</span>
       </div>
       {/* 占类信息容器 */}
-      <div className="divination-type-container">
+      <div className={styles.divinationTypeContainer}>
         {/* 占类标签，显示"占类：" */}
-        <span className="divination-type-label">占类：</span>
+        <span className={styles.divinationTypeLabel}>占类：</span>
         {/* 占类信息，显示格式化后的占类（可能包含子类型） */}
-        <span className="divination-type-info">{displayType}</span>
+        <span className={styles.divinationTypeInfo}>{displayType}</span>
       </div>
       {/* 起卦方式信息容器 */}
       {displayMethod && (
-        <div className="method-info-container">
+        <div className={styles.methodInfoContainer}>
           {/* 起卦方式标签，显示"起卦：" */}
-          <span className="method-label">起卦：</span>
+          <span className={styles.methodLabel}>起卦：</span>
           {/* 起卦方式信息，显示格式化后的起卦方式 */}
-          <span className="method-info">{displayMethod}</span>
+          <span className={styles.methodInfo}>{displayMethod}</span>
         </div>
       )}
     </div>
@@ -146,13 +146,13 @@ SeekerInfo.displayName = 'SeekerInfo';
 const DivinationQuery = React.memo(({ question = '' }) => {
   // 返回 JSX 元素，渲染占卜查询信息容器
   return (
-    <div className="divination-query" role="list" aria-label="占卜内容信息">
+    <div className={styles.divinationQuery} role="list" aria-label="占卜内容信息">
       {/* 占题信息容器 */}
-      <div className="question-info-container">
+      <div className={styles.questionInfoContainer}>
         {/* 占题标签，显示"占题：" */}
-        <span className="question-label">占题：</span>
+        <span className={styles.questionLabel}>占题：</span>
         {/* 占题信息，显示占题内容 */}
-        <span className="question-info">{question}</span>
+        <span className={styles.questionInfo}>{question}</span>
       </div>
     </div>
   );
@@ -210,30 +210,30 @@ const DateTimeInfo = React.memo(({ solarInfo, lunarInfo, prevJie, nextJie }) => 
   
   // 返回 JSX 元素，渲染日期时间信息容器
   return (
-    <div className="datetime-container" role="list" aria-label="日期时间和节气信息">
+    <div className={styles.datetimeContainer} role="list" aria-label="日期时间和节气信息">
       {/* 西历信息行 */}
       <div 
-        className="calendar-row solar-row" 
+        className={`${styles.calendarRow} ${styles.solarRow}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {/* 上一个节气 */}
-        <div className="calendar-item">
-          <span className="jieqi-label">{prevJie?.name || ''}：</span>
-          <span className="date-info">{displayPrevJieDate}</span>
-          <span className="time-info">{displayPrevJieTime}</span>
+        <div className={styles.calendarItem}>
+          <span className={styles.jieqiLabel}>{prevJie?.name || ''}：</span>
+          <span className={styles.dateInfo}>{displayPrevJieDate}</span>
+          <span className={styles.timeInfo}>{displayPrevJieTime}</span>
         </div>
         {/* 占时 */}
-        <div className="calendar-item">
-          <span className="time-label">占时：</span>
-          <span className="date-info">{displayDate}</span>
-          <span className="time-info">{displayTime}</span>
+        <div className={styles.calendarItem}>
+          <span className={styles.timeLabel}>占时：</span>
+          <span className={styles.dateInfo}>{displayDate}</span>
+          <span className={styles.timeInfo}>{displayTime}</span>
         </div>
         {/* 下一个节气 */}
-        <div className="calendar-item">
-          <span className="jieqi-label">{nextJie?.name || ''}：</span>
-          <span className="date-info">{displayNextJieDate}</span>
-          <span className="time-info">{displayNextJieTime}</span>
+        <div className={styles.calendarItem}>
+          <span className={styles.jieqiLabel}>{nextJie?.name || ''}：</span>
+          <span className={styles.dateInfo}>{displayNextJieDate}</span>
+          <span className={styles.timeInfo}>{displayNextJieTime}</span>
         </div>
       </div>
     </div>
@@ -315,7 +315,7 @@ const BriefDivinationQuery = React.memo(({ formData = {} }) => {
   // role="listitem"：ARIA 角色，表示这是一个列表项
   // aria-label="简要占题"：为屏幕阅读器提供描述信息
   return (
-    <div className="divination-info brief" role="listitem" aria-label="简要占题">
+    <div className={`${styles.divinationInfo} ${styles.brief}`} role="listitem" aria-label="简要占题">
       {/* 显示格式化后的简要占题文本 */}
       {briefText}
     </div>
@@ -375,7 +375,7 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
 
   if (loading) {
     return (
-      <div className="divination-info loading" role="status" aria-label="加载中">
+      <div className={`${styles.divinationInfo} ${styles.loading}`} role="status" aria-label="加载中">
         加载中...
       </div>
     );
@@ -383,7 +383,7 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
 
   if (error) {
     return (
-      <div className="divination-info error" role="alert" aria-label="加载失败">
+      <div className={`${styles.divinationInfo} ${styles.error}`} role="alert" aria-label="加载失败">
         {error}
       </div>
     );
@@ -399,21 +399,21 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
   try {
     // 返回 JSX 元素，渲染占卜信息的主容器
     return (
-      <div className="divination-info" role="region" aria-label="占卜信息">
+      <div className={styles.divinationInfo} role="region" aria-label="占卜信息">
         {/* 顶部信息区域：包含求测者信息 */}
-        <div className="info-top">
+        <div className={styles.infoTop}>
           {/* 渲染 SeekerInfo 子组件，传入缓存的 props */}
           <SeekerInfo {...seekerInfoProps} />
         </div>
 
         {/* 中间信息区域：包含占卜查询信息 */}
-        <div className="info-middle">
+        <div className={styles.infoMiddle}>
           {/* 渲染 DivinationQuery 子组件，传入缓存的 props */}
           <DivinationQuery {...divinationQueryProps} />
         </div>
 
         {/* 底部信息区域：包含日期时间信息和节气信息 */}
-        <div className="info-bottom">
+        <div className={styles.infoBottom}>
           {/* 渲染 DateTimeInfo 子组件，传入缓存的 props */}
           <DateTimeInfo {...dateTimeInfoProps} />
         </div>
@@ -428,7 +428,7 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
     });
     
     return (
-      <div className="divination-info error" role="alert" aria-label="占卜信息加载失败">
+      <div className={`${styles.divinationInfo} ${styles.error}`} role="alert" aria-label="占卜信息加载失败">
         占卜信息加载失败，请稍后重试
       </div>
     );
