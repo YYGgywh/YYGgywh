@@ -1,0 +1,48 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/GanZhiSelector/GanZhiSelector.mobile.module.css
+ * @description     天干地支选择器组件移动端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-11 00:00:00
+ * @lastModified    2026-03-11 00:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 选择器容器 */
+.selector {
+  position: fixed;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  min-width: 160px;
+}
+
+/* 行容器 */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 菜单项 */
+.item {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 菜单项悬停效果 */
+.item:hover {
+  background-color: #f0f0f0;
+  color: #1890ff;
+}
+
+/* 菜单项点击效果 */
+.item:active {
+  background-color: #e6f7ff;
+}

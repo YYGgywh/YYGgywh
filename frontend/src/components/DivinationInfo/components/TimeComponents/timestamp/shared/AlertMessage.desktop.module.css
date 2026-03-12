@@ -1,14 +1,14 @@
 /*
- * @file            frontend/src/components/DivinationInfo/timestamp/shared/AlertMessage.mobile.module.css
- * @description     警告提示组件移动端样式 - CSS Modules
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/shared/AlertMessage.desktop.module.css
+ * @description     警告提示组件桌面端样式 - CSS Modules
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 14:30:00
- * @lastModified    2026-03-09 14:30:00
+ * @lastModified    2026-03-11 00:00:00
  * Copyright © All rights reserved
 */
 
 /* ===== 警告提示遮罩层 ===== */
-/* 警告提示遮罩层样式 - 覆盖全屏的半透明背景（移动端） */
+/* 警告提示遮罩层样式 - 覆盖全屏的半透明背景 */
 .alertOverlay {
   /* ===== 布局变量定义 ===== */
   --overlay-position: fixed;
@@ -36,11 +36,11 @@
 }
 
 /* ===== 警告提示内容区 ===== */
-/* 警告提示内容区样式 - 实际的警告内容（移动端） */
+/* 警告提示内容区样式 - 实际的警告内容 */
 .alertContent {
   /* ===== 尺寸变量定义 ===== */
-  --alert-padding: var(--spacing-xl, 16px);
-  --alert-max-width: 320px;
+  --alert-padding: var(--spacing-3xl, 24px);
+  --alert-max-width: 400px;
   --alert-width: 90%;
   
   /* ===== 颜色变量定义 ===== */
@@ -58,17 +58,17 @@
 }
 
 /* ===== 警告消息文本 ===== */
-/* 警告消息文本样式 - 显示警告或错误信息（移动端） */
+/* 警告消息文本样式 - 显示警告或错误信息 */
 .alertMessage {
   /* ===== 尺寸变量定义 ===== */
-  --message-margin-bottom: var(--spacing-lg, 12px);
+  --message-margin-bottom: var(--spacing-2xl, 16px);
   --message-line-height: 1.5;
   
   /* ===== 颜色变量定义 ===== */
   --message-color: var(--text-primary, #333333);
   
   /* ===== 字体变量定义 ===== */
-  --message-font-size: var(--font-size-base, 14px);
+  --message-font-size: var(--font-size-lg, 16px);
   
   /* ===== 样式属性 ===== */
   font-size: var(--message-font-size);
@@ -78,14 +78,14 @@
 }
 
 /* ===== 警告关闭按钮 ===== */
-/* 警告关闭按钮样式 - 用于关闭警告弹窗（移动端） */
+/* 警告关闭按钮样式 - 用于关闭警告弹窗 */
 .alertClose {
   /* ===== 尺寸变量定义 ===== */
-  --close-padding: var(--spacing-sm, 6px) var(--spacing-2xl, 16px);
+  --close-padding: var(--spacing-sm, 6px) var(--spacing-3xl, 24px);
   --close-border-radius: var(--radius-md, 6px);
   
   /* ===== 颜色变量定义 ===== */
-  --close-bg: var(--primary-color, #1890FF);
+  --close-bg: var(--btn-warning-bg, #FF4D4F);
   --close-text-color: var(--bg-white, #FFFFFF);
   
   /* ===== 字体变量定义 ===== */
@@ -106,8 +106,8 @@
 }
 
 /* ===== 警告关闭按钮悬停状态 ===== */
-/* 警告关闭按钮悬停状态样式（移动端） */
+/* 警告关闭按钮悬停状态样式 */
 .alertClose:hover {
-  --close-hover-bg: var(--primary-hover, #40A9FF);
+  --close-hover-bg: var(--btn-warning-hover, #FF7875);
   background-color: var(--close-hover-bg);
 }

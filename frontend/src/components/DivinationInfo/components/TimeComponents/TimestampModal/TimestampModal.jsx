@@ -8,9 +8,9 @@
 */
 
 import React, { useState, useEffect, useCallback } from 'react'; // 导入React钩子函数
-import SolarTime from '../../../timestamp/components/SolarTime/SolarTime'; // 导入公历时间组件
-import LunarTime from '../../../timestamp/components/LunarTime/LunarTime'; // 导入农历时间组件
-import FourPillarsTime from '../../../timestamp/components/FourPillarsTime/FourPillarsTime'; // 导入四柱时间组件
+import SolarTime from '../timestamp/components/SolarTime/SolarTime'; // 导入公历时间组件
+import LunarTime from '../timestamp/components/LunarTime/LunarTime'; // 导入农历时间组件
+import FourPillarsTime from '../timestamp/components/FourPillarsTime/FourPillarsTime'; // 导入四柱时间组件
 import styles from './TimestampModal.desktop.module.css'; // 导入组件样式文件
 
 // 定义时间戳弹窗组件，接收关闭和提交回调函数

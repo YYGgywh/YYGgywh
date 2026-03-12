@@ -14,7 +14,9 @@ import './LiuYaoReault.css';
 // 导入四柱展示组件
 import FourPillarsDisplay from '../../FourPillars/FourPillarsDisplay';
 // 导入占卜信息展示组件和简短占卜查询组件
-import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/DivinationInfoDisplay';
+import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
+
+
 // 导入六爻网格展示组件
 import LiuYaoGridDisplay from './LiuYaoGridDisplay';
 // 导入显示控制组件

@@ -1,0 +1,168 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/SolarTime/SolarTime.desktop.module.css
+ * @description     公历时间输入和显示组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 15:30:00
+ * @lastModified    2026-03-12 10:52:10
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 公历时间容器 - 主容器
+ */
+.gregorianTimeContainer {
+  display: flex;
+  flex-direction: column;
+  /* gap: var(--spacing-lg); */
+  /* padding: var(--spacing-lg); */
+}
+
+/**
+ * 时间输入框容器 - 包含所有时间输入框
+ */
+.timestampInputs {
+  display: flex;
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * 基础时间输入框 - 通用输入框样式
+ */
+.timeInput {
+  height: 30px;
+  padding: 0 var(--spacing-xs);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  text-align: center;
+}
+
+/**
+ * 时间输入框焦点状态 - 获得焦点时的样式
+ */
+.timeInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-focus);
+}
+
+/**
+ * 年份输入框 - 较宽的宽度
+ */
+.timeInputYear {
+  width: 60px;
+}
+
+/**
+ * 小尺寸时间输入框 - 用于月、日、时等
+ */
+.timeInputSmall {
+  width: 40px;
+}
+
+/**
+ * 隐藏数字输入框的增减按钮
+ */
+.noSpinButtons {
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
+/**
+ * 时间输入框禁用状态
+ */
+.timeInput:disabled {
+  background-color: var(--bg-gray-medium);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  border-color: var(--border-color);
+}
+
+/**
+ * 时间显示容器 - 包含阳历和阴历时间信息
+ */
+.timestampDisplay {
+  background-color: var(--bg-gray-light);
+  padding: 15px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/**
+ * 阳历信息 - 显示阳历日期和时间
+ */
+.solarInfo {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+/**
+ * 阴历信息 - 显示阴历日期和时间
+ */
+.lunarInfo {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+/**
+ * 阳历和阴历信息的最后一个元素 - 移除底部间距
+ */
+.solarInfo:last-child,
+.lunarInfo:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * 阳历标签 - 阳历信息的标签文本
+ */
+.solarLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+}
+
+/**
+ * 日期标签 - 通用日期标签
+ */
+.dateLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+}
+
+/**
+ * 日期值 - 显示具体的日期
+ */
+.dateValue {
+  color: var(--text-primary);
+  display: inline-block;
+  width: 120px;
+  font-size: var(--font-size-base);
+}
+
+/**
+ * 时间值 - 显示具体的时间
+ */
+.timeValue {
+  color: var(--text-primary);
+  display: inline-block;
+  width: 60px;
+  font-size: var(--font-size-base);
+}

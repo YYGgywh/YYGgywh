@@ -9,7 +9,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { methodToChinese } from '../../utils/methodMapping';
+import { methodToChinese } from '../../../../../utils/methodMapping';
 // 导入时间格式化工具函数，用于将原始数据格式化为可读的日期时间字符串
 import {
   formatSolarDate,    // 格式化西历日期（如：2025年08月10日）
@@ -20,7 +20,8 @@ import {
   formatJieqiTime,     // 格式化节气时间（如：12:00:00）
   formatJieqiDateToLunar, // 格式化节气日期为农历（如：乙巳年六月十七）
   formatJieqiTimeToLunar  // 格式化节气时间为农历（如：午时）
-} from '../../utils/formatTimeUtils';
+} from '../../../../../utils/formatTimeUtils';
+
 // 导入组件样式文件，定义组件的视觉样式
 import './DivinationInfoDisplay.css';
 

@@ -1,9 +1,9 @@
 /*
- * @file            frontend/src/components/DivinationInfo/timestamp/GanZhiSelector.jsx
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/GanZhiSelector/GanZhiSelector.jsx
  * @description     天干地支选择菜单组件，支持点击选择和鼠标事件处理
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-06 10:00:00
- * @lastModified    2026-02-18 14:13:59
+ * @lastModified    2026-03-11 00:00:00
  * Copyright © All rights reserved
 */
 
@@ -13,7 +13,8 @@ import React, {
   useRef, // useRef: 用于引用DOM元素或保存可变值(不触发重新渲染)
   useEffect // useEffect: 用于处理副作用(如订阅、定时器、DOM操作等)
 } from 'react'; // 从react模块导入 
-import styles from './GanZhiSelector.module.css'; // 导入组件样式模块
+// 导入CSS Modules样式文件
+import desktopStyles from './GanZhiSelector.desktop.module.css';
 
 // 菜单内容配置
 // 定义菜单类型常量对象,包含各种天干地支菜单的配置
@@ -89,6 +90,9 @@ const GanZhiSelector = ({
   const menuRef = useRef(null); // 定义菜单引用,用于获取菜单DOM元素
   // 获取当前菜单类型的内容
   const menuContent = MENU_TYPES[menuType]?.content || MENU_TYPES.TIANGAN.content; // 根据menuType获取对应菜单内容,如果不存在则默认使用天干菜单内容
+  
+  // 直接使用桌面端样式
+  const styles = desktopStyles;
 
   // 处理选择
   // 定义选择处理函数,接收选中的项作为参数

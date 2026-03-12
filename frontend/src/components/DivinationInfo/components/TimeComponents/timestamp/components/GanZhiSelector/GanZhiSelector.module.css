@@ -1,5 +1,11 @@
-
-
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/GanZhiSelector/GanZhiSelector.module.css
+ * @description     天干地支选择菜单组件样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-06 10:00:00
+ * @lastModified    2026-03-11 00:00:00
+ * Copyright © All rights reserved
+*/
 
 .selector {
   position: absolute; 

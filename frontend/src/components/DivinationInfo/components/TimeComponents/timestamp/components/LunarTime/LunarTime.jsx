@@ -1,9 +1,9 @@
 /*
- * @file            frontend/src/components/DivinationInfo/timestamp/components/LunarTime/LunarTime.jsx
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/LunarTime/LunarTime.jsx
  * @description     农历时间输入和显示组件，支持农历转公历转换
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-04 10:00:00
- * @lastModified    2026-03-09 15:18:43
+ * @lastModified    2026-03-12 10:46:52
  * Copyright © All rights reserved
 */
 
@@ -15,8 +15,10 @@ import React, {
   useRef // useRef: 用于引用DOM元素或保存可变值(不触发重新渲染)
 } from 'react';
 
-import CalendarService from '../../../../../services/calendarService'; // 导入日历服务模块,用于处理日历转换和计算
+import CalendarService from '../../../../../../../services/calendarService'; // 导入日历服务模块,用于处理日历转换和计算
 import AlertMessage from '../../shared/AlertMessage'; // 导入错误提示组件
+import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组件
+import desktopStyles from './LunarTime.desktop.module.css'; // 导入桌面端样式
 
 // 导入验证工具函数集合
 import {
@@ -27,7 +29,7 @@ import {
   handleInputValidation, // handleInputValidation: 处理输入验证,包括范围检查和错误提示
   getLunarMonthDays, // getLunarMonthDays: 获取指定农历月份的天数
   getLeapMonth // getLeapMonth: 获取指定农历年份的闰月月份
-} from '../../../../../utils/validationUtils';
+} from '../../../../../../../utils/validationUtils';
 
 /**
  * 农历时间输入和显示组件
@@ -37,6 +39,9 @@ import {
 
 // 定义农历时间组件,接收props参数
 const LunarTime = ({ onTimeChange, confirmedTime }) => {
+  // 使用桌面端样式
+  const styles = desktopStyles;
+  
   // 定义时间数据状态,存储用户输入的时间值
   const [timeData, setTimeData] = useState({
     lunar_year: '',    // 农历年份字段,存储4位数字
@@ -87,6 +92,8 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
     second: false,       // 秒输入框禁用状态
     leap_month: true     // 闰月切换按钮禁用状态(默认禁用,只有当年份有闰月且月份等于闰月时才启用)
   });
+  
+
   
   // 定义输入框引用,用于同步浏览器自动填充的值(直接操作DOM元素)
   const inputRefs = useRef({
@@ -745,16 +752,16 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
 
   // 返回JSX渲染结果
   return (
-    <div className="lunar-time-container"> {/* 农历时间容器 */}
+    <div className={styles.lunarTimeContainer}> {/* 农历时间容器 */}
       {/* 农历输入区域 */}
-      <div className="timestamp-inputs"> {/* 时间戳输入区域 */}
+      <div className={styles.timestampInputs}> {/* 时间戳输入区域 */}
         {/* 农历年份输入框 */}
         <input 
           ref={(el) => (inputRefs.current.lunar_year = el)} // 设置输入框引用
           type="number" // 输入类型为数字
           name="lunar_year" // 输入框名称
           placeholder="年" // 占位符文本
-          className="time-input time-input-year no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputYear} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.lunar_year} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -768,7 +775,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
         <button
           type="button" // 按钮类型
           ref={(el) => (inputRefs.current.leapMonthToggle = el)} // 设置按钮引用
-          className={`leap-month-toggle ${timeData.is_leap_month ? 'active' : ''}`} // CSS类名,根据闰月状态添加active类
+          className={`${styles.leapMonthToggle} ${timeData.is_leap_month ? styles.active : ''}`} // CSS类名,根据闰月状态添加active类
           onClick={handleLeapMonthToggle} // 点击事件处理
           onKeyDown={handleLeapMonthKeyDown} // 键盘事件处理
           aria-pressed={timeData.is_leap_month} // ARIA属性,表示按钮是否被按下
@@ -786,7 +793,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
           type="number" // 输入类型为数字
           name="lunar_month" // 输入框名称
           placeholder="月" // 占位符文本
-          className="time-input time-input-small no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.lunar_month} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -802,7 +809,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
           type="number" // 输入类型为数字
           name="lunar_day" // 输入框名称
           placeholder="日" // 占位符文本
-          className="time-input time-input-small no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.lunar_day} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -818,7 +825,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
           type="number" // 输入类型为数字
           name="hour" // 输入框名称
           placeholder="时" // 占位符文本
-          className="time-input time-input-small no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.hour} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -834,7 +841,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
           type="number" // 输入类型为数字
           name="minute" // 输入框名称
           placeholder="分" // 占位符文本
-          className="time-input time-input-small no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.minute} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -850,7 +857,7 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
           type="number" // 输入类型为数字
           name="second" // 输入框名称
           placeholder="秒" // 占位符文本
-          className="time-input time-input-small no-spin-buttons" // CSS类名
+          className={`${styles.timeInput} ${styles.timeInputSmall} ${styles.noSpinButtons}`} // CSS类名
           value={timeData.second} // 输入框值
           onChange={handleChange} // 值变化事件处理
           onBlur={handleBlur} // 失焦事件处理
@@ -862,47 +869,21 @@ const LunarTime = ({ onTimeChange, confirmedTime }) => {
         />
       </div> {/* 结束时间戳输入区域 */}
       
-      {/* 时间显示区域 */}
-      <div className="timestamp-display"> {/* 时间戳显示区域 */}
-        <> {/* React Fragment,用于包裹多个元素而不添加额外的DOM节点 */}
-          {/* 农历信息显示 */}
-          <div className="lunar-info"> {/* 农历信息容器 */}
-            <span className="date-label">农历：</span> {/* 农历标签 */}
-            <span className="date-value"> {/* 农历日期值 */}
-              {/* 显示农历干支年,如"甲子年" */}
-              {lunarInfo.lunar_year_in_GanZhi ? lunarInfo.lunar_year_in_GanZhi + '年' : ''}
-              {/* 显示农历中文月,如"正月" */}
-              {lunarInfo.lunar_month_in_Chinese ? lunarInfo.lunar_month_in_Chinese + '月' : ''}
-              {/* 显示农历中文日,如"初一" */}
-              {lunarInfo.lunar_day_in_Chinese ? lunarInfo.lunar_day_in_Chinese : ''}
-            </span>
-            {/* 显示农历时辰,如"子时"、"早子时"、"晚子时" */}
-            <span className="time-value">{lunarInfo.lunar_time_Zhi}</span>
-          </div>
-          {/* 公历信息显示 */}
-          <div className="solar-info"> {/* 公历信息容器 */}
-            <span className="date-label">公历：</span> {/* 公历标签 */}
-            <span className="date-value"> {/* 公历日期值 */}
-              {/* 显示公历年份 */}
-              {lunarInfo.solar_year ? lunarInfo.solar_year : ''}
-              {/* 如果年份和月份都有值,显示"年"字 */}
-              {lunarInfo.solar_year && lunarInfo.solar_month ? '年' : ''}
-              {/* 显示公历月份 */}
-              {lunarInfo.solar_month ? lunarInfo.solar_month : ''}
-              {/* 如果月份和日期都有值,显示"月"字 */}
-              {lunarInfo.solar_month && lunarInfo.solar_day ? '月' : ''}
-              {/* 显示公历日期 */}
-              {lunarInfo.solar_day ? lunarInfo.solar_day : ''}
-              {/* 如果日期有值,显示"日"字 */}
-              {lunarInfo.solar_day ? '日' : ''}
-            </span>
-            {/* 显示公历时间,如"12:30:45" */}
-            <span className="time-value">
-              {timeData.hour ? solarTime : ''}
-            </span>
-          </div>
-        </> {/* 结束React Fragment */}
-      </div> {/* 结束时间戳显示区域 */}
+      {/* 时间显示区域 - 使用统一的时间显示组件 */}
+      <TimeDisplay
+        solarDate={lunarInfo.solar_year && lunarInfo.solar_month && lunarInfo.solar_day 
+          ? `${lunarInfo.solar_year}年${lunarInfo.solar_month}月${lunarInfo.solar_day}日` 
+          : ''}
+        solarTime={timeData.hour ? solarTime : ''}
+        lunarDate={(lunarInfo.lunar_year_in_GanZhi || lunarInfo.lunar_month_in_Chinese || lunarInfo.lunar_day_in_Chinese) 
+          ? `${lunarInfo.lunar_year_in_GanZhi ? lunarInfo.lunar_year_in_GanZhi + '年' : ''}${lunarInfo.lunar_month_in_Chinese ? lunarInfo.lunar_month_in_Chinese + '月' : ''}${lunarInfo.lunar_day_in_Chinese ? lunarInfo.lunar_day_in_Chinese : ''}` 
+          : ''}
+        lunarTime={lunarInfo.lunar_time_Zhi}
+        solarFirst={false}
+        showLabels={true}
+        showTime={true}
+        className={styles.timeDisplay}
+      />
       
       <AlertMessage
         showAlert={showAlert}

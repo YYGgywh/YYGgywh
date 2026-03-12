@@ -1,18 +1,21 @@
 /*
- * @file            frontend/src/components/DivinationInfo/timestamp/FourPillarsTime.jsx
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/FourPillarsTime/FourPillarsTime.jsx
  * @description     四柱时间输入和显示组件
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-06 10:00:00
- * @lastModified    2026-02-18 18:55:18
+ * @lastModified    2026-03-11 18:39:43
  * Copyright © All rights reserved
 */
 
 // 导入React核心库和Hooks
 import React, { useState, useEffect, useRef } from 'react'; // 导入React及状态管理、副作用和引用钩子
+// 导入CSS Modules样式文件
+import desktopStyles from './FourPillarsTime.desktop.module.css';
 // 导入四柱工具函数
-import { getTianGanList, validateYearGanInput, validateYearZhiInput, validateDayGanInput, validateDayZhiInput, validateMonthZhiInput, validateHourZhiInput, calculateMonthGan, calculateHourGan } from '../../../../../utils/fourPillarsUtils'; // 导入天干地支相关工具函数
+import { getTianGanList, validateYearGanInput, validateYearZhiInput, validateDayGanInput, validateDayZhiInput, validateMonthZhiInput, validateHourZhiInput, calculateMonthGan, calculateHourGan } from '../../../../../../../utils/fourPillarsUtils'; // 导入天干地支相关工具函数
 import GanZhiSelector from '../GanZhiSelector/GanZhiSelector'; // 导入天干地支选择器组件
-import CalendarService from '../../../../../services/calendarService'; // 导入日历服务模块
+import CalendarService from '../../../../../../../services/calendarService'; // 导入日历服务模块
+import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组件
 
 // 定义四柱时间组件
 const FourPillarsTime = ({ // 组件参数解构
@@ -43,6 +46,9 @@ const FourPillarsTime = ({ // 组件参数解构
   // 农历信息状态
   const [lunarDate, setLunarDate] = useState(''); // 定义农历日期状态,存储格式化后的农历日期
   const [lunarTime, setLunarTime] = useState(''); // 定义农历时间状态,存储格式化后的农历时间
+  
+  // 使用桌面端样式
+  const styles = desktopStyles;
   
   const skipNotifyRef = useRef(false); // 使用ref存储跳过通知的标记,避免不必要的父组件更新
   
@@ -84,6 +90,8 @@ const FourPillarsTime = ({ // 组件参数解构
       console.log('FourPillarsTime - 已更新timeData'); // 输出调试日志
     }
   }, [confirmedTime]); // 依赖数组:监听confirmedTime变化
+  
+
   
   // 监听年干和月支变化，自动计算月干
   useEffect(() => { // 定义副作用钩子,监听年干和月支变化
@@ -546,16 +554,16 @@ const FourPillarsTime = ({ // 组件参数解构
 
   // 渲染组件的 JSX 结构
   return (
-    <div className="four-pillars-time-container" ref={containerRef}> {/* 四柱时间组件最外层容器，用于整体布局和定位 */}
+    <div className={styles.fourPillarsTimeContainer} ref={containerRef}> {/* 四柱时间组件最外层容器，用于整体布局和定位 */}
       {/* 四柱输入区域 */}      
-      <div className="timestamp-inputs tiangan-inputs"> {/* 天干输入区域：用于输入年、月、日、时的天干 */}
+      <div className={`${styles.timestampInputs} ${styles.tianganInputs}`}> {/* 天干输入区域：用于输入年、月、日、时的天干 */}
         {/* 年干输入框：用于输入或显示年柱的天干，支持手动输入、双击清空及获取焦点时弹出对应天干菜单 */}
         <input 
           ref={yearGanRef} // 绑定DOM引用，便于后续获取位置或操作
           type="text" // 文本输入类型
           name="yearGan" // 字段名，与timeData中的key对应
           placeholder="年" // 占位提示文字，提示用户输入年干
-          className="time-input" // 统一样式类名
+          className={styles.timeInput} // 统一样式类名
           value={timeData.yearGan} // 当前绑定的年干值
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleYearGanFocus} // 获取焦点时根据已有年支动态显示天干菜单
@@ -567,7 +575,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 输入框类型为普通文本，用于输入单个天干或地支字符
           name="monthGan" // 月干字段，仅用于展示自动计算出的月干
           placeholder="月" // 占位提示文字，提示用户该输入框对应月柱的天干
-          className="time-input" // 统一样式类名
+          className={styles.timeInput} // 统一样式类名
           value={timeData.monthGan} // 绑定自动计算后的月干值
           onChange={handleChange} // 输入变化时触发统一校验（实际被禁用，不会触发）
           onDoubleClick={handleDoubleClick} // 双击可清空当前字段
@@ -579,7 +587,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 文本输入类型，仅允许输入单个天干字符
           name="dayGan" // 字段名，与timeData中的dayGhan字段对应
           placeholder="日" // 占位提示文字，提示用户输入日干
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.dayGan} // 当前绑定的日干值，受控组件
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleDayGanFocus} // 获取焦点时根据已有日支动态显示天干菜单
@@ -591,7 +599,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 输入框类型为普通文本，仅用于展示单个天干字符
           name="hourGan" // 字段名，与timeData中的hourGan字段对应，表示时柱天干
           placeholder="时" // 占位提示文字，提示用户该输入框对应时辰的天干
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.hourGan} // 当前绑定的时干值，受控组件，由日干和时支自动计算得出
           onChange={handleChange} // 输入变化时触发统一校验（实际被禁用，不会触发）
           onDoubleClick={handleDoubleClick} // 双击快速清空当前时干字段
@@ -599,14 +607,14 @@ const FourPillarsTime = ({ // 组件参数解构
         />
       </div>
       
-      <div className="timestamp-inputs dizhi-inputs"> {/* 地支输入区域：用于输入年、月、日、时的地支 */}
+      <div className={`${styles.timestampInputs} ${styles.dizhiInputs}`}> {/* 地支输入区域：用于输入年、月、日、时的地支 */}
         {/* 年支输入框：用于输入或显示年柱的地支，支持手动输入、双击清空及获取焦点时弹出对应地支菜单 */}
         <input 
           ref={yearZhiRef} // 绑定DOM引用，便于后续获取位置或操作
           type="text" // 文本输入类型
           name="yearZhi" // 字段名，与timeData中的yearZhi字段对应
           placeholder="年" // 占位提示文字，提示用户输入年支
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.yearZhi} // 当前绑定的年支值，受控组件
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleYearZhiFocus} // 获取焦点时根据已有年干动态显示地支菜单
@@ -619,7 +627,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 文本输入类型，仅允许输入单个地支字符
           name="monthZhi" // 字段名，与timeData中的monthZhi字段对应，表示月柱地支
           placeholder="月" // 占位提示文字，提示用户输入月支
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.monthZhi} // 当前绑定的月支值，受控组件
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleMonthZhiFocus} // 获取焦点时显示四季地支菜单
@@ -632,7 +640,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 文本输入类型，仅允许输入单个地支字符
           name="dayZhi" // 字段名，与timeData中的dayZhi字段对应，表示日柱地支
           placeholder="日" // 占位提示文字，提示用户输入日支
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.dayZhi} // 当前绑定的日支值，受控组件，由程序根据已有数据自动计算得出
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleDayZhiFocus} // 获取焦点时根据已有日干动态显示地支菜单
@@ -645,7 +653,7 @@ const FourPillarsTime = ({ // 组件参数解构
           type="text" // 文本输入类型，仅允许输入单个地支字符
           name="hourZhi" // 字段名，与timeData中的hourZhi字段对应，表示时柱地支
           placeholder="时" // 占位提示文字，提示用户输入时支
-          className="time-input" // 统一样式类名，保持输入框外观一致
+          className={styles.timeInput} // 统一样式类名，保持输入框外观一致
           value={timeData.hourZhi} // 当前绑定的时支值，受控组件，由程序根据已有数据自动计算得出
           onChange={handleChange} // 输入变化时触发统一校验与更新
           onFocus={handleHourZhiFocus} // 获取焦点时根据已有时干动态显示地支菜单
@@ -686,22 +694,17 @@ const FourPillarsTime = ({ // 组件参数解构
         />
       </div>
       
-      {/* 时间显示区域 */}
-      <div className="timestamp-display"> {/* 时间展示区域：用于显示当前选中的公历与农历日期时间信息 */}
-        <div className="solar-info"> {/* 公历信息展示块：包含“公历：”标签、日期字符串及时间字符串 */}
-          <span className="solar-label">公历：</span> {/* “公历：”标签 */}
-          <span className="date-value">{solarDate}</span> {/* 公历日期值，由 solarDate 状态提供，格式如“2025年06月25日” */}
-          <span className="time-value"> {/* 公历时间值，仅当 selectedSolar 存在时显示 solarTime，否则显示空字符串 */}
-            {selectedSolar ? solarTime : ''} {/* 当已选中公历时间时显示时间字符串，否则显示空字符串 */}
-          </span>
-        </div>
-        
-        <div className="lunar-info"> {/* 农历信息展示块：包含“农历：”标签、日期字符串及时辰字符串 */}
-          <span className="date-label">农历：</span> {/* “农历：”标签 */}
-          <span className="date-value">{lunarDate}</span> {/* 农历日期值，由 lunarDate 状态提供，格式如“乙巳年五月三十” */}
-          <span className="time-value">{lunarTime}</span> {/* 农历时辰值，由 lunarTime 状态提供，格式如“午时”或“早子时” */}
-        </div>
-      </div>
+      {/* 时间显示区域 - 使用统一的时间显示组件 */}
+      <TimeDisplay
+        solarDate={solarDate}
+        solarTime={selectedSolar ? solarTime : ''}
+        lunarDate={lunarDate}
+        lunarTime={lunarTime}
+        solarFirst={true}
+        showLabels={true}
+        showTime={true}
+        className={styles.timeDisplay}
+      />
     </div>
   );
 };

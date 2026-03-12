@@ -1,0 +1,127 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/TimeDisplay/TimeDisplay.desktop.module.css
+ * @description     通用时间显示组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 18:00:00
+ * @lastModified    2026-03-12 10:11:11
+ * Copyright © All rights reserved
+*/
+
+/* 时间显示容器 */
+.timestampDisplay {
+  --tpd-gb-color: #f5f7fa;
+  --tpd-padding: 16px 40px;
+  background-color: var(--tpd-gb-color);
+  /* border-radius: 8px; */
+  padding: var(--tpd-padding);
+  /* margin-top: 12px; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  font-size: var(--font-size-base, 14px);
+  line-height: var(--line-height-base, 1.5);
+  
+  align-items: center; /* 垂直居中对齐 */
+  justify-items: center; /* 水平居中对齐 */
+  /* width: fit-content; */
+}
+
+/* 网格容器 */
+.gridContainer {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* 标签列自适应 + 日期列扩展 + 时间列自适应 */
+  grid-template-rows: auto auto; /* 两行：公历一行，农历一行 */
+  /* gap: 8px 0px; 行间距 8px，列间距 12px */
+  row-gap: 8px;
+  align-items: center; /* 垂直居中对齐 */
+  justify-items: center; /* 水平居中对齐 */
+  width: fit-content; 
+}
+
+/* 标签与日期间隔 */
+.labelCell + .dateCell {
+  margin-left: 0px;
+}
+
+/* 日期与时间间隔 */
+.dateCell + .timeCell {
+  margin-left: 8px;
+}
+
+/* 网格单元格基础样式 */
+.gridCell {
+  display: flex; 
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: center; /* 水平居中对齐 */
+}
+
+/* 标签列样式 */
+.labelCell {
+  justify-content: flex-start; /* 标签列左对齐 */
+  /* min-width: 40px; 标签列最小宽度 */
+}
+
+/* 日期列样式 */
+.dateCell {
+  justify-content: center; /* 日期列居中对齐 */
+   min-width: 115px;/* 日期列最小宽度 */
+}
+
+/* 时间列样式 */
+.timeCell {
+  justify-content: center; /* 时间列居中对齐 */
+  min-width: 55px;/*  时间列最小宽度 */
+}
+
+/* 标签样式 */
+.solarLabel {
+  --solar-label-color: #333333;
+  font-weight: bold;
+  color: var(--solar-label-color, #333333);
+  /* margin-right: 8px; */
+}
+
+.lunarLabel {
+  font-weight: bold;
+  color: var(--text-primary, #333333);
+  /* margin-right: 8px; */
+}
+
+/* 日期值样式 */
+.dateValue {
+  /* margin-right: 12px; */
+  color: var(--text-primary, #333333);
+  /* min-width: 115px; 日期列最小宽度 */
+  text-align: center; /* 日期列居中对齐 */
+  /* background-color: #c00000; */
+  /* border: 1px solid #c00000; */
+  /* border-right: 1px solid #c00000; */
+}
+
+/* 时间值样式 */
+.timeValue {
+  color: var(--text-primary, #333333);
+  /* font-style: italic; */
+  /* min-width: 55px; 时间列最小宽度 */
+  text-align: center; /* 时间列右对齐 */
+  /* padding-left: 12px; 时间值垂直内边距 */
+  /* border: 1px solid  #c00000;  */
+}
+
+/* 响应式设计 
+@media (max-width: 768px) {
+  .timestampDisplay {
+    padding: 12px;
+    font-size: 13px;
+  }
+  
+  .solarInfo, .lunarInfo {
+    margin-bottom: 6px;
+  }
+  
+  .solarLabel, .lunarLabel {
+    margin-right: 6px;
+  }
+  
+  .dateValue {
+    margin-right: 8px;
+  }
+}*/

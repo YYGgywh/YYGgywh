@@ -1,0 +1,96 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/TimeDisplay/TimeDisplay.mobile.module.css
+ * @description     通用时间显示组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 18:00:00
+ * @lastModified    2026-03-11 17:03:48
+ * Copyright © All rights reserved
+*/
+
+/* 时间显示容器 - 移动端优化 */
+.timestampDisplay {
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-family: 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* 公历信息容器 - 移动端优化 */
+.solarInfo {
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* 农历信息容器 - 移动端优化 */
+.lunarInfo {
+  color: #666;
+}
+
+/* 标签样式 - 移动端优化 */
+.solarLabel {
+  font-weight: bold;
+  color: #1890ff;
+  margin-right: 6px;
+}
+
+.lunarLabel {
+  font-weight: bold;
+  color: #52c41a;
+  margin-right: 6px;
+}
+
+/* 日期值样式 - 移动端优化 */
+.dateValue {
+  margin-right: 8px;
+  color: #262626;
+}
+
+/* 时间值样式 - 移动端优化 */
+.timeValue {
+  color: #8c8c8c;
+  font-style: italic;
+}
+
+/* 移动端特殊适配 - 横屏模式 */
+@media (min-width: 480px) and (max-width: 768px) {
+  .timestampDisplay {
+    padding: 14px;
+    font-size: 13.5px;
+  }
+  
+  .solarInfo, .lunarInfo {
+    margin-bottom: 7px;
+  }
+  
+  .solarLabel, .lunarLabel {
+    margin-right: 7px;
+  }
+  
+  .dateValue {
+    margin-right: 10px;
+  }
+}
+
+/* 移动端特殊适配 - 小屏幕模式 */
+@media (max-width: 360px) {
+  .timestampDisplay {
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .solarInfo, .lunarInfo {
+    margin-bottom: 5px;
+  }
+  
+  .solarLabel, .lunarLabel {
+    margin-right: 5px;
+  }
+  
+  .dateValue {
+    margin-right: 6px;
+  }
+}

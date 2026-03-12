@@ -1,9 +1,9 @@
 /*
- * @file            frontend/src/components/DivinationInfo/timestamp/shared/AlertMessage.jsx
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/shared/AlertMessage.jsx
  * @description     错误提示组件，用于显示时间输入验证错误
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-18 21:15:00
- * @lastModified    2026-03-09 14:42:47
+ * @lastModified    2026-03-11 11:23:35
  * Copyright © All rights reserved
 */
 

@@ -1,0 +1,95 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/FourPillarsTime/FourPillarsTime.desktop.module.css
+ * @description     四柱时间组件桌面端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-11 00:00:00
+ * @lastModified    2026-03-11 00:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 四柱时间容器 */
+.fourPillarsTimeContainer {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 输入区域 */
+.timestampInputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* 天干输入区域 */
+.tianganInputs {
+  margin-bottom: 10px;
+}
+
+/* 地支输入区域 */
+.dizhiInputs {
+  margin-bottom: 20px;
+}
+
+/* 时间输入框 */
+.timeInput {
+  width: 80px;
+  height: 40px;
+  font-size: 16px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 10px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* 输入框焦点状态 */
+.timeInput:focus {
+  outline: none;
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 禁用状态输入框 */
+.timeInput:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  color: #999;
+}
+
+/* 时间显示区域 */
+.timestampDisplay {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* 公历信息 */
+.solarInfo {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* 农历信息 */
+.lunarInfo {
+  font-size: 14px;
+}
+
+/* 标签样式 */
+.solarLabel,
+.lunarLabel {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* 日期和时间值 */
+.dateValue,
+.timeValue {
+  color: #333;
+}

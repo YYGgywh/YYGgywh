@@ -1,0 +1,225 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/TimeComponents/timestamp/components/LunarTime/LunarTime.mobile.module.css
+ * @description     农历时间输入和显示组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 15:40:00
+ * @lastModified    2026-03-11 15:40:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 农历时间容器 - 主容器
+ */
+.lunarTimeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+/**
+ * 时间输入框容器 - 包含所有时间输入框
+ */
+.timestampInputs {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/**
+ * 基础时间输入框 - 通用输入框样式
+ */
+.timeInput {
+  height: 28px;
+  padding: 0 var(--spacing-xs);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  text-align: center;
+}
+
+/**
+ * 时间输入框焦点状态 - 获得焦点时的样式
+ */
+.timeInput:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-focus);
+}
+
+/**
+ * 年份输入框 - 较宽的宽度
+ */
+.timeInputYear {
+  width: 55px;
+}
+
+/**
+ * 小尺寸时间输入框 - 用于月、日、时等
+ */
+.timeInputSmall {
+  width: 35px;
+}
+
+/**
+ * 隐藏数字输入框的增减按钮
+ */
+.noSpinButtons {
+  /* Chrome, Safari, Edge, Opera */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  -moz-appearance: textfield;
+}
+
+/**
+ * 时间输入框禁用状态
+ */
+.timeInput:disabled {
+  background-color: var(--bg-gray-medium);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  border-color: var(--border-color);
+}
+
+/**
+ * 闰月切换按钮 - 用于切换闰月状态的特殊按钮
+ */
+.leapMonthToggle {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--toggle-border-color);
+  border-radius: 4px;
+  background-color: var(--bg-gray-dark);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-top: 10px;
+}
+
+/**
+ * 闰月切换按钮悬停状态
+ */
+.leapMonthToggle:hover {
+  background-color: var(--toggle-bg-color);
+  border-color: #B0B0B0;
+}
+
+/**
+ * 闰月切换按钮激活状态 - 表示闰月已开启
+ */
+.leapMonthToggle.active {
+  background-color: var(--toggle-active-bg);
+  border-color: var(--toggle-active-border);
+  color: var(--text-primary);
+}
+
+/**
+ * 闰月切换按钮激活状态的悬停效果
+ */
+.leapMonthToggle.active:hover {
+  background-color: var(--toggle-active-hover-bg);
+  border-color: var(--toggle-active-hover-border);
+}
+
+/**
+ * 闰月切换按钮禁用状态
+ */
+.leapMonthToggle:disabled {
+  background-color: var(--border-disabled);
+  border-color: var(--border-disabled);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/**
+ * 时间显示容器 - 包含农历和公历时间信息
+ */
+.timestampDisplay {
+  background-color: var(--bg-gray-light);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/**
+ * 农历信息 - 显示农历日期和时间
+ */
+.lunarInfo {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+/**
+ * 公历信息 - 显示公历日期和时间
+ */
+.solarInfo {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+/**
+ * 农历和公历信息的最后一个元素 - 移除底部间距
+ */
+.lunarInfo:last-child,
+.solarInfo:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * 农历标签 - 农历信息的标签文本
+ */
+.lunarLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/**
+ * 公历标签 - 公历信息的标签文本
+ */
+.solarLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/**
+ * 日期值 - 显示具体的日期
+ */
+.dateValue {
+  color: var(--text-primary);
+  display: inline-block;
+  width: 100px;
+  font-size: var(--font-size-sm);
+}
+
+/**
+ * 时间值 - 显示具体的时间
+ */
+.timeValue {
+  color: var(--text-primary);
+  display: inline-block;
+  width: 50px;
+  font-size: var(--font-size-sm);
+}
