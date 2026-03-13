@@ -1,15 +1,20 @@
 /*
- * @file            frontend/src/components/common/SixYaoDisplay.jsx
+ * @file            frontend/src/components/common/SixYaoDisplay/SixYaoDisplay.jsx
  * @description     六爻显示组件，用于展示从初爻到上爻的排盘结果
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2024-07-01 10:00:00
- * @lastModified    2026-02-16 21:46:53
+ * @lastModified    2026-03-13 10:44:13
  * Copyright © All rights reserved
 */
 
 import React from 'react'; // 导入React核心库
-import { YangYao, YinYao } from './YaoComponents'; // 导入阳爻和阴爻组件
-import './SixYaoDisplay.css'; // 导入六爻显示组件样式
+import { YangYao, YinYao } from '../YaoComponents/YaoComponents'; // 导入阳爻和阴爻组件
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./SixYaoDisplay.mobile.module.css").default
+  : require("./SixYaoDisplay.desktop.module.css").default;
 
 /**
  * 六爻显示组件
@@ -56,7 +61,7 @@ const SixYaoDisplay = ({
   // 返回JSX
   return (
     
-    <div className={`six-yao-display ${className}`} style={style}> {/* 渲染六爻显示容器，应用动态类名和自定义样式 */}
+    <div className={`${styles.root} ${className}`} style={style}> {/* 渲染六爻显示容器，应用动态类名和自定义样式 */}
 
       {/* 遍历爻位标签数组 */}
       {yaoLabels.map((label, index) => {
@@ -67,17 +72,17 @@ const SixYaoDisplay = ({
           // 渲染爻容器
           <div
             key={index} // 使用index作为key
-            className="yao-container" // 设置类名为yao-container
+            className={styles.yaoContainer} // 设置类名为yao-container
             style={yaoContainerStyle} // 应用爻容器自定义样式
           > {/* 结束div开始标签 */}
 
-            <span className="yao-label" style={yaoLabelStyle}> {/* 渲染爻位标签，应用自定义样式 */}
+            <span className={styles.yaoLabel} style={yaoLabelStyle}> {/* 渲染爻位标签，应用自定义样式 */}
 
               {label} {/* 渲染爻位标签文本 */}
 
             </span> {/* 结束span元素 */}
 
-            <div className="yao-content"> {/* 渲染爻内容容器 */}
+            <div className={styles.yaoContent}> {/* 渲染爻内容容器 */}
 
               {/* 如果是阳爻 */}
               {yaoType === 'yang' && (
@@ -103,7 +108,7 @@ const SixYaoDisplay = ({
 
               {/* 如果爻类型为空 */}
               {!yaoType && ( 
-                <div className="yao-placeholder" style={{ width: yaoWidth, height: yaoHeight }} /> // 渲染占位符
+                <div className={styles.yaoPlaceholder} style={{ width: yaoWidth, height: yaoHeight }} /> // 渲染占位符
               )} {/* 结束占位符条件渲染 */}
 
             </div> {/* 结束爻内容容器 */}

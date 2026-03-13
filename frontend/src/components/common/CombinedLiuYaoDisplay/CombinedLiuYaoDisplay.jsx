@@ -1,16 +1,21 @@
-﻿/*
- * @file            frontend/src/components/common/CombinedLiuYaoDisplay.jsx
+/*
+ * @file            frontend/src/components/common/CombinedLiuYaoDisplay/CombinedLiuYaoDisplay.jsx
  * @description     整合四柱与六爻排盘的展示组件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-06 17:00:00
- * @lastModified    2026-03-06 17:00:00
+ * @lastModified    2026-03-13 10:00:00
  * Copyright © All rights reserved
 */
 
 import React from "react";
-import FourPillarsDisplay from "../FourPillars/FourPillarsDisplay";
-import LiuYaoGridDisplay from "../LiuYao/LiuYaoReault/LiuYaoGridDisplay";
-import "./CombinedLiuYaoDisplay.css";
+import FourPillarsDisplay from "../../FourPillars/FourPillarsDisplay";
+import LiuYaoGridDisplay from "../../LiuYao/LiuYaoReault/LiuYaoGridDisplay";
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./CombinedLiuYaoDisplay.mobile.module.css").default
+  : require("./CombinedLiuYaoDisplay.desktop.module.css").default;
 
 /**
  * 验证占卜数据结构
@@ -53,8 +58,8 @@ const CombinedLiuYaoDisplay = React.memo(({ panResult }) => {
    */
   if (!validatedData) {
     return (
-      <div id="CombinedLiuYaoDisplay" className="combined-liu-yao-display-container">
-        <div className="error-message">
+      <div id="CombinedLiuYaoDisplay" className={styles.root}>
+        <div className={styles.errorMessage}>
           排盘数据解析失败
         </div>
       </div>
@@ -70,17 +75,17 @@ const CombinedLiuYaoDisplay = React.memo(({ panResult }) => {
    * 数据加载成功后显示完整的排盘结果页面
    */
   return (
-    <div id="CombinedLiuYaoDisplay" className="combined-liu-yao-display-container">
-      <div className="main-content"> 
-        <div className="content-wrapper">
-          <div className="liu-yao-info">
+    <div id="CombinedLiuYaoDisplay" className={styles.root}>
+      <div className={styles.mainContent}> 
+        <div className={styles.contentWrapper}>
+          <div className={styles.liuYaoInfo}>
             {/* 四柱信息展示 */}
-            <div className="four-pillars-section">
+            <div className={styles.fourPillarsSection}>
               <FourPillarsDisplay ganzhiInfo={ganzhiInfo} />
             </div>
             
             {/* 六爻排盘网格展示 */}
-            <div className="liu-yao-grid-section">
+            <div className={styles.liuYaoGridSection}>
               <LiuYaoGridDisplay divinationData={validatedData} />
             </div>
           </div>

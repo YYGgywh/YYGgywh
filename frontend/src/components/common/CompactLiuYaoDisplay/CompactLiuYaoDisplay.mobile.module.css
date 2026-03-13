@@ -1,0 +1,85 @@
+/*
+ * @file            frontend/src/components/common/CompactLiuYaoDisplay/CompactLiuYaoDisplay.mobile.module.css
+ * @description     紧凑型六爻排盘结果展示组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-13 10:30:00
+ * @lastModified    2026-03-13 10:30:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  background-color: #f5f5f5;
+  padding: 2px;
+}
+
+.errorMessage {
+  text-align: center;
+  color: #ff4d4f;
+  font-size: 16px;
+  margin-top: 30px;
+  padding: 0 16px;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+.mainContent {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.liuYaoInfo {
+  flex: 1;
+  background-color: white;
+  padding: 0px;
+  border-radius: 8px;
+  max-width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.supplementInfo {
+  width: auto;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.textBox {
+  margin-bottom: 12px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.textBox p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+}
+
+/* 六爻元素样式 */
+.liuShen,
+.fuShen,
+.liuQin,
+.yaoShape,
+.yaoGan,
+.yaoZhi,
+.yaoSiYin,
+.fuQin,
+.fuGan,
+.fuZhi,
+.dongSymbolCell {
+  font-size: 10px;
+}

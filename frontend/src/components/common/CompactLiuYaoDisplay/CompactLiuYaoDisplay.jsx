@@ -1,18 +1,22 @@
 /*
- * @file            frontend/src/components/common/CompactLiuYaoDisplay.jsx
+ * @file            frontend/src/components/common/CompactLiuYaoDisplay/CompactLiuYaoDisplay.jsx
  * @description     紧凑型六爻排盘结果展示组件，专为卡片设计
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 15:00:00
- * @lastModified    2026-03-06 15:27:33
+ * @lastModified    2026-03-13 10:30:00
  * Copyright © All rights reserved
 */
 
 // 导入React核心库和相关hooks
 import React, { useState } from 'react';
-// 导入样式文件
-import './CompactLiuYaoDisplay.css';
 // 导入六爻网格展示组件
-import LiuYaoGridDisplay from '../LiuYao/LiuYaoReault/LiuYaoGridDisplay';
+import LiuYaoGridDisplay from '../../LiuYao/LiuYaoReault/LiuYaoGridDisplay';
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./CompactLiuYaoDisplay.mobile.module.css").default
+  : require("./CompactLiuYaoDisplay.desktop.module.css").default;
 
 /**
  * 验证占卜数据结构
@@ -58,8 +62,8 @@ const CompactLiuYaoDisplay = React.memo(({ panResult }) => {
    */
   if (!validatedData) {
     return (
-      <div id="CompactLiuYaoDisplay" className="compact-liu-yao-display-container">
-        <div className="error-message">
+      <div id="CompactLiuYaoDisplay" className={styles.root}>
+        <div className={styles.errorMessage}>
           排盘数据解析失败
         </div>
       </div>
@@ -76,10 +80,10 @@ const CompactLiuYaoDisplay = React.memo(({ panResult }) => {
   const showFuShen = activeButtons.includes('fushen');
   
   return (
-    <div id="CompactLiuYaoDisplay" className="compact-liu-yao-display-container">
-      <div className="main-content"> 
-        <div className="content-wrapper">
-          <div className="liu-yao-info">
+    <div id="CompactLiuYaoDisplay" className={styles.root}>
+      <div className={styles.mainContent}> 
+        <div className={styles.contentWrapper}>
+          <div className={styles.liuYaoInfo}>
             {/* 六爻网格展示组件，显示卦象信息 */}
             <LiuYaoGridDisplay 
               divinationData={validatedData}

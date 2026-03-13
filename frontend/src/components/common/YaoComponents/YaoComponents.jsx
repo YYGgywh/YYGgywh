@@ -1,14 +1,19 @@
 /*
- * @file            frontend/src/components/common/YaoComponents.jsx
+ * @file            frontend/src/components/common/YaoComponents/YaoComponents.jsx
  * @description     六爻爻型组件，包括阳爻和阴爻组件
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-01-29 10:00:00
- * @lastModified    2026-02-16 21:57:44
+ * @lastModified    2026-03-13 12:00:00
  * Copyright © All rights reserved
 */
 
 import React from 'react'; // 导入React核心库
-import './YaoComponents.css'; // 导入爻型组件样式
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./YaoComponents.mobile.module.css").default
+  : require("./YaoComponents.desktop.module.css").default;
 
 /**
  * 阳爻组件 - 直横形状
@@ -36,7 +41,7 @@ export const YangYao = ({
   return (
     // 渲染div元素
     <div 
-      className={`yang-yao ${className}`} // 设置类名，包含基础类名和自定义类名
+      className={`${styles.yangYao} ${className}`} // 设置类名，包含基础类名和自定义类名
       style={{ // 设置内联样式
         width, // 设置宽度
         height, // 设置高度
@@ -78,7 +83,7 @@ export const YinYao = ({
   return (
     // 渲染div元素
     <div
-      className={`yin-yao ${className}`} // 设置类名，包含基础类名和自定义类名
+      className={`${styles.yinYao} ${className}`} // 设置类名，包含基础类名和自定义类名
       // 设置内联样式
       style={{
         gap, // 设置两个长方形之间的间距
@@ -88,7 +93,7 @@ export const YinYao = ({
 
       {/* 渲染第一个长方形div元素 */}
       <div
-        className="yin-yao-segment" // 设置类名为yin-yao-segment
+        className={styles.yinYaoSegment} // 设置类名为yin-yao-segment
         // 设置内联样式
         style={{
           width, // 设置宽度
@@ -101,7 +106,7 @@ export const YinYao = ({
 
       {/* 渲染第二个长方形div元素 */}
       <div
-        className="yin-yao-segment" // 设置类名为yin-yao-segment
+        className={styles.yinYaoSegment} // 设置类名为yin-yao-segment
         // 设置内联样式
         style={{
           width, // 设置宽度

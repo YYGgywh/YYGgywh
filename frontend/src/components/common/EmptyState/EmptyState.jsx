@@ -1,16 +1,21 @@
 /*
- * @file            frontend/src/components/common/EmptyState.jsx
+ * @file            frontend/src/components/common/EmptyState/EmptyState.jsx
  * @description     空状态组件，用于展示空数据状态
  *                  提供友好的用户提示和操作按钮
  *                  使用 CSS Modules 实现样式隔离
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-27 16:33:00
- * @lastModified    2026-03-07 19:30:00
+ * @lastModified    2026-03-13 11:30:00
  * Copyright © All rights reserved
 */
 
 import React from 'react'; // 导入React核心库，用于创建React组件
-import styles from './EmptyState.desktop.module.css'; // 导入桌面端空状态样式（CSS Modules方式）
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./EmptyState.mobile.module.css").default
+  : require("./EmptyState.desktop.module.css").default;
 
 /**
  * EmptyState组件 - 空状态展示组件

@@ -1,17 +1,19 @@
 /*
- * @file            frontend/src/components/common/LoadingDots.jsx
+ * @file            frontend/src/components/common/LoadingDots/LoadingDots.jsx
  * @description     加载动画组件，提供三个点的脉冲加载动画
- *                  支持 small、medium、large 三种尺寸
- *                  支持自定义颜色
- *                  使用 CSS Modules 实现样式隔离
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-27 16:33:00
- * @lastModified    2026-03-07 20:00:00
+ * @lastModified    2026-03-13 10:25:02
  * Copyright © All rights reserved
 */
 
 import React from 'react'; // 导入React核心库，用于创建React组件
-import styles from './LoadingDots.desktop.module.css'; // 导入桌面端加载动画样式（CSS Modules方式）
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./LoadingDots.mobile.module.css").default
+  : require("./LoadingDots.desktop.module.css").default;
 
 /**
  * LoadingDots组件 - 加载动画组件

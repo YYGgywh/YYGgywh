@@ -3,15 +3,15 @@
  * @description     排盘详情弹窗组件，实现小红书式左右分栏布局
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-06 17:20:00
- * @lastModified    2026-03-06 17:20:00
- * Copyright  All rights reserved
+ * @lastModified    2026-03-13 09:53:33
+ * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect, useRef } from "react";
 import { useImageLazyLoad } from "../../hooks";
 import { formatStandardTime } from "../../utils";
 import PanImageViewer from "../PanImageViewer";
-import CombinedLiuYaoDisplay from "../common/CombinedLiuYaoDisplay";
+import CombinedLiuYaoDisplay from "../common/CombinedLiuYaoDisplay/CombinedLiuYaoDisplay";
 import "./PanDetailModal.css";
 
 const PanDetailModal = ({ isOpen, onClose, data }) => {

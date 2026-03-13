@@ -3,7 +3,7 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-03 12:30:00
+ * @lastModified    2026-03-13 10:07:16
  * Copyright © All rights reserved
 */
 
@@ -20,7 +20,7 @@ import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInf
 // 导入六爻网格展示组件
 import LiuYaoGridDisplay from './LiuYaoGridDisplay';
 // 导入显示控制组件
-import DisplayControl from '../../common/DisplayControl';
+import DisplayControl from '../../common/DisplayControl/DisplayControl';
 // 导入排盘API
 import { savePan } from '../../../api/panApi';
 // 导入登录状态检查工具

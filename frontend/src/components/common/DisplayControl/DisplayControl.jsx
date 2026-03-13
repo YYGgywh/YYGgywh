@@ -1,15 +1,20 @@
 /*
- * @file            frontend/src/components/common/DisplayControl.jsx
+ * @file            frontend/src/components/common/DisplayControl/DisplayControl.jsx
  * @description     显示控制组件，用于控制展示样式和模式切换
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-23 10:00:00
- * @lastModified    2026-02-23 15:00:57
+ * @lastModified    2026-03-13 11:00:00
  * Copyright © All rights reserved
 */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './DisplayControl.css';
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./DisplayControl.mobile.module.css").default
+  : require("./DisplayControl.desktop.module.css").default;
 
 /**
  * 显示控制组件
@@ -35,7 +40,7 @@ const DisplayControl = React.memo(({
   const displayButtons = buttons.length > 0 ? buttons : defaultButtons;
 
   return (
-    <div className={`display-control ${className}`} role="group" aria-label="显示控制按钮组">
+    <div className={`${styles.root} ${className}`} role="group" aria-label="显示控制按钮组">
       {displayButtons.map((button) => {
         const isActive = activeButtons.includes(button.id);
         const isColorChangeButton = button.id === 'colorChange';
@@ -45,7 +50,7 @@ const DisplayControl = React.memo(({
           <button
             key={button.id}
             id={button.id}
-            className={`display-control-button ${button.primary ? 'primary' : 'secondary'} ${isActive ? 'active' : ''} ${isButtonDisabled ? 'disabled' : ''} ${isColorChangeButton ? 'color-change' : ''}`}
+            className={`${styles.button} ${button.primary ? styles.buttonPrimary : styles.buttonSecondary} ${isActive ? (isColorChangeButton ? styles.buttonColorChangeActive : styles.buttonActive) : ''} ${isButtonDisabled ? styles.buttonDisabled : ''} ${isColorChangeButton ? styles.buttonColorChange : ''}`}
             onClick={() => !isButtonDisabled && onButtonClick && onButtonClick(button.id)}
             disabled={isButtonDisabled}
             aria-pressed={isActive}

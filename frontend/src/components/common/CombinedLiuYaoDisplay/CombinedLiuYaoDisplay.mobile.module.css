@@ -1,0 +1,130 @@
+/*
+ * @file            frontend/src/components/common/CombinedLiuYaoDisplay/CombinedLiuYaoDisplay.mobile.module.css
+ * @description     整合四柱与六爻排盘的展示组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-13 10:00:00
+ * @lastModified    2026-03-13 10:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 整合排盘展示组件样式 */
+.root {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+  overflow: auto;
+  padding: 8px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.liuYaoInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 四柱信息展示区域 */
+.fourPillarsSection {
+  background-color: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+/* 六爻排盘网格展示区域 */
+.liuYaoGridSection {
+  flex: 1;
+  min-height: 0; /* 允许flex子元素收缩 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 六爻网格容器 */
+.liuYaoDetails {
+  flex: 1;
+  overflow: auto;
+}
+
+.liuYaoGrid {
+  width: 100%;
+  min-width: min-content; /* 防止表格内容溢出 */
+  font-size: 14px;
+}
+
+/* 错误状态样式 */
+.errorMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  color: #dc3545;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f8d7da;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+  margin: 16px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+/* 滚动条样式优化 */
+.mainContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mainContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.mainContent::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.mainContent::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .root {
+    background-color: #1a1a1a;
+  }
+  
+  .fourPillarsSection {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .errorMessage {
+    color: #ff6b6b;
+    background-color: #3d2828;
+    border-color: #5a3a3a;
+  }
+  
+  .mainContent::-webkit-scrollbar-track {
+    background: #2d2d2d;
+  }
+  
+  .mainContent::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  
+  .mainContent::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+}

@@ -1,0 +1,48 @@
+/*
+ * @file            frontend/src/components/common/SixYaoDisplay/SixYaoDisplay.mobile.module.css
+ * @description     六爻显示组件样式 - 移动端专用（CSS Modules版本）
+ *                  针对移动设备优化，调整尺寸和间距
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.4rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.yaoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.yaoLabel {
+  font-size: 0.75rem;
+  font-weight: 500;
+  width: 3rem;
+  text-align: right;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.yaoContent {
+  flex: 1;
+  align-items: center;
+  min-height: 1rem;
+  transition: all 0.3s ease;
+}
+
+.yaoPlaceholder {
+  background-color: transparent;
+  border-radius: 0.2rem;
+  transition: all 0.3s ease;
+}

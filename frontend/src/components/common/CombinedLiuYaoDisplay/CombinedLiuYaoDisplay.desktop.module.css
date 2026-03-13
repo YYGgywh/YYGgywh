@@ -1,14 +1,14 @@
-﻿/*
- * @file            frontend/src/components/common/CombinedLiuYaoDisplay.css
- * @description     整合四柱与六爻排盘的展示组件样式
+/*
+ * @file            frontend/src/components/common/CombinedLiuYaoDisplay/CombinedLiuYaoDisplay.desktop.module.css
+ * @description     整合四柱与六爻排盘的展示组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
- * @createTime      2026-03-06 17:00:00
- * @lastModified    2026-03-06 17:00:00
- * Copyright  All rights reserved
+ * @createTime      2026-03-13 10:00:00
+ * @lastModified    2026-03-13 10:00:00
+ * Copyright © All rights reserved
 */
 
 /* 整合排盘展示组件样式 */
-.combined-liu-yao-display-container {
+.root {
   width: 100%;
   height: 100%;
   background-color: #fff;
@@ -17,26 +17,26 @@
   overflow: hidden;
 }
 
-.main-content {
+.mainContent {
   flex: 1;
   overflow: auto;
   padding: 16px;
 }
 
-.content-wrapper {
+.contentWrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.liu-yao-info {
+.liuYaoInfo {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
 /* 四柱信息展示区域 */
-.four-pillars-section {
+.fourPillarsSection {
   background-color: #f8f9fa;
   padding: 16px;
   border-radius: 8px;
@@ -44,7 +44,7 @@
 }
 
 /* 六爻排盘网格展示区域 */
-.liu-yao-grid-section {
+.liuYaoGridSection {
   flex: 1;
   min-height: 0; /* 允许flex子元素收缩 */
   display: flex;
@@ -52,18 +52,18 @@
 }
 
 /* 六爻网格容器 */
-.liu-yao-details {
+.liuYaoDetails {
   flex: 1;
   overflow: auto;
 }
 
-.liu-yao-grid {
+.liuYaoGrid {
   width: 100%;
   min-width: min-content; /* 防止表格内容溢出 */
 }
 
 /* 错误状态样式 */
-.error-message {
+.errorMessage {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,69 +77,51 @@
   margin: 20px;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .main-content {
-    padding: 8px;
-  }
-  
-  .liu-yao-info {
-    gap: 16px;
-  }
-  
-  .four-pillars-section {
-    padding: 12px;
-  }
-}
-
-/* 深色模式支持 */
-@media (prefers-color-scheme: dark) {
-  .combined-liu-yao-display-container {
-    background-color: #1a1a1a;
-  }
-  
-  .four-pillars-section {
-    background-color: #2d2d2d;
-    border-color: #404040;
-  }
-  
-  .error-message {
-    color: #ff6b6b;
-    background-color: #3d2828;
-    border-color: #5a3a3a;
-  }
-}
-
 /* 滚动条样式优化 */
-.main-content::-webkit-scrollbar {
+.mainContent::-webkit-scrollbar {
   width: 8px;
 }
 
-.main-content::-webkit-scrollbar-track {
+.mainContent::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 4px;
 }
 
-.main-content::-webkit-scrollbar-thumb {
+.mainContent::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 4px;
 }
 
-.main-content::-webkit-scrollbar-thumb:hover {
+.mainContent::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
 
-/* 深色模式滚动条 */
+/* 深色模式支持 */
 @media (prefers-color-scheme: dark) {
-  .main-content::-webkit-scrollbar-track {
+  .root {
+    background-color: #1a1a1a;
+  }
+  
+  .fourPillarsSection {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .errorMessage {
+    color: #ff6b6b;
+    background-color: #3d2828;
+    border-color: #5a3a3a;
+  }
+  
+  .mainContent::-webkit-scrollbar-track {
     background: #2d2d2d;
   }
   
-  .main-content::-webkit-scrollbar-thumb {
+  .mainContent::-webkit-scrollbar-thumb {
     background: #555;
   }
   
-  .main-content::-webkit-scrollbar-thumb:hover {
+  .mainContent::-webkit-scrollbar-thumb:hover {
     background: #666;
   }
 }

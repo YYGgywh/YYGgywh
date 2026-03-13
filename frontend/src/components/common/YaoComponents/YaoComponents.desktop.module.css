@@ -1,0 +1,22 @@
+/*
+ * @file            frontend/src/components/common/YaoComponents/YaoComponents.desktop.module.css
+ * @description     六爻爻型组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.yangYao {
+  transition: all 0.3s ease;
+}
+
+.yinYao {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.yinYaoSegment {
+  transition: all 0.3s ease;
+}

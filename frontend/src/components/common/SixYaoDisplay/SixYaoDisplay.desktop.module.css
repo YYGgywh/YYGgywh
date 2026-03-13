@@ -1,0 +1,47 @@
+/*
+ * @file            frontend/src/components/common/SixYaoDisplay/SixYaoDisplay.desktop.module.css
+ * @description     六爻显示组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0.9375rem;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.yaoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;
+  transition: all 0.3s ease;
+}
+
+.yaoLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: 3.75rem;
+  text-align: right;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.yaoContent {
+  flex: 1;
+  align-items: center;
+  min-height: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.yaoPlaceholder {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}

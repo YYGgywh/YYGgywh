@@ -7,7 +7,7 @@
  * Copyright © All rights reserved
 */
 
-import { YangYao, YinYao } from '../../common/YaoComponents';  // 导入阳爻和阴爻组件
+import { YangYao, YinYao } from '../../common/YaoComponents/YaoComponents';  // 导入阳爻和阴爻组件
 
 /**
  * @description     获取爻组件
