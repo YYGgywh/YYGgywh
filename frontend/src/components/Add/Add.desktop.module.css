@@ -1,0 +1,17 @@
+/*
+ * @file            frontend/src/components/Add/Add.desktop.module.css
+ * @description     添加组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 11:31:17
+ * Copyright © All rights reserved
+*/
+
+.title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.root {
+  padding-top: 72px;
+}
