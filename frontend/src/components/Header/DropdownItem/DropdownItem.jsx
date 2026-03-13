@@ -1,34 +1,51 @@
-/* 路径:src/components/Header/DropdownItem/DropdownItem.jsx 时间:2026-02-07 11:00 */
-/* 功能:下拉菜单项组件，负责单个菜单项的渲染，包含图标、标题和描述文字 */
-import React from 'react';
-import './DropdownItem.css';
+/*
+ * @file            frontend/src/components/Header/DropdownItem/DropdownItem.jsx
+ * @description     下拉菜单项组件，负责单个菜单项的渲染，包含图标、标题和描述文字
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-02-07 11:00:00
+ * @lastModified    2026-03-13 12:18:44
+ * Copyright © All rights reserved
+*/
 
+import React from 'react'; // 导入React核心库，用于创建React组件
+import './DropdownItem.css'; // 导入下拉菜单项组件样式文件
+
+// 定义DropdownItem组件，接收以下属性：
+// title - 菜单项标题，默认为空字符串
+// description - 菜单项描述文字，默认为空字符串
+// href - 链接地址，默认为 '#'
+// icon - 图标，可以是字符串或React元素，默认为null
 const DropdownItem = ({ title = '', description = '', href = '#', icon = null }) => {
+  // 定义renderIcon函数，用于渲染图标部分
   const renderIcon = () => {
+    // 如果图标不存在，返回null，不渲染图标
     if (!icon) return null;
 
+    // 如果图标是字符串类型，渲染为文本图标
     if (typeof icon === 'string') {
-      return <span className="dropdown-col-icon-text">{icon}</span>;
+      return <span className="dropdown-col-icon-text">{icon}</span>; // 渲染文本图标
     }
 
+    // 如果图标是React元素，渲染为图标容器
     return (
-      <div className="dropdown-col-icon">
-        {icon}
+      <div className="dropdown-col-icon"> // 渲染图标容器
+        {icon} // 渲染React元素图标
       </div>
     );
   };
 
+  // 返回组件的JSX结构
   return (
-    <a href={href} className="dropdown-col-link">
-      {renderIcon()}
-      <div className="dropdown-col-text">
-        <span className="dropdown-col-title">{title}</span>
-        {description && (
-          <span className="dropdown-col-desc">{description}</span>
+    <a href={href} className="dropdown-col-link"> {/* 渲染链接元素，应用下拉菜单链接样式 */}
+      {renderIcon()} {/* 调用renderIcon函数渲染图标 */}
+      <div className="dropdown-col-text"> {/* 渲染文本容器，包含标题和描述 */}
+        <span className="dropdown-col-title">{title}</span> {/* 渲染菜单项标题 */}
+        {description && ( // 如果存在描述文字，则渲染描述
+          <span className="dropdown-col-desc">{description}</span> // 渲染菜单项描述
         )}
       </div>
     </a>
   );
 };
 
-export default DropdownItem;
+export default DropdownItem; // 导出DropdownItem组件作为默认导出，供其他组件使用

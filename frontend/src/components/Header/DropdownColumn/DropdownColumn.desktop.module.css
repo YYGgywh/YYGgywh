@@ -1,0 +1,35 @@
+/*
+ * @file            frontend/src/components/Header/DropdownColumn/DropdownColumn.desktop.module.css
+ * @description     下拉菜单列组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:13:16
+ * Copyright © All rights reserved
+*/
+
+.dropdownCol {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownCol dt,
+.dropdownCol dd {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownCol dt.dropdownColTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #999999;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.dropdownColItem {
+  margin: 0 0 8px 0;
+  padding: 0;
+}
