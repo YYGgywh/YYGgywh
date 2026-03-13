@@ -1,0 +1,93 @@
+/*
+ * @file            frontend/src/components/Header/DropdownItem/DropdownItem.mobile.module.css
+ * @description     下拉菜单项组件移动端样式，包含图标、标题、描述和悬停效果
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 00:00:00
+ * @lastModified    2026-03-13 00:00:00
+ * Copyright © All rights reserved
+*/
+
+.dropdownColLink {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 12px;
+  color: #333333;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.dropdownColLink:hover {
+  background-color: #F9FAFB;
+  color: #1890FF;
+}
+
+.dropdownColLink > * {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.dropdownColIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333333;
+  transition: color 0.2s ease;
+}
+
+.dropdownColIconText {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333333;
+  transition: color 0.2s ease;
+}
+
+.dropdownColLink:hover .dropdownColIcon,
+.dropdownColLink:hover .dropdownColIconText {
+  color: #1890FF;
+}
+
+.dropdownColIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dropdownColText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdownColTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.dropdownColLink:hover .dropdownColTitle {
+  color: #1890FF;
+}
+
+.dropdownColDesc {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.dropdownColLink:hover .dropdownColDesc {
+  color: #1890FF;
+}

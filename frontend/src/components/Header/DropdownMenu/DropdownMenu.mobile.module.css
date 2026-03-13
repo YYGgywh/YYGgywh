@@ -1,8 +1,16 @@
+/*
+ * @file            frontend/src/components/Header/DropdownMenu/DropdownMenu.mobile.module.css
+ * @description     下拉菜单组件移动端样式，包含多列布局和动画效果
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 00:00:00
+ * @lastModified    2026-03-13 00:00:00
+ * Copyright © All rights reserved
+*/
 
 .dropdownMenuRich {
   position: absolute; 
-  top: calc(100% + 15px); 
-  left: -80px; 
+  top: calc(100% + 10px); 
+  left: -10px; 
   background-color: #FFFFFF; 
   border-radius: 8px; 
   border: 1px solid #ebeaea; 
@@ -11,8 +19,9 @@
   opacity: 0; 
   transform: translateY(5px); 
   animation: dropdownFadeIn 0.2s ease forwards; 
-  min-width: 600px; 
-  width: auto; 
+  min-width: 280px; 
+  width: calc(100vw - 20px); 
+  max-width: 400px; 
   padding: 5px; 
 }
 
@@ -33,10 +42,8 @@
 
 .dropdownMenuContent {
   display: flex; 
-  flex-direction: row; 
-  gap: 40px; 
-  flex-wrap: nowrap; 
-  justify-content: space-between; 
+  flex-direction: column; 
+  gap: 20px; 
   width: 100%; 
 }
 
@@ -45,12 +52,12 @@
   display: flex; 
   flex-direction: column; 
   flex: 1 1 0; 
-  min-width: 100px; 
-  max-width: calc(33.333% - 26.666px); 
+  min-width: 100%; 
+  max-width: 100%; 
 }
 
 
 .dropdownMenuContent dl dt,
 .dropdownMenuContent dl dd {
-  padding: 10px; 
+  padding: 8px; 
 }

@@ -1,7 +1,6 @@
 module.exports = {
-  extends: ['react-app', 'react-app/jest'],
+  extends: ['react-app'],
   rules: {
-    'no-unused-vars': 'off',
-    'import/no-unused-modules': 'off'
+    'no-unused-vars': 'off'
   }
 };
