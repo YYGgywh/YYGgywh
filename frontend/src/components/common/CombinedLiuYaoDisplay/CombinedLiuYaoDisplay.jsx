@@ -8,7 +8,7 @@
 */
 
 import React from "react";
-import FourPillarsDisplay from "../../FourPillars/FourPillarsDisplay";
+import FourPillarsDisplay from "../../FourPillarsDisplay/FourPillarsDisplay";
 import LiuYaoGridDisplay from "../../LiuYao/LiuYaoReault/LiuYaoGridDisplay";
 
 // 根据设备类型导入不同的样式

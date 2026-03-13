@@ -1,0 +1,65 @@
+/*
+ * @file            frontend/src/components/FourPillarsDisplay/FourPillarsDisplay.desktop.module.css
+ * @description     四柱显示组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.yearPillarsInfo,
+.monthPillarsInfo,
+.dayPillarsInfo,
+.hourPillarsInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yearLabel,
+.monthLabel,
+.dayLabel,
+.hourLabel {
+  font-size: 0.75rem;
+  color: #8e8e8e;
+}
+
+.yearGan,
+.monthGan,
+.dayGan,
+.hourGan,
+.yearZhi,
+.monthZhi,
+.dayZhi,
+.hourZhi {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bolder;
+  transition: color 0.3s ease;
+}
+
+.yearGan:hover,
+.monthGan:hover,
+.dayGan:hover,
+.hourGan:hover,
+.yearZhi:hover,
+.monthZhi:hover,
+.dayZhi:hover,
+.hourZhi:hover {
+  color: #1890FF;
+}
+
+.yearVacancy,
+.monthVacancy,
+.dayVacancy,
+.hourVacancy {
+  font-size: 0.75rem;
+  color: #666;
+}

@@ -3,7 +3,7 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-13 10:07:16
+ * @lastModified    2026-03-13 11:39:41
  * Copyright © All rights reserved
 */
 
@@ -12,7 +12,7 @@ import React, { useEffect, useState, useRef } from 'react';
 // 导入样式文件
 import './LiuYaoReault.css';
 // 导入四柱展示组件
-import FourPillarsDisplay from '../../FourPillars/FourPillarsDisplay';
+import FourPillarsDisplay from '../../FourPillarsDisplay/FourPillarsDisplay';
 // 导入占卜信息展示组件和简短占卜查询组件
 import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
 

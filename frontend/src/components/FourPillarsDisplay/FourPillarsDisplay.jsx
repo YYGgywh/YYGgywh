@@ -1,9 +1,9 @@
 /*
- * @file            frontend/src/components/FourPillars/FourPillarsDisplay.jsx
+ * @file            frontend/src/components/FourPillarsDisplay/FourPillarsDisplay.jsx
  * @description     四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-22 11:00:00
- * @lastModified    2026-02-22 15:51:39
+ * @lastModified    2026-03-13 12:00:00
  * Copyright © All rights reserved
 */
 
@@ -11,23 +11,28 @@ import React from 'react'; // 导入React核心库
 import PropTypes from 'prop-types'; // 导入PropTypes库，用于组件props的类型检查
 import { calculateHourGan } from '../../utils/fourPillarsUtils'; // 导入时干计算函数
 import { getXunKongDisplay } from '../../utils/xunKongUtils'; // 导入旬空判断函数
-import './FourPillarsDisplay.css'; // 导入组件样式文件
 import '../../styles/elementColors.css'; // 导入五行颜色样式
+
+// 根据设备类型导入不同的样式
+const isMobile = window.innerWidth < 768;
+const styles = isMobile 
+  ? require("./FourPillarsDisplay.mobile.module.css").default
+  : require("./FourPillarsDisplay.desktop.module.css").default;
 
 // 四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
 const Pillar = ({ label, gan, zhi, vacancy, className }) => {
-  const prefix = className.split('-')[0];
+  const prefix = className;
   
   return (
     <div 
-      className={className}
+      className={styles[prefix]}
       role="listitem"
       aria-label={`${label}柱信息`}
     >
-      <span className={`${prefix}-label`} aria-hidden="true">{label}</span>
-      <span className={`${prefix}-gan`} aria-label={`${label}干`} data-element={gan}>{gan}</span>
-      <span className={`${prefix}-zhi`} aria-label={`${label}支`} data-element={zhi}>{zhi}</span>
-      <span className={`${prefix}-vacancy`} aria-label={`${label}柱空亡`}>{vacancy}</span>
+      <span className={styles[`${prefix}Label`]} aria-hidden="true">{label}</span>
+      <span className={styles[`${prefix}Gan`]} aria-label={`${label}干`} data-element={gan}>{gan}</span>
+      <span className={styles[`${prefix}Zhi`]} aria-label={`${label}支`} data-element={zhi}>{zhi}</span>
+      <span className={styles[`${prefix}Vacancy`]} aria-label={`${label}柱空亡`}>{vacancy}</span>
     </div>
   );
 };
@@ -116,7 +121,7 @@ const FourPillarsDisplay = React.memo(({
   // 渲染四柱信息组件
   return (
     <div 
-      className={`four-pillars-info ${className} ${isColorMode ? 'color-mode' : ''}`}
+      className={`${styles.root} ${className} ${isColorMode ? 'color-mode' : ''}`}
       role="list"
       aria-label="四柱信息"
     >
@@ -125,28 +130,28 @@ const FourPillarsDisplay = React.memo(({
         gan={lunar_year_gan_exact}
         zhi={lunar_year_zhi_exact}
         vacancy={yearVacancy}
-        className="year-pillars-info"
+        className="yearPillarsInfo"
       />
       <Pillar 
         label="月"
         gan={lunar_month_gan_exact}
         zhi={lunar_month_zhi_exact}
         vacancy={monthVacancy}
-        className="month-pillars-info"
+        className="monthPillarsInfo"
       />
       <Pillar 
         label="日"
         gan={lunar_day_in_gan_exact}
         zhi={lunar_day_in_zhi_exact}
         vacancy={dayVacancy}
-        className="day-pillars-info"
+        className="dayPillarsInfo"
       />
       <Pillar 
         label="时"
         gan={hourGan}
         zhi={lunar_time_in_zhi_exact}
         vacancy={hourKong}
-        className="hour-pillars-info"
+        className="hourPillarsInfo"
       />
     </div>
   );
