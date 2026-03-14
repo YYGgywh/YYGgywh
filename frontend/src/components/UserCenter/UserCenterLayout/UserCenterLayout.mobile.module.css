@@ -1,0 +1,33 @@
+/*
+ * @file            frontend/src/components/UserCenter/UserCenterLayout/UserCenterLayout.mobile.module.css
+ * @description     用户中心布局容器样式 - 移动端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:38:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 用户中心布局容器 - 移动端适配 */
+.userCenterLayout {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  min-height: calc(100vh - 160px);
+}
+
+/* 左侧导航栏区域 - 移动端适配 */
+.userCenterSidebar {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* 右侧主要内容区域 - 移动端适配 */
+.userCenterMain {
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}

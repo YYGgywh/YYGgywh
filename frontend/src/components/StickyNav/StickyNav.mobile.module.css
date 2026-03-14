@@ -1,0 +1,82 @@
+/*
+ * @file            frontend/src/components/StickyNav/StickyNav.mobile.module.css
+ * @description     吸顶导航组件移动端样式，当页面滚动超过一定距离时固定在顶部
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 10:00:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.stickyNav {
+  background: white;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+.stickyNavSticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.navContainer {
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+.navItems {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 12px 0;
+}
+
+.navItem {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 16px;
+  transition: all 0.3s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.navItem:hover {
+  color: #1890ff;
+  background: #f0f7ff;
+}
+
+.navItemActive {
+  color: #1890ff;
+  background: #e6f7ff;
+  font-weight: 600;
+}
+
+.navItemActive::after {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: #1890ff;
+  border-radius: 2px;
+}

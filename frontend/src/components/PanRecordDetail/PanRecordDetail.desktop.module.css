@@ -1,0 +1,207 @@
+/*
+ * @file            frontend/src/components/PanRecordDetail/PanRecordDetail.desktop.module.css
+ * @description     排盘记录详情组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-02 18:10:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 弹窗容器 */
+.panRecordDetail {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部样式 */
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detailHeader h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+.closeBtn:hover {
+  color: #333;
+}
+
+/* 内容区域 */
+.detailContent {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* 基本信息 */
+.basicInfo {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.infoItem {
+  display: flex;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.infoLabel {
+  width: 120px;
+  font-weight: 500;
+  color: #666;
+}
+
+.infoValue {
+  flex: 1;
+  color: #333;
+}
+
+/* 补充说明 */
+.supplementItem {
+  margin-top: 16px;
+}
+
+.supplementDisplay {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.supplementEdit {
+  flex: 1;
+}
+
+.supplementEdit textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.editButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* 排盘参数和结果 */
+.panParams,
+.panResult {
+  margin-bottom: 30px;
+}
+
+.panParams h3,
+.panResult h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.paramItem,
+.resultItem {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.paramLabel,
+.resultLabel {
+  width: 120px;
+  font-weight: 500;
+  color: #666;
+}
+
+.paramValue,
+.resultValue {
+  flex: 1;
+  color: #333;
+}
+
+/* 底部按钮区域 */
+.detailFooter {
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 错误信息 */
+.errorMessage {
+  flex: 1;
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btnPrimary {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.btnSecondary {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btnDanger {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.btnSm {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 错误提示 */
+.error {
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 10px;
+}

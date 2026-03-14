@@ -1,9 +1,9 @@
 /*
  * @file            frontend/src/components/FourPillarsDisplay/FourPillarsDisplay.jsx
  * @description     四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-22 11:00:00
- * @lastModified    2026-03-13 12:00:00
+ * @lastModified    2026-03-14 12:59:01
  * Copyright © All rights reserved
 */
 
@@ -13,11 +13,8 @@ import { calculateHourGan } from '../../utils/fourPillarsUtils'; // 导入时干
 import { getXunKongDisplay } from '../../utils/xunKongUtils'; // 导入旬空判断函数
 import '../../styles/elementColors.css'; // 导入五行颜色样式
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./FourPillarsDisplay.mobile.module.css").default
-  : require("./FourPillarsDisplay.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./FourPillarsDisplay.desktop.module.css";
 
 // 四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
 const Pillar = ({ label, gan, zhi, vacancy, className }) => {

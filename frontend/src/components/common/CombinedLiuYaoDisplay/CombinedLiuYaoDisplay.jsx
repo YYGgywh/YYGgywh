@@ -9,13 +9,10 @@
 
 import React from "react";
 import FourPillarsDisplay from "../../FourPillarsDisplay/FourPillarsDisplay";
-import LiuYaoGridDisplay from "../../LiuYao/LiuYaoReault/LiuYaoGridDisplay";
+import LiuYaoGridDisplay from "../../LiuYao/LiuYaoReault/LiuYaoGridDisplay/LiuYaoGridDisplay";
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./CombinedLiuYaoDisplay.mobile.module.css").default
-  : require("./CombinedLiuYaoDisplay.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./CombinedLiuYaoDisplay.desktop.module.css";
 
 /**
  * 验证占卜数据结构

@@ -1,0 +1,59 @@
+/*
+ * @file            frontend/src/components/UserCenter/NavItem/NavItem.desktop.module.css
+ * @description     导航项组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:42:00
+ * @lastModified    2026-03-14 11:03:43
+ * Copyright © All rights reserved
+*/
+
+/* 导航项包装器 */
+.navItemWrapper {
+  margin: 4px 0;
+}
+
+/* 导航项按钮 */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+/* 导航项悬停效果 */
+.navItem:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* 导航项激活状态 */
+.navItemActive {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-right: 3px solid #1976d2;
+}
+
+.navItemActive:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+/* 导航项图标 */
+.navItemIcon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* 导航项文字 */
+.navItemLabel {
+  font-weight: 500;
+}

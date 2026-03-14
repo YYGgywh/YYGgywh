@@ -9,11 +9,8 @@
 
 import React from 'react'; // 导入React核心库
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./YaoComponents.mobile.module.css").default
-  : require("./YaoComponents.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./YaoComponents.desktop.module.css";
 
 /**
  * 阳爻组件 - 直横形状

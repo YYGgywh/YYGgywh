@@ -85,10 +85,12 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
       // 如果爻位未禁用
       if (!disabledYaos[yao]) {
         // 延迟聚焦
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           yaoRefs[yao].current?.focus();  // 聚焦到该爻位输入框
         }, 200);  // 延迟200毫秒
-        break;  // 找到第一个可输入的爻位后退出循环
+        
+        // 清除定时器
+        return () => clearTimeout(timer);
       }
     }
   }, [disabledYaos]);  // 依赖 disabledYaos 状态
@@ -121,9 +123,12 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
       // 如果所有输入都有效，聚焦到生成卦象按钮      
       if (allValid) {
         // 延迟聚焦
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           generateButtonRef.current?.focus();  // 聚焦到生成卦象按钮
         }, 300);  // 延迟300毫秒
+        
+        // 清除定时器
+        return () => clearTimeout(timer);
       }
       
       return newValues;  // 返回新值对象

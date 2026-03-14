@@ -1,0 +1,169 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoGridDisplay/LiuYaoGridDisplay.mobile.module.css
+ * @description     六爻排盘网格展示组件移动端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 11:50:00
+ * @lastModified    2026-03-13 11:50:00
+ * Copyright © All rights reserved
+*/
+
+/* ========================================
+   六爻网格展示组件移动端样式
+   ======================================== */
+
+.liuYaoDetails {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.liuYaoGrid {
+  display: grid;
+  gap: 0;
+  font-size: 0.875rem;
+}
+
+/* 通用网格列数样式 */
+.liuYaoGrid[class*="columns-"] {
+  grid-template-columns: repeat(var(--column-count), auto);
+}
+
+.liuYaoGrid.columns-1 { --column-count: 1; }
+.liuYaoGrid.columns-2 { --column-count: 2; }
+.liuYaoGrid.columns-3 { --column-count: 3; }
+.liuYaoGrid.columns-4 { --column-count: 4; }
+.liuYaoGrid.columns-5 { --column-count: 5; }
+.liuYaoGrid.columns-6 { --column-count: 6; }
+.liuYaoGrid.columns-7 { --column-count: 7; }
+.liuYaoGrid.columns-8 { --column-count: 8; }
+.liuYaoGrid.columns-9 { --column-count: 9; }
+
+.gridRow {
+  display: contents;
+}
+
+.gridCell {
+  padding: 4px 2px;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: fit-content;
+}
+
+.liuShen,
+.fuShen,
+.liuQin,
+.yaoShape,
+.yaoGan,
+.yaoZhi,
+.yaoSiYin {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.liuShen {
+  padding-right: 4px;
+}
+
+.fuZhi {
+  padding-right: 4px;
+}
+
+.yaoShape {
+  padding: 0 4px;
+  font-weight: bold;
+}
+
+.yaoSiYin {
+  padding-left: 4px;
+}
+
+.dongYao {
+  padding: 0 4px;
+}
+
+.liuYaoDetails p,
+.liuYaoAccessory p {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  text-indent: 0;
+}
+
+.liuYaoDetails p {
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.liuYaoAccessory {
+  text-align: center;
+}
+
+.liuYaoAccessory p {
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.chongHe {
+  font-size: 0.5rem;
+  padding: 0 2px;
+}
+
+.lineColorRed {
+  color: var(--line-color-red);
+}
+
+.lineColorGreen {
+  color: var(--line-color-green);
+}
+
+.lineColorBlack {
+  color: var(--line-color-black);
+}
+
+.lineColorWhite {
+  color: var(--line-color-white);
+}
+
+.lineColorYellow {
+  color: var(--line-color-yellow);
+}
+
+.lineColorBlue {
+  color: var(--line-color-blue);
+}
+
+.liuYaoError {
+  border: 2px solid var(--error-border-color);
+  color: var(--error-color);
+  text-align: center;
+  padding: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+  .liuYaoGrid {
+    font-size: 0.75rem;
+  }
+  
+  .gridCell {
+    padding: 2px 1px;
+  }
+  
+  .liuShen,
+  .fuShen,
+  .liuQin,
+  .yaoShape,
+  .yaoGan,
+  .yaoZhi,
+  .yaoSiYin {
+    font-size: 0.625rem;
+  }
+}

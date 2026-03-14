@@ -6,13 +6,24 @@
  */
 export const throttle = (func, limit = 300) => {
   let inThrottle;
-  return function(...args) {
+  let timer;
+  
+  const throttled = function(...args) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => {
+      timer = setTimeout(() => {
         inThrottle = false;
       }, limit);
     }
   };
+  
+  throttled.cancel = () => {
+    if (timer) {
+      clearTimeout(timer);
+      inThrottle = false;
+    }
+  };
+  
+  return throttled;
 };

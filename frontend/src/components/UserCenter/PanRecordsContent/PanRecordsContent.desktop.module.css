@@ -1,0 +1,228 @@
+/*
+ * @file            frontend/src/components/UserCenter/PanRecordsContent/PanRecordsContent.desktop.module.css
+ * @description     排盘记录内容组件样式 - 桌面端专用（CSS Modules版本）
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:52:00
+ * @lastModified    2026-03-14 11:06:17
+ * Copyright © All rights reserved
+*/
+
+/* 排盘记录内容容器 */
+.panRecordsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 加载状态 */
+.panRecordsLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  gap: 16px;
+  color: #999;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 空状态 */
+.panRecordsEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  text-align: center;
+  color: #999;
+}
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.panRecordsEmpty p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.panRecordsEmpty span {
+  font-size: 14px;
+}
+
+/* 记录列表 */
+.recordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 记录卡片 */
+.recordCard {
+  background-color: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.recordCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #e0e0e0;
+}
+
+/* 记录卡片头部 */
+.recordCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* 排盘类型标签 */
+.recordTypeBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 记录时间 */
+.recordTime {
+  font-size: 13px;
+  color: #999;
+}
+
+/* 记录卡片主体 */
+.recordCardBody {
+  margin-bottom: 16px;
+}
+
+/* 卦象结果 */
+.recordResult {
+  margin-bottom: 8px;
+}
+
+.resultLabel {
+  font-size: 14px;
+  color: #666;
+}
+
+.resultValue {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* 补充说明 */
+.recordSupplement {
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  border-left: 3px solid #ff9800;
+}
+
+.supplementLabel {
+  font-size: 13px;
+  color: #999;
+}
+
+.supplementValue {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 记录卡片底部 */
+.recordCardFooter {
+  display: flex;
+  gap: 12px;
+}
+
+/* 操作按钮 */
+.recordActionBtn {
+  padding: 8px 16px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recordActionBtn:hover {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.recordActionBtnPrimary {
+  background-color: #2196f3;
+  color: #fff;
+  border-color: #2196f3;
+}
+
+.recordActionBtnPrimary:hover {
+  background-color: #1976d2;
+  border-color: #1976d2;
+}
+
+/* 分页控制 */
+.recordsPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 分页按钮 */
+.pageBtn {
+  padding: 8px 20px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.pageBtn:disabled {
+  background-color: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: #f0f0f0;
+}
+
+/* 分页信息 */
+.pageInfo {
+  font-size: 14px;
+  color: #666;
+}

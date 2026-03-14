@@ -1,0 +1,35 @@
+/*
+ * @file            frontend/src/components/BackToTop/BackToTop.desktop.module.css
+ * @description     返回顶部按钮组件桌面端样式，当页面滚动超过一定距离时显示
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-11 10:00:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: white;
+  color: #1890ff;
+  border: 1px solid #e8e8e8;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+  z-index: 99;
+}
+
+.backToTop:hover {
+  background: #1890ff;
+  color: white;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}

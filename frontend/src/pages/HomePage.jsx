@@ -3,7 +3,7 @@
  * @description     首页组件 - 显示公开排盘记录列表，支持瀑布流布局和交互功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 13:38:55
- * @lastModified    2026-03-13 09:58:43
+ * @lastModified    2026-03-14 12:00:00
  * Copyright © All rights reserved
 */
 
@@ -11,7 +11,7 @@
 // 禁用 ESLint 检查，允许某些代码风格
 import React, { useState, useEffect } from 'react'; // 导入 React 核心库和 Hooks：useState（状态管理）、useEffect（副作用处理）
 import Navigation from '../components/Header/Navigation/Navigation'; // 导入导航栏组件
-import BackToTop from '../components/BackToTop'; // 导入返回顶部按钮组件
+import BackToTop from '../components/BackToTop/BackToTop'; // 导入返回顶部按钮组件
 import { getPublicPanList } from '../api/panApi'; // 导入获取公开排盘列表的 API 接口
 import hexagram1 from '../assets/images/hexagram-1.svg'; // 导入卦象图片资源 1
 import hexagram2 from '../assets/images/hexagram-2.svg'; // 导入卦象图片资源 2

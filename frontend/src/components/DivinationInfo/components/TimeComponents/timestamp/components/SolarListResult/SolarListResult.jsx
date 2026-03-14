@@ -8,14 +8,7 @@
 */
 
 import React from 'react';
-import desktopStyles from './SolarListResult.desktop.module.css';
-import mobileStyles from './SolarListResult.mobile.module.css';
-
-// 设备类型检测（简化版，实际项目中可能使用更复杂的检测方法）
-const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
-
-// 根据设备类型选择样式
-const styles = isDesktop ? desktopStyles : mobileStyles;
+import styles from './SolarListResult.desktop.module.css'; // 导入桌面端样式
 
 /**
  * 四柱计算结果列表显示组件

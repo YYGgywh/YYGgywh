@@ -3,14 +3,14 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-13 11:39:41
+ * @lastModified    2026-03-13 12:05:00
  * Copyright © All rights reserved
 */
 
 // 导入React核心库和相关hooks
 import React, { useEffect, useState, useRef } from 'react';
-// 导入样式文件
-import './LiuYaoReault.css';
+// 导入桌面端样式（CSS Modules）
+import styles from './LiuYaoReault.desktop.module.css';
 // 导入四柱展示组件
 import FourPillarsDisplay from '../../FourPillarsDisplay/FourPillarsDisplay';
 // 导入占卜信息展示组件和简短占卜查询组件
@@ -18,7 +18,7 @@ import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInf
 
 
 // 导入六爻网格展示组件
-import LiuYaoGridDisplay from './LiuYaoGridDisplay';
+import LiuYaoGridDisplay from './LiuYaoGridDisplay/LiuYaoGridDisplay';
 // 导入显示控制组件
 import DisplayControl from '../../common/DisplayControl/DisplayControl';
 // 导入排盘API
@@ -258,9 +258,12 @@ const LiuYaoReault = React.memo(() => {
       setHasInitialized(true);
       // 不要立即删除localStorage，以便在保存时能获取完整数据
       // 延迟删除，确保保存逻辑能获取到数据
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         localStorage.removeItem('divinationResult');
       }, 1000);
+      
+      // 清除定时器
+      return () => clearTimeout(timer);
     }
   }, [hasInitialized]); // 移除hasSaved依赖，防止重复执行
 
@@ -272,7 +275,7 @@ const LiuYaoReault = React.memo(() => {
    */
   if (error) {
     return (
-      <div id="LiuYaoReault" className="liu-yao-reault-container">
+      <div id="LiuYaoReault" className={styles.liuYaoReaultContainer}>
         <div className="error-message">
           加载失败：{error.message}
         </div>
@@ -286,7 +289,7 @@ const LiuYaoReault = React.memo(() => {
    */
   if (!divinationData) {
     return (
-      <div id="LiuYaoReault" className="liu-yao-reault-container">
+      <div id="LiuYaoReault" className={styles.liuYaoReaultContainer}>
         <div className="loading">加载中...</div>
       </div>
     );
@@ -297,23 +300,23 @@ const LiuYaoReault = React.memo(() => {
    * 数据加载成功后显示完整的排盘结果页面
    */
   return (
-    <div id="LiuYaoReault" className="liu-yao-reault-container">
+    <div id="LiuYaoReault" className={styles.liuYaoReaultContainer}>
       {/* 占卜信息展示组件，显示基本信息 */}
       <DivinationInfoDisplay formData={formData} divinationData={divinationData} />
 
-      <div className="main-content"> 
-        <div className="content-wrapper">
-          <div className="liu-yao-info">
+      <div className={styles.mainContent}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.liuYaoInfo}>
             {/* 简短占卜查询组件，显示占卜问题 */}
             <BriefDivinationQuery formData={formData} />
             {/* 四柱展示组件，显示干支信息 */}
-            <FourPillarsDisplay 
+            <FourPillarsDisplay
               ganzhiInfo={divinationData.calendar_info?.ganzhi_info || {}}
               isColorMode={activeButtons.includes('colorChange')}
             />
 
             {/* 六爻网格展示组件，显示卦象信息 */}
-            <LiuYaoGridDisplay 
+            <LiuYaoGridDisplay
               divinationData={divinationData}
               isColorMode={activeButtons.includes('colorChange')}
             />
@@ -326,14 +329,14 @@ const LiuYaoReault = React.memo(() => {
           </div>
 
           {/* 补充信息区域，待开发功能 */}
-          <div className="supplement-info">
-            <div className="text-box">
+          <div className={styles.supplementInfo}>
+            <div className={styles.textBox}>
               <p>求占者补充说明（待开发）</p>
             </div>
-            <div className="text-box">
+            <div className={styles.textBox}>
               <p>待开发</p>
             </div>
-            <div className="text-box">
+            <div className={styles.textBox}>
               <p>待开发</p>
             </div>
           </div>

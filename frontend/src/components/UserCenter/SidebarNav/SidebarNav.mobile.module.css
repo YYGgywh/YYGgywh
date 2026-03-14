@@ -1,0 +1,63 @@
+/*
+ * @file            frontend/src/components/UserCenter/SidebarNav/SidebarNav.mobile.module.css
+ * @description     用户中心左侧导航栏样式 - 移动端专用（CSS Modules版本）
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:40:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 侧边栏导航容器 - 移动端适配 */
+.sidebarNav {
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 8px 0 16px 0;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+/* 导航列表 - 移动端适配 */
+.sidebarNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+/* 侧边栏底部 - 移动端适配 */
+.sidebarNavFooter {
+  padding: 12px 16px 0;
+  border-top: 1px solid #f0f0f0;
+  margin-top: auto;
+}
+
+/* 退出登录按钮 - 移动端适配 */
+.sidebarLogoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background-color: transparent;
+  color: #f44336;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.sidebarLogoutBtn:hover {
+  background-color: #ffebee;
+}
+
+/* 退出登录图标 - 移动端适配 */
+.logoutIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}

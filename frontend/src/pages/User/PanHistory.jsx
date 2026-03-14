@@ -3,13 +3,13 @@
  * @description     用户排盘历史页面
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-03-02 18:30:00
- * @lastModified    2026-03-02 18:30:00
+ * @lastModified    2026-03-14 12:00:00
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect } from 'react';
 import { listPan } from '../../api/panApi';
-import PanRecordDetail from '../../components/PanRecordDetail';
+import PanRecordDetail from '../../components/PanRecordDetail/PanRecordDetail';
 import { panTypeToChinese } from '../../utils/methodMapping';
 
 const PanHistory = () => {

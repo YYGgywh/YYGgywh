@@ -10,11 +10,8 @@
 import React from 'react'; // 导入React核心库
 import { YangYao, YinYao } from '../YaoComponents/YaoComponents'; // 导入阳爻和阴爻组件
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./SixYaoDisplay.mobile.module.css").default
-  : require("./SixYaoDisplay.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./SixYaoDisplay.desktop.module.css";
 
 /**
  * 六爻显示组件

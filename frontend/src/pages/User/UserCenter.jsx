@@ -3,7 +3,7 @@
  * @description     用户中心页面组件，重构后采用两栏布局结构
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-03-03 20:58:00
+ * @lastModified    2026-03-14 12:00:00
  * Copyright © All rights reserved
 */
 
@@ -29,7 +29,7 @@ import {
   getLoginNameLimitInfo,
   updateLoginName
 } from '../../api/userApi';
-import PanRecordDetail from '../../components/PanRecordDetail';
+import PanRecordDetail from '../../components/PanRecordDetail/PanRecordDetail';
 import { panTypeToChinese } from '../../utils/methodMapping';
 
 // 导航项配置

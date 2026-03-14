@@ -9,11 +9,8 @@
 
 import React, { Component } from 'react' // 导入React核心库和Component基类
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./Add.mobile.module.css").default
-  : require("./Add.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./Add.desktop.module.css";
 
 // 定义Add类组件，继承自Component
 export default class Add extends Component {

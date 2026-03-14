@@ -110,9 +110,12 @@ const LikeButton = ({
       // 无论成功失败，都结束加载状态
       setIsLoading(false);
       // 300毫秒后结束动画状态（与CSS动画时长一致）
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setIsAnimating(false);
       }, 300);
+      
+      // 清除定时器
+      return () => clearTimeout(timer);
     }
   };
 

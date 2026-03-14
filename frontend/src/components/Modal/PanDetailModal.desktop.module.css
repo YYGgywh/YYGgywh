@@ -1,0 +1,602 @@
+/*
+ * @file            frontend/src/components/Modal/PanDetailModal.desktop.module.css
+ * @description     排盘详情弹窗桌面端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:10:00
+ * @lastModified    2026-03-13 12:10:00
+ * Copyright © All rights reserved
+*/
+
+/* ========================================
+   排盘详情弹窗桌面端样式
+   ======================================== */
+
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 蒙层样式 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 弹窗主体 */
+.modalContent {
+  width: 90%;
+  height: 90vh;
+  background-color: #fff;
+  border-radius: 16px 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: slideIn 0.3s ease;
+  max-width: 1200px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* 顶部固定区 */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 24px;
+  border-bottom: 1px solid #f5f5f5;
+  flex-shrink: 0;
+}
+
+.headerLeft {
+  flex: 1;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: transparent;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* 主体内容区 */
+.modalBody {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* 左侧视觉区 */
+.modalLeftContent {
+  width: 60%;
+  height: 100%;
+  position: relative;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailImageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.detailImageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.detailImageContainer img.loading {
+  opacity: 0;
+}
+
+.detailImageContainer img.loaded {
+  opacity: 1;
+}
+
+.imageLoading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 右侧信息区 */
+.modalRightContent {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* 用户信息区 */
+.userInfoSection {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f5f5f5;
+  flex-shrink: 0;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.userAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userDetails {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.followButton {
+  padding: 6px 16px;
+  background-color: #ff2442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.followButton:hover {
+  background-color: #e60026;
+}
+
+.followButton.followed {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.followButton.followed:hover {
+  background-color: #e6e6e6;
+}
+
+/* 中间内容区 */
+.contentSection {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.postTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.tagsSection {
+  margin-bottom: 16px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #f5f5f5;
+  color: #666;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background-color: #e6e6e6;
+}
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #999;
+}
+
+.postTime {
+  display: flex;
+  align-items: center;
+}
+
+.postLocation {
+  display: flex;
+  align-items: center;
+}
+
+.divinationInfo {
+  margin-bottom: 24px;
+}
+
+.divinationInfo h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.infoLabel {
+  width: 80px;
+  font-weight: 600;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  color: #333;
+  flex: 1;
+}
+
+/* 评论区 */
+.commentsSection {
+  margin-top: 24px;
+}
+
+.commentsSection h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.commentInputSection {
+  margin-bottom: 20px;
+}
+
+.commentInputPlaceholder {
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.commentInputPlaceholder:hover {
+  background-color: #e6e6e6;
+  color: #666;
+}
+
+.commentInputForm {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.commentInputField {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  padding: 8px;
+}
+
+.commentInputField::placeholder {
+  color: #999;
+}
+
+.commentSubmitButton {
+  padding: 6px 16px;
+  background-color: #ff2442;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.commentSubmitButton:hover:not(:disabled) {
+  background-color: #e60026;
+}
+
+.commentSubmitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.commentUserAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentUserAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.commentContentSection {
+  flex: 1;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.commentUserName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.commentTime {
+  font-size: 12px;
+  color: #999;
+}
+
+.commentText {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.commentActions {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+}
+
+.commentLike {
+  transition: color 0.3s ease;
+}
+
+.commentLike:hover {
+  color: #ff2442;
+}
+
+.commentReply {
+  transition: color 0.3s ease;
+}
+
+.commentReply:hover {
+  color: #1890ff;
+}
+
+.noComments {
+  text-align: center;
+  padding: 40px 0;
+  color: #999;
+  font-size: 14px;
+  background-color: #fafafa;
+  border-radius: 8px;
+}
+
+/* 底部互动区 */
+.interactionSection {
+  height: 60px;
+  padding: 0 24px;
+  border-top: 1px solid #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #fafafa;
+}
+
+.interactionLeft {
+  display: flex;
+  gap: 32px;
+}
+
+.interactionRight {
+  display: flex;
+}
+
+.interactionItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.interactionItem:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.interactionIcon {
+  font-size: 20px;
+}
+
+.interactionCount {
+  font-weight: 600;
+}
+
+.interactionItem.liked {
+  color: #ff2442;
+}
+
+.interactionItem.collected {
+  color: #faad14;
+}
+
+.shareButton {
+  transition: all 0.3s ease;
+}
+
+.shareButton:hover {
+  color: #1890ff;
+}
+
+/* 底部固定区 */
+.modalFooter {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #f5f5f5;
+  background-color: #fafafa;
+  flex-shrink: 0;
+}
+
+.footerContent {
+  font-size: 12px;
+  color: #999;
+}
+
+.footerText {
+  display: flex;
+  align-items: center;
+}
+
+/* 滚动条样式 */
+.contentSection::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contentSection::-webkit-scrollbar-track {
+  background-color: #fafafa;
+}
+
+.contentSection::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.contentSection::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}

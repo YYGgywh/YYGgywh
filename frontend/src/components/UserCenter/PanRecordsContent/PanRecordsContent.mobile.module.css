@@ -1,0 +1,231 @@
+/*
+ * @file            frontend/src/components/UserCenter/PanRecordsContent/PanRecordsContent.mobile.module.css
+ * @description     排盘记录内容组件样式 - 移动端专用（CSS Modules版本）
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-03 20:52:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+/* 排盘记录内容容器 - 移动端适配 */
+.panRecordsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 加载状态 - 移动端适配 */
+.panRecordsLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  gap: 12px;
+  color: #999;
+}
+
+.loadingSpinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #f0f0f0;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 空状态 - 移动端适配 */
+.panRecordsEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  text-align: center;
+  color: #999;
+}
+
+.emptyIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.panRecordsEmpty p {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.panRecordsEmpty span {
+  font-size: 12px;
+}
+
+/* 记录列表 - 移动端适配 */
+.recordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 记录卡片 - 移动端适配 */
+.recordCard {
+  background-color: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 16px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.recordCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #e0e0e0;
+}
+
+/* 记录卡片头部 - 移动端适配 */
+.recordCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 排盘类型标签 - 移动端适配 */
+.recordTypeBadge {
+  display: inline-block;
+  padding: 3px 10px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* 记录时间 - 移动端适配 */
+.recordTime {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 记录卡片主体 - 移动端适配 */
+.recordCardBody {
+  margin-bottom: 12px;
+}
+
+/* 卦象结果 - 移动端适配 */
+.recordResult {
+  margin-bottom: 6px;
+}
+
+.resultLabel {
+  font-size: 13px;
+  color: #666;
+}
+
+.resultValue {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* 补充说明 - 移动端适配 */
+.recordSupplement {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  border-left: 2px solid #ff9800;
+}
+
+.supplementLabel {
+  font-size: 12px;
+  color: #999;
+}
+
+.supplementValue {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 记录卡片底部 - 移动端适配 */
+.recordCardFooter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 操作按钮 - 移动端适配 */
+.recordActionBtn {
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recordActionBtn:hover {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.recordActionBtnPrimary {
+  background-color: #2196f3;
+  color: #fff;
+  border-color: #2196f3;
+}
+
+.recordActionBtnPrimary:hover {
+  background-color: #1976d2;
+  border-color: #1976d2;
+}
+
+/* 分页控制 - 移动端适配 */
+.recordsPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 分页按钮 - 移动端适配 */
+.pageBtn {
+  padding: 6px 16px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.pageBtn:disabled {
+  background-color: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: #f0f0f0;
+}
+
+/* 分页信息 - 移动端适配 */
+.pageInfo {
+  font-size: 13px;
+  color: #666;
+}

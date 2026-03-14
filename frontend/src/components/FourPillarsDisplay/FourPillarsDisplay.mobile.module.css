@@ -25,43 +25,43 @@
   align-items: center;
 }
 
-.yearLabel,
-.monthLabel,
-.dayLabel,
-.hourLabel {
+.yearPillarsInfoLabel,
+.monthPillarsInfoLabel,
+.dayPillarsInfoLabel,
+.hourPillarsInfoLabel {
   font-size: 0.7rem;
   color: #8e8e8e;
 }
 
-.yearGan,
-.monthGan,
-.dayGan,
-.hourGan,
-.yearZhi,
-.monthZhi,
-.dayZhi,
-.hourZhi {
+.yearPillarsInfoGan,
+.monthPillarsInfoGan,
+.dayPillarsInfoGan,
+.hourPillarsInfoGan,
+.yearPillarsInfoZhi,
+.monthPillarsInfoZhi,
+.dayPillarsInfoZhi,
+.hourPillarsInfoZhi {
   font-size: 0.8rem;
   color: #333;
   font-weight: bolder;
   transition: color 0.3s ease;
 }
 
-.yearGan:hover,
-.monthGan:hover,
-.dayGan:hover,
-.hourGan:hover,
-.yearZhi:hover,
-.monthZhi:hover,
-.dayZhi:hover,
-.hourZhi:hover {
+.yearPillarsInfoGan:hover,
+.monthPillarsInfoGan:hover,
+.dayPillarsInfoGan:hover,
+.hourPillarsInfoGan:hover,
+.yearPillarsInfoZhi:hover,
+.monthPillarsInfoZhi:hover,
+.dayPillarsInfoZhi:hover,
+.hourPillarsInfoZhi:hover {
   color: #1890FF;
 }
 
-.yearVacancy,
-.monthVacancy,
-.dayVacancy,
-.hourVacancy {
+.yearPillarsInfoVacancy,
+.monthPillarsInfoVacancy,
+.dayPillarsInfoVacancy,
+.hourPillarsInfoVacancy {
   font-size: 0.65rem;
   color: #666;
 }

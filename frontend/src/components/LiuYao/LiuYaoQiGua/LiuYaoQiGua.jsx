@@ -189,9 +189,12 @@ const LiuYaoQiGua = () => {
       // 如果已完成六次投掷
       if (newIndex === 6) {
         // 延迟执行，确保状态更新完成
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setIsDivinationButtonEnabled(true);  // 启用排盘按钮
         }, 500);  // 延迟执行，确保状态更新完成
+        
+        // 清除定时器
+        return () => clearTimeout(timer);
       }
       
       // 重置正在投掷状态

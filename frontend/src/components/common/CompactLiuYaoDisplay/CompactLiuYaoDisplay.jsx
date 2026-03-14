@@ -10,13 +10,10 @@
 // 导入React核心库和相关hooks
 import React, { useState } from 'react';
 // 导入六爻网格展示组件
-import LiuYaoGridDisplay from '../../LiuYao/LiuYaoReault/LiuYaoGridDisplay';
+import LiuYaoGridDisplay from '../../LiuYao/LiuYaoReault/LiuYaoGridDisplay/LiuYaoGridDisplay';
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./CompactLiuYaoDisplay.mobile.module.css").default
-  : require("./CompactLiuYaoDisplay.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./CompactLiuYaoDisplay.desktop.module.css";
 
 /**
  * 验证占卜数据结构

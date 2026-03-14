@@ -8,13 +8,7 @@
 */
 
 import React from 'react'; // 导入React核心库，用于创建React组件
-import desktopStyles from './DropdownItem.desktop.module.css'; // 导入桌面端样式
-import mobileStyles from './DropdownItem.mobile.module.css'; // 导入移动端样式
-
-// 检测设备类型
-const isMobile = () => {
-  return window.innerWidth < 768;
-};
+import styles from './DropdownItem.desktop.module.css'; // 导入桌面端样式
 
 // 定义DropdownItem组件，接收以下属性：
 // title - 菜单项标题，默认为空字符串
@@ -24,8 +18,6 @@ const isMobile = () => {
 const DropdownItem = ({ title = '', description = '', href = '#', icon = null }) => {
   // 定义renderIcon函数，用于渲染图标部分
   const renderIcon = () => {
-    // 获取当前设备的样式
-    const styles = isMobile() ? mobileStyles : desktopStyles;
     
     // 如果图标不存在，返回null，不渲染图标
     if (!icon) return null;
@@ -43,9 +35,6 @@ const DropdownItem = ({ title = '', description = '', href = '#', icon = null })
     );
   };
 
-  // 获取当前设备的样式
-  const styles = isMobile() ? mobileStyles : desktopStyles;
-  
   // 返回组件的JSX结构
   return (
     <a href={href} className={styles.dropdownColLink}> {/* 渲染链接元素，应用下拉菜单链接样式 */}

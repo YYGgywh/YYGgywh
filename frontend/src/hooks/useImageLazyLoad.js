@@ -40,6 +40,7 @@ export const useImageLazyLoad = (src, placeholder = '') => {
       if (imgRef.current) {
         observer.unobserve(imgRef.current);
       }
+      observer.disconnect(); // 完全断开观察器
     };
   }, []);
   

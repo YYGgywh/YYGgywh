@@ -8,14 +8,7 @@
 */
 
 import React, { useRef, useEffect } from 'react';
-import desktopStyles from './DateInput.desktop.module.css'; // 导入桌面端样式
-import mobileStyles from './DateInput.mobile.module.css'; // 导入移动端样式
-
-// 设备类型检测（简化版，实际项目中可能使用更复杂的检测方法）
-const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
-
-// 根据设备类型选择样式
-const styles = isDesktop ? desktopStyles : mobileStyles;
+import styles from './DateInput.desktop.module.css'; // 导入桌面端样式
 
 /**
  * 统一的时间输入框组件

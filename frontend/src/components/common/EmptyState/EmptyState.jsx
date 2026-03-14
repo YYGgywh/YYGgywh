@@ -11,11 +11,8 @@
 
 import React from 'react'; // 导入React核心库，用于创建React组件
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./EmptyState.mobile.module.css").default
-  : require("./EmptyState.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./EmptyState.desktop.module.css";
 
 /**
  * EmptyState组件 - 空状态展示组件

@@ -1,0 +1,83 @@
+/*
+ * @file            frontend/src/components/Waterfall/WaterfallContainer/WaterfallContainer.mobile.module.css
+ * @description     瀑布流容器组件移动端样式，负责管理瀑布流布局、无限滚动和卡片渲染的样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-07 17:30:00
+ * @lastModified    2026-03-14 12:00:00
+ * Copyright © All rights reserved
+*/
+
+.waterfallContainer {
+  width: 100%;
+  padding: 10px;
+}
+
+.waterfallGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  position: relative;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+}
+
+.loadingContainer p {
+  margin-top: 12px;
+  color: #666;
+  font-size: 14px;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+  text-align: center;
+}
+
+.errorContainer p {
+  margin-bottom: 12px;
+  color: #ff4d4f;
+  font-size: 14px;
+}
+
+.retryButton {
+  padding: 6px 12px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.retryButton:hover {
+  background-color: #40a9ff;
+}
+
+.loadMoreTrigger {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  margin-top: 15px;
+}
+
+.loadingMore {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 12px;
+}

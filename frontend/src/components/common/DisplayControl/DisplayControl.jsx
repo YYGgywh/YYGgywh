@@ -10,11 +10,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// 根据设备类型导入不同的样式
-const isMobile = window.innerWidth < 768;
-const styles = isMobile 
-  ? require("./DisplayControl.mobile.module.css").default
-  : require("./DisplayControl.desktop.module.css").default;
+// 导入桌面端样式
+import styles from "./DisplayControl.desktop.module.css";
 
 /**
  * 显示控制组件

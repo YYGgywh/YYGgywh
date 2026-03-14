@@ -8,14 +8,8 @@
 */
 
 import React from 'react'; // 导入React核心库
-import desktopStyles from './DropdownMenu.desktop.module.css'; // 导入桌面端样式
-import mobileStyles from './DropdownMenu.mobile.module.css'; // 导入移动端样式
+import styles from './DropdownMenu.desktop.module.css'; // 导入桌面端样式
 import DropdownColumn from '../DropdownColumn/DropdownColumn'; // 导入下拉菜单列组件
-
-// 检测设备类型
-const isMobile = () => {
-  return window.innerWidth < 768;
-};
 
 // 定义DropdownMenu组件，接收columns、className参数
 const DropdownMenu = ({ columns = [], className = '' }) => {
@@ -23,9 +17,6 @@ const DropdownMenu = ({ columns = [], className = '' }) => {
   if (!columns || columns.length === 0) {
     return null; // 如果为空，返回null
   }
-
-  // 获取当前设备的样式
-  const styles = isMobile() ? mobileStyles : desktopStyles;
   
   // 返回JSX
   return (

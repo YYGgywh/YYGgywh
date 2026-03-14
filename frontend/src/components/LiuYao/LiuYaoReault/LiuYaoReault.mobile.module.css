@@ -1,0 +1,239 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoReault.mobile.module.css
+ * @description     六爻结果展示组件移动端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-13 12:00:00
+ * @lastModified    2026-03-13 12:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ========================================
+   六爻结果展示组件移动端样式
+   ======================================== */
+
+.liuYaoReaultContainer {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  font-size: 0.75rem;
+}
+
+.divinationInfo {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.infoTop {
+  margin-bottom: 5px;
+}
+
+.seekerInfo {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+}
+
+.nameLabel,
+.genderLabel,
+.birthYearLabel,
+.locationLabel,
+.questionLabel,
+.divinationTypeLabel,
+.solarLabel,
+.lunarLabel,
+.prevJieLabel,
+.nextJieLabel {
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.divinationQuery {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 10px;
+}
+
+.dateInfo {
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+}
+
+.timeInfo {
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+}
+
+.nameLabel {
+  font-size: 12px;
+}
+
+.infoMiddle {
+  margin-bottom: 5px;
+}
+
+.infoBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.divinationDatetime {
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.divinationDatetime > .solarInfo,
+.divinationDatetime > .lunarInfo {
+  width: 100%;
+}
+
+.solarTermsInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mainContent {
+  background-color: var(--white-color);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.liuYaoInfo {
+  flex: 1;
+  max-width: 100%;
+}
+
+.liuYaoInfo > .divinationInfo {
+  padding-top: 0px;
+  margin-bottom: 8px;
+  border: 0px;
+  border-radius: 0px;
+  border-bottom: 1px solid #ddd;
+}
+
+.liuYaoInfo > .divinationInfo > .solarInfo {
+  margin-bottom: 0px;
+}
+
+.liuYaoInfo > .divinationInfo > .fourPillarsInfo {
+  display: flex;
+  padding: 0;
+  border: 0;
+}
+
+.fourPillarsInfo {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.yearPillarsInfo,
+.monthPillarsInfo,
+.dayPillarsInfo,
+.hourPillarsInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+}
+
+.yearLabel,
+.monthLabel,
+.dayLabel,
+.hourLabel {
+  font-size: 0.625rem;
+  color: var(--light-text-color);
+}
+
+.yearGan,
+.monthGan,
+.dayGan,
+.hourGan,
+.yearZhi,
+.monthZhi,
+.dayZhi,
+.hourZhi {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  font-weight: bolder;
+}
+
+.yearVacancy,
+.monthVacancy,
+.dayVacancy,
+.hourVacancy {
+  font-size: 0.625rem;
+  color: var(--gray-text-color);
+}
+
+.supplementInfo {
+  flex: 1;
+}
+
+.textBox {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  margin-bottom: 10px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+}
+
+.textBox:hover {
+  border-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+  .liuYaoReaultContainer {
+    padding: 5px;
+    font-size: 0.625rem;
+  }
+  
+  .divinationInfo {
+    padding: 5px;
+    border-radius: 8px;
+  }
+  
+  .seekerInfo,
+  .divinationQuery {
+    gap: 5px;
+  }
+  
+  .fourPillarsInfo {
+    gap: 10px;
+  }
+  
+  .textBox {
+    padding: 10px;
+    min-height: 50px;
+  }
+}
