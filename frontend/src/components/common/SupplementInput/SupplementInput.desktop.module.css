@@ -1,0 +1,83 @@
+/*
+ * @file            frontend/src/components/common/SupplementInput/SupplementInput.desktop.module.css
+ * @description     补充说明输入组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-15 10:00:00
+ * @lastModified    2026-03-15 15:04:10
+ * Copyright © All rights reserved
+*/
+
+.supplementInput {
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.inputContainer:hover {
+  border-color: #d9d9d9;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  resize: vertical;
+  font-family: inherit;
+  outline: none;
+}
+
+.textarea::placeholder {
+  color: #999;
+}
+
+.textarea:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.inputFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e8e8e8;
+}
+
+.charCount {
+  font-size: 12px;
+  color: #999;
+}
+
+.clearButton {
+  --btn-initialize-bg: #EF4444;
+  padding: 4px 12px;
+  background-color: var(--btn-initialize-bg);
+  /* border: 1px solid #d9d9d9; */
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  color: var(--text-white);
+  cursor: pointer; /* 鼠标悬停时显示为指针 */
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover:not(:disabled) {
+  --btn-initialize-hover-bg: #DC2626;
+  background-color: var(--btn-initialize-hover-bg);
+  color: var(--text-white);
+}
+
+.clearButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

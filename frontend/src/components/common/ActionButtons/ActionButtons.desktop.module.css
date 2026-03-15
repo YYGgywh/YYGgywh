@@ -1,0 +1,64 @@
+/*
+ * @file            frontend/src/components/common/ActionButtons/ActionButtons.desktop.module.css
+ * @description     操作按钮组件桌面端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-15 10:00:00
+ * @lastModified    2026-03-15 10:00:00
+ * Copyright © All rights reserved
+*/
+
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.button {
+  --btn-padding-y: 4px;
+  --btn-padding-x: 12px;
+  --btn-font-size: 16px;
+  --btn-border-radius: 6px;
+  
+  width: 72px;
+  height: 32px;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  border-radius: var(--btn-border-radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.saveButton {
+  --btn-primary-bg: #1890FF;
+  color: #fff;
+  background-color: var(--btn-primary-bg);
+  border: none;
+}
+
+.saveButton:hover:not(:disabled) {
+  --btn-primary-hover: #40a9ff;
+  background-color: var(--btn-primary-hover);
+}
+
+.publishButton {
+  --btn-submit-bg: #10B981;
+  color: #fff;
+  background-color: var(--btn-submit-bg);
+  border: none;
+}
+
+.publishButton:hover:not(:disabled) {
+  --btn-submit-hover-bg: #059669;
+  background-color: var(--btn-submit-hover-bg);
+}
+
+.button:disabled {
+  --btn-disabled-bg: #D1D5DB;
+  cursor: not-allowed;
+  background-color: var(--btn-disabled-bg);
+  border: none;
+  color: #666;
+  opacity: 0.6;
+}

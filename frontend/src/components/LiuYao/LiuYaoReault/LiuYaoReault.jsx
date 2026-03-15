@@ -9,6 +9,7 @@
 
 // 导入React核心库和相关hooks
 import React, { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 // 导入桌面端样式（CSS Modules）
 import styles from './LiuYaoReault.desktop.module.css';
 // 导入四柱展示组件
@@ -21,8 +22,10 @@ import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInf
 import LiuYaoGridDisplay, { defaultDisplayConfig as liuYaoDefaultConfig } from './LiuYaoGridDisplay/LiuYaoGridDisplay';
 // 导入显示控制组件
 import DisplayControl from '../../common/DisplayControl/DisplayControl';
+import SupplementInput from '../../common/SupplementInput/SupplementInput';
+import ActionButtons from '../../common/ActionButtons/ActionButtons';
 // 导入排盘API
-import { savePan } from '../../../api/panApi';
+import { savePan, updatePan } from '../../../api/panApi';
 // 导入登录状态检查工具
 import { isLoggedIn } from '../../../utils/storage';
 // 导入起卦方式映射工具
@@ -120,13 +123,20 @@ const LiuYaoReault = React.memo(() => {
   const [fourPillarsDisplayConfig, setFourPillarsDisplayConfig] = useState(fourPillarsDefaultConfig);
   // 六爻显示配置状态
   const [liuYaoDisplayConfig, setLiuYaoDisplayConfig] = useState(liuYaoDefaultConfig);
+  // 补充说明状态
+  const [supplement, setSupplement] = useState('');
+  // 排盘记录ID状态（用于更新）
+  const [recordId, setRecordId] = useState(null);
+  // 操作状态
+  const [operationLoading, setOperationLoading] = useState(false);
 
   /**
    * 自动保存排盘记录
    * @param {Object} panResult - 排盘结果数据
    * @param {Object} panFormData - 排盘表单数据
+   * @param {string} supplementText - 补充说明文本
    */
-  const autoSavePanRecord = async (panResult, panFormData) => {
+  const autoSavePanRecord = async (panResult, panFormData, supplementText) => {
     // 使用ref锁防止并发调用
     if (saveInProgress.current || hasSaved) {
       console.log('排盘记录正在保存或已保存，避免重复调用');
@@ -175,10 +185,13 @@ const LiuYaoReault = React.memo(() => {
         'liuyao', // 排盘类型
         panParams, // 排盘参数（完整数据）
         panResult, // 排盘结果
-        panFormData?.question || '' // 补充说明
+        supplementText || '' // 补充说明
       );
 
       console.log('排盘记录保存成功:', response);
+      if (response?.data?.record_id) {
+        setRecordId(response.data.record_id);
+      }
       setHasSaved(true);
     } catch (err) {
       console.error('自动保存排盘记录失败:', err);
@@ -201,6 +214,49 @@ const LiuYaoReault = React.memo(() => {
         return [...prev, buttonId];
       }
     });
+  };
+
+  /**
+   * 处理保存操作
+   */
+  const handleSave = async () => {
+    if (!divinationData || !formData) return;
+    
+    setOperationLoading(true);
+    try {
+      await autoSavePanRecord(divinationData, formData, supplement);
+      console.log('排盘记录保存成功');
+    } catch (err) {
+      console.error('保存排盘记录失败:', err);
+      alert('保存失败，请稍后重试');
+    } finally {
+      setOperationLoading(false);
+    }
+  };
+
+  /**
+   * 处理发布操作
+   */
+  const handlePublish = async () => {
+    if (!divinationData || !formData) return;
+    
+    setOperationLoading(true);
+    try {
+      await autoSavePanRecord(divinationData, formData, supplement);
+      console.log('排盘记录发布成功');
+    } catch (err) {
+      console.error('发布排盘记录失败:', err);
+      alert('发布失败，请稍后重试');
+    } finally {
+      setOperationLoading(false);
+    }
+  };
+
+  /**
+   * 处理补充说明变化
+   */
+  const handleSupplementChange = (value) => {
+    setSupplement(value);
   };
 
   /**
@@ -232,7 +288,7 @@ const LiuYaoReault = React.memo(() => {
               
               // 自动保存排盘记录（仅在用户登录时）
               if (isLoggedIn()) {
-                autoSavePanRecord(validatedData, result.formData);
+                autoSavePanRecord(validatedData, result.formData, '');
               }
             } else {
               // 数据格式不正确，设置错误状态
@@ -334,16 +390,23 @@ const LiuYaoReault = React.memo(() => {
             />
           </div>
 
-          {/* 补充信息区域，待开发功能 */}
+          {/* 补充信息区域 */}
           <div className={styles.supplementInfo}>
-            <div className={styles.textBox}>
-              <p>求占者补充说明（待开发）</p>
-            </div>
-            <div className={styles.textBox}>
-              <p>待开发</p>
-            </div>
-            <div className={styles.textBox}>
-              <p>待开发</p>
+            <div className={styles.supplementSection}>
+              <SupplementInput
+                value={supplement}
+                onChange={handleSupplementChange}
+                placeholder="请输入补充说明，记录您的求占背景、心境或其他相关信息..."
+                disabled={operationLoading}
+                maxLength={500}
+                autoSave={true}
+              />
+              <ActionButtons
+                onSave={handleSave}
+                onPublish={handlePublish}
+                loading={operationLoading}
+                disabled={!supplement.trim()}
+              />
             </div>
           </div>
         </div>
