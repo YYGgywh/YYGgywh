@@ -64,7 +64,7 @@ import styles from './YaoInput.desktop.module.css';
  * />
  */
 const YaoInput = ({ 
-  value,                          // 当前输入框的值
+  value = '',                     // 当前输入框的值，默认为空字符串
   placeholder = '待生成',         // 占位符文本，默认为"待生成"
   disabled = true,                // 是否禁用，默认为true
   isPlaceholder = false,          // 是否处于占位符状态（只读模式）
@@ -86,7 +86,7 @@ const YaoInput = ({
   /**
    * @description     获取输入框的显示值
    *                   只读模式下：如果处于占位符状态，返回空字符串以显示占位符
-   *                   可编辑模式下：直接返回 value
+   *                   可编辑模式下：返回 value，如果 value 为 undefined 或 null 则返回空字符串
    * 
    * @return          {string}  - 输入框应显示的值
    */
@@ -95,8 +95,8 @@ const YaoInput = ({
     if (!editable && isPlaceholder) {
       return '';
     }
-    // 否则返回实际的值
-    return value;
+    // 否则返回实际的值，如果值为 undefined 或 null，返回空字符串
+    return value !== undefined && value !== null ? value : '';
   };
   
   /**

@@ -173,6 +173,10 @@
   --element-earth: #80350E;       /* 土元素 - 棕色 */
   --element-metal: #FFC000;       /* 金元素 - 橙黄色 */
   
+  /* 冲合颜色系统 */
+  --element-chong: #C00000;       /* 冲 - 深红色 */
+  --element-he: #00B050;          /* 合 - 绿色 */
+  
   /* 兼容旧代码的五行颜色变量 */
   --line-color-red: var(--element-fire);
   --line-color-green: var(--element-wood);

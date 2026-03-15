@@ -55,3 +55,12 @@
 .color-mode [data-element="螣蛇"] {
   color: var(--element-earth);
 }
+
+/* 冲合颜色样式 */
+.color-mode [data-element="冲"] {
+  color: var(--element-chong);
+}
+
+.color-mode [data-element="合"] {
+  color: var(--element-he);
+}

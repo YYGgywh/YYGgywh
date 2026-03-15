@@ -1,9 +1,9 @@
 /*
  * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoGridDisplay/LiuYaoGridDisplay.jsx
  * @description     六爻排盘网格展示组件，负责展示主卦、变卦及每爻的详细信息
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-22 19:00:00
- * @lastModified    2026-03-13 11:55:00
+ * @lastModified    2026-03-15 14:25:39
  * Copyright © All rights reserved
 */
 
@@ -15,6 +15,68 @@ import PropTypes from 'prop-types';
 import styles from './LiuYaoGridDisplay.desktop.module.css';
 // 导入五行颜色样式
 import '../../../../styles/elementColors.css';
+
+// 默认显示配置
+const defaultDisplayConfig = {
+  // 行级别控制
+  rows: {
+    palace: true,  // 卦宫行
+    name: true,    // 卦名行
+    yao1: true,    // 初爻
+    yao2: true,    // 二爻
+    yao3: true,    // 三爻
+    yao4: true,    // 四爻
+    yao5: true,    // 五爻
+    yao6: true     // 上爻
+  },
+  
+  // 列级别控制
+  columns: {
+    liuShen: true,   // 六神列
+    fuShen: true,    // 伏神列
+    benGua: true,    // 本卦主体列
+    shiYing: true,   // 世应列
+    dongSymbol: true, // 动爻符号列
+    bianGua: true,   // 变卦主体列
+    bianShiYing: true // 变卦世应列
+  },
+  
+  // 元素级别控制（覆盖行列配置）
+  elements: {
+    palace: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    name: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao1: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao2: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao3: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao4: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao5: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true },
+    yao6: { liuShen: true, fuShen: true, benGua: true, shiYing: true, dongSymbol: true, bianGua: true, bianShiYing: true }
+  }
+};
+
+// 计算最终的显示状态
+const calculateDisplayState = (config, rowKey, columnKey) => {
+  // 优先级：元素配置 > 行配置 && 列配置
+  
+  // 1. 检查行级别
+  if (config.rows[rowKey] === false) {
+    return false; // 整行隐藏
+  }
+  
+  // 2. 检查列级别
+  if (config.columns[columnKey] === false) {
+    return false; // 整列隐藏
+  }
+  
+  // 3. 检查元素级别（最高优先级）
+  const elementConfig = config.elements[rowKey];
+  if (elementConfig && elementConfig[columnKey] !== undefined) {
+    return elementConfig[columnKey];
+  }
+  
+  // 4. 默认显示
+  return true;
+};
 
 /**
  * 根据爻性获取爻符号
@@ -34,7 +96,16 @@ const getYaoSymbol = (yaoNature) => {
 //   - showLiuShen (boolean): 是否显示六神列
 //   - showShiYing (boolean): 是否显示世应列
 //   - showFuShen (boolean): 是否显示伏神列
-const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, showAccessory = true, showLiuShen = true, showShiYing = true, showFuShen = true }) => {
+//   - displayConfig (object): 显示配置
+const LiuYaoGridDisplay = React.memo(({ 
+  divinationData, 
+  isColorMode = false, 
+  showAccessory = true, 
+  showLiuShen = true, 
+  showShiYing = true, 
+  showFuShen = true,
+  displayConfig = defaultDisplayConfig 
+}) => {
   // 使用 React.useMemo 缓存是否有伏神的判断结果
   // 依赖项：divinationData.ben_gua_head?.fu_shen_wei_list
   // 优化目的：避免每次渲染都判断是否有伏神
@@ -72,25 +143,31 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, sho
     [dongYaoPositionSet]
   );
 
-  // 计算实际需要显示的伏神列
-  const shouldShowFuShen = showFuShen && hasFuShen;
+  // 计算实际需要显示的列
+  // 保持向后兼容性：当 displayConfig 中未设置时，使用原来的参数
+  const shouldShowLiuShen = displayConfig.columns.liuShen !== false && showLiuShen;
+  const shouldShowFuShen = displayConfig.columns.fuShen !== false && showFuShen && hasFuShen;
+  const shouldShowShiYing = displayConfig.columns.shiYing !== false && showShiYing;
+  const shouldShowDongSymbol = displayConfig.columns.dongSymbol !== false;
+  const shouldShowBianGua = displayConfig.columns.bianGua !== false;
+  const shouldShowBianShiYing = displayConfig.columns.bianShiYing !== false && showShiYing;
   
   // 使用 React.useMemo 缓存网格列数的计算结果
-  // 依赖项：showLiuShen, shouldShowFuShen, showShiYing, hasDongYao
+  // 依赖项：shouldShowLiuShen, shouldShowFuShen, shouldShowShiYing, hasDongYao, shouldShowDongSymbol, shouldShowBianGua, shouldShowBianShiYing
   // 优化目的：避免每次渲染都计算网格列数
   const gridColumns = React.useMemo(() => {
     let columns = 0;
-    if (showLiuShen) columns++;
+    if (shouldShowLiuShen) columns++;
     if (shouldShowFuShen) columns++;
     columns += 1; // 本卦主体列
-    if (showShiYing) columns++; // 本卦世应列
+    if (shouldShowShiYing) columns++; // 本卦世应列
     if (hasDongYao) {
-      columns += 1; // 动爻符号列
-      columns += 1; // 变卦主体列
-      if (showShiYing) columns++; // 变卦世应列
+      if (shouldShowDongSymbol) columns++; // 动爻符号列
+      if (shouldShowBianGua) columns++; // 变卦主体列
+      if (shouldShowBianShiYing) columns++; // 变卦世应列
     }
     return columns;
-  }, [showLiuShen, shouldShowFuShen, showShiYing, hasDongYao]);
+  }, [shouldShowLiuShen, shouldShowFuShen, shouldShowShiYing, hasDongYao, shouldShowDongSymbol, shouldShowBianGua, shouldShowBianShiYing]);
 
   // 优化 3：使用 React.useMemo 缓存变卦爻映射表
   // 依赖项：hasDongYao, divinationData.bian_gua_body?.length
@@ -104,21 +181,37 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, sho
     }, {});
   }, [hasDongYao, divinationData?.bian_gua_body?.length]);
 
-  // 使用 React.useMemo 缓存六冲六合占位符
+  // 使用 React.useMemo 缓存本卦六冲六合占位符
   // 依赖项：divinationData.ben_gua_head?.chong_he
   // 优化目的：避免每次渲染都重新计算
-  const chongHePlaceholder = React.useMemo(() => {
+  const benChongHePlaceholder = React.useMemo(() => {
     const chongHe = divinationData?.ben_gua_head?.chong_he || '';
     return chongHe.length > 0 ? '　' : '';
   }, [divinationData?.ben_gua_head?.chong_he]);
 
-  // 使用 React.useMemo 缓存六冲六合最后一个字符
+  // 使用 React.useMemo 缓存本卦六冲六合最后一个字符
   // 依赖项：divinationData.ben_gua_head?.chong_he
   // 优化目的：避免每次渲染都重新计算
-  const chongHeLastChar = React.useMemo(() => {
+  const benChongHeLastChar = React.useMemo(() => {
     const chongHe = divinationData?.ben_gua_head?.chong_he || '';
     return chongHe.length > 0 ? chongHe[chongHe.length - 1] : '';
   }, [divinationData?.ben_gua_head?.chong_he]);
+
+  // 使用 React.useMemo 缓存变卦六冲六合占位符
+  // 依赖项：divinationData.bian_gua_head?.chong_he
+  // 优化目的：避免每次渲染都重新计算
+  const bianChongHePlaceholder = React.useMemo(() => {
+    const chongHe = divinationData?.bian_gua_head?.chong_he || '';
+    return chongHe.length > 0 ? '　' : '';
+  }, [divinationData?.bian_gua_head?.chong_he]);
+
+  // 使用 React.useMemo 缓存变卦六冲六合最后一个字符
+  // 依赖项：divinationData.bian_gua_head?.chong_he
+  // 优化目的：避免每次渲染都重新计算
+  const bianChongHeLastChar = React.useMemo(() => {
+    const chongHe = divinationData?.bian_gua_head?.chong_he || '';
+    return chongHe.length > 0 ? chongHe[chongHe.length - 1] : '';
+  }, [divinationData?.bian_gua_head?.chong_he]);
 
   // 优化 4：使用 React.useMemo 缓存世身信息
   // 依赖项：divinationData.ben_gua_head?.shi_position, divinationData.ben_gua_body, divinationData.ben_gua_head?.shi_body, divinationData.ben_gua_head?.month_body
@@ -151,81 +244,125 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, sho
         <div className={`${styles.liuYaoDetails} ${isColorMode ? 'color-mode' : ''}`} role="listitem" aria-label="六爻详细排盘">
           <div className={`${styles.liuYaoGrid} ${styles[`columns-${gridColumns}`]}`}>
             {/* 卦宫行 */}
-            <div className={styles.gridRow}>
-              {showLiuShen && <div className={styles.gridCell}></div>}
-              {shouldShowFuShen && <div className={styles.gridCell}></div>}
-              <div className={styles.gridCell}>
-                <span>{divinationData.ben_gua_head?.palace || ''}宫{divinationData.ben_gua_head?.nature || ''}</span>
+            {displayConfig.rows.palace && (
+              <div className={styles.gridRow}>
+                {shouldShowLiuShen && calculateDisplayState(displayConfig, 'palace', 'liuShen') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {shouldShowFuShen && calculateDisplayState(displayConfig, 'palace', 'fuShen') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {calculateDisplayState(displayConfig, 'palace', 'benGua') && (
+                  <div className={styles.gridCell}>
+                    <span>{divinationData.ben_gua_head?.palace || ''}宫{divinationData.ben_gua_head?.nature || ''}</span>
+                  </div>
+                )}
+                {shouldShowShiYing && calculateDisplayState(displayConfig, 'palace', 'shiYing') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {hasDongYao && shouldShowDongSymbol && calculateDisplayState(displayConfig, 'palace', 'dongSymbol') && (
+                  <div key="dong-symbol-1" className={styles.gridCell}></div>
+                )}
+                {hasDongYao && shouldShowBianGua && calculateDisplayState(displayConfig, 'palace', 'bianGua') && (
+                  <div key="bian-body-1" className={styles.gridCell}>
+                    <span>{divinationData.bian_gua_head?.palace || ''}宫{divinationData.bian_gua_head?.nature || ''}</span>
+                  </div>
+                )}
+                {hasDongYao && shouldShowBianShiYing && calculateDisplayState(displayConfig, 'palace', 'bianShiYing') && (
+                  <div key="bian-si-ying-1" className={styles.gridCell}></div>
+                )}
               </div>
-              {showShiYing && <div className={styles.gridCell}></div>}
-              {hasDongYao && <div key="dong-symbol-1" className={styles.gridCell}></div>}
-              {hasDongYao && (
-                <div key="bian-body-1" className={styles.gridCell}>
-                  <span>{divinationData.bian_gua_head?.palace || ''}宫{divinationData.bian_gua_head?.nature || ''}</span>
-                </div>
-              )}
-              {hasDongYao && showShiYing && <div key="bian-si-ying-1" className={styles.gridCell}></div>}
-            </div>
+            )}
 
             {/* 卦名行 */}
-            <div className={styles.gridRow}>
-              {showLiuShen && <div className={styles.gridCell}></div>}
-              {shouldShowFuShen && <div className={styles.gridCell}></div>}
-              <div className={styles.gridCell}>
-                <p>
-                  <span className={styles.chongHe}>{chongHePlaceholder}</span>
-                  {divinationData.ben_gua_head?.name || ''}
-                  <span className={styles.chongHe}>{chongHeLastChar}</span>
-                </p>
+            {displayConfig.rows.name && (
+              <div className={styles.gridRow}>
+                {shouldShowLiuShen && calculateDisplayState(displayConfig, 'name', 'liuShen') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {shouldShowFuShen && calculateDisplayState(displayConfig, 'name', 'fuShen') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {calculateDisplayState(displayConfig, 'name', 'benGua') && (
+                  <div className={styles.gridCell}>
+                    <p>
+                      <span className={styles.chongHe} data-element={benChongHeLastChar}>{benChongHePlaceholder}</span>
+                      {divinationData.ben_gua_head?.name || ''}
+                      <span className={styles.chongHe} data-element={benChongHeLastChar}>{benChongHeLastChar}</span>
+                    </p>
+                  </div>
+                )}
+                {shouldShowShiYing && calculateDisplayState(displayConfig, 'name', 'shiYing') && (
+                  <div className={styles.gridCell}></div>
+                )}
+                {hasDongYao && shouldShowDongSymbol && calculateDisplayState(displayConfig, 'name', 'dongSymbol') && (
+                  <div key="dong-symbol-2" className={styles.gridCell}></div>
+                )}
+                {hasDongYao && shouldShowBianGua && calculateDisplayState(displayConfig, 'name', 'bianGua') && (
+                  <div key="bian-body-2" className={styles.gridCell}>
+                    <p>
+                      <span className={styles.chongHe} data-element={bianChongHeLastChar}>{bianChongHePlaceholder}</span>
+                      {divinationData.bian_gua_head?.name || ''}
+                      <span className={styles.chongHe} data-element={bianChongHeLastChar}>{bianChongHeLastChar}</span>
+                    </p>
+                  </div>
+                )}
+                {hasDongYao && shouldShowBianShiYing && calculateDisplayState(displayConfig, 'name', 'bianShiYing') && (
+                  <div key="bian-si-ying-2" className={styles.gridCell}></div>
+                )}
               </div>
-              {showShiYing && <div className={styles.gridCell}></div>}
-              {hasDongYao && <div key="dong-symbol-2" className={styles.gridCell}></div>}
-              {hasDongYao && (
-                <div key="bian-body-2" className={styles.gridCell}>
-                  <p>
-                    <span className={styles.chongHe}>{chongHePlaceholder}</span>
-                    {divinationData.bian_gua_head?.name || ''}
-                    <span className={styles.chongHe}>{chongHeLastChar}</span>
-                  </p>
-                </div>
-              )}
-              {hasDongYao && showShiYing && <div key="bian-si-ying-2" className={styles.gridCell}></div>}
-            </div>
+            )}
 
             {/* 六爻行 */}
             {divinationData.ben_gua_body && divinationData.ben_gua_body.map((yao, index) => {
               const bianYao = hasDongYao ? bianYaoMap[yao.position] : null;
+              const rowKey = `yao${7 - yao.position}`; // 生成行键：yao1 (初爻) 到 yao6 (上爻)
+              
+              // 检查行级别显示控制
+              if (!displayConfig.rows[rowKey]) {
+                return null;
+              }
+              
               return (
                 <div key={`ben-yao-${index}`} className={styles.gridRow}>
-                  {showLiuShen && (
+                  {shouldShowLiuShen && calculateDisplayState(displayConfig, rowKey, 'liuShen') && (
                     <div className={styles.gridCell}>
                       <span className={styles.liuShen} data-element={yao.liu_shen || ''}>{yao.liu_shen || ''}</span>
                     </div>
                   )}
-                  {shouldShowFuShen && (
+                  {shouldShowFuShen && calculateDisplayState(displayConfig, rowKey, 'fuShen') && (
                     <div className={styles.gridCell}>
                       <span>{yao.fu_qin || ''}</span>
                       <span data-element={yao.fu_gan || ''}>{yao.fu_gan || ''}</span>
                       <span className={styles.fuZhi} data-element={yao.fu_zhi || ''}>{yao.fu_zhi || ''}</span>
                     </div>
                   )}
-                  <div className={styles.gridCell}>
-                    <span className={styles.liuQin}>{yao.liu_qin || ''}</span>
-                    <span className={styles.yaoShape}>{getYaoSymbol(yao.yao_nature)}</span>
-                    <span className={styles.yaoGan} data-element={yao.na_gan || ''}>{yao.na_gan || ''}</span>
-                    <span className={styles.yaoZhi} data-element={yao.na_zhi || ''}>{yao.na_zhi || ''}</span>
-                  </div>
-                  {showShiYing && (
+                  {calculateDisplayState(displayConfig, rowKey, 'benGua') && (
+                    <div className={styles.gridCell}>
+                      <span className={styles.liuQin}>{yao.liu_qin || ''}</span>
+                      <span 
+                        className={styles.yaoShape}
+                        style={isColorMode && dongYaoPositionSet.has(yao.position) ? {
+                          color: yao.yao_nature === '阳' ? '#C00000' : '#0070C0'
+                        } : {}}
+                      >
+                        {getYaoSymbol(yao.yao_nature)}
+                      </span>
+                      <span className={styles.yaoGan} data-element={yao.na_gan || ''}>{yao.na_gan || ''}</span>
+                      <span className={styles.yaoZhi} data-element={yao.na_zhi || ''}>{yao.na_zhi || ''}</span>
+                    </div>
+                  )}
+                  {shouldShowShiYing && calculateDisplayState(displayConfig, rowKey, 'shiYing') && (
                     <div className={styles.gridCell}>
                       <span className={styles.yaoSiYin}>{yao.shi_ying || ''}</span>
                     </div>
                   )}
-                  {hasDongYao && (
+                  {hasDongYao && shouldShowDongSymbol && calculateDisplayState(displayConfig, rowKey, 'dongSymbol') && (
                     <div className={styles.gridCell}>
                       <span className={styles.dongYao}>{dongYaoSymbolMap[yao.position] || ''}</span>
                     </div>
                   )}
-                  {hasDongYao && (
+                  {hasDongYao && shouldShowBianGua && calculateDisplayState(displayConfig, rowKey, 'bianGua') && (
                     <div className={styles.gridCell}>
                       {bianYao && (
                         <>
@@ -237,7 +374,7 @@ const LiuYaoGridDisplay = React.memo(({ divinationData, isColorMode = false, sho
                       )}
                     </div>
                   )}
-                  {hasDongYao && showShiYing && (
+                  {hasDongYao && shouldShowBianShiYing && calculateDisplayState(displayConfig, rowKey, 'bianShiYing') && (
                     <div className={styles.gridCell}>
                       {bianYao && (
                         <span className={styles.yaoSiYin}>{bianYao.shi_ying || ''}</span>
@@ -337,7 +474,102 @@ LiuYaoGridDisplay.propTypes = {
   showAccessory: PropTypes.bool, /* 是否显示补充信息 */
   showLiuShen: PropTypes.bool, /* 是否显示六神 */
   showShiYing: PropTypes.bool, /* 是否显示四运 */
-  showFuShen: PropTypes.bool /* 是否显示福神 */
+  showFuShen: PropTypes.bool, /* 是否显示福神 */
+  displayConfig: PropTypes.shape({
+    rows: PropTypes.shape({
+      palace: PropTypes.bool,
+      name: PropTypes.bool,
+      yao1: PropTypes.bool,
+      yao2: PropTypes.bool,
+      yao3: PropTypes.bool,
+      yao4: PropTypes.bool,
+      yao5: PropTypes.bool,
+      yao6: PropTypes.bool
+    }),
+    columns: PropTypes.shape({
+      liuShen: PropTypes.bool,
+      fuShen: PropTypes.bool,
+      benGua: PropTypes.bool,
+      shiYing: PropTypes.bool,
+      dongSymbol: PropTypes.bool,
+      bianGua: PropTypes.bool,
+      bianShiYing: PropTypes.bool
+    }),
+    elements: PropTypes.shape({
+      palace: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      name: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao1: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao2: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao3: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao4: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao5: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      }),
+      yao6: PropTypes.shape({
+        liuShen: PropTypes.bool,
+        fuShen: PropTypes.bool,
+        benGua: PropTypes.bool,
+        shiYing: PropTypes.bool,
+        dongSymbol: PropTypes.bool,
+        bianGua: PropTypes.bool,
+        bianShiYing: PropTypes.bool
+      })
+    })
+  })
 };
 
 // 为 LiuYaoGridDisplay 组件添加 displayName，便于在 React DevTools 中调试
@@ -346,3 +578,4 @@ LiuYaoGridDisplay.displayName = 'LiuYaoGridDisplay';
 // 导出 LiuYaoGridDisplay 组件作为默认导出
 // 这样其他文件可以通过 import LiuYaoGridDisplay from './LiuYaoGridDisplay' 导入使用
 export default LiuYaoGridDisplay;
+export { defaultDisplayConfig }; // 导出默认显示配置

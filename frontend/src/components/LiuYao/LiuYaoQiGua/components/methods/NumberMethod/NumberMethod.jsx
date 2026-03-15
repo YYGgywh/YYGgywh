@@ -103,36 +103,30 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
 
   // 处理爻位输入变化
   const handleYaoChange = (yao, value) => {
-    // 只调用一次setYaoValues，避免状态更新冲突
+    // 创建新值对象
+    const newValues = {
+      ...yaoValues,  // 保留原有值
+      [yao]: value  // 更新指定爻位的值
+    };
+    
+    // 检查是否有任何输入框有值
+    const hasAnyInput = Object.values(newValues).some(val => val.length > 0);  // 检查是否有非空输入
+    setHasValidInput(hasAnyInput);  // 更新是否有合法输入状态
+    
+    // 检查所有输入框是否都有有效值（3位数字）
+    const allValid = Object.values(newValues).every(val => val.length === 3);  // 检查所有输入是否都是3位数字
+    setAllInputsValid(allValid);  // 更新所有输入是否有效状态
+    
     // 更新爻值状态
-    setYaoValues(prev => {
-      // 创建新值对象
-      const newValues = {
-        ...prev,  // 保留原有值
-        [yao]: value  // 更新指定爻位的值
-      };
-      
-      // 检查是否有任何输入框有值
-      const hasAnyInput = Object.values(newValues).some(val => val.length > 0);  // 检查是否有非空输入
-      setHasValidInput(hasAnyInput);  // 更新是否有合法输入状态
-      
-      // 检查所有输入框是否都有有效值（3位数字）
-      const allValid = Object.values(newValues).every(val => val.length === 3);  // 检查所有输入是否都是3位数字
-      setAllInputsValid(allValid);  // 更新所有输入是否有效状态
-      
-      // 如果所有输入都有效，聚焦到生成卦象按钮      
-      if (allValid) {
-        // 延迟聚焦
-        const timer = setTimeout(() => {
-          generateButtonRef.current?.focus();  // 聚焦到生成卦象按钮
-        }, 300);  // 延迟300毫秒
-        
-        // 清除定时器
-        return () => clearTimeout(timer);
-      }
-      
-      return newValues;  // 返回新值对象
-    });
+    setYaoValues(newValues);
+    
+    // 如果所有输入都有效，聚焦到生成卦象按钮      
+    if (allValid) {
+      // 延迟聚焦
+      setTimeout(() => {
+        generateButtonRef.current?.focus();  // 聚焦到生成卦象按钮
+      }, 300);  // 延迟300毫秒
+    }
 
     // 检查输入是否完成（3位数字）
     // 如果输入长度为3

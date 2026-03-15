@@ -3,7 +3,7 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-13 12:05:00
+ * @lastModified    2026-03-14 16:25:58
  * Copyright © All rights reserved
 */
 
@@ -12,13 +12,13 @@ import React, { useEffect, useState, useRef } from 'react';
 // 导入桌面端样式（CSS Modules）
 import styles from './LiuYaoReault.desktop.module.css';
 // 导入四柱展示组件
-import FourPillarsDisplay from '../../FourPillarsDisplay/FourPillarsDisplay';
+import FourPillarsDisplay, { defaultDisplayConfig as fourPillarsDefaultConfig } from '../../FourPillarsDisplay/FourPillarsDisplay';
 // 导入占卜信息展示组件和简短占卜查询组件
 import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
 
 
 // 导入六爻网格展示组件
-import LiuYaoGridDisplay from './LiuYaoGridDisplay/LiuYaoGridDisplay';
+import LiuYaoGridDisplay, { defaultDisplayConfig as liuYaoDefaultConfig } from './LiuYaoGridDisplay/LiuYaoGridDisplay';
 // 导入显示控制组件
 import DisplayControl from '../../common/DisplayControl/DisplayControl';
 // 导入排盘API
@@ -116,6 +116,10 @@ const LiuYaoReault = React.memo(() => {
   const [saving, setSaving] = useState(false);
   // 使用ref确保只有一个保存请求正在执行
   const saveInProgress = useRef(false);
+  // 四柱显示配置状态
+  const [fourPillarsDisplayConfig, setFourPillarsDisplayConfig] = useState(fourPillarsDefaultConfig);
+  // 六爻显示配置状态
+  const [liuYaoDisplayConfig, setLiuYaoDisplayConfig] = useState(liuYaoDefaultConfig);
 
   /**
    * 自动保存排盘记录
@@ -307,18 +311,20 @@ const LiuYaoReault = React.memo(() => {
       <div className={styles.mainContent}>
         <div className={styles.contentWrapper}>
           <div className={styles.liuYaoInfo}>
-            {/* 简短占卜查询组件，显示占卜问题 */}
-            <BriefDivinationQuery formData={formData} />
+            {/* 简短占卜查询组件，显示占卜问题和时间 */}
+            <BriefDivinationQuery formData={formData} divinationData={divinationData} />
             {/* 四柱展示组件，显示干支信息 */}
             <FourPillarsDisplay
               ganzhiInfo={divinationData.calendar_info?.ganzhi_info || {}}
               isColorMode={activeButtons.includes('colorChange')}
+              displayConfig={fourPillarsDisplayConfig}
             />
 
             {/* 六爻网格展示组件，显示卦象信息 */}
             <LiuYaoGridDisplay
               divinationData={divinationData}
               isColorMode={activeButtons.includes('colorChange')}
+              displayConfig={liuYaoDisplayConfig}
             />
 
             {/* 显示控制组件，用于控制展示样式和模式切换 */}

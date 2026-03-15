@@ -25,6 +25,9 @@ import {
 // 导入组件样式文件，定义组件的视觉样式
 import styles from './DivinationInfoDisplay.desktop.module.css';
 
+// 导入简要占卜查询组件
+import BriefDivinationQuery from '../BriefDivinationQuery/BriefDivinationQuery';
+
 const formatDateTimeInfo = (solarInfo, lunarInfo) => ({
   solarDate: formatSolarDate(solarInfo),
   solarTime: formatSolarTime(solarInfo),
@@ -271,77 +274,6 @@ DateTimeInfo.propTypes = {
 // 为 DateTimeInfo 组件添加 displayName，便于在 React DevTools 中调试
 DateTimeInfo.displayName = 'DateTimeInfo';
 
-// 定义 BriefDivinationQuery 子组件：用于展示简要的占卜信息
-// 该组件将求测者信息和占题合并为一行显示，适用于需要紧凑展示的场景
-// 使用 React.memo 包装组件，避免不必要的重渲染
-// props 参数说明：
-//   - formData (object): 表单数据对象，包含求测者信息、占题等，默认值为空对象
-const BriefDivinationQuery = React.memo(({ formData = {} }) => {
-  // 使用 React.useMemo 缓存简要占题文本的格式化结果
-  // 只有当 formData 中的相关字段变化时才重新计算
-  // 优化目的：避免每次渲染都重新拼接字符串
-  // 依赖项：formData.location, formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.question
-  const briefText = React.useMemo(() => {
-    // 如果 formData 为空对象，则返回空字符串
-    if (!formData || Object.keys(formData).length === 0) {
-      return '';
-    }
-    
-    // 提取各个字段，如果不存在则使用空字符串
-    const location = formData.location || '';           // 属地
-    const firstName = formData.firstName || '';         // 名字
-    const lastName = formData.lastName || '';           // 姓氏
-    const gender = formData.gender || '';             // 性别
-    const birthYear = formData.birthYear || '';       // 出生年份
-    const question = formData.question || '';         // 占题
-    
-    // 构建生年信息：如果有出生年份，则添加"生人"后缀
-    const birthYearText = birthYear ? `${birthYear}生人` : '';
-    
-    // 构建占题信息：如果有占题，则添加句号后缀
-    const questionText = question ? `${question} ？` : '';
-    
-    // 拼接所有信息，格式为：属地 姓名 性别 生年生人，占：占题。
-    // 使用模板字符串进行拼接，各字段之间用空格分隔
-    return `${location} ${firstName}${lastName} ${gender} ${birthYearText}，占：${questionText}`.trim();
-  }, [formData.location, formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.question]);
-  
-  // 如果没有数据，则不渲染任何内容
-  if (!briefText) {
-    return null;
-  }
-  
-  // 返回 JSX 元素，渲染简要占卜查询信息
-  // role="listitem"：ARIA 角色，表示这是一个列表项
-  // aria-label="简要占题"：为屏幕阅读器提供描述信息
-  return (
-    <div className={`${styles.divinationInfo} ${styles.brief}`} role="listitem" aria-label="简要占题">
-      {/* 显示格式化后的简要占题文本 */}
-      {briefText}
-    </div>
-  );
-});
-
-// 为 BriefDivinationQuery 组件添加 PropTypes 类型定义
-// 这有助于在开发阶段捕获类型错误，并提供更好的 IDE 智能提示
-BriefDivinationQuery.propTypes = {
-  formData: PropTypes.shape({          // formData 必须是对象类型，且包含以下属性
-    location: PropTypes.string,       // location 属性必须是字符串类型
-    firstName: PropTypes.string,       // firstName 属性必须是字符串类型
-    lastName: PropTypes.string,        // lastName 属性必须是字符串类型
-    gender: PropTypes.string,         // gender 属性必须是字符串类型
-    birthYear: PropTypes.string,      // birthYear 属性必须是字符串类型
-    question: PropTypes.string         // question 属性必须是字符串类型
-  })
-};
-
-// 为 BriefDivinationQuery 组件添加 displayName，便于在 React DevTools 中调试
-BriefDivinationQuery.displayName = 'BriefDivinationQuery';
-
-// 导出所有组件，包括主组件和子组件
-// 这样其他文件可以按需导入需要的组件
-export { BriefDivinationQuery };
-
 // 定义 DivinationInfoDisplay 主组件：占卜信息展示的主容器组件
 // 使用 React.memo 包装组件，避免在父组件重渲染时不必要的重新渲染
 // props 参数说明：
@@ -474,3 +406,7 @@ DivinationInfoDisplay.propTypes = {
 // 导出 DivinationInfoDisplay 组件作为默认导出
 // 这样其他文件可以通过 import DivinationInfoDisplay from './DivinationInfoDisplay' 导入使用
 export default DivinationInfoDisplay;
+
+// 导出 BriefDivinationQuery 组件
+// 这样其他文件可以通过 import { BriefDivinationQuery } from './DivinationInfoDisplay' 导入使用
+export { BriefDivinationQuery };

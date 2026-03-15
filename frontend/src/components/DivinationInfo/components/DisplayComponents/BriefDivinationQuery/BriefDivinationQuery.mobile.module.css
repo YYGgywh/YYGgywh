@@ -1,0 +1,31 @@
+/*
+ * @file            frontend/src/components/DivinationInfo/components/DisplayComponents/BriefDivinationQuery/BriefDivinationQuery.mobile.module.css
+ * @description     简要占卜查询组件移动端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-14 16:30:00
+ * @lastModified    2026-03-14 16:30:00
+ * Copyright © All rights reserved
+*/
+
+.briefDivinationQuery {
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  border-bottom: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+.briefDivinationQuery:hover {
+  background-color: #f9f9f9;
+  border-bottom-color: #d9d9d9;
+}
+
+@media screen and (max-width: 480px) {
+  .briefDivinationQuery {
+    padding: 5px 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+}

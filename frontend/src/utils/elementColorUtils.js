@@ -58,17 +58,66 @@ const getElementColor = (element) => {
 };
 
 /**
+ * 冲合颜色映射表
+ * 冲：红色 #C00000
+ * 合：绿色 #00B050
+ */
+const CHONG_HE_COLOR_MAP = {
+  '冲': '#C00000',
+  '合': '#00B050'
+};
+
+/**
  * 根据汉字直接获取对应的颜色值
+ * 优先判断冲合，再判断五行
  * @param {string} text - 需要判断的汉字
- * @returns {string|null} 返回颜色值，如果不在五行映射表中则返回 null
+ * @returns {string|null} 返回颜色值，如果不在映射表中则返回 null
  */
 const getColorByText = (text) => {
-  const element = getElementByText(text);
+  if (!text || typeof text !== 'string') {
+    return null;
+  }
+
+  const trimmedText = text.trim();
+  
+  // 优先判断冲合
+  if (CHONG_HE_COLOR_MAP[trimmedText]) {
+    return CHONG_HE_COLOR_MAP[trimmedText];
+  }
+  
+  // 再判断五行
+  const element = getElementByText(trimmedText);
   return getElementColor(element);
+};
+
+/**
+ * 判断是否为冲或合
+ * @param {string} text - 需要判断的汉字
+ * @returns {boolean} 返回是否为冲或合
+ */
+const isChongOrHe = (text) => {
+  if (!text || typeof text !== 'string') {
+    return false;
+  }
+  return text.trim() === '冲' || text.trim() === '合';
+};
+
+/**
+ * 获取冲合颜色
+ * @param {string} text - 冲或合
+ * @returns {string|null} 返回颜色值，如果不是冲或合则返回 null
+ */
+const getChongHeColor = (text) => {
+  if (!text || typeof text !== 'string') {
+    return null;
+  }
+  return CHONG_HE_COLOR_MAP[text.trim()] || null;
 };
 
 export {
   getElementByText,
   getElementColor,
-  getColorByText
+  getColorByText,
+  isChongOrHe,
+  getChongHeColor
 };

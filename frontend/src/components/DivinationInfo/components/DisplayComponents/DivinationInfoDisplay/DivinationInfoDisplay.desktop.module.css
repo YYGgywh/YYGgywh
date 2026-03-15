@@ -3,7 +3,7 @@
  * @description     占卜信息展示组件桌面端样式，负责展示用户输入的占卜信息
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-12 15:00:00
- * @lastModified    2026-03-14 12:50:06
+ * @lastModified    2026-03-15 11:31:16
  * Copyright © All rights reserved
 */
 
@@ -13,8 +13,8 @@
   padding: 10px;
   border: 1px solid var(--primary-color);
   border-radius: var(--border-radius);
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
+  /* margin-bottom: 20px; */
+  transition: all 0.3s ease; /* 平滑过渡 */
 }
 
 .divinationInfo:hover {

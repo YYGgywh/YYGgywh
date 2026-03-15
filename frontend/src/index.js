@@ -3,7 +3,7 @@
  * @description     React应用入口文件，负责渲染App组件到DOM
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-16 13:35:00
- * @lastModified    2026-02-16 14:08:02
+ * @lastModified    2026-03-15 12:15:13
  * Copyright © All rights reserved
 */
 
@@ -16,7 +16,7 @@ import './styles/variables.css';  // 统一的主题变量文件 - 必须最先�
 import './styles/elementColors.css';  // 五行颜色样式
 import './styles/Reset.css';  // 全局CSS Reset和基础标准设置
 
-/* 内存监控函数 */
+/* 内存监控函数 - 暂时注释掉，避免在浏览器中打印内存监控信息
 if (typeof process !== 'undefined' && process.versions && process.versions.node) {
   // Node.js 环境内存监控
   const formatMemoryUsage = (data) => {
@@ -76,6 +76,7 @@ if (typeof process !== 'undefined' && process.versions && process.versions.node)
     clearInterval(browserMonitorInterval);
   });
 }
+*/
 
 const root = ReactDOM.createRoot(document.getElementById('root')); // 创建React根节点，绑定到DOM中的root元素
 // 开始渲染React应用
