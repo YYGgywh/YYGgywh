@@ -40,7 +40,7 @@ export const validatePassword = (password) => {
 };
 
 // 验证表单数据
-export const validateForm = (formData, type, registerMethod = 'phone') => {
+export const validateForm = (formData, type, registerMethod = 'phone', loginMethod = 'code') => {
   const errors = {};
 
   if (type === 'login' || type === 'register') {
@@ -51,7 +51,13 @@ export const validateForm = (formData, type, registerMethod = 'phone') => {
       } else if (!validateEmail(formData.email)) {
         errors.email = '请输入正确的邮箱';
       }
+    } else if (type === 'login' && loginMethod === 'password') {
+      // 密码登录时，不验证格式，只验证是否为空
+      if (!formData.phone) {
+        errors.phone = '请输入账号';
+      }
     } else {
+      // 验证码登录或注册时，验证手机号格式
       if (!formData.phone) {
         errors.phone = '请输入手机号';
       } else if (!validatePhone(formData.phone)) {

@@ -1,0 +1,115 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer.desktop.module.css
+ * @description     六爻信息容器组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-16 00:00:00
+ * @lastModified    2026-03-16 15:11:01
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 六爻信息容器
+ * 定义六爻信息容器的整体样式
+ */
+.liuYaoInfoContainer {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-md);
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white);
+  border-radius: var(--radius-md);
+  /* border: 1px solid var(--border-color); */
+}
+
+/**
+ * 简要占题组件样式
+ * 定义简要占题组件的容器样式
+ */
+/*
+.briefDivinationQuery {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-gray-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+*/
+/**
+ * 四柱展示组件样式
+ * 定义四柱展示组件的容器样式
+ */
+/*
+.fourPillarsDisplay {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-gray-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+*/
+/**
+ * 六爻网格展示组件样式
+ * 定义六爻网格展示组件的容器样式
+ */
+.liuYaoGridDisplay {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-sm);
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * 显示控制组件样式
+ * 定义显示控制组件的容器样式
+ */
+/*
+.displayControl {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-gray-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+*/
+/**
+ * 响应式设计
+ * 适配不同屏幕尺寸
+ */
+@media (max-width: 768px) {
+  .liuYaoInfoContainer {
+    /* 移动端样式调整 */
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+  
+  .briefDivinationQuery,
+  .fourPillarsDisplay,
+  .liuYaoGridDisplay,
+  .displayControl {
+    /* 移动端内边距调整 */
+    padding: var(--spacing-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .liuYaoInfoContainer {
+    /* 小屏幕样式调整 */
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xs);
+  }
+}

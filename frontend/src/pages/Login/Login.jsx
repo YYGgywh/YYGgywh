@@ -3,13 +3,13 @@
  * @description     登录/注册页面组件
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-02-28 18:00:00
+ * @lastModified    2026-03-16 20:02:49
  * Copyright © All rights reserved
 */
 
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './Login.css';
+import styles from './Login.desktop.module.css';
 import { sendCode, sendEmailCode, register, registerByEmail, login as loginApi } from '../../api/userApi';
 import { validateForm } from '../../utils/validate';
 import { setToken, setUserInfo } from '../../utils/storage';
@@ -90,7 +90,7 @@ const Login = () => {
     setError('');
 
     // 验证表单
-    const validation = validateForm(formData, activeTab, registerMethod);
+    const validation = validateForm(formData, activeTab, registerMethod, loginMethod);
     if (!validation.isValid) {
       setError(Object.values(validation.errors)[0]);
       return;
@@ -150,22 +150,22 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
+    <div className={styles.loginContainer}>
+      <div className={styles.loginForm}>
         <h2>{activeTab === 'login' ? '登录' : '注册'}</h2>
         
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className={styles.errorMessage}>{error}</div>}
         
         {/* 切换标签 */}
-        <div className="tab-buttons">
+        <div className={styles.tabButtons}>
           <button 
-            className={activeTab === 'login' ? 'active' : ''}
+            className={activeTab === 'login' ? styles.active : ''}
             onClick={() => setActiveTab('login')}
           >
             登录
           </button>
           <button 
-            className={activeTab === 'register' ? 'active' : ''}
+            className={activeTab === 'register' ? styles.active : ''}
             onClick={() => setActiveTab('register')}
           >
             注册
@@ -174,15 +174,15 @@ const Login = () => {
 
         {/* 注册方式切换 */}
         {activeTab === 'register' && (
-          <div className="register-method">
+          <div className={styles.loginMethod}>
             <button 
-              className={registerMethod === 'phone' ? 'active' : ''}
+              className={registerMethod === 'phone' ? styles.active : ''}
               onClick={() => setRegisterMethod('phone')}
             >
               手机号注册
             </button>
             <button 
-              className={registerMethod === 'email' ? 'active' : ''}
+              className={registerMethod === 'email' ? styles.active : ''}
               onClick={() => setRegisterMethod('email')}
             >
               邮箱注册
@@ -192,15 +192,15 @@ const Login = () => {
 
         {/* 登录方式切换 */}
         {activeTab === 'login' && (
-          <div className="login-method">
+          <div className={styles.loginMethod}>
             <button 
-              className={loginMethod === 'code' ? 'active' : ''}
+              className={loginMethod === 'code' ? styles.active : ''}
               onClick={() => setLoginMethod('code')}
             >
               验证码登录
             </button>
             <button 
-              className={loginMethod === 'password' ? 'active' : ''}
+              className={loginMethod === 'password' ? styles.active : ''}
               onClick={() => setLoginMethod('password')}
             >
               密码登录
@@ -210,22 +210,35 @@ const Login = () => {
 
         {/* 表单 */}
         <form onSubmit={handleSubmit}>
-          {/* 手机号或邮箱输入 */}
+          {/* 账号输入（手机号/邮箱/登录名） */}
           {activeTab === 'register' && registerMethod === 'email' ? (
-            <div className="form-group">
-              <label htmlFor="email">邮箱</label>
+            <div className={styles.formGroup}>
+              <label htmlFor="email">邮箱号</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                placeholder="请输入邮箱"
+                placeholder="请输入邮箱号"
+                required
+              />
+            </div>
+          ) : activeTab === 'login' && loginMethod === 'password' ? (
+            <div className={styles.formGroup}>
+              <label htmlFor="phone">账号</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="请输入手机号、邮箱或登录名"
                 required
               />
             </div>
           ) : (
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label htmlFor="phone">手机号</label>
               <input
                 type="text"
@@ -239,26 +252,11 @@ const Login = () => {
             </div>
           )}
 
-          {/* 登录名输入（仅注册时显示） */}
-          {activeTab === 'register' && (
-            <div className="form-group">
-              <label htmlFor="loginName">登录名（可选）</label>
-              <input
-                type="text"
-                id="loginName"
-                name="loginName"
-                value={formData.loginName}
-                onChange={handleInputChange}
-                placeholder="请输入登录名（4-20字符）"
-              />
-            </div>
-          )}
-
           {/* 验证码输入 */}
           {activeTab === 'register' || loginMethod === 'code' ? (
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label htmlFor="code">验证码</label>
-              <div className="code-input">
+              <div className={styles.codeInput}>
                 <input
                   type="text"
                   id="code"
@@ -270,9 +268,9 @@ const Login = () => {
                 />
                 <button 
                   type="button" 
-                  className="send-code"
+                  className={styles.sendCode}
                   onClick={handleSendCode}
-                  disabled={countdown > 0 || loading}
+                  disabled={countdown > 0 || loading || !(activeTab === 'register' && registerMethod === 'email' ? /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email) : /^1[3-9]\d{9}$/.test(formData.phone))}
                 >
                   {countdown > 0 ? `${countdown}秒后重发` : '发送验证码'}
                 </button>
@@ -280,22 +278,39 @@ const Login = () => {
             </div>
           ) : null}
 
-          {/* 密码输入 */}
-          <div className="form-group">
-            <label htmlFor="password">密码</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder={activeTab === 'register' ? '请设置密码（至少6位，允许字母、数字和下划线）' : '请输入密码'}
-              required
-            />
-          </div>
+
+          {/* 登录名输入（仅注册时显示） */}
+          {activeTab === 'register' && (
+            <div className={styles.formGroup}>
+              <label htmlFor="loginName">登录名</label>
+              <input
+                type="text"
+                id="loginName"
+                name="loginName"
+                value={formData.loginName}
+                onChange={handleInputChange}
+                placeholder="4-20字符，允许字母、数字和下划线"
+              />
+            </div>
+          )}
+          {/* 密码输入（注册或密码登录时显示） */}
+          {(activeTab === 'register' || loginMethod === 'password') && (
+            <div className={styles.formGroup}>
+              <label htmlFor="password">密码</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder={activeTab === 'register' ? '至少6位，允许字母、数字和下划线' : '请输入密码'}
+                required
+              />
+            </div>
+          )}
 
           {activeTab === 'register' && (
-            <div className="form-group agreement">
+            <div className={`${styles.formGroup} ${styles.agreement}`}>
               <input 
                 type="checkbox" 
                 id="agreement" 
@@ -309,7 +324,7 @@ const Login = () => {
 
           <button 
             type="submit" 
-            className="submit-btn"
+            className={styles.submitBtn}
             disabled={loading}
           >
             {loading ? '处理中...' : (activeTab === 'login' ? '登录' : '注册')}

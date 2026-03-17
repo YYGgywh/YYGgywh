@@ -3,7 +3,7 @@
  * @description     六爻结果展示组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 12:00:00
- * @lastModified    2026-03-15 14:57:11
+ * @lastModified    2026-03-16 15:04:51
  * Copyright © All rights reserved
 */
 
@@ -112,12 +112,12 @@
 
 .contentWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 子元素在主轴上均匀分布 */
   gap: 20px;
 }
 
 .liuYaoInfo {
-  flex: 2;
+  flex: 2; /* 占满剩余空间 */
   max-width: 50%;
 }
 
@@ -186,6 +186,10 @@
 }
 
 .supplementInfo {
+  flex: 1;
+}
+
+.accessoryInfo {
   flex: 1;
 }
 

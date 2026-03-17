@@ -1,0 +1,291 @@
+/*
+ * @file            frontend/src/components/common/Button/Button.desktop.module.css
+ * @description     基础按钮组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-15 15:00:00
+ * @lastModified    2026-03-16 10:56:15
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   CSS 变量定义区域
+   定义按钮的颜色、尺寸、过渡效果等变量
+   便于统一管理和主题切换
+   ============================================ */
+
+:root {
+  /* Primary 类型按钮颜色 */
+  --btn-primary-bg: #1890FF;        /* 主按钮背景色 */
+  --btn-primary-hover: #40A9FF;     /* 主按钮悬停色 */
+  --btn-primary-active: #096DD9;    /* 主按钮点击色 */
+  
+  /* Secondary 类型按钮颜色 */
+  --btn-secondary-bg: #FFFFFF;      /* 次要按钮背景色 */
+  --btn-secondary-hover: #F9FAFB;   /* 次要按钮悬停色 */
+  --btn-secondary-active: #d0d0d0;  /* 次要按钮点击色 */
+  
+  /* Danger 类型按钮颜色 */
+  --btn-danger-bg: #EF4444;         /* 危险按钮背景色 */
+  --btn-danger-hover: #DC2626;      /* 危险按钮悬停色 */
+  --btn-danger-active: #B91C1C;     /* 危险按钮点击色 */
+  
+  /* Confirm 类型按钮颜色 */
+  --btn-confirm-bg: #10b981;        /* 确认按钮背景色 */
+  --btn-confirm-hover: #059669;     /* 确认按钮悬停色 */
+  --btn-confirm-active: #047857;    /* 确认按钮点击色 */
+
+  /* Disable 禁用类型按钮颜色 */
+  --btn-disable-bg: #D1D5DB;        /* 禁用按钮背景色 */
+    
+  /* Text 类型按钮颜色 */
+  --btn-active-text: #FFFFFF;          /* 文本按钮宽度 */
+  --btn-secondary-text: #666666;       /* 次要按钮文字颜色 */
+  --btn-disable-text: #666666;           /* 文本按钮高度 */
+
+  --btn-text-color: #1890FF;        /* 文本按钮颜色 */
+  --btn-text-hover: #40A9FF;        /* 文本按钮悬停色 */
+  --btn-text-active: #096DD9;       /* 文本按钮点击色 */
+  
+  /* 按键边框 */
+  --btn-secondary-border: 1px solid #D9D9D9;  /* 按钮边框 */
+
+  /* 通用样式变量 */
+  --btn-border-radius: 8px;         /* 按钮圆角大小 */
+  --btn-transition: all 0.3s ease;  /* 按钮过渡动画 */
+}
+
+/* ============================================
+   基础按钮样式
+   所有按钮共有的基础样式
+   ============================================ */
+
+.button {
+  position: relative;               /* 相对定位，用于加载指示器居中 */
+  display: inline-flex;             /* 行内弹性布局 */
+  align-items: center;              /* ├─容器内的子元素垂直居中对齐 */
+  justify-content: center;          /* └─容器内的子元素水平居中对齐 */
+  border: none;                     /* 去除默认边框 */
+  border-radius: var(--btn-border-radius);  /* 使用变量设置圆角 */
+  font-size: var(--font-size-base,14px);                  /* 默认字体大小 */
+  font-weight: 500;                 /* 字体粗细 */
+  cursor: pointer;                  /* 鼠标悬停时显示手型 */
+  transition: var(--btn-transition); /* 过渡动画效果 */
+  outline: none;                    /* 去除焦点轮廓 */
+  white-space: nowrap;              /* 文字不换行 */
+  user-select: none;                /* 禁止文字选择 */
+}
+
+/* 按钮获得焦点时的样式 */
+.button:focus {
+  /* box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);  蓝色焦点阴影 */
+}
+
+/* 按钮被点击时的样式 */
+.button:active {
+  transform: translateY(1px);       /* 向下移动1px，产生按下效果 */
+}
+
+/* ============================================
+   按钮类型样式
+   定义不同类型按钮的颜色和交互效果
+   ============================================ */
+
+/* ---------- Primary 类型按钮 ---------- */
+.buttonPrimary {
+  background-color: var(--btn-primary-bg);  /* 蓝色背景 */
+  color: var(--btn-active-text);                             /* 白色文字 */
+}
+
+/* Primary 按钮悬停效果（非禁用、非加载状态） */
+.buttonPrimary:hover:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-primary-hover);  /* 悬停时颜色变浅 */
+}
+
+/* Primary 按钮点击效果（非禁用、非加载状态） */
+.buttonPrimary:active:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-primary-active);  /* 点击时颜色变深 */
+}
+
+/* ---------- Secondary 类型按钮 ---------- */
+.buttonSecondary {
+  background-color: var(--btn-secondary-bg);  /* 灰色背景 */
+  color: var(--btn-secondary-text);                                /* 深灰色文字 */
+  border: var(--btn-secondary-border)!important;                  /* 灰色边框 */
+}
+
+/* Secondary 按钮悬停效果 */
+.buttonSecondary:hover:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-secondary-hover);
+  /* border-color: #c0c0c0;                      边框颜色变深 */
+}
+
+/* Secondary 按钮点击效果 */
+.buttonSecondary:active:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-secondary-active); /* 点击时颜色变深 */
+  border-color: #a0a0a0; /* 边框颜色变深 */
+}
+
+/* ---------- Danger 类型按钮 ---------- */
+.buttonDanger {
+  background-color: var(--btn-danger-bg);  /* 红色背景 */
+  color: var(--btn-active-text);                            /* 白色文字 */
+}
+
+/* Danger 按钮悬停效果 */
+.buttonDanger:hover:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-danger-hover);
+}
+
+/* Danger 按钮点击效果 */
+.buttonDanger:active:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-danger-active);
+}
+
+
+/* ---------- Confirm 类型按钮 ---------- */
+.buttonConfirm {
+  background-color: var(--btn-confirm-bg);  /* 绿色背景 */
+  color: var(--btn-active-text);                            /* 白色文字 */
+}
+
+/* Confirm 按钮悬停效果 */
+.buttonConfirm:hover:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-confirm-hover);
+}
+
+/* Confirm 按钮点击效果 */
+.buttonConfirm:active:not(:disabled):not(.buttonLoading) {
+  background-color: var(--btn-confirm-active);
+}
+
+/* ---------- Text 类型按钮 ---------- */
+.buttonText {
+  background-color: transparent;           /* 透明背景 */
+  /* color: var(--btn-text-color);            蓝色文字 */
+  border: none;
+}
+
+/* Text 按钮悬停效果 
+.buttonText:hover:not(:disabled):not(.buttonLoading) {
+  color: var(--btn-text-hover);
+  background-color: rgba(24, 144, 255, 0.1);  
+}*/
+
+/* Text 按钮点击效果
+.buttonText:active:not(:disabled):not(.buttonLoading) {
+  color: var(--btn-text-active);
+  background-color: rgba(24, 144, 255, 0.2); 
+} */
+
+/* ============================================
+   按钮尺寸样式
+   定义不同尺寸按钮的 padding、字体大小和高度
+   ============================================ */
+
+/* 小尺寸按钮 */
+.buttonSmall {
+  padding: 4px 12px;    /* 上下4px，左右12px的内边距 */
+  font-size: 14px;      /* 小字体 */
+  width: 72px;      /* 固定宽度72px */
+  height: 32px;        /* 固定高度24px */
+  border-radius: 6px;
+  border: none;
+}
+
+/* 中尺寸按钮（默认） */
+.buttonMedium {
+  padding: 10px 24px;    /* 上下6px，左右16px的内边距 */
+  font-size: 14px;      /* 标准字体 */
+  border: none;
+  /* height: 32px;         固定高度32px */
+}
+
+/* 大尺寸按钮 */
+.buttonLarge {
+  padding: 12px 32px;    /* 上下8px，左右20px的内边距 */
+  font-size: 16px;      /* 大字体 */
+  border: none;
+  /* height: 40px;         固定高度40px */
+}
+
+/* ============================================
+   禁用状态样式
+   定义按钮禁用时的外观
+   ============================================ */
+
+.buttonDisabled {
+  opacity: 0.6;                                       /* 透明度降低 */
+  cursor: not-allowed;                                /* 禁止光标 */
+  background-color: var(--btn-disabled-bg) !important; /* 强制使用禁用背景色 */
+  color: var(--text-secondary) !important;        /* 强制使用禁用文字色 */
+  /* border-color: var(--btn-disabled-bg) !important;    强制使用禁用边框色 */
+}
+
+/* 禁用按钮悬停时去除阴影效果 */
+.buttonDisabled:hover {
+  box-shadow: none !important;
+}
+
+/* ============================================
+   加载状态样式
+   定义按钮加载时的外观和动画
+   ============================================ */
+
+.buttonLoading {
+  cursor: not-allowed;  /* 禁止光标 */
+  opacity: 0.8;         /* 透明度降低 */
+}
+
+/* 加载指示器容器 */
+.loadingIndicator {
+  position: absolute;           /* 绝对定位 */
+  top: 50%;                     /* 垂直居中 */
+  left: 50%;                    /* 水平居中 */
+  transform: translate(-50%, -50%);  /* 精确居中 */
+}
+
+/* 加载旋转动画 */
+.loadingSpinner {
+  display: inline-block;        /* 行内块级显示 */
+  width: 16px;                  /* 宽度16px */
+  height: 16px;                 /* 高度16px */
+  border: 2px solid rgba(255, 255, 255, 0.3);  /* 半透明边框 */
+  border-radius: 50%;           /* 圆形 */
+  border-top-color: white;      /* 顶部边框白色，形成旋转效果 */
+  animation: spin 1s ease-in-out infinite;  /* 无限旋转动画 */
+}
+
+/* Text 类型按钮的加载旋转器颜色 */
+.buttonText .loadingSpinner {
+  border-color: rgba(24, 144, 255, 0.3);
+  border-top-color: var(--btn-text-color);
+}
+
+/* Secondary 类型按钮的加载旋转器颜色 */
+.buttonSecondary .loadingSpinner {
+  border-color: rgba(51, 51, 51, 0.3);
+  border-top-color: #333;
+}
+
+/* 旋转动画关键帧 */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);  /* 旋转360度 */
+  }
+}
+
+/* ============================================
+   按钮文本样式
+   定义按钮内文本的显示效果
+   ============================================ */
+
+.buttonText {
+  display: inline-block;        /* 行内块级显示 */
+  /* transition: var(--btn-transition);  过渡动画 */
+}
+
+/* 加载状态下隐藏按钮文本 */
+.buttonLoading .buttonText {
+  visibility: hidden;           /* 隐藏但保留空间 */
+  opacity: 0;                   /* 完全透明 */
+}

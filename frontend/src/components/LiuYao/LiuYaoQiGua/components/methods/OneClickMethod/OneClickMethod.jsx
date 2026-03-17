@@ -3,7 +3,7 @@
  * @description     一键成卦组件，快速生成完整卦象
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-08 12:10:00
- * @lastModified    2026-03-09 12:49:41
+ * @lastModified    2026-03-15 20:40:49
  * Copyright © All rights reserved
 */
 
@@ -102,7 +102,7 @@ const OneClickMethod = ({
               {getButtonText()}
             </ActionButton>
             <ActionButton
-              type="secondary"
+              type="danger"
               onClick={onReset}
               disabled={!isResetEnabled}
               size="medium"

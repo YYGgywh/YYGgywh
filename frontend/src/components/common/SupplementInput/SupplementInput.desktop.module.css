@@ -3,7 +3,7 @@
  * @description     补充说明输入组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-15 10:00:00
- * @lastModified    2026-03-15 15:04:10
+ * @lastModified    2026-03-16 15:24:35
  * Copyright © All rights reserved
 */
 
@@ -57,6 +57,7 @@
 .charCount {
   font-size: 12px;
   color: #999;
+  padding: 4px 0px;
 }
 
 .clearButton {

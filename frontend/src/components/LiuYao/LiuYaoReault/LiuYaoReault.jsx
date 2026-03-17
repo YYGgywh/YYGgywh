@@ -3,7 +3,7 @@
  * @description     六爻排盘结果展示页面，包含个人信息、卦象信息和补充说明
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-14 16:25:58
+ * @lastModified    2026-03-16 13:42:38
  * Copyright © All rights reserved
 */
 
@@ -12,18 +12,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 // 导入桌面端样式（CSS Modules）
 import styles from './LiuYaoReault.desktop.module.css';
-// 导入四柱展示组件
-import FourPillarsDisplay, { defaultDisplayConfig as fourPillarsDefaultConfig } from '../../FourPillarsDisplay/FourPillarsDisplay';
-// 导入占卜信息展示组件和简短占卜查询组件
-import DivinationInfoDisplay, { BriefDivinationQuery } from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
-
-
-// 导入六爻网格展示组件
-import LiuYaoGridDisplay, { defaultDisplayConfig as liuYaoDefaultConfig } from './LiuYaoGridDisplay/LiuYaoGridDisplay';
-// 导入显示控制组件
-import DisplayControl from '../../common/DisplayControl/DisplayControl';
-import SupplementInput from '../../common/SupplementInput/SupplementInput';
-import ActionButtons from '../../common/ActionButtons/ActionButtons';
+// 导入占卜信息展示组件
+import DivinationInfoDisplay from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
+// 导入六爻信息容器组件
+import LiuYaoInfoContainer from './LiuYaoInfoContainer/LiuYaoInfoContainer';
+// 导入占卜补充信息组件
+import DivinationGridAccessory from '../../common/DivinationGridAccessory/DivinationGridAccessory';
 // 导入排盘API
 import { savePan, updatePan } from '../../../api/panApi';
 // 导入登录状态检查工具
@@ -119,10 +113,6 @@ const LiuYaoReault = React.memo(() => {
   const [saving, setSaving] = useState(false);
   // 使用ref确保只有一个保存请求正在执行
   const saveInProgress = useRef(false);
-  // 四柱显示配置状态
-  const [fourPillarsDisplayConfig, setFourPillarsDisplayConfig] = useState(fourPillarsDefaultConfig);
-  // 六爻显示配置状态
-  const [liuYaoDisplayConfig, setLiuYaoDisplayConfig] = useState(liuYaoDefaultConfig);
   // 补充说明状态
   const [supplement, setSupplement] = useState('');
   // 排盘记录ID状态（用于更新）
@@ -367,47 +357,29 @@ const LiuYaoReault = React.memo(() => {
       <div className={styles.mainContent}>
         <div className={styles.contentWrapper}>
           <div className={styles.liuYaoInfo}>
-            {/* 简短占卜查询组件，显示占卜问题和时间 */}
-            <BriefDivinationQuery formData={formData} divinationData={divinationData} />
-            {/* 四柱展示组件，显示干支信息 */}
-            <FourPillarsDisplay
-              ganzhiInfo={divinationData.calendar_info?.ganzhi_info || {}}
-              isColorMode={activeButtons.includes('colorChange')}
-              displayConfig={fourPillarsDisplayConfig}
-            />
-
-            {/* 六爻网格展示组件，显示卦象信息 */}
-            <LiuYaoGridDisplay
+            {/* 六爻信息容器组件，整合所有六爻相关信息的展示 */}
+            <LiuYaoInfoContainer
+              formData={formData}
               divinationData={divinationData}
-              isColorMode={activeButtons.includes('colorChange')}
-              displayConfig={liuYaoDisplayConfig}
-            />
-
-            {/* 显示控制组件，用于控制展示样式和模式切换 */}
-            <DisplayControl
               activeButtons={activeButtons}
               onButtonClick={handleDisplayControlClick}
+              isColorMode={activeButtons.includes('colorChange')}
             />
           </div>
 
           {/* 补充信息区域 */}
-          <div className={styles.supplementInfo}>
-            <div className={styles.supplementSection}>
-              <SupplementInput
-                value={supplement}
-                onChange={handleSupplementChange}
-                placeholder="请输入补充说明，记录您的求占背景、心境或其他相关信息..."
-                disabled={operationLoading}
-                maxLength={500}
-                autoSave={true}
-              />
-              <ActionButtons
-                onSave={handleSave}
-                onPublish={handlePublish}
-                loading={operationLoading}
-                disabled={!supplement.trim()}
-              />
-            </div>
+          <div className={styles.accessoryInfo}>
+            <DivinationGridAccessory
+              value={supplement}
+              onChange={handleSupplementChange}
+              onSave={handleSave}
+              onPublish={handlePublish}
+              loading={operationLoading}
+              disabled={!supplement.trim()}
+              maxLength={500}
+              placeholder="请输入补充说明，记录您的求占背景、心境或其他相关信息..."
+              autoSave={true}
+            />
           </div>
         </div>
       </div>

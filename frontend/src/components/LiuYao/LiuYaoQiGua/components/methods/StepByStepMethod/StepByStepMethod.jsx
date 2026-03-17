@@ -3,7 +3,7 @@
  * @description     逐爻起卦组件，完全模拟传统六爻投掷三枚铜钱
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-29 10:00:00
- * @lastModified    2026-03-09 12:55:05
+ * @lastModified    2026-03-15 20:39:56
  * Copyright © All rights reserved
 */
 
@@ -76,7 +76,7 @@ const StepByStepMethod = ({
               {getButtonText()}
             </ActionButton>
             <ActionButton
-              type="secondary"
+              type="danger"
               onClick={onReset}
               disabled={!isResetEnabled}
               size="medium"

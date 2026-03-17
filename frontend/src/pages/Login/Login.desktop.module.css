@@ -1,13 +1,13 @@
 /*
- * @file            frontend/src/pages/Login/Login.css
- * @description     登录/注册页面样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @file            frontend/src/pages/Login/Login.desktop.module.css
+ * @description     登录/注册页面桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-02-27 14:00:00
+ * @lastModified    2026-03-16 19:57:42
  * Copyright © All rights reserved
 */
 
-.login-container {
+.loginContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,7 @@
   padding: 20px;
 }
 
-.login-form {
+.loginForm {
   width: 100%;
   max-width: 400px;
   background: #fff;
@@ -24,13 +24,14 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-form h2 {
+.loginForm h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
+  font-size: 24px;
 }
 
-.error-message {
+.errorMessage {
   background-color: #ffebee;
   color: #c62828;
   padding: 10px;
@@ -39,13 +40,13 @@
   font-size: 14px;
 }
 
-.tab-buttons {
+.tabButtons {
   display: flex;
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.tab-buttons button {
+.tabButtons button {
   flex: 1;
   padding: 10px;
   background: none;
@@ -56,13 +57,13 @@
   color: #666;
 }
 
-.tab-buttons button.active {
+.tabButtons button.active {
   border-bottom-color: #4CAF50;
   color: #4CAF50;
   font-weight: bold;
 }
 
-.login-method {
+.loginMethod {
   display: flex;
   margin-bottom: 20px;
   border: 1px solid #e0e0e0;
@@ -70,7 +71,7 @@
   overflow: hidden;
 }
 
-.login-method button {
+.loginMethod button {
   flex: 1;
   padding: 10px;
   background: none;
@@ -80,60 +81,77 @@
   color: #666;
 }
 
-.login-method button.active {
+.loginMethod button.active {
   background-color: #4CAF50;
   color: #fff;
 }
 
-.form-group {
+.formGroup {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
+.formGroup label {
+  flex-shrink: 0;
   font-size: 14px;
   color: #333;
 }
 
-.form-group input {
-  width: 100%;
+.formGroup input {
+  flex: 1;
   padding: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
-.form-group input:focus {
+.formGroup input:focus {
   outline: none;
   border-color: #4CAF50;
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
-.code-input {
+.codeInput {
+  flex: 1;
+  width: 0;
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-.code-input input {
+.codeInput input {
   flex: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 0;
+
 }
 
-.send-code {
-  padding: 0 20px;
+.sendCode {
+  flex-shrink: 0;
+  padding: 10px 15px;
   background-color: #f0f0f0;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   color: #333;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* max-width: 100%; */
 }
 
-.send-code:hover:not(:disabled) {
+.sendCode:hover:not(:disabled) {
   background-color: #e0e0e0;
 }
 
-.send-code:disabled {
+.sendCode:disabled {
   cursor: not-allowed;
   color: #999;
 }
@@ -142,6 +160,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 0;
 }
 
 .agreement input {
@@ -154,7 +173,7 @@
   color: #666;
 }
 
-.submit-btn {
+.submitBtn {
   width: 100%;
   padding: 12px;
   background-color: #4CAF50;
@@ -166,15 +185,15 @@
   transition: background-color 0.3s;
 }
 
-.submit-btn:hover:not(:disabled) {
+.submitBtn:hover:not(:disabled) {
   background-color: #45a049;
 }
 
-.submit-btn:active:not(:disabled) {
+.submitBtn:active:not(:disabled) {
   background-color: #3d8b40;
 }
 
-.submit-btn:disabled {
+.submitBtn:disabled {
   background-color: #a5d6a7;
   cursor: not-allowed;
 }

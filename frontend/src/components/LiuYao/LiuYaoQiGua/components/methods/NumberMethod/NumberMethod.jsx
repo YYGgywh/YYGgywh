@@ -3,7 +3,7 @@
  * @description     报数起卦组件，通过输入数字生成卦象，实现顺序输入
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-08 16:30:00
- * @lastModified    2026-03-09 12:48:40
+ * @lastModified    2026-03-15 20:41:29
  * Copyright © All rights reserved
 */
 
@@ -309,7 +309,7 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
               {isGenerating ? '卦象已成' : '生成卦象'}
             </ActionButton>
             <ActionButton
-              type="secondary"
+              type="danger"
               onClick={handleReset}
               disabled={!hasValidInput}
               size="medium"

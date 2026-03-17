@@ -3,7 +3,7 @@
  * @description     时间戳设置弹窗主组件，管理选项卡状态和协调三个时间组件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-30 11:00:00
- * @lastModified    2026-03-12 14:15:35
+ * @lastModified    2026-03-16 10:59:16
  * Copyright © All rights reserved
 */
 
@@ -12,6 +12,7 @@ import SolarTime from '../timestamp/components/SolarTime/SolarTime'; // 导入�
 import LunarTime from '../timestamp/components/LunarTime/LunarTime'; // 导入农历时间组件
 import FourPillarsTime from '../timestamp/components/FourPillarsTime/FourPillarsTime'; // 导入四柱时间组件
 import SolarListResult from '../timestamp/components/SolarListResult/SolarListResult'; // 导入独立的四柱结果列表组件
+import { Button } from '../../../../common/Button'; // 导入统一的按钮组件
 import styles from './TimestampModal.desktop.module.css'; // 导入组件样式文件
 
 // 定义时间戳弹窗组件，接收关闭和提交回调函数
@@ -624,37 +625,48 @@ const TimestampModal = ({ onClose, onSubmit }) => {
         
         {/* 底部按钮 */}
         <div className={`${styles.modalFooter} ${styles.timestampModalFooter}`}> {/* 模态框底部区域 */}
-          <button // 全清按钮
-            className={`${styles.modalButton} ${styles.initialize}`} // 设置按钮样式类名
-            onClick={handleInitialize} // 点击处理函数
-            disabled={isInitializeDisabled} // 根据状态禁用按钮
+          <Button // 全清按钮
+            type="danger"
+            size="small"
+            onClick={handleInitialize}
+            disabled={isInitializeDisabled}
+            ariaLabel="全清时间输入"
           >
             全清
-          </button> {/* 全清按钮结束 */}
+          </Button> {/* 全清按钮结束 */}
           {/* 右侧按钮组 */}
           <div className={styles.rightButtonGroup}>
             {/* 补全按钮 */}
-            <button
-              className={`${styles.modalButton} ${styles.confirm}`} // 设置按钮样式类名
-              onClick={handleConfirm} // 点击处理函数
-              disabled={isConfirmDisabled} // 根据状态禁用按钮
-              title={activeTab === 'gregorian' ? '以当前公历时间补全' : activeTab === 'lunar' ? '以当前农历时间补全' : '以当前时间补全'} // 根据选项卡设置提示文本
-              style={{ display: activeTab === 'four-pillars' ? 'none' : 'block' }} // 四柱选项卡隐藏补全按钮
+            <Button
+              type="primary"
+              size="small"
+              onClick={handleConfirm}
+              disabled={isConfirmDisabled}
+              title={activeTab === 'gregorian' ? '以当前公历时间补全' : activeTab === 'lunar' ? '以当前农历时间补全' : '以当前时间补全'}
+              style={{ display: activeTab === 'four-pillars' ? 'none' : 'block' }}
+              ariaLabel="补全时间"
             >
               补全
-            </button> {/* 补全按钮结束 */}
+            </Button> {/* 补全按钮结束 */}
             {/* 提交按钮 */}
-            <button
-              className={`${styles.modalButton} ${styles.submit}`} // 设置按钮样式类名
-              onClick={handleSubmit} // 点击处理函数
-              disabled={isSubmitDisabled} // 根据状态禁用按钮
+            <Button
+              type="confirm"
+              size="small"
+              onClick={handleSubmit}
+              disabled={isSubmitDisabled}
+              ariaLabel="提交时间"
             >
               提交
-            </button> {/* 提交按钮结束 */}
+            </Button> {/* 提交按钮结束 */}
             {/* 取消按钮 */}
-            <button className={`${styles.modalButton} ${styles.cancel}`} onClick={onClose}> {/* 取消按钮 */}
+            <Button
+              type="secondary"
+              size="small"
+              onClick={onClose}
+              ariaLabel="取消"
+            >
               取消
-            </button> {/* 取消按钮结束 */}
+            </Button> {/* 取消按钮结束 */}
           </div> {/* 右侧按钮组结束 */}
         </div> {/* 模态框底部区域结束 */}
       </div> {/* 模态框内容容器结束 */}

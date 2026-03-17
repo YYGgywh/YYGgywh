@@ -1,0 +1,80 @@
+/*
+ * @file            frontend/src/components/common/DivinationGridAccessory/DivinationGridAccessory.mobile.module.css
+ * @description     占卜补充信息组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-16 00:00:00
+ * @lastModified    2026-03-16 00:00:00
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 占卜补充信息容器
+ * 定义补充信息区域的整体样式（移动端）
+ */
+.divinationGridAccessory {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  
+  /* 盒模型属性 */
+  width: 100%;
+  padding: var(--spacing-sm);
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * 补充信息区域
+ * 定义补充说明和操作按钮的容器样式
+ */
+.supplementInfo {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  
+  /* 盒模型属性 */
+  width: 100%;
+}
+
+/**
+ * 补充信息区块
+ * 定义补充说明输入框和操作按钮的布局
+ */
+.supplementSection {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  
+  /* 盒模型属性 */
+  width: 100%;
+}
+
+/**
+ * 补充说明输入组件样式
+ * 定义输入组件的容器样式
+ */
+.supplementInput {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  
+  /* 盒模型属性 */
+  width: 100%;
+}
+
+/**
+ * 操作按钮组件样式
+ * 定义按钮组件的容器样式
+ */
+.actionButtons {
+  /* 布局属性 */
+  display: flex;
+  justify-content: center;
+  
+  /* 盒模型属性 */
+  width: 100%;
+}

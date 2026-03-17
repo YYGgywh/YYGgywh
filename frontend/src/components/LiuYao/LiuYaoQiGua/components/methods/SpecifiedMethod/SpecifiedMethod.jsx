@@ -3,7 +3,7 @@
  * @description     指定起卦组件，用户手动指定每爻爻象生成卦象
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-09 18:00:00
- * @lastModified    2026-03-09 12:51:13
+ * @lastModified    2026-03-15 20:40:21
  * Copyright © All rights reserved
 */
 
@@ -294,7 +294,7 @@ const SpecifiedMethod = ({ onReset, onSpecifiedDivination }) => {
               指定起卦  {/* 按钮文字 */}
             </ActionButton>
             <ActionButton
-              type="secondary"  // 次要操作类型
+              type="danger"  // 危险操作类型
               onClick={handleReset}  // 点击事件
               disabled={!hasAnySelection}  // 禁用状态
               className="reset-button"  // 额外类名

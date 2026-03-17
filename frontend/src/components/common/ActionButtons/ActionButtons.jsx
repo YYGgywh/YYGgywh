@@ -1,15 +1,15 @@
 /*
  * @file            frontend/src/components/common/ActionButtons/ActionButtons.jsx
  * @description     操作按钮组件，提供保存和发布功能
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-15 10:00:00
- * @lastModified    2026-03-15 10:00:00
+ * @lastModified    2026-03-16 15:21:38
  * Copyright © All rights reserved
 */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isLoggedIn } from '../../../utils/storage';
+import { Button, ButtonGroup } from '../Button';
 import styles from './ActionButtons.desktop.module.css';
 
 const ActionButtons = React.memo(({ 
@@ -31,24 +31,28 @@ const ActionButtons = React.memo(({
   };
 
   return (
-    <div className={styles.actionButtons}>
-      <button 
-        className={`${styles.button} ${styles.saveButton}`}
+    <ButtonGroup className={styles.actionButtons} spacing="medium">
+      <Button
+        type="primary"
+        size="small"
         onClick={handleSave}
-        disabled={loading || disabled}
-        aria-label="保存排盘记录"
+        loading={loading}
+        disabled={disabled}
+        ariaLabel="保存排盘记录"
       >
         {loading ? '保存中...' : '保存'}
-      </button>
-      <button 
-        className={`${styles.button} ${styles.publishButton}`}
+      </Button>
+      <Button
+        type="confirm"
+        size="small"
         onClick={handlePublish}
-        disabled={loading || disabled}
-        aria-label="发布排盘记录"
+        loading={loading}
+        disabled={disabled}
+        ariaLabel="发布排盘记录"
       >
         {loading ? '发布中...' : '发布'}
-      </button>
-    </div>
+      </Button>
+    </ButtonGroup>
   );
 });
 

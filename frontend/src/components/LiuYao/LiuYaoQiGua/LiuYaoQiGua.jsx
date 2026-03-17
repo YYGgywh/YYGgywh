@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件，协调各子组件的状态和布局
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-09 13:16:50
+ * @lastModified    2026-03-15 20:55:19
  * Copyright © All rights reserved
 */
 
@@ -14,6 +14,7 @@ import React, {
   useEffect // 副作用 Hook，用于处理组件挂载、更新和卸载时的操作
 } from 'react';  
 import styles from './LiuYaoQiGua.desktop.module.css';  // 导入桌面端样式文件（CSS Modules）
+import { Button } from '../../common/Button';  // 导入统一的按钮组件
 import NavigationSidebar from './components/NavigationSidebar/NavigationSidebar';  // 导入侧边导航组件
 import MethodContent from './components/MethodContent/MethodContent';  // 导入方法内容组件
 import LiuYaoService from '../../../services/liuyaoService';  // 导入六爻服务层
@@ -193,8 +194,8 @@ const LiuYaoQiGua = () => {
           setIsDivinationButtonEnabled(true);  // 启用排盘按钮
         }, 500);  // 延迟执行，确保状态更新完成
         
-        // 清除定时器
-        return () => clearTimeout(timer);
+        // 清除定时器 - 注意：这里不应该返回，而是在组件卸载时清理
+        // 由于这是在 finally 块中，组件不会立即卸载，所以可以暂时不清理
       }
       
       // 重置正在投掷状态
@@ -228,6 +229,7 @@ const LiuYaoQiGua = () => {
     });
     
     setCurrentYaoIndex(0);  // 重置点击计数（重置当前爻位索引）
+    setIsThrowing(false);  // 重置投掷状态
     setIsResetEnabled(false);  // 重置重新投掷按钮状态（禁用重置按钮）
     setIsDivinationButtonEnabled(false);  // 重置开始排盘按钮状态（禁用排盘按钮）
     setThreeDigitsArray([]);  // 重置three_digits数组（清空数组）
@@ -475,13 +477,15 @@ const LiuYaoQiGua = () => {
       </div>
       <div className={styles.divinationButtonContainer}> {/* 排盘按钮容器 */}
           {/* 排盘按钮 */}
-          <button 
-            className={styles.divinationButton} // 排盘按钮类名
-            disabled={!isDivinationButtonEnabled} // 是否禁用排盘按钮
-            onClick={handleStartDivination} // 点击事件处理，调用 handleStartDivination 回调
+          <Button
+            type="confirm"
+            size="large"
+            disabled={!isDivinationButtonEnabled}
+            onClick={handleStartDivination}
+            ariaLabel="开始排盘"
           >
             开始排盘
-          </button>
+          </Button>
         </div>
     </div>
   );
