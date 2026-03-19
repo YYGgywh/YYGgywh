@@ -9,6 +9,7 @@
 
 // 导入React核心库和相关hooks
 import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // 导入桌面端样式（CSS Modules）
 import styles from './LiuYaoReault.desktop.module.css';
@@ -18,8 +19,10 @@ import DivinationInfoDisplay from '../../DivinationInfo/components/DisplayCompon
 import LiuYaoInfoContainer from './LiuYaoInfoContainer/LiuYaoInfoContainer';
 // 导入占卜补充信息组件
 import DivinationGridAccessory from '../../common/DivinationGridAccessory/DivinationGridAccessory';
+// 导入补充说明输入组件
+import SupplementInput from '../../common/SupplementInput/SupplementInput';
 // 导入排盘API
-import { savePan, updatePan } from '../../../api/panApi';
+import { savePan, updatePan, getPanDetail } from '../../../api/panApi';
 // 导入登录状态检查工具
 import { isLoggedIn } from '../../../utils/storage';
 // 导入起卦方式映射工具
@@ -97,6 +100,9 @@ const validateDivinationData = (data) => {
  * @returns {JSX.Element} 返回排盘结果展示的JSX元素
  */
 const LiuYaoReault = React.memo(() => {
+  // 从 URL 参数获取 recordId
+  const { recordId: urlRecordId } = useParams();
+  
   // 占卜数据状态，存储从后端返回的排盘结果
   const [divinationData, setDivinationData] = useState(null);
   // 表单数据状态，存储用户提交的表单信息
@@ -116,20 +122,23 @@ const LiuYaoReault = React.memo(() => {
   // 补充说明状态
   const [supplement, setSupplement] = useState('');
   // 排盘记录ID状态（用于更新）
-  const [recordId, setRecordId] = useState(null);
+  const [recordId, setRecordId] = useState(urlRecordId || null);
   // 操作状态
   const [operationLoading, setOperationLoading] = useState(false);
+  // 加载状态
+  const [loading, setLoading] = useState(false);
 
   /**
    * 自动保存排盘记录
    * @param {Object} panResult - 排盘结果数据
    * @param {Object} panFormData - 排盘表单数据
    * @param {string} supplementText - 补充说明文本
+   * @param {boolean} isManualSave - 是否是手动保存（点击按钮）
    */
-  const autoSavePanRecord = async (panResult, panFormData, supplementText) => {
+  const autoSavePanRecord = async (panResult, panFormData, supplementText, isManualSave = false) => {
     // 使用ref锁防止并发调用
-    if (saveInProgress.current || hasSaved) {
-      console.log('排盘记录正在保存或已保存，避免重复调用');
+    if (saveInProgress.current && !isManualSave) {
+      console.log('排盘记录正在保存，避免重复调用');
       return;
     }
 
@@ -169,6 +178,7 @@ const LiuYaoReault = React.memo(() => {
       };
 
       console.log('保存的排盘参数:', panParams);
+      console.log('保存的补充说明:', supplementText);
 
       // 调用保存API
       const response = await savePan(
@@ -182,7 +192,14 @@ const LiuYaoReault = React.memo(() => {
       if (response?.data?.record_id) {
         setRecordId(response.data.record_id);
       }
-      setHasSaved(true);
+      
+      // 保存成功后清除草稿
+      SupplementInput.clearDraft();
+      
+      // 只有自动保存时才设置 hasSaved 为 true，手动保存不设置，以便用户可以多次保存
+      if (!isManualSave) {
+        setHasSaved(true);
+      }
     } catch (err) {
       console.error('自动保存排盘记录失败:', err);
       // 保存失败不影响用户查看结果，只在控制台记录错误
@@ -212,10 +229,19 @@ const LiuYaoReault = React.memo(() => {
   const handleSave = async () => {
     if (!divinationData || !formData) return;
     
+    // 检查用户是否登录
+    if (!isLoggedIn()) {
+      // 非登录用户，在新标签页打开注册/登录页
+      window.open('/login', '_blank');
+      return;
+    }
+    
     setOperationLoading(true);
     try {
-      await autoSavePanRecord(divinationData, formData, supplement);
+      await autoSavePanRecord(divinationData, formData, supplement, true);
       console.log('排盘记录保存成功');
+      // 登录用户，在新标签页打开用户中心页
+      window.open('/user', '_blank');
     } catch (err) {
       console.error('保存排盘记录失败:', err);
       alert('保存失败，请稍后重试');
@@ -230,10 +256,19 @@ const LiuYaoReault = React.memo(() => {
   const handlePublish = async () => {
     if (!divinationData || !formData) return;
     
+    // 检查用户是否登录
+    if (!isLoggedIn()) {
+      // 非登录用户，在新标签页打开注册/登录页
+      window.open('/login', '_blank');
+      return;
+    }
+    
     setOperationLoading(true);
     try {
-      await autoSavePanRecord(divinationData, formData, supplement);
+      await autoSavePanRecord(divinationData, formData, supplement, true);
       console.log('排盘记录发布成功');
+      // 登录用户，在新标签页打开用户中心页
+      window.open('/user', '_blank');
     } catch (err) {
       console.error('发布排盘记录失败:', err);
       alert('发布失败，请稍后重试');
@@ -250,12 +285,77 @@ const LiuYaoReault = React.memo(() => {
   };
 
   /**
-   * 组件初始化副作用钩子
-   * 从localStorage读取排盘结果数据并初始化组件状态
-   * 只在组件首次挂载时执行一次
+   * 从后端加载排盘记录详情
+   * 当 URL 中有 recordId 参数时执行
    */
   useEffect(() => {
-    if (!hasInitialized) {
+    const loadPanDetail = async () => {
+      if (!urlRecordId) {
+        return;
+      }
+
+      try {
+        setLoading(true);
+        console.log('从后端加载排盘记录详情，recordId:', urlRecordId);
+        
+        const response = await getPanDetail(urlRecordId);
+        console.log('后端完整响应:', response);
+        console.log('response.data:', response.data);
+        
+        // 检查响应格式，尝试不同的提取方式
+        let record = response.data.data;
+        if (!record) {
+          // 尝试直接使用 response.data
+          record = response.data;
+          console.log('使用 response.data 作为记录:', record);
+        }
+        
+        console.log('后端返回的排盘记录:', record);
+        
+        // 从 pan_params 中提取数据
+        const panParams = record?.pan_params || {};
+        console.log('提取的 panParams:', panParams);
+        
+        const panResult = record?.pan_result || {};
+        console.log('提取的 panResult:', panResult);
+        
+        const formData = panParams.form_data || {};
+        console.log('提取的 formData:', formData);
+        
+        // 验证数据结构
+        const validatedData = validateDivinationData(panResult);
+        
+        if (validatedData) {
+          // 数据验证通过，更新组件状态
+          console.log('更新状态前 - formData:', formData);
+          setDivinationData(validatedData);
+          setFormData(formData);
+          setSupplement(record.supplement || '');
+          setRecordId(record.id);
+          setHasSaved(true); // 已保存的记录，标记为已保存
+          console.log('更新状态后 - formData 状态已设置');
+        } else {
+          // 数据格式不正确，设置错误状态
+          setError(new Error('排盘数据格式不正确'));
+        }
+      } catch (err) {
+        console.error('加载排盘记录详情失败:', err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPanDetail();
+  }, [urlRecordId]);
+
+  /**
+   * 组件初始化副作用钩子
+   * 从localStorage读取排盘结果数据并初始化组件状态
+   * 只在组件首次挂载时执行一次，并且只在没有URL参数时执行
+   */
+  useEffect(() => {
+    if (!hasInitialized && !urlRecordId) {
       try {
         // 从localStorage获取排盘结果数据
         const data = localStorage.getItem('divinationResult');
@@ -275,6 +375,8 @@ const LiuYaoReault = React.memo(() => {
               // 数据验证通过，更新组件状态
               setDivinationData(validatedData);
               setFormData(result.formData);
+              
+              console.log('LiuYaoReault - setFormData:', result.formData);
               
               // 自动保存排盘记录（仅在用户登录时）
               if (isLoggedIn()) {
@@ -314,8 +416,11 @@ const LiuYaoReault = React.memo(() => {
       
       // 清除定时器
       return () => clearTimeout(timer);
+    } else if (!hasInitialized && urlRecordId) {
+      // 有URL参数时，只标记已初始化，不执行本地存储读取逻辑
+      setHasInitialized(true);
     }
-  }, [hasInitialized]); // 移除hasSaved依赖，防止重复执行
+  }, [hasInitialized, urlRecordId]); // 添加 urlRecordId 依赖
 
 
 
@@ -337,7 +442,7 @@ const LiuYaoReault = React.memo(() => {
    * 加载状态渲染
    * 当数据尚未加载完成时显示加载提示
    */
-  if (!divinationData) {
+  if (loading || !divinationData || !formData) {
     return (
       <div id="LiuYaoReault" className={styles.liuYaoReaultContainer}>
         <div className="loading">加载中...</div>
@@ -375,7 +480,7 @@ const LiuYaoReault = React.memo(() => {
               onSave={handleSave}
               onPublish={handlePublish}
               loading={operationLoading}
-              disabled={!supplement.trim()}
+              disabled={false}
               maxLength={500}
               placeholder="请输入补充说明，记录您的求占背景、心境或其他相关信息..."
               autoSave={true}

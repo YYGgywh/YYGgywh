@@ -16,10 +16,13 @@ from app.models.pan_record import PanRecord
 from app.models.comment import Comment
 from app.models.system_log import SystemLog
 from app.models.system_config import SystemConfig
+from app.models.config_change_log import ConfigChangeLog
 from app.utils.password import verify_password, hash_password
 from app.utils.token import create_access_token
 from app.utils.response_formatter import create_success_response, create_error_response
 from app.utils.logger import log_system_action
+from app.utils.config_manager import ConfigManager
+from app.middleware.rate_limit import update_rate_limit_config
 
 # 尝试导入openpyxl，如果失败则使用CSV作为备选
 try:
@@ -620,6 +623,56 @@ async def get_pan_record_list(
     })
 
 
+# ==================== 已删除记录管理 ====================
+
+class DeletedPanRecordListQuery(BaseModel):
+    page: int = 1
+    page_size: int = 20
+    keyword: Optional[str] = None
+
+
+@router.get("/pan-records/deleted")
+async def get_deleted_pan_record_list(
+    query: DeletedPanRecordListQuery = Depends(),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """获取已删除的排盘记录列表"""
+    query_obj = db.query(PanRecord).filter(PanRecord.deleted_at.isnot(None))
+    
+    if query.keyword:
+        query_obj = query_obj.filter(
+            or_(
+                PanRecord.user_id == query.keyword,
+                PanRecord.pan_type.ilike(f"%{query.keyword}%")
+            )
+        )
+    
+    total = query_obj.count()
+    offset = (query.page - 1) * query.page_size
+    records = query_obj.order_by(PanRecord.deleted_at.desc()).offset(offset).limit(query.page_size).all()
+    
+    result = []
+    for record in records:
+        result.append({
+            "id": record.id,
+            "user_id": record.user_id,
+            "pan_type": record.pan_type,
+            "audit_status": record.audit_status,
+            "supplement": record.supplement,
+            "create_time": record.create_time,
+            "update_time": record.update_time,
+            "deleted_at": record.deleted_at
+        })
+    
+    return create_success_response({
+        "list": result,
+        "total": total,
+        "page": query.page,
+        "page_size": query.page_size
+    })
+
+
 @router.get("/pan-records/{record_id}")
 async def get_pan_record_detail(
     record_id: int,
@@ -702,6 +755,49 @@ async def delete_pan_record(
     db.commit()
     
     return create_success_response(None, "删除成功")
+
+
+@router.put("/pan-records/{record_id}/restore")
+async def restore_pan_record(
+    record_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """恢复已删除的排盘记录"""
+    record = db.query(PanRecord).filter(
+        PanRecord.id == record_id,
+        PanRecord.deleted_at.isnot(None)
+    ).first()
+    
+    if not record:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    record.deleted_at = None
+    record.update_time = int(time.time())
+    db.commit()
+    
+    return create_success_response(None, "恢复成功")
+
+
+@router.delete("/pan-records/{record_id}/permanent")
+async def permanent_delete_pan_record(
+    record_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """永久删除排盘记录"""
+    record = db.query(PanRecord).filter(
+        PanRecord.id == record_id,
+        PanRecord.deleted_at.isnot(None)
+    ).first()
+    
+    if not record:
+        raise HTTPException(status_code=404, detail="排盘记录不存在")
+    
+    db.delete(record)
+    db.commit()
+    
+    return create_success_response(None, "永久删除成功")
 
 
 # ==================== 批量操作 ====================
@@ -790,99 +886,6 @@ async def batch_audit_pan_records(
         {"audited_count": audited_count},
         f"成功审核 {audited_count} 条记录，状态：{status_text}"
     )
-
-
-# ==================== 已删除记录管理 ====================
-
-class DeletedPanRecordListQuery(BaseModel):
-    page: int = 1
-    page_size: int = 20
-    keyword: Optional[str] = None
-
-
-@router.get("/pan-records/deleted")
-async def get_deleted_pan_record_list(
-    query: DeletedPanRecordListQuery = Depends(),
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin_user)
-):
-    """获取已删除的排盘记录列表"""
-    query_obj = db.query(PanRecord).filter(PanRecord.deleted_at.isnot(None))
-    
-    if query.keyword:
-        query_obj = query_obj.filter(
-            or_(
-                PanRecord.user_id == query.keyword,
-                PanRecord.pan_type.ilike(f"%{query.keyword}%")
-            )
-        )
-    
-    total = query_obj.count()
-    offset = (query.page - 1) * query.page_size
-    records = query_obj.order_by(PanRecord.deleted_at.desc()).offset(offset).limit(query.page_size).all()
-    
-    result = []
-    for record in records:
-        result.append({
-            "id": record.id,
-            "user_id": record.user_id,
-            "pan_type": record.pan_type,
-            "audit_status": record.audit_status,
-            "supplement": record.supplement,
-            "create_time": record.create_time,
-            "update_time": record.update_time,
-            "deleted_at": record.deleted_at
-        })
-    
-    return create_success_response({
-        "list": result,
-        "total": total,
-        "page": query.page,
-        "page_size": query.page_size
-    })
-
-
-@router.put("/pan-records/{record_id}/restore")
-async def restore_pan_record(
-    record_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin_user)
-):
-    """恢复已删除的排盘记录"""
-    record = db.query(PanRecord).filter(
-        PanRecord.id == record_id,
-        PanRecord.deleted_at.isnot(None)
-    ).first()
-    
-    if not record:
-        raise HTTPException(status_code=404, detail="排盘记录不存在")
-    
-    record.deleted_at = None
-    record.update_time = int(time.time())
-    db.commit()
-    
-    return create_success_response(None, "恢复成功")
-
-
-@router.delete("/pan-records/{record_id}/permanent")
-async def permanent_delete_pan_record(
-    record_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin_user)
-):
-    """永久删除排盘记录"""
-    record = db.query(PanRecord).filter(
-        PanRecord.id == record_id,
-        PanRecord.deleted_at.isnot(None)
-    ).first()
-    
-    if not record:
-        raise HTTPException(status_code=404, detail="排盘记录不存在")
-    
-    db.delete(record)
-    db.commit()
-    
-    return create_success_response(None, "永久删除成功")
 
 
 @router.post("/pan-records/batch-permanent-delete")
@@ -1276,35 +1279,107 @@ async def export_system_logs(
 
 # ==================== 系统配置 ====================
 
+@router.get("/system-configs/categories")
+async def get_config_categories(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """获取配置分类列表"""
+    categories = ConfigManager.get_all_categories()
+    category_list = []
+    for category in categories:
+        category_list.append({
+            "name": category,
+            "display_name": {
+                "app": "应用配置",
+                "rate_limit": "频率限制",
+                "token": "Token配置",
+                "verify_code": "验证码配置",
+                "user": "用户功能",
+                "content": "内容管理"
+            }.get(category, category)
+        })
+    
+    return create_success_response(category_list)
+
+
 @router.get("/system-configs")
 async def get_system_configs(
+    category: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_admin_user)
 ):
     """获取系统配置列表"""
-    configs = db.query(SystemConfig).all()
+    if category:
+        configs_by_category = ConfigManager.get_configs_by_category(category)
+        config_keys = list(configs_by_category.keys())
+        configs = db.query(SystemConfig).filter(SystemConfig.key.in_(config_keys)).all()
+    else:
+        configs = db.query(SystemConfig).all()
     
     config_list = []
     for config in configs:
+        definition = ConfigManager.get_config_definition(config.key)
         config_list.append({
             "id": config.id,
             "key": config.key,
             "value": config.value,
-            "description": config.description,
+            "description": definition.get("description", config.description) if definition else config.description,
+            "category": definition.get("category", "") if definition else "",
+            "type": definition.get("type", "string") if definition else "string",
+            "is_super_admin_only": definition.get("is_super_admin_only", False) if definition else False,
             "update_time": config.update_time
         })
     
     return create_success_response(config_list)
 
 
+class CreateSystemConfigRequest(BaseModel):
+    key: str = Field(..., description="配置键")
+    value: str = Field(..., description="配置值")
+    description: Optional[str] = Field(None, description="配置描述")
+
+
+@router.post("/system-configs")
+async def create_system_config(
+    request: CreateSystemConfigRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_super_admin)
+):
+    """创建系统配置"""
+    existing_config = db.query(SystemConfig).filter(SystemConfig.key == request.key).first()
+    if existing_config:
+        raise HTTPException(status_code=400, detail="配置项已存在")
+    
+    new_config = SystemConfig(
+        key=request.key,
+        value=request.value,
+        description=request.description
+    )
+    db.add(new_config)
+    db.commit()
+    db.refresh(new_config)
+    
+    log_system_action(
+        db=db,
+        user_id=current_user.id,
+        action="create_config",
+        details=f"创建配置项: {request.key}"
+    )
+    
+    return create_success_response({"id": new_config.id}, "创建成功")
+
+
 class UpdateSystemConfigRequest(BaseModel):
-    value: str
+    value: str = Field(..., description="配置值")
+    change_reason: Optional[str] = Field(None, description="变更原因")
 
 
 @router.put("/system-configs/{config_key}")
 async def update_system_config(
     config_key: str,
     request: UpdateSystemConfigRequest,
+    req: Request,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_super_admin)
 ):
@@ -1314,8 +1389,187 @@ async def update_system_config(
     if not config:
         raise HTTPException(status_code=404, detail="配置项不存在")
     
+    old_value = config.value
+    
+    is_valid, error_msg = ConfigManager.validate_config(config_key, request.value)
+    if not is_valid:
+        raise HTTPException(status_code=400, detail=error_msg)
+    
     config.value = request.value
     config.update_time = int(time.time())
     db.commit()
     
+    change_log = ConfigChangeLog(
+        config_key=config_key,
+        old_value=old_value,
+        new_value=request.value,
+        operator_id=current_user.id,
+        operator_name=current_user.nickname or current_user.login_name or current_user.phone,
+        operator_ip=req.client.host if req.client else "unknown",
+        change_reason=request.change_reason
+    )
+    db.add(change_log)
+    db.commit()
+    
+    log_system_action(
+        db=db,
+        user_id=current_user.id,
+        action="update_config",
+        details=f"更新配置项: {config_key}, 旧值: {old_value}, 新值: {request.value}"
+    )
+    
+    update_rate_limit_config(config_key, request.value)
+    
     return create_success_response(None, "更新成功")
+
+
+@router.delete("/system-configs/{config_key}")
+async def delete_system_config(
+    config_key: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_super_admin)
+):
+    """删除系统配置"""
+    config = db.query(SystemConfig).filter(SystemConfig.key == config_key).first()
+    
+    if not config:
+        raise HTTPException(status_code=404, detail="配置项不存在")
+    
+    old_value = config.value
+    
+    db.delete(config)
+    db.commit()
+    
+    change_log = ConfigChangeLog(
+        config_key=config_key,
+        old_value=old_value,
+        new_value="",
+        operator_id=current_user.id,
+        operator_name=current_user.nickname or current_user.login_name or current_user.phone,
+        change_reason="删除配置项"
+    )
+    db.add(change_log)
+    db.commit()
+    
+    log_system_action(
+        db=db,
+        user_id=current_user.id,
+        action="delete_config",
+        details=f"删除配置项: {config_key}, 值: {old_value}"
+    )
+    
+    return create_success_response(None, "删除成功")
+
+
+@router.get("/system-configs/{config_key}/logs")
+async def get_config_change_logs(
+    config_key: str,
+    page: int = 1,
+    page_size: int = 20,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin_user)
+):
+    """获取配置变更日志"""
+    offset = (page - 1) * page_size
+    logs = db.query(ConfigChangeLog).filter(
+        ConfigChangeLog.config_key == config_key
+    ).order_by(ConfigChangeLog.create_time.desc()).offset(offset).limit(page_size).all()
+    
+    total = db.query(ConfigChangeLog).filter(
+        ConfigChangeLog.config_key == config_key
+    ).count()
+    
+    log_list = []
+    for log in logs:
+        log_list.append({
+            "id": log.id,
+            "config_key": log.config_key,
+            "old_value": log.old_value,
+            "new_value": log.new_value,
+            "operator_id": log.operator_id,
+            "operator_name": log.operator_name,
+            "operator_ip": log.operator_ip,
+            "change_reason": log.change_reason,
+            "create_time": log.create_time
+        })
+    
+    return create_success_response({
+        "logs": log_list,
+        "total": total,
+        "page": page,
+        "page_size": page_size
+    })
+
+
+class BatchUpdateConfigsRequest(BaseModel):
+    configs: List[dict] = Field(..., description="配置项列表")
+    change_reason: Optional[str] = Field(None, description="变更原因")
+
+
+@router.post("/system-configs/batch-update")
+async def batch_update_system_configs(
+    request: BatchUpdateConfigsRequest,
+    req: Request,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_super_admin)
+):
+    """批量更新系统配置"""
+    updated_configs = []
+    errors = []
+    
+    for config_item in request.configs:
+        config_key = config_item.get("key")
+        config_value = config_item.get("value")
+        
+        if not config_key or config_value is None:
+            errors.append(f"配置项 {config_key} 参数不完整")
+            continue
+        
+        config = db.query(SystemConfig).filter(SystemConfig.key == config_key).first()
+        if not config:
+            errors.append(f"配置项 {config_key} 不存在")
+            continue
+        
+        is_valid, error_msg = ConfigManager.validate_config(config_key, config_value)
+        if not is_valid:
+            errors.append(f"配置项 {config_key}: {error_msg}")
+            continue
+        
+        old_value = config.value
+        config.value = config_value
+        config.update_time = int(time.time())
+        updated_configs.append({
+            "key": config_key,
+            "old_value": old_value,
+            "new_value": config_value
+        })
+        
+        change_log = ConfigChangeLog(
+            config_key=config_key,
+            old_value=old_value,
+            new_value=config_value,
+            operator_id=current_user.id,
+            operator_name=current_user.nickname or current_user.login_name or current_user.phone,
+            operator_ip=req.client.host if req.client else "unknown",
+            change_reason=request.change_reason
+        )
+        db.add(change_log)
+    
+    if updated_configs:
+        db.commit()
+        
+        for config in updated_configs:
+            update_rate_limit_config(config["key"], config["new_value"])
+        
+        log_system_action(
+            db=db,
+            user_id=current_user.id,
+            action="batch_update_config",
+            details=f"批量更新配置项: {len(updated_configs)} 个"
+        )
+    
+    return create_success_response({
+        "updated_count": len(updated_configs),
+        "updated_configs": updated_configs,
+        "errors": errors
+    }, f"成功更新 {len(updated_configs)} 个配置项" if not errors else f"部分更新成功，{len(errors)} 个失败")

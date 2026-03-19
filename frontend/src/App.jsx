@@ -96,6 +96,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/divination/liuyao" element={<LiuYaoPage />} />
               <Route path="/divination-result" element={<ResultPage />} />
+              <Route path="/divination-result/:recordId" element={<ResultPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/user" element={<UserCenter />} />
               <Route path="/admin/login" element={<AdminLogin />} />

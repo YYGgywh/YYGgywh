@@ -29,7 +29,6 @@ import {
   getLoginNameLimitInfo,
   updateLoginName
 } from '../../api/userApi';
-import PanRecordDetail from '../../components/PanRecordDetail/PanRecordDetail';
 import { panTypeToChinese } from '../../utils/methodMapping';
 
 // 导航项配置
@@ -65,10 +64,6 @@ const UserCenter = () => {
   // 限制信息状态
   const [nicknameLimitInfo, setNicknameLimitInfo] = useState(null);
   const [loginNameLimitInfo, setLoginNameLimitInfo] = useState(null);
-
-  // 详情弹窗状态
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [showDetail, setShowDetail] = useState(false);
 
   // 检查登录状态并初始化
   useEffect(() => {
@@ -192,16 +187,8 @@ const UserCenter = () => {
 
   // 排盘记录处理
   const handleViewDetail = (record) => {
-    setSelectedRecord(record);
-    setShowDetail(true);
-  };
-  const handleRecordUpdate = (updatedRecord) => {
-    setPanRecords(prev =>
-      prev.map(record => (record.id === updatedRecord.id ? updatedRecord : record))
-    );
-  };
-  const handleRecordDelete = (recordId) => {
-    setPanRecords(prev => prev.filter(record => record.id !== recordId));
+    // 跳转到排盘结果页面，传递 recordId
+    navigate(`/divination-result/${record.id}`);
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -287,16 +274,6 @@ const UserCenter = () => {
           }
         />
       </div>
-
-      {/* 排盘详情弹窗 */}
-      {showDetail && selectedRecord && (
-        <PanRecordDetail
-          record={selectedRecord}
-          onClose={() => setShowDetail(false)}
-          onUpdate={handleRecordUpdate}
-          onDelete={handleRecordDelete}
-        />
-      )}
     </div>
   );
 };

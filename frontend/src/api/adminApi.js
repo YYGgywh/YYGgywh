@@ -233,10 +233,31 @@ export const getSystemLogList = async (params) => {
   }
 };
 
-// 获取系统配置列表
-export const getSystemConfigList = async () => {
+// 获取配置分类列表
+export const getConfigCategories = async () => {
   try {
-    const response = await api.get('/admin/system-configs');
+    const response = await api.get('/admin/system-configs/categories');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取系统配置列表
+export const getSystemConfigList = async (category = null) => {
+  try {
+    const params = category ? { category } : {};
+    const response = await api.get('/admin/system-configs', { params });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 创建系统配置
+export const createSystemConfig = async (data) => {
+  try {
+    const response = await api.post('/admin/system-configs', data);
     return response;
   } catch (error) {
     throw error;
@@ -244,9 +265,49 @@ export const getSystemConfigList = async () => {
 };
 
 // 更新系统配置
-export const updateSystemConfig = async (configKey, value) => {
+export const updateSystemConfig = async (configKey, value, changeReason = null) => {
   try {
-    const response = await api.put(`/admin/system-configs/${configKey}`, { value });
+    const data = { value };
+    if (changeReason) {
+      data.change_reason = changeReason;
+    }
+    const response = await api.put(`/admin/system-configs/${configKey}`, data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 删除系统配置
+export const deleteSystemConfig = async (configKey) => {
+  try {
+    const response = await api.delete(`/admin/system-configs/${configKey}`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取配置变更日志
+export const getConfigChangeLogs = async (configKey, page = 1, pageSize = 20) => {
+  try {
+    const response = await api.get(`/admin/system-configs/${configKey}/logs`, {
+      params: { page, page_size: pageSize }
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 批量更新系统配置
+export const batchUpdateSystemConfigs = async (configs, changeReason = null) => {
+  try {
+    const data = { configs };
+    if (changeReason) {
+      data.change_reason = changeReason;
+    }
+    const response = await api.post('/admin/system-configs/batch-update', data);
     return response;
   } catch (error) {
     throw error;

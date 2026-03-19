@@ -3,12 +3,12 @@
  * @description     简要占卜查询组件，用于展示求测者信息和占题的简要形式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-14 16:30:00
- * @lastModified    2026-03-15 14:13:26
+ * @lastModified    2026-03-19 13:49:09
  * Copyright © All rights reserved
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; /* 引入 PropTypes 库，用于类型检查 */
 import styles from './BriefDivinationQuery.desktop.module.css';
 import {
   formatSolarDate,
@@ -29,12 +29,16 @@ import {
 const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, className = '' }) => {
   const calendarInfo = divinationData.calendar_info || {};
   
+  console.log('BriefDivinationQuery - formData:', formData);
+  console.log('BriefDivinationQuery - divinationData:', divinationData);
+  
   // 使用 React.useMemo 缓存简要占题文本的格式化结果
   // 只有当 formData 中的相关字段变化时才重新计算
   // 优化目的：避免每次渲染都重新拼接字符串
   const briefText = React.useMemo(() => {
     // 如果 formData 为空对象，则返回空字符串
     if (!formData || Object.keys(formData).length === 0) {
+      console.log('BriefDivinationQuery - formData is empty');
       return '';
     }
     
@@ -46,6 +50,8 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     const birthYear = formData.birthYear || '';       // 出生年份
     const question = formData.question || '';         // 占题
     
+    console.log('BriefDivinationQuery - fields:', { location, firstName, lastName, gender, birthYear, question });
+    
     // 构建生年信息：如果有出生年份，则添加"生人"后缀
     const birthYearText = birthYear ? `${birthYear}生人` : '';
     
@@ -54,15 +60,24 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     
     // 拼接所有信息，格式为：属地 姓名 性别 生年生人，占：占题。
     // 使用模板字符串进行拼接，各字段之间用空格分隔
-    return `${location} ${firstName}${lastName} ${gender} ${birthYearText}，占：${questionText}`.trim();
+    const result = `${location} ${firstName}${lastName} ${gender} ${birthYearText}，占：${questionText}`.trim();
+    console.log('BriefDivinationQuery - briefText:', result);
+    return result;
   }, [formData.location, formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.question]);
   
   // 使用 React.useMemo 缓存时间信息的格式化结果
   const timeText = React.useMemo(() => {
+    console.log('BriefDivinationQuery - 开始格式化时间');
+    console.log('BriefDivinationQuery - calendarInfo:', calendarInfo);
+    
     const solarInfo = calendarInfo.solar_info;
     const lunarInfo = calendarInfo.lunar_info;
     
+    console.log('BriefDivinationQuery - solarInfo:', solarInfo);
+    console.log('BriefDivinationQuery - lunarInfo:', lunarInfo);
+    
     if (!solarInfo || !lunarInfo) {
+      console.log('BriefDivinationQuery - solarInfo 或 lunarInfo 为空');
       return '';
     }
     
@@ -71,7 +86,11 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     const lunarDate = formatLunarDate(lunarInfo);
     const lunarTime = formatLunarTime(lunarInfo);
     
-    return `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）`;
+    console.log('BriefDivinationQuery - 格式化后的时间:', { solarDate, solarTime, lunarDate, lunarTime });
+    
+    const result = `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）`;
+    console.log('BriefDivinationQuery - timeText:', result);
+    return result;
   }, [calendarInfo.solar_info, calendarInfo.lunar_info]);
   
   // 如果没有数据，则不渲染任何内容

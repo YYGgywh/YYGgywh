@@ -140,7 +140,7 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
               {data.pan_result ? (
                 <LiuYaoInfoContainer
                   divinationData={data.pan_result}
-                  formData={{
+                  formData={data.pan_params?.form_data || {
                     question: data.question,
                     method: data.method
                   }}

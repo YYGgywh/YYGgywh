@@ -14,13 +14,14 @@ import styles from './SupplementInput.desktop.module.css';
 const MAX_LENGTH = 500;
 const STORAGE_KEY = 'supplement_draft';
 
-const SupplementInput = React.memo(({ 
+// 先定义组件
+const SupplementInputComponent = ({ 
   value = '', 
   onChange, 
   maxLength = MAX_LENGTH,
   placeholder = '请输入补充说明...',
   disabled = false,
-  autoSave = true 
+  autoSave = true
 }) => {
   const [localValue, setLocalValue] = useState(value);
   const [charCount, setCharCount] = useState(value.length);
@@ -92,7 +93,15 @@ const SupplementInput = React.memo(({
       </div>
     </div>
   );
-});
+};
+
+// 使用 React.memo 包装组件
+const SupplementInput = React.memo(SupplementInputComponent);
+
+// 添加静态方法：清除草稿
+SupplementInput.clearDraft = () => {
+  localStorage.removeItem(STORAGE_KEY);
+};
 
 SupplementInput.propTypes = {
   value: PropTypes.string,

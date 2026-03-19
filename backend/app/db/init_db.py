@@ -14,6 +14,7 @@ from app.models.comment import Comment
 from app.models.admin_permission import AdminPermission
 from app.models.system_log import SystemLog
 from app.models.system_config import SystemConfig
+from app.models.config_change_log import ConfigChangeLog
 
 # 创建所有表
 Base.metadata.create_all(bind=engine)
