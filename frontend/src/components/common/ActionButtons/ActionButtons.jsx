@@ -63,4 +63,7 @@ ActionButtons.propTypes = {
   disabled: PropTypes.bool
 };
 
+// 为 ActionButtons 组件添加 displayName，便于在 React DevTools 中调试
+ActionButtons.displayName = 'ActionButtons';
+
 export default ActionButtons;

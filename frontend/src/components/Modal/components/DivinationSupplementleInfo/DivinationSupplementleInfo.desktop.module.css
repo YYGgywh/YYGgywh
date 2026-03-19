@@ -1,0 +1,102 @@
+/*
+ * @file            frontend/src/components/Modal/components/DivinationSupplementleInfo/DivinationSupplementleInfo.desktop.module.css
+ * @description     DivinationSupplementleInfo 组件样式文件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-17 18:30:00
+ * @lastModified    2026-03-18 17:05:16
+ * Copyright © All rights reserved
+*/
+
+.divinationInfo {
+  padding: 0px 24px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.divinationInfo h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.infoRowSupplement {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.infoRow .infoLabel {
+  width: 80px;
+  font-size: 14px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.infoRow .infoValue {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.infoRowSupplement .infoLabel {
+  width: 80px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.infoRowSupplement .infoValue {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+  padding-left: 80px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .divinationInfo {
+    padding: 12px 0;
+  }
+  
+  .divinationInfo h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .infoRow {
+    margin-bottom: 6px;
+  }
+  
+  .infoRowSupplement {
+    margin-bottom: 6px;
+  }
+  
+  .infoRow .infoLabel {
+    width: 70px;
+    font-size: 12px;
+  }
+  
+  .infoRow .infoValue {
+    font-size: 12px;
+  }
+  
+  .infoRowSupplement .infoLabel {
+    width: 70px;
+    font-size: 12px;
+  }
+  
+  .infoRowSupplement .infoValue {
+    font-size: 12px;
+    padding-left: 70px;
+  }
+}

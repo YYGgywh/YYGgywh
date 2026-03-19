@@ -1,22 +1,15 @@
 /*
  * @file            frontend/src/components/Modal/PanDetailModal.desktop.module.css
  * @description     排盘详情弹窗桌面端样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 12:10:00
- * @lastModified    2026-03-13 12:10:00
+ * @lastModified    2026-03-18 15:14:40
  * Copyright © All rights reserved
 */
 
 /* ========================================
    排盘详情弹窗桌面端样式
    ======================================== */
-
-/* 全局样式重置 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 /* 蒙层样式 */
 .modalOverlay {
@@ -34,6 +27,7 @@
   overflow: hidden;
 }
 
+/* 弹窗淡入动画 */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -43,21 +37,22 @@
   }
 }
 
-/* 弹窗主体 */
+/* 弹窗主体 - 左右分栏布局 */
 .modalContent {
   width: 90%;
   height: 90vh;
-  background-color: #fff;
+  background-color: #FFFFFF;
   border-radius: 16px 0 0 16px;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
   position: relative;
   animation: slideIn 0.3s ease;
   max-width: 1200px;
+  min-width: 900px;
 }
 
+/* 弹窗滑动入动画 */
 @keyframes slideIn {
   from {
     transform: translateX(100%);
@@ -67,197 +62,111 @@
   }
 }
 
-/* 顶部固定区 */
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  padding: 0 24px;
-  border-bottom: 1px solid #f5f5f5;
-  flex-shrink: 0;
-}
+/* ========================================
+   左侧区域样式
+   ======================================== */
 
-.headerLeft {
-  flex: 1;
-}
-
-.headerRight {
-  display: flex;
-  align-items: center;
-}
-
-.closeButton {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background-color: transparent;
-  font-size: 24px;
-  color: #999;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.closeButton:hover {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-/* 主体内容区 */
-.modalBody {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-/* 左侧视觉区 */
+/* 左侧区域 */
 .modalLeftContent {
-  width: 60%;
-  height: 100%;
-  position: relative;
-  background-color: #fafafa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.detailImageContainer {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.detailImageContainer img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
-
-.detailImageContainer img.loading {
-  opacity: 0;
-}
-
-.detailImageContainer img.loaded {
-  opacity: 1;
-}
-
-.imageLoading {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-}
-
-.loadingSpinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #1890ff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* 右侧信息区 */
-.modalRightContent {
-  width: 40%;
+  width: 58%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: #fafafa;
   overflow: hidden;
 }
 
-/* 用户信息区 */
-.userInfoSection {
-  display: flex;
-  align-items: center;
-  padding: 16px 24px;
+/* 左侧头部区域 */
+.modalLeftHeader {
+  padding: 20px 24px;
   border-bottom: 1px solid #f5f5f5;
   flex-shrink: 0;
+  background-color: #fff;
 }
 
-.userAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-
-.userAvatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.userDetails {
+/* 左侧主体区域 - 上下垂直分栏 */
+.modalLeftBody {
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   overflow: hidden;
 }
 
-.userName {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+/* 左侧主体区域上部 - 六爻排盘信息 */
+.modalLeftBodyTop {
+  flex: none;
+  /* overflow-y: auto; */
+  padding: 0px 24px;
+  background-color: #fff;
+}
+
+/* 左侧主体区域下部 - 占卜补充信息 */
+.modalLeftBodyBottom {
   flex: 1;
-}
-
-.followButton {
-  padding: 6px 16px;
-  background-color: #ff2442;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 16px 16px;
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
   flex-shrink: 0;
-  margin-left: 12px;
+  overflow-y: auto;
 }
 
-.followButton:hover {
-  background-color: #e60026;
+/* 左侧底部区域 - 版权信息 */
+.modalLeftFooter {
+  padding: 12px 24px;
+  border-top: 1px solid #f5f5f5;
+  flex-shrink: 0;
+  background-color: #fff;
+  text-align: center;
 }
 
-.followButton.followed {
-  background-color: #f5f5f5;
-  color: #333;
+/* 底部文本 */
+.footerText {
+  font-size: 12px;
+  color: #999;
 }
 
-.followButton.followed:hover {
-  background-color: #e6e6e6;
+/* ========================================
+   右侧区域样式
+   ======================================== */
+
+/* 右侧区域 */
+.modalRightContent {
+  width: 42%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-left: 1px solid #f0f0f0;
+  overflow: hidden;
 }
 
-/* 中间内容区 */
-.contentSection {
+/* 右侧头部区域 - 用户信息 */
+.modalRightHeader {
+  /* padding: 16px 20px; */
+  border-bottom: 1px solid #f5f5f5;
+  flex-shrink: 0; /* 防止头部区域压缩 */
+}
+
+/* 右侧主体区域 - 评论列表 */
+.modalRightBody {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
+  padding: 16px 20px;
 }
 
+/* 右侧底部区域 - 评论输入 */
+.modalRightFooter {
+  padding: 12px 20px;
+  border-top: 1px solid rgb(0 0 0 / 10%);
+  flex-shrink: 0;
+  background-color: #fff;
+}
+
+/* ========================================
+   通用组件样式（供子组件使用）
+   ======================================== */
+
+/* 帖子标题 */
 .postTitle {
   font-size: 18px;
   font-weight: 600;
@@ -266,10 +175,12 @@
   line-height: 1.5;
 }
 
+/* 标签区 */
 .tagsSection {
   margin-bottom: 16px;
 }
 
+/* 标签 */
 .tag {
   display: inline-block;
   padding: 4px 12px;
@@ -283,10 +194,12 @@
   transition: all 0.3s ease;
 }
 
+/* 标签悬停样式 */
 .tag:hover {
   background-color: #e6e6e6;
 }
 
+/* 帖子元数据 */
 .postMeta {
   display: flex;
   align-items: center;
@@ -296,20 +209,24 @@
   color: #999;
 }
 
+/* 帖子发布时间 */
 .postTime {
   display: flex;
   align-items: center;
 }
 
+/* 帖子发布地点 */
 .postLocation {
   display: flex;
   align-items: center;
 }
 
+/* 排盘信息 */
 .divinationInfo {
   margin-bottom: 24px;
 }
 
+/* 排盘信息标题 */
 .divinationInfo h3 {
   font-size: 16px;
   font-weight: 600;
@@ -317,6 +234,7 @@
   margin-bottom: 16px;
 }
 
+/* 排盘信息行 */
 .infoRow {
   display: flex;
   align-items: center;
@@ -331,66 +249,56 @@
   flex-shrink: 0;
 }
 
+/* 排盘信息值 */
 .infoValue {
   color: #333;
   flex: 1;
 }
 
-/* 评论区 */
-.commentsSection {
-  margin-top: 24px;
+/* 用户信息区 */
+.userInfoSection {
+  display: flex;
+  align-items: center;
 }
 
-.commentsSection h3 {
-  font-size: 16px;
+/* 用户头像 */
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+/* 用户头像图片 */
+.userAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 用户详情 */
+.userDetails {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 用户姓名 */
+.userName {
+  font-size: 14px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 16px;
-}
-
-.commentInputSection {
-  margin-bottom: 20px;
-}
-
-.commentInputPlaceholder {
-  padding: 12px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  color: #999;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-}
-
-.commentInputPlaceholder:hover {
-  background-color: #e6e6e6;
-  color: #666;
-}
-
-.commentInputForm {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  background-color: #f5f5f5;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.commentInputField {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   flex: 1;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  padding: 8px;
 }
 
-.commentInputField::placeholder {
-  color: #999;
-}
-
-.commentSubmitButton {
+/* 关注按钮 */
+.followButton {
   padding: 6px 16px;
   background-color: #ff2442;
   color: #fff;
@@ -400,203 +308,152 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
 }
 
-.commentSubmitButton:hover:not(:disabled) {
+/* 关注按钮悬停样式 */
+.followButton:hover {
   background-color: #e60026;
 }
 
-.commentSubmitButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* 已关注样式 */
+.followButton.followed {
+  background-color: #f5f5f5;
+  color: #666666;
 }
 
-.commentsList {
+/* 已关注按钮悬停样式 */
+.followButton.followed:hover {
+  background-color: #e6e6e6;
+}
+
+/* 评论区 */
+.commentsSection {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.commentItem {
-  display: flex;
-  gap: 12px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f5f5f5;
-}
-
-.commentUserAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.commentUserAvatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.commentContentSection {
-  flex: 1;
-}
-
-.commentHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.commentUserName {
-  font-size: 14px;
+/* 评论区标题 */
+.commentsSection h3 {
+  font-size: 16px;
   font-weight: 600;
   color: #333;
-}
-
-.commentTime {
-  font-size: 12px;
-  color: #999;
-}
-
-.commentText {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.5;
   margin-bottom: 8px;
 }
 
-.commentActions {
+/* 评论输入区 */
+.commentInputArea {
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+}
+
+/* 评论输入框占位符 */
+.commentInputPlaceholder {
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 互动按钮区域 */
+.interactionButtons {
   display: flex;
+  align-items: center;
   gap: 16px;
-  font-size: 12px;
-  color: #999;
-  cursor: pointer;
 }
 
-.commentLike {
-  transition: color 0.3s ease;
-}
-
-.commentLike:hover {
-  color: #ff2442;
-}
-
-.commentReply {
-  transition: color 0.3s ease;
-}
-
-.commentReply:hover {
-  color: #1890ff;
-}
-
-.noComments {
-  text-align: center;
-  padding: 40px 0;
-  color: #999;
-  font-size: 14px;
-  background-color: #fafafa;
-  border-radius: 8px;
-}
-
-/* 底部互动区 */
-.interactionSection {
-  height: 60px;
-  padding: 0 24px;
-  border-top: 1px solid #f5f5f5;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  background-color: #fafafa;
-}
-
-.interactionLeft {
-  display: flex;
-  gap: 32px;
-}
-
-.interactionRight {
-  display: flex;
-}
-
-.interactionItem {
+/* 互动按钮 */
+.interactionButton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #999;
+  gap: 4px;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 8px;
-  border-radius: 4px;
+  color: #999;
+  transition: color 0.2s ease;
+  padding: 4px;
 }
 
-.interactionItem:hover {
-  background-color: #f0f0f0;
+.interactionButton:hover {
   color: #333;
+}
+
+.interactionButton.active {
+  color: #1677ff;
 }
 
 .interactionIcon {
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .interactionCount {
-  font-weight: 600;
-}
-
-.interactionItem.liked {
-  color: #ff2442;
-}
-
-.interactionItem.collected {
-  color: #faad14;
-}
-
-.shareButton {
-  transition: all 0.3s ease;
-}
-
-.shareButton:hover {
-  color: #1890ff;
-}
-
-/* 底部固定区 */
-.modalFooter {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 1px solid #f5f5f5;
-  background-color: #fafafa;
-  flex-shrink: 0;
-}
-
-.footerContent {
   font-size: 12px;
-  color: #999;
-}
-
-.footerText {
-  display: flex;
-  align-items: center;
 }
 
 /* 滚动条样式 */
-.contentSection::-webkit-scrollbar {
-  width: 6px;
+.modalLeftBodyTop::-webkit-scrollbar,
+.modalRightBody::-webkit-scrollbar {
+  width: 4px;
 }
 
-.contentSection::-webkit-scrollbar-track {
-  background-color: #fafafa;
+.modalLeftBodyTop::-webkit-scrollbar-track,
+.modalRightBody::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
 }
 
-.contentSection::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 3px;
+.modalLeftBodyTop::-webkit-scrollbar-thumb,
+.modalRightBody::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
 }
 
-.contentSection::-webkit-scrollbar-thumb:hover {
-  background-color: #999;
+.modalLeftBodyTop::-webkit-scrollbar-thumb:hover,
+.modalRightBody::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 响应式设计 - 平板 */
+@media (max-width: 1024px) {
+  .modalContent {
+    max-width: 100%;
+    min-width: 100%;
+    border-radius: 0;
+  }
+
+  .modalLeftContent {
+    width: 55%;
+  }
+
+  .modalRightContent {
+    width: 45%;
+  }
+}
+
+/* 响应式设计 - 移动端 */
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .modalLeftContent,
+  .modalRightContent {
+    width: 100%;
+  }
+
+  .modalLeftContent {
+    height: 50%;
+  }
+
+  .modalRightContent {
+    height: 50%;
+    border-left: none;
+    border-top: 1px solid #f0f0f0;
+  }
 }

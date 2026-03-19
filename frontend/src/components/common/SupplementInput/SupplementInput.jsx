@@ -103,4 +103,7 @@ SupplementInput.propTypes = {
   autoSave: PropTypes.bool
 };
 
+// 为 SupplementInput 组件添加 displayName，便于在 React DevTools 中调试
+SupplementInput.displayName = 'SupplementInput';
+
 export default SupplementInput;

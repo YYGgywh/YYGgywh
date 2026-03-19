@@ -85,4 +85,7 @@ ButtonGroup.propTypes = {
 };
 
 // 导出 ButtonGroup 组件
+// 为 ButtonGroup 组件添加 displayName，便于在 React DevTools 中调试
+ButtonGroup.displayName = 'ButtonGroup';
+
 export default ButtonGroup;

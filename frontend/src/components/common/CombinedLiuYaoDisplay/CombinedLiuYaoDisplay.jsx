@@ -93,4 +93,7 @@ const CombinedLiuYaoDisplay = React.memo(({ panResult }) => {
 });
 
 // 导出CombinedLiuYaoDisplay组件供其他模块使用
+// 为 CombinedLiuYaoDisplay 组件添加 displayName，便于在 React DevTools 中调试
+CombinedLiuYaoDisplay.displayName = 'CombinedLiuYaoDisplay';
+
 export default CombinedLiuYaoDisplay;

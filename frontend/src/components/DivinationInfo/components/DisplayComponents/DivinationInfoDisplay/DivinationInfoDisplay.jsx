@@ -403,6 +403,9 @@ DivinationInfoDisplay.propTypes = {
   error: PropTypes.string
 };
 
+// 为 DivinationInfoDisplay 组件添加 displayName，便于在 React DevTools 中调试
+DivinationInfoDisplay.displayName = 'DivinationInfoDisplay';
+
 // 导出 DivinationInfoDisplay 组件作为默认导出
 // 这样其他文件可以通过 import DivinationInfoDisplay from './DivinationInfoDisplay' 导入使用
 export default DivinationInfoDisplay;

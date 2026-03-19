@@ -388,4 +388,7 @@ const LiuYaoReault = React.memo(() => {
 });
 
 // 导出LiuYaoReault组件供其他模块使用
+// 为 LiuYaoReault 组件添加 displayName，便于在 React DevTools 中调试
+LiuYaoReault.displayName = 'LiuYaoReault';
+
 export default LiuYaoReault;

@@ -98,4 +98,7 @@ const CompactLiuYaoDisplay = React.memo(({ panResult }) => {
 });
 
 // 导出CompactLiuYaoDisplay组件供其他模块使用
+// 为 CompactLiuYaoDisplay 组件添加 displayName，便于在 React DevTools 中调试
+CompactLiuYaoDisplay.displayName = 'CompactLiuYaoDisplay';
+
 export default CompactLiuYaoDisplay;

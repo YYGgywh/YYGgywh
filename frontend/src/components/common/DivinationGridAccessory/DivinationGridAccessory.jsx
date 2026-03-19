@@ -152,4 +152,7 @@ DivinationGridAccessory.defaultProps = {
   style: {}
 };
 
+// 为 DivinationGridAccessory 组件添加 displayName，便于在 React DevTools 中调试
+DivinationGridAccessory.displayName = 'DivinationGridAccessory';
+
 export default DivinationGridAccessory;

@@ -143,7 +143,13 @@ const HomePage = () => {
             view_count: record.view_count || 0, // 浏览数：默认为 0
             comment_count: record.comment_count || 0, // 评论数：默认为 0
             is_liked: record.is_liked || false, // 是否已点赞：默认为 false
-            pan_result: panResult // 排盘结果对象
+            pan_result: panResult, // 排盘结果对象
+            pan_params: panParams, // 排盘参数对象
+            method: panParams.method, // 起卦方式
+            supplement: record.supplement, // 补充信息
+            supplement_create_time: record.supplement_create_time, // 补充信息创建时间
+            supplement_update_time: record.supplement_update_time, // 补充信息最后修改时间
+            supplement_modify_count: record.supplement_modify_count || 0 // 补充信息修改次数
           };
         });
 

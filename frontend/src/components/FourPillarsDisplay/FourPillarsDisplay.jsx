@@ -3,7 +3,7 @@
  * @description     四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-22 11:00:00
- * @lastModified    2026-03-14 16:10:46
+ * @lastModified    2026-03-17 11:26:04
  * Copyright © All rights reserved
 */
 
@@ -254,6 +254,9 @@ FourPillarsDisplay.propTypes = {
     })
   })
 };
+
+// 为 FourPillarsDisplay 组件添加 displayName，便于在 React DevTools 中调试
+FourPillarsDisplay.displayName = 'FourPillarsDisplay';
 
 export default FourPillarsDisplay; // 导出四柱显示组件
 export { defaultDisplayConfig }; // 导出默认显示配置

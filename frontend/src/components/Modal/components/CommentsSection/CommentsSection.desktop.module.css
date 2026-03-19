@@ -1,0 +1,269 @@
+/*
+ * @file            frontend/src/components/Modal/components/CommentsSection/CommentsSection.desktop.module.css
+ * @description     评论区域组件样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-17 18:30:00
+ * @lastModified    2026-03-18 12:14:29
+ * Copyright © All rights reserved
+*/
+
+/* 评论区域容器 */
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* padding: 16px; */
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* 评论列表区域 */
+.commentsList {
+  flex: 1;
+  /* overflow-y: auto; */
+  max-height: 400px;
+}
+
+/* 评论标题 */
+.commentsList h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* 单个评论项 */
+.commentItem {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 评论用户头像 */
+.commentUserAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentUserAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 评论内容区域 */
+.commentContentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 评论头部信息 */
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 评论头部左侧（用户名和作者标识） */
+.commentHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 评论用户名 */
+.commentUserName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 作者标识 */
+.authorBadge {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #f0f9ff;
+  color: #1677ff;
+}
+
+/* 评论头部右侧（时间和地点） */
+.commentHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 评论时间 */
+.commentTime {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 评论地点 */
+.commentLocation {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 评论内容 */
+.commentText {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-word;
+}
+
+/* 评论操作按钮 */
+.commentActions {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+/* 评论操作按钮样式 */
+.commentActionBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.commentActionBtn:hover {
+  color: #333;
+}
+
+/* 操作图标 */
+.actionIcon {
+  width: 14px;
+  height: 14px;
+}
+
+/* 操作计数 */
+.actionCount {
+  font-size: 12px;
+}
+
+/* 无评论提示 */
+.noComments {
+  text-align: center;
+  padding: 40px 0;
+  color: #999;
+  font-size: 14px;
+}
+
+/* 互动按钮区域 */
+.interactionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 互动按钮 */
+.interactionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s ease;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.interactionButton:hover {
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+/* 互动按钮激活状态 */
+.interactionButton.active {
+  color: #1677ff;
+}
+
+/* 互动图标 */
+.interactionIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* 互动计数 */
+.interactionCount {
+  font-size: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .commentsSection {
+    padding: 12px;
+  }
+
+  .commentsList {
+    max-height: 300px;
+  }
+
+  .commentItem {
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+
+  .commentUserAvatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .commentUserName {
+    font-size: 13px;
+  }
+
+  .commentText {
+    font-size: 13px;
+  }
+
+  .interactionButtons {
+    padding-top: 10px;
+  }
+
+  .interactionIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* 滚动条样式 */
+.commentsList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.commentsList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.commentsList::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.commentsList::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

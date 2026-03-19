@@ -152,4 +152,7 @@ Button.propTypes = {
 };
 
 // 导出 Button 组件
+// 为 Button 组件添加 displayName，便于在 React DevTools 中调试
+Button.displayName = 'Button';
+
 export default Button;
