@@ -3,7 +3,7 @@
  * @description     排盘信息展示组件，包含起卦方式和补充信息
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-17 18:30:00
- * @lastModified    2026-03-18 17:04:17
+ * @lastModified    2026-03-20 14:03:37
  * Copyright © All rights reserved
 */
 
@@ -21,7 +21,9 @@ const DivinationSupplementleInfo = ({
   data, // 排盘数据对象
   showMethod = true, // 是否显示起卦方式，默认为 true
   showSupplement = true, // 是否显示补充信息，默认为 true
-  showSupplementTime = true // 是否显示补充信息时间和修改次数，默认为 true
+  showSupplementTime = true, // 是否显示补充信息时间和修改次数，默认为 true
+  onEditSupplement, // 编辑补充信息的回调函数
+  canEdit = true // 是否可以编辑补充信息，默认为 true
 }) => {
   // 调试：打印 data 对象结构
   console.log('DivinationSupplementleInfo data:', data);
@@ -74,6 +76,21 @@ const DivinationSupplementleInfo = ({
 
   const method = getMethod();
   
+  // 格式化补充信息，处理换行和缩进
+  const formatSupplement = (text) => {
+    if (!text) return '求占者暂无任何补充信息……';
+    
+    return text.split('\n').map((paragraph, index) => {
+      // 跳过空行
+      if (!paragraph.trim()) return null;
+      return (
+        <p key={index} className={styles.paragraph}>
+          {paragraph}
+        </p>
+      );
+    });
+  };
+  
   // 渲染组件
   return (
     <div className={styles.divinationInfo}>
@@ -88,24 +105,35 @@ const DivinationSupplementleInfo = ({
         </div>
       )}
       
-      {/* 条件渲染：如果 showSupplement 为 true 且 data.supplement 存在，则显示补充信息 */}
-      {showSupplement && data.supplement && (
+      {/* 条件渲染：如果 showSupplement 为 true，则显示补充信息 */}
+      {showSupplement && (
         <div className={styles.infoRowSupplement}>
-          <span className={styles.infoLabel}>补充信息：</span>
-          <div className={styles.infoValue}>{data.supplement}</div>
-        </div>
-      )}
-      
-      {/* 条件渲染：如果 showSupplementTime 为 true 且有补充信息时间数据，则显示补充信息时间和修改次数 */}
-      {showSupplementTime && (data.supplement_create_time || data.supplement_update_time) && (
-        <div className={styles.infoRowSupplement}>
-          <span className={styles.infoLabel}>补充信息时间：</span>
-          <span className={styles.infoValue}>
-            {data.supplement_create_time && `创建: ${formatStandardTime(data.supplement_create_time)}`}
-            {data.supplement_create_time && data.supplement_update_time && data.supplement_create_time !== data.supplement_update_time && ` | `}
-            {data.supplement_update_time && data.supplement_create_time !== data.supplement_update_time && `修改: ${formatStandardTime(data.supplement_update_time)}`}
-            {data.supplement_modify_count > 0 && ` (修改 ${data.supplement_modify_count} 次)`}
-          </span>
+          <div className={styles.infoLabelRow}>
+            <span className={styles.infoLabel}>补充信息：</span>
+            {canEdit && (
+              <button 
+                className={styles.editButton}
+                onClick={() => onEditSupplement && onEditSupplement(data)}
+              >
+                编辑
+              </button>
+            )}
+          </div>
+          <div className={styles.infoValue}>
+            {formatSupplement(data.supplement)}
+          </div>
+          
+          {/* 条件渲染：如果 showSupplementTime 为 true 且有补充信息时间数据，则显示补充信息时间和修改次数 */}
+          {showSupplementTime && (data.supplement_create_time || data.supplement_update_time) && (
+            <div className={styles.supplementTimeContainer}>
+              <span className={styles.supplementTime}>
+                {data.supplement_create_time && `创建: ${formatStandardTime(data.supplement_create_time)}`}
+                {data.supplement_create_time && data.supplement_update_time && data.supplement_create_time !== data.supplement_update_time && ` | `}
+                {data.supplement_update_time && data.supplement_create_time !== data.supplement_update_time && `修改: ${formatStandardTime(data.supplement_update_time)}`}
+                {data.supplement_modify_count > 0 && ` (修改 ${data.supplement_modify_count} 次)`}
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>

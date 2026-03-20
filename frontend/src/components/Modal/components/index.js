@@ -13,3 +13,4 @@ export { default as UserInfo } from './UserInfo/UserInfo';
 export { default as PostHeader } from './PostHeader/PostHeader';
 export { default as DivinationSupplementleInfo } from './DivinationSupplementleInfo/DivinationSupplementleInfo';
 export { default as InteractionButtons } from './InteractionButtons/InteractionButtons';
+export { default as EditSupplementModal } from './EditSupplementModal/EditSupplementModal';

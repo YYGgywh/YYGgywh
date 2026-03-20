@@ -3,16 +3,17 @@
  * @description     排盘详情弹窗组件，实现小红书式左右分栏布局
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-06 17:20:00
- * @lastModified    2026-03-20 12:09:05
+ * @lastModified    2026-03-20 13:15:06
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect, useRef } from "react";
 import { useImageLazyLoad } from "../../hooks";
 import { formatStandardTime } from "../../utils";
+import { getFrontendUserInfo } from "../../utils/storage";
 import PanImageViewer from "../PanImageViewer/PanImageViewer";
 import LiuYaoInfoContainer from "../LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer";
-import { UserInfo, PostHeader, CommentsSection, CommentInput, DivinationSupplementleInfo } from "./components";
+import { UserInfo, PostHeader, CommentsSection, CommentInput, DivinationSupplementleInfo, EditSupplementModal } from "./components";
 import styles from "./PanDetailModal.desktop.module.css";
 
 const PanDetailModal = ({ isOpen, onClose, data }) => {
@@ -24,6 +25,8 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
   const [commentContent, setCommentContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showImageViewer, setShowImageViewer] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editData, setEditData] = useState(null);
   const [activeButtons, setActiveButtons] = useState(['liuqin', 'fuchen', 'yinyang', 'colorChange']);
   const commentInputRef = useRef(null);
 
@@ -121,6 +124,26 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
     });
   };
 
+  // 判断当前用户是否是发帖主
+  const isPostOwner = () => {
+    const currentUser = getFrontendUserInfo();
+    if (!currentUser || !data) return false;
+    return currentUser.id === data.user_id;
+  };
+
+  // 处理编辑补充信息
+  const handleEditSupplement = (recordData) => {
+    setEditData(recordData);
+    setShowEditModal(true);
+  };
+
+  // 处理编辑成功
+  const handleEditSuccess = (newContent) => {
+    if (data) {
+      data.supplement = newContent;
+    }
+  };
+
   if (!isOpen || !data) return null;
 
   return (
@@ -162,6 +185,8 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
                 showMethod={false}
                 showSupplement={true}
                 showSupplementTime={true}
+                canEdit={isPostOwner()}
+                onEditSupplement={handleEditSupplement}
               />
             </div>
           </div>
@@ -211,6 +236,15 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
           images={[data.hexagram_image]}
           initialIndex={0}
           onClose={() => setShowImageViewer(false)}
+        />
+      )}
+
+      {showEditModal && (
+        <EditSupplementModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          data={editData}
+          onSuccess={handleEditSuccess}
         />
       )}
     </div>

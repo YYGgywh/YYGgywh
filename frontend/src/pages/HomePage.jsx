@@ -3,7 +3,7 @@
  * @description     首页组件 - 显示公开排盘记录列表，支持瀑布流布局和交互功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 13:38:55
- * @lastModified    2026-03-14 12:00:00
+ * @lastModified    2026-03-20 13:42:37
  * Copyright © All rights reserved
 */
 
@@ -13,6 +13,7 @@ import React, { useState, useEffect } from 'react'; // 导入 React 核心库和
 import Navigation from '../components/Header/Navigation/Navigation'; // 导入导航栏组件
 import BackToTop from '../components/BackToTop/BackToTop'; // 导入返回顶部按钮组件
 import { getPublicPanList } from '../api/panApi'; // 导入获取公开排盘列表的 API 接口
+import { panTypeToChinese } from '../utils/methodMapping'; // 导入排盘类型映射工具
 import hexagram1 from '../assets/images/hexagram-1.svg'; // 导入卦象图片资源 1
 import hexagram2 from '../assets/images/hexagram-2.svg'; // 导入卦象图片资源 2
 import hexagram3 from '../assets/images/hexagram-3.svg'; // 导入卦象图片资源 3
@@ -117,15 +118,22 @@ const HomePage = () => {
             console.error('解析排盘数据失败:', e);
           }
 
-          // 生成随机标签（用于演示）
-          const randomTags = [];
-          const tagCount = Math.floor(Math.random() * 2) + 1; // 随机生成 1-2 个标签
-          for (let i = 0; i < tagCount; i++) {
-            // 从标签池中随机选择标签
-            const randomTag = availableTags[Math.floor(Math.random() * availableTags.length)];
-            // 避免重复标签
-            if (!randomTags.includes(randomTag)) {
-              randomTags.push(randomTag);
+          // 生成标签：第一个标签是排盘类型，第二个标签是占卜类型
+          const tags = [];
+          
+          // 第一个标签：排盘类型（pan_type）
+          if (record.pan_type) {
+            const panTypeTag = panTypeToChinese(record.pan_type);
+            if (panTypeTag) {
+              tags.push(panTypeTag);
+            }
+          }
+          
+          // 第二个标签：占卜类型（divinationType）
+          if (panParams.form_data?.divinationType) {
+            const divinationTypeTag = panParams.form_data.divinationType;
+            if (divinationTypeTag && !tags.includes(divinationTypeTag)) {
+              tags.push(divinationTypeTag);
             }
           }
 
@@ -133,7 +141,8 @@ const HomePage = () => {
           return {
             id: record.id, // 记录 ID
             title: record.supplement || panParams.question || "未填写标题", // 标题：优先使用补充信息，其次使用问题，最后使用默认值
-            tags: randomTags, // 随机生成的标签
+            tags: tags, // 生成的标签
+            user_id: record.user?.id, // 用户ID：用于判断是否是发帖主
             user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
             user_avatar: record.user?.avatar_url || avatarImages[index % avatarImages.length], // 用户头像：优先使用用户头像，否则使用默认头像数组
             create_time: record.create_time, // 创建时间
