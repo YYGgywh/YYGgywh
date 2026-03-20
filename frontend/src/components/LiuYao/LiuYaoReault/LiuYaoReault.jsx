@@ -121,6 +121,10 @@ const LiuYaoReault = React.memo(() => {
   const saveInProgress = useRef(false);
   // 补充说明状态
   const [supplement, setSupplement] = useState('');
+  // 补充信息相关时间和修改次数
+  const [supplementCreateTime, setSupplementCreateTime] = useState(null);
+  const [supplementUpdateTime, setSupplementUpdateTime] = useState(null);
+  const [supplementModifyCount, setSupplementModifyCount] = useState(0);
   // 排盘记录ID状态（用于更新）
   const [recordId, setRecordId] = useState(urlRecordId || null);
   // 操作状态
@@ -180,17 +184,26 @@ const LiuYaoReault = React.memo(() => {
       console.log('保存的排盘参数:', panParams);
       console.log('保存的补充说明:', supplementText);
 
-      // 调用保存API
-      const response = await savePan(
-        'liuyao', // 排盘类型
-        panParams, // 排盘参数（完整数据）
-        panResult, // 排盘结果
-        supplementText || '' // 补充说明
-      );
-
-      console.log('排盘记录保存成功:', response);
-      if (response?.data?.record_id) {
-        setRecordId(response.data.record_id);
+      // 根据是否存在 recordId 决定是创建新记录还是更新现有记录
+      let response;
+      if (recordId) {
+        // 更新现有记录
+        response = await updatePan(recordId, {
+          supplement: supplementText || ''
+        });
+        console.log('排盘记录更新成功:', response);
+      } else {
+        // 创建新记录
+        response = await savePan(
+          'liuyao', // 排盘类型
+          panParams, // 排盘参数（完整数据）
+          panResult, // 排盘结果
+          supplementText || '' // 补充说明
+        );
+        console.log('排盘记录保存成功:', response);
+        if (response?.data?.record_id) {
+          setRecordId(response.data.record_id);
+        }
       }
       
       // 保存成功后清除草稿
@@ -331,6 +344,9 @@ const LiuYaoReault = React.memo(() => {
           setDivinationData(validatedData);
           setFormData(formData);
           setSupplement(record.supplement || '');
+          setSupplementCreateTime(record.supplement_create_time || null);
+          setSupplementUpdateTime(record.supplement_update_time || null);
+          setSupplementModifyCount(record.supplement_modify_count || 0);
           setRecordId(record.id);
           setHasSaved(true); // 已保存的记录，标记为已保存
           console.log('更新状态后 - formData 状态已设置');
@@ -484,6 +500,9 @@ const LiuYaoReault = React.memo(() => {
               maxLength={500}
               placeholder="请输入补充说明，记录您的求占背景、心境或其他相关信息..."
               autoSave={true}
+              supplementCreateTime={supplementCreateTime}
+              supplementUpdateTime={supplementUpdateTime}
+              supplementModifyCount={supplementModifyCount}
             />
           </div>
         </div>

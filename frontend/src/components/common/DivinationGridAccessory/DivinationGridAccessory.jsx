@@ -45,7 +45,10 @@ const DivinationGridAccessory = ({
   placeholder = '请输入补充说明，记录您的求占背景、心境或其他相关信息...',
   autoSave = true,
   className = '',
-  style = {}
+  style = {},
+  supplementCreateTime = null,
+  supplementUpdateTime = null,
+  supplementModifyCount = 0
 }) => {
   /**
    * 构建容器CSS类名字符串
@@ -89,6 +92,24 @@ const DivinationGridAccessory = ({
   };
 
   /**
+   * 格式化时间戳为可读日期时间
+   * @param {number} timestamp - 时间戳
+   * @returns {string} 格式化后的日期时间字符串
+   */
+  const formatTime = (timestamp) => {
+    if (!timestamp) return '';
+    const date = new Date(timestamp * 1000);
+    return date.toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
+
+  /**
    * 渲染占卜补充信息组件
    * 包含补充说明输入框和操作按钮
    */
@@ -105,6 +126,30 @@ const DivinationGridAccessory = ({
           autoSave={autoSave}
           className={styles.supplementInput}
         />
+        
+        {/* 补充信息元数据 */}
+        {(supplementCreateTime || supplementUpdateTime || supplementModifyCount > 0) && (
+          <div className={styles.supplementMeta}>
+            {supplementCreateTime && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>创建时间：</span>
+                <span className={styles.metaValue}>{formatTime(supplementCreateTime)}</span>
+              </div>
+            )}
+            {supplementUpdateTime && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>更新时间：</span>
+                <span className={styles.metaValue}>{formatTime(supplementUpdateTime)}</span>
+              </div>
+            )}
+            {supplementModifyCount > 0 && (
+              <div className={styles.metaItem}>
+                <span className={styles.metaLabel}>修改次数：</span>
+                <span className={styles.metaValue}>{supplementModifyCount}</span>
+              </div>
+            )}
+          </div>
+        )}
         
         {/* 操作按钮组件 */}
         <ActionButtons
@@ -134,7 +179,10 @@ DivinationGridAccessory.propTypes = {
   placeholder: PropTypes.string, // 输入框占位文本
   autoSave: PropTypes.bool, // 是否启用自动保存
   className: PropTypes.string, // 额外的CSS类名
-  style: PropTypes.object // 行内样式对象
+  style: PropTypes.object, // 行内样式对象
+  supplementCreateTime: PropTypes.number, // 补充说明创建时间
+  supplementUpdateTime: PropTypes.number, // 补充说明更新时间
+  supplementModifyCount: PropTypes.number // 补充说明修改次数
 };
 
 /**
@@ -149,7 +197,10 @@ DivinationGridAccessory.defaultProps = {
   placeholder: '请输入补充说明，记录您的求占背景、心境或其他相关信息...',
   autoSave: true,
   className: '',
-  style: {}
+  style: {},
+  supplementCreateTime: null,
+  supplementUpdateTime: null,
+  supplementModifyCount: 0
 };
 
 // 为 DivinationGridAccessory 组件添加 displayName，便于在 React DevTools 中调试

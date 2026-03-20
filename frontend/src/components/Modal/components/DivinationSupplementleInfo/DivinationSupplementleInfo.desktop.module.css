@@ -3,7 +3,7 @@
  * @description     DivinationSupplementleInfo 组件样式文件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-17 18:30:00
- * @lastModified    2026-03-18 17:05:16
+ * @lastModified    2026-03-20 12:14:23
  * Copyright © All rights reserved
 */
 
@@ -50,16 +50,18 @@
 .infoRowSupplement .infoLabel {
   width: 80px;
   font-size: 14px;
-  color: #666;
+  font-weight: 600;
+  color: #333;
   margin-bottom: 4px;
 }
 
 .infoRowSupplement .infoValue {
   font-size: 14px;
   color: #333;
+  font-weight: 400;
   line-height: 1.4;
-  word-break: break-word;
-  padding-left: 80px;
+  word-break: break-word; /* 保持长单词不被断开 */
+  /* padding-left: 80px; */
 }
 
 /* 响应式调整 */

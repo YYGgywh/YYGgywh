@@ -38,6 +38,7 @@ export default function SystemConfigManagement() {
   const [newConfig, setNewConfig] = useState({ key: '', value: '', description: '' });
   const [batchUpdateReason, setBatchUpdateReason] = useState('');
   const [batchUpdateConfigs, setBatchUpdateConfigs] = useState([]);
+  const [inputValues, setInputValues] = useState({});
 
   const fetchCategories = async () => {
     try {
@@ -94,6 +95,12 @@ export default function SystemConfigManagement() {
       setSavingKey(configKey);
       await updateSystemConfig(configKey, newValue, changeReason);
       fetchConfigs(selectedCategory);
+      // 保存成功后清除临时输入值
+      setInputValues(prev => {
+        const newValues = { ...prev };
+        delete newValues[configKey];
+        return newValues;
+      });
     } catch (error) {
       console.error('保存配置失败:', error);
       alert(error.response?.data?.detail || '保存失败，请稍后重试');
@@ -208,15 +215,20 @@ export default function SystemConfigManagement() {
     return (
       <input
         type={config.type === 'integer' ? 'number' : 'text'}
-        value={isEditing ? (batchUpdateConfigs.find(c => c.key === config.key)?.value || config.value) : config.value}
+        value={inputValues[config.key] || config.value}
         onChange={(e) => {
           if (isEditing) {
             updateBatchConfigValue(config.key, e.target.value);
+          } else {
+            setInputValues(prev => ({
+              ...prev,
+              [config.key]: e.target.value
+            }));
           }
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !isEditing) {
-            handleSaveConfig(config.key, e.target.value);
+            handleSaveConfig(config.key, inputValues[config.key] || config.value);
           }
         }}
         disabled={!isEditing && savingKey === config.key}

@@ -80,6 +80,59 @@
 }
 
 /**
+ * 补充信息元数据容器
+ * 定义元数据区域的样式
+ */
+.supplementMeta {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  
+  /* 盒模型属性 */
+  padding: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+  
+  /* 视觉属性 */
+  background-color: var(--bg-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * 元数据项
+ * 定义每个元数据条目的样式
+ */
+.metaItem {
+  /* 布局属性 */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/**
+ * 元数据标签
+ * 定义元数据标签的样式
+ */
+.metaLabel {
+  /* 排版属性 */
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/**
+ * 元数据值
+ * 定义元数据值的样式
+ */
+.metaValue {
+  /* 排版属性 */
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/**
  * 响应式设计
  * 适配不同屏幕尺寸
  */

@@ -3,7 +3,7 @@
  * @description     排盘记录相关接口实现
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-03-02 18:25:40
+ * @lastModified    2026-03-20 11:28:35
  * Copyright © All rights reserved
 """
 
@@ -57,6 +57,9 @@ class PanRecordResponse(BaseModel):
     create_time: int
     update_time: int
     supplement: str | None
+    supplement_create_time: int | None = None
+    supplement_update_time: int | None = None
+    supplement_modify_count: int = 0
     comment_count: int = 0
 
 class ListPanResponse(BaseModel):
@@ -79,13 +82,18 @@ async def save_pan(request: SavePanRequest, current_user: User = Depends(get_cur
     """
     保存排盘记录
     """
+    # 获取当前时间戳
+    current_time = int(time.time())
+    
     # 创建排盘记录
     new_pan = PanRecord(
         user_id=current_user.id,
         pan_type=request.pan_type,
         pan_params=request.pan_params,
         pan_result=request.pan_result,
-        supplement=request.supplement
+        supplement=request.supplement,
+        supplement_create_time=current_time if request.supplement else None,
+        supplement_update_time=current_time if request.supplement else None
     )
     db.add(new_pan)
     db.commit()
@@ -152,6 +160,9 @@ async def list_pan(
             create_time=record.create_time,
             update_time=record.update_time,
             supplement=record.supplement,
+            supplement_create_time=record.supplement_create_time,
+            supplement_update_time=record.supplement_update_time,
+            supplement_modify_count=record.supplement_modify_count,
             comment_count=comment_count
         ))
     
@@ -177,16 +188,25 @@ async def update_pan(
     if not record:
         raise HTTPException(status_code=404, detail="排盘记录不存在")
     
+    # 获取当前时间戳
+    current_time = int(time.time())
+    
     # 更新字段
     if request.supplement is not None:
-        record.supplement = request.supplement
+        # 只有当补充信息真正发生变化时才更新
+        if record.supplement != request.supplement:
+            record.supplement = request.supplement
+            record.supplement_update_time = current_time
+            if record.supplement_create_time is None:
+                record.supplement_create_time = current_time
+            record.supplement_modify_count += 1
     if request.audit_status is not None:
         record.audit_status = request.audit_status
     if request.audit_remark is not None:
         record.audit_remark = request.audit_remark
     
     # 更新时间戳
-    record.update_time = int(time.time())
+    record.update_time = current_time
     
     db.commit()
     db.refresh(record)

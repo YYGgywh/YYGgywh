@@ -1364,7 +1364,8 @@ async def create_system_config(
         db=db,
         user_id=current_user.id,
         action="create_config",
-        details=f"创建配置项: {request.key}"
+        module="system",
+        detail=f"创建配置项: {request.key}"
     )
     
     return create_success_response({"id": new_config.id}, "创建成功")
@@ -1415,7 +1416,8 @@ async def update_system_config(
         db=db,
         user_id=current_user.id,
         action="update_config",
-        details=f"更新配置项: {config_key}, 旧值: {old_value}, 新值: {request.value}"
+        module="system",
+        detail=f"更新配置项: {config_key}, 旧值: {old_value}, 新值: {request.value}"
     )
     
     update_rate_limit_config(config_key, request.value)
@@ -1455,7 +1457,8 @@ async def delete_system_config(
         db=db,
         user_id=current_user.id,
         action="delete_config",
-        details=f"删除配置项: {config_key}, 值: {old_value}"
+        module="system",
+        detail=f"删除配置项: {config_key}, 值: {old_value}"
     )
     
     return create_success_response(None, "删除成功")
@@ -1565,7 +1568,8 @@ async def batch_update_system_configs(
             db=db,
             user_id=current_user.id,
             action="batch_update_config",
-            details=f"批量更新配置项: {len(updated_configs)} 个"
+            module="system",
+            detail=f"批量更新配置项: {len(updated_configs)} 个"
         )
     
     return create_success_response({

@@ -3,7 +3,7 @@
  * @description     排盘详情弹窗组件，实现小红书式左右分栏布局
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-06 17:20:00
- * @lastModified    2026-03-18 12:12:15
+ * @lastModified    2026-03-20 12:09:05
  * Copyright © All rights reserved
 */
 
@@ -159,7 +159,7 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
             <div className={styles.modalLeftBodyBottom}>
               <DivinationSupplementleInfo
                 data={data}
-                showMethod={true}
+                showMethod={false}
                 showSupplement={true}
                 showSupplementTime={true}
               />
