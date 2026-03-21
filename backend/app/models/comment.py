@@ -1,9 +1,10 @@
 # backend/app/models/comment.py 2026-02-26 14:20:00
 # 功能：评论数据模型
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, func, Index
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, Boolean, func, Index
 from sqlalchemy.orm import relationship
 from app.db.database import Base
+import time
 
 class Comment(Base):
     __tablename__ = "comment"
@@ -11,9 +12,9 @@ class Comment(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     pan_record_id = Column(Integer, ForeignKey("pan_record.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    content = Column(String, nullable=False)
-    create_time = Column(Integer, default=lambda: int(func.now().timestamp()))
-    update_time = Column(Integer, default=lambda: int(func.now().timestamp()), onupdate=lambda: int(func.now().timestamp()))
+    content = Column(Text, nullable=False)
+    create_time = Column(Integer, default=lambda: int(time.time()))
+    update_time = Column(Integer, default=lambda: int(time.time()), onupdate=lambda: int(time.time()))
     is_public = Column(Boolean, default=False)
     ext_info = Column(String, default='{}')
     audit_status = Column(Integer, default=0)

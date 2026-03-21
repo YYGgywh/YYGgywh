@@ -3,7 +3,7 @@
  * @description     排盘详情弹窗桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 12:10:00
- * @lastModified    2026-03-18 15:14:40
+ * @lastModified    2026-03-21 17:00:18
  * Copyright © All rights reserved
 */
 
@@ -103,7 +103,7 @@
 /* 左侧主体区域下部 - 占卜补充信息 */
 .modalLeftBodyBottom {
   flex: 1;
-  padding: 16px 16px;
+  padding: 16px 32px;
   background-color: #fafafa;
   border-top: 1px solid #f0f0f0;
   flex-shrink: 0;

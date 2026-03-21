@@ -22,7 +22,7 @@ def get_db():
     finally:
         db.close()
 
-# 请求频率限制配置
+# 请求频率限制配置（默认值，会从数据库同步）
 RATE_LIMIT_CONFIG = {
     "/api/v1/user/send_code": {"max_requests": 1, "window": 60},  # 验证码：1次/60秒
     "/api/v1/user/register": {"max_requests": 5, "window": 3600},  # 注册：5次/小时
@@ -34,6 +34,51 @@ RATE_LIMIT_CONFIG = {
     "/api/v1/comment/update": {"max_requests": 10, "window": 3600},  # 更新评论：10次/小时
     "/api/v1/comment/delete": {"max_requests": 10, "window": 3600},  # 删除评论：10次/小时
 }
+
+# 配置映射
+RATE_LIMIT_MAPPINGS = {
+    "rate_limit.send_code.max_requests": ("/api/v1/user/send_code", "max_requests"),
+    "rate_limit.send_code.window": ("/api/v1/user/send_code", "window"),
+    "rate_limit.register.max_requests": ("/api/v1/user/register", "max_requests"),
+    "rate_limit.register.window": ("/api/v1/user/register", "window"),
+    "rate_limit.login.max_requests": ("/api/v1/user/login", "max_requests"),
+    "rate_limit.login.window": ("/api/v1/user/login", "window"),
+    "rate_limit.save_pan.max_requests": ("/api/v1/pan/save", "max_requests"),
+    "rate_limit.save_pan.window": ("/api/v1/pan/save", "window"),
+    "rate_limit.list_pan.max_requests": ("/api/v1/pan/list", "max_requests"),
+    "rate_limit.list_pan.window": ("/api/v1/pan/list", "window"),
+    "rate_limit.add_comment.max_requests": ("/api/v1/comment/add", "max_requests"),
+    "rate_limit.add_comment.window": ("/api/v1/comment/add", "window"),
+    "rate_limit.list_comment.max_requests": ("/api/v1/comment/list", "max_requests"),
+    "rate_limit.list_comment.window": ("/api/v1/comment/list", "window"),
+    "rate_limit.update_comment.max_requests": ("/api/v1/comment/update", "max_requests"),
+    "rate_limit.update_comment.window": ("/api/v1/comment/update", "window"),
+    "rate_limit.delete_comment.max_requests": ("/api/v1/comment/delete", "max_requests"),
+    "rate_limit.delete_comment.window": ("/api/v1/comment/delete", "window"),
+}
+
+# 从数据库同步配置
+def sync_rate_limit_configs():
+    """
+    从数据库同步频率限制配置
+    """
+    from app.db.database import SessionLocal
+    from app.models.system_config import SystemConfig
+    
+    db = SessionLocal()
+    try:
+        for config_key, (path, config_type) in RATE_LIMIT_MAPPINGS.items():
+            config = db.query(SystemConfig).filter(SystemConfig.key == config_key).first()
+            if config and path in RATE_LIMIT_CONFIG:
+                if config_type == "max_requests":
+                    RATE_LIMIT_CONFIG[path]["max_requests"] = int(config.value)
+                elif config_type == "window":
+                    RATE_LIMIT_CONFIG[path]["window"] = int(config.value)
+    finally:
+        db.close()
+
+# 初始化时同步配置
+sync_rate_limit_configs()
 
 # 请求记录存储
 request_records: Dict[str, Dict[str, List[float]]] = defaultdict(lambda: defaultdict(list))

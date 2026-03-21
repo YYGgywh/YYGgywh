@@ -11,6 +11,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './UserProfileContent.desktop.module.css';
 import CalendarService from '../../../services/calendarService';
 import { updateUserInfo, getNameLimitInfo, getGenderLimitInfo, getBirthTimeLimitInfo, getVirtualGenderLimitInfo } from '../../../api/userApi';
+import Avatar from '../../common/Avatar';
 
 // 选项卡配置
 const TABS = [
@@ -597,16 +598,13 @@ const UserProfileContent = ({
       <div className={styles.profileRow}>
         <div className={styles.profileLabel}>头像</div>
         <div className={styles.profileValue + ' ' + styles.profileValueAvatar}>
-          {userInfo.avatar ? (
-            <img src={userInfo.avatar} alt="用户头像" className={styles.avatarPreview} />
-          ) : (
-            <div className={styles.avatarPreview + ' ' + styles.avatarPreviewDefault}>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="8" r="4" fill="#ccc"/>
-                <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#ccc" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-          )}
+          <Avatar 
+            src={userInfo.avatar}
+            alt="用户头像"
+            size="xlarge"
+            className={styles.avatarPreview}
+            nickname={userInfo.nickname || userInfo.login_name}
+          />
         </div>
         <div className={styles.profileAction}>
           <input

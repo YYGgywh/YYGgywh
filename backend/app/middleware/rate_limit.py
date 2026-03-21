@@ -9,14 +9,14 @@ from typing import Dict, List
 # 请求频率限制配置（默认值，会被数据库配置覆盖）
 RATE_LIMIT_CONFIG = {
     "/api/v1/user/send_code": {"max_requests": 1, "window": 60},  # 验证码：1次/60秒
-    "/api/v1/user/register": {"max_requests": 5, "window": 3600},  # 注册：5次/小时
-    "/api/v1/user/login": {"max_requests": 10, "window": 3600},  # 登录：10次/小时
-    "/api/v1/pan/save": {"max_requests": 20, "window": 3600},  # 保存排盘：20次/小时
-    "/api/v1/pan/list": {"max_requests": 60, "window": 3600},  # 查询排盘：60次/小时
-    "/api/v1/comment/add": {"max_requests": 10, "window": 3600},  # 添加评论：10次/小时
-    "/api/v1/comment/list": {"max_requests": 60, "window": 3600},  # 查询评论：60次/小时
-    "/api/v1/comment/update": {"max_requests": 10, "window": 3600},  # 更新评论：10次/小时
-    "/api/v1/comment/delete": {"max_requests": 10, "window": 3600},  # 删除评论：10次/小时
+    "/api/v1/user/register": {"max_requests": 100, "window": 60},  # 注册：100次/分钟（测试用）
+    "/api/v1/user/login": {"max_requests": 100, "window": 60},  # 登录：100次/分钟（测试用）
+    "/api/v1/pan/save": {"max_requests": 100, "window": 60},  # 保存排盘：100次/分钟（测试用）
+    "/api/v1/pan/list": {"max_requests": 200, "window": 60},  # 查询排盘：200次/分钟（测试用）
+    "/api/v1/comment/add": {"max_requests": 100, "window": 60},  # 添加评论：100次/分钟（测试用）
+    "/api/v1/comment/list": {"max_requests": 200, "window": 60},  # 查询评论：200次/分钟（测试用）
+    "/api/v1/comment/update": {"max_requests": 100, "window": 60},  # 更新评论：100次/分钟（测试用）
+    "/api/v1/comment/delete": {"max_requests": 100, "window": 60},  # 删除评论：100次/分钟（测试用）
 }
 
 
@@ -58,13 +58,26 @@ def update_rate_limit_config(config_key: str, value: str) -> bool:
         
         path, config_type = rate_limit_mappings[config_key]
         
-        if path not in RATE_LIMIT_CONFIG:
-            return False
+        # 更新中间件配置
+        if path in RATE_LIMIT_CONFIG:
+            if config_type == "max_requests":
+                RATE_LIMIT_CONFIG[path]["max_requests"] = int(value)
+            elif config_type == "window":
+                RATE_LIMIT_CONFIG[path]["window"] = int(value)
         
-        if config_type == "max_requests":
-            RATE_LIMIT_CONFIG[path]["max_requests"] = int(value)
-        elif config_type == "window":
-            RATE_LIMIT_CONFIG[path]["window"] = int(value)
+        # 同时更新dependencies中的配置
+        try:
+            from app.utils.dependencies import RATE_LIMIT_CONFIG as deps_config
+            from app.utils.dependencies import RATE_LIMIT_MAPPINGS as deps_mappings
+            if config_key in deps_mappings:
+                deps_path, deps_type = deps_mappings[config_key]
+                if deps_path in deps_config:
+                    if deps_type == "max_requests":
+                        deps_config[deps_path]["max_requests"] = int(value)
+                    elif deps_type == "window":
+                        deps_config[deps_path]["window"] = int(value)
+        except Exception as e:
+            print(f"更新dependencies配置失败: {str(e)}")
         
         return True
     

@@ -35,6 +35,10 @@ import Login from './pages/Login/Login'
 // 导入用户中心页面组件 - 用户个人信息管理
 import UserCenter from './pages/User/UserCenter'
 
+// 导入测试页面
+// 导入评论测试页面组件 - 用于测试评论区功能
+import { CommentTestPage } from './test'
+
 // 导入后台管理相关页面
 // 导入后台管理上下文提供者和路由守卫 - 用于后台管理的权限控制
 import { AdminProvider, AdminRouteGuard } from './contexts/AdminContext'
@@ -99,6 +103,7 @@ export default function App() {
               <Route path="/divination-result/:recordId" element={<ResultPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/user" element={<UserCenter />} />
+              <Route path="/test/comment" element={<CommentTestPage />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin" element={
                 <AdminRouteGuard>

@@ -104,6 +104,25 @@
   background: transparent;
 }
 
+/* 字数统计和错误提示 */
+.inputMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12px;
+}
+
+.errorText {
+  color: #ff4757;
+  font-size: 12px;
+}
+
+.charCount {
+  color: #999;
+  font-size: 12px;
+}
+
 /* 评论输入底部 */
 .commentInputFooter {
   display: flex;

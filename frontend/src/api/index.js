@@ -37,6 +37,11 @@ api.interceptors.request.use(
       _t: Date.now()
     };
     
+    // 开发环境打印请求日志
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, config.params || {});
+    }
+    
     // 根据请求路径选择使用的Token
     if (config.url && (config.url.startsWith('/admin') || config.url.startsWith('/sensitive_word'))) {
       // 后台管理接口，使用后台Token
@@ -67,6 +72,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   response => {
     // 隐藏加载状态
+    
+    // 开发环境打印响应日志
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API Response] ${response.config.method?.toUpperCase()} ${response.config.url}`, response.data);
+    }
     
     // 处理blob响应（用于文件下载）
     if (response.config.responseType === 'blob') {

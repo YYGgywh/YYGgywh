@@ -150,6 +150,38 @@ class ConfigManager:
             "is_super_admin_only": False,
             "validation": lambda x: x.isdigit() and 60 <= int(x) <= 86400
         },
+        "rate_limit.update_comment.max_requests": {
+            "type": "integer",
+            "default": "10",
+            "description": "更新评论频率限制（次数）",
+            "category": "rate_limit",
+            "is_super_admin_only": False,
+            "validation": lambda x: x.isdigit() and 1 <= int(x) <= 100
+        },
+        "rate_limit.update_comment.window": {
+            "type": "integer",
+            "default": "3600",
+            "description": "更新评论频率限制（秒）",
+            "category": "rate_limit",
+            "is_super_admin_only": False,
+            "validation": lambda x: x.isdigit() and 60 <= int(x) <= 86400
+        },
+        "rate_limit.delete_comment.max_requests": {
+            "type": "integer",
+            "default": "10",
+            "description": "删除评论频率限制（次数）",
+            "category": "rate_limit",
+            "is_super_admin_only": False,
+            "validation": lambda x: x.isdigit() and 1 <= int(x) <= 100
+        },
+        "rate_limit.delete_comment.window": {
+            "type": "integer",
+            "default": "3600",
+            "description": "删除评论频率限制（秒）",
+            "category": "rate_limit",
+            "is_super_admin_only": False,
+            "validation": lambda x: x.isdigit() and 60 <= int(x) <= 86400
+        },
         
         # Token配置
         "token.expire_days": {
