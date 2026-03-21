@@ -14,6 +14,7 @@ import Navigation from '../components/Header/Navigation/Navigation'; // 导入�
 import BackToTop from '../components/BackToTop/BackToTop'; // 导入返回顶部按钮组件
 import { getPublicPanList } from '../api/panApi'; // 导入获取公开排盘列表的 API 接口
 import { panTypeToChinese } from '../utils/methodMapping'; // 导入排盘类型映射工具
+import { getUserAvatar } from '../utils/avatarUtils'; // 导入头像工具函数
 import hexagram1 from '../assets/images/hexagram-1.svg'; // 导入卦象图片资源 1
 import hexagram2 from '../assets/images/hexagram-2.svg'; // 导入卦象图片资源 2
 import hexagram3 from '../assets/images/hexagram-3.svg'; // 导入卦象图片资源 3
@@ -144,7 +145,7 @@ const HomePage = () => {
             tags: tags, // 生成的标签
             user_id: record.user?.id, // 用户ID：用于判断是否是发帖主
             user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
-            user_avatar: record.user?.avatar_url || avatarImages[index % avatarImages.length], // 用户头像：优先使用用户头像，否则使用默认头像数组
+            user_avatar: getUserAvatar(record.user?.avatar_url, record.user?.nickname), // 用户头像：优先使用用户头像，否则使用基于昵称的默认头像
             create_time: record.create_time, // 创建时间
             hexagram_image: hexagramImages[index % hexagramImages.length], // 卦象图片：根据索引循环使用卦象数组
             like_count: record.like_count || 0, // 点赞数：默认为 0

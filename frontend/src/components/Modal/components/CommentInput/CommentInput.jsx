@@ -3,17 +3,19 @@
  * @description     评论输入组件，接入真实 API，实现评论发布功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-18 10:00:00
- * @lastModified    2026-03-21 18:30:00
+ * @lastModified    2026-03-21 17:13:04
  * Copyright © All rights reserved
 */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { addComment } from '../../../../api/commentApi';
 import { InteractionButtons } from '../index';
 import Avatar from '../../../common/Avatar';
+import EmojiPicker from '../../../common/EmojiPicker/EmojiPicker';
+import { getFrontendUserInfo } from '../../../../utils/storage';
 import styles from './CommentInput.desktop.module.css';
 
-const MAX_LENGTH = 500;
+const MAX_LENGTH = 1000;
 
 const CommentInput = ({ 
   panRecordId,
@@ -31,7 +33,15 @@ const CommentInput = ({
   const [commentContent, setCommentContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const commentInputRef = useRef(null);
+
+  // 获取当前用户信息
+  useEffect(() => {
+    const userInfo = getFrontendUserInfo();
+    setCurrentUser(userInfo);
+  }, []);
 
   const handleCommentInputClick = (e) => {
     e.stopPropagation();
@@ -40,7 +50,8 @@ const CommentInput = ({
 
   const handleCommentContentChange = (e) => {
     const value = e.target.value;
-    if (value.length <= MAX_LENGTH) {
+    const actualLength = Array.from(value).length;
+    if (actualLength <= MAX_LENGTH) {
       setCommentContent(value);
       setError(null);
     }
@@ -59,7 +70,8 @@ const CommentInput = ({
       return;
     }
 
-    if (commentContent.length > MAX_LENGTH) {
+    const actualLength = Array.from(commentContent).length;
+    if (actualLength > MAX_LENGTH) {
       setError(`评论内容不能超过 ${MAX_LENGTH} 字`);
       return;
     }
@@ -90,6 +102,23 @@ const CommentInput = ({
     setCommentContent('');
     setError(null);
     setShowCommentInput(false);
+    setShowEmojiPicker(false);
+  };
+
+  const handleEmojiSelect = (emoji) => {
+    const textarea = commentInputRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newValue = commentContent.substring(0, start) + emoji + commentContent.substring(end);
+      setCommentContent(newValue);
+      
+      // 设置光标位置到表情后面
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start + emoji.length, start + emoji.length);
+      }, 0);
+    }
   };
 
   return (
@@ -98,7 +127,11 @@ const CommentInput = ({
         <div className={styles.inputContainer}>
           <div className={styles.inputWrapper}>
             <div className={styles.userAvatar}>
-              <Avatar size="small" />
+              <Avatar 
+                size="small" 
+                src={currentUser?.avatar}
+                nickname={currentUser?.nickname}
+              />
             </div>
             <span
               className={styles.commentInputPlaceholder}
@@ -147,7 +180,7 @@ const CommentInput = ({
               <span className={styles.errorText}>{error}</span>
             )}
             <span className={styles.charCount}>
-              {commentContent.length}/{MAX_LENGTH}
+              {Array.from(commentContent).length}/{MAX_LENGTH}
             </span>
           </div>
 
@@ -161,11 +194,24 @@ const CommentInput = ({
                   <line x1="12" y1="16" x2="12.01" y2="16"></line>
                 </svg>
               </button>
-              <button className={styles.footerButton} type="button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-              </button>
+              <div className={styles.emojiButtonContainer}>
+                <button
+                  className={styles.footerButton}
+                  type="button"
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  title="添加表情"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </button>
+                {showEmojiPicker && (
+                  <EmojiPicker
+                    onSelect={handleEmojiSelect}
+                    onClose={() => setShowEmojiPicker(false)}
+                  />
+                )}
+              </div>
             </div>
             <div className={styles.footerRight}>
               <button

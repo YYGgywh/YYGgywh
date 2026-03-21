@@ -3,7 +3,7 @@
  * @description     评论区域组件，接入真实API，包含评论列表和互动功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-17 18:30:00
- * @lastModified    2026-03-21 14:00:00
+ * @lastModified    2026-03-21 18:11:30
  * Copyright © All rights reserved
 */
 
@@ -36,6 +36,8 @@ const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) 
   const [hasMore, setHasMore] = useState(true);
 
   const pageSize = 10;
+  const observerRef = useRef(null);
+  const lastCommentRef = useRef(null);
 
   const fetchComments = useCallback(async (pageNum = 1, isLoadMore = false) => {
     if (!panRecordId) return;
@@ -81,6 +83,25 @@ const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) 
     fetchComments(1, false);
   }, [fetchComments]);
 
+  useEffect(() => {
+    if (loading || !hasMore || comments.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          handleLoadMore();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (lastCommentRef.current) {
+      observer.observe(lastCommentRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [loading, hasMore, comments.length]);
+
   const handleLoadMore = () => {
     if (loading || !hasMore) return;
     const nextPage = page + 1;
@@ -92,8 +113,12 @@ const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) 
     fetchComments(1, false);
   };
 
-  const renderComment = (comment) => (
-    <div key={comment.id} className={styles.commentItem}>
+  const renderComment = (comment, index) => (
+    <div 
+      key={comment.id} 
+      ref={index === comments.length - 1 ? lastCommentRef : null}
+      className={styles.commentItem}
+    >
       <div className={styles.commentUserAvatar}>
         <Avatar
           src={comment.user_avatar}
@@ -163,16 +188,11 @@ const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) 
           renderEmpty()
         ) : (
           <>
-            {comments.map(renderComment)}
-            {hasMore && (
-              <div className={styles.loadMore}>
-                <button
-                  onClick={handleLoadMore}
-                  disabled={loading}
-                  className={styles.loadMoreBtn}
-                >
-                  {loading ? '加载中...' : '加载更多'}
-                </button>
+            {comments.map((comment, index) => renderComment(comment, index))}
+            {loading && hasMore && (
+              <div className={styles.loadingMore}>
+                <div className={styles.loadingSpinner}></div>
+                <span>加载中...</span>
               </div>
             )}
           </>

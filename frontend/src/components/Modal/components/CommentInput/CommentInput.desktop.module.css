@@ -136,6 +136,13 @@
 .footerLeft {
   display: flex;
   gap: 12px;
+  position: relative;
+}
+
+/* 表情按钮容器 */
+.emojiButtonContainer {
+  position: relative;
+  display: inline-block;
 }
 
 /* 底部按钮 */

@@ -199,31 +199,30 @@
   background-color: #4096ff;
 }
 
-/* 加载更多 */
-.loadMore {
-  text-align: center;
+/* 加载更多状态 */
+.loadingMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 16px 0;
-}
-
-.loadMoreBtn {
-  padding: 8px 24px;
-  background-color: #f5f5f5;
-  color: #666;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  color: #999;
   font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.loadMoreBtn:hover:not(:disabled) {
-  background-color: #e6e6e6;
-  border-color: #b3b3b3;
+.loadingSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f0f0f0;
+  border-top-color: #1677ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-.loadMoreBtn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 骨架屏样式 */
