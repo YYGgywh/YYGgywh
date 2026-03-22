@@ -14,6 +14,7 @@ from .dto_models import (
 from .user import User
 from .pan_record import PanRecord
 from .comment import Comment
+from .comment_like import CommentLike
 from .pan_like import PanLike
 from .pan_collect import PanCollect
 from .admin_permission import AdminPermission
@@ -32,6 +33,7 @@ __all__ = [
     'User',
     'PanRecord',
     'Comment',
+    'CommentLike',
     'PanLike',
     'PanCollect',
     'AdminPermission',

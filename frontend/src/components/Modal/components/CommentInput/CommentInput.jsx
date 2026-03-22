@@ -13,6 +13,8 @@ import { InteractionButtons } from '../index';
 import Avatar from '../../../common/Avatar';
 import EmojiPicker from '../../../common/EmojiPicker/EmojiPicker';
 import { getFrontendUserInfo } from '../../../../utils/storage';
+import SmilingFaceIcon from '../../../../assets/images/smiling face.svg';
+import AtIcon from '../../../../assets/images/@.svg';
 import styles from './CommentInput.desktop.module.css';
 
 const MAX_LENGTH = 1000;
@@ -187,12 +189,8 @@ const CommentInput = ({
           {/* 底部操作按钮 */}
           <div className={styles.commentInputFooter}>
             <div className={styles.footerLeft}>
-              <button className={styles.footerButton} type="button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
+              <button className={styles.footerButton} type="button" title="@提及用户">
+                <img src={AtIcon} alt="@" width="16" height="16" />
               </button>
               <div className={styles.emojiButtonContainer}>
                 <button
@@ -201,9 +199,7 @@ const CommentInput = ({
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   title="添加表情"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
+                  <img src={SmilingFaceIcon} alt="表情" width="16" height="16" />
                 </button>
                 {showEmojiPicker && (
                   <EmojiPicker

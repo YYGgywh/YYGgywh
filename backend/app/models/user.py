@@ -59,3 +59,4 @@ class User(Base):
     comments = relationship("Comment", foreign_keys="Comment.user_id", back_populates="user", cascade="all, delete-orphan")
     likes = relationship("PanLike", back_populates="user", cascade="all, delete-orphan")
     collects = relationship("PanCollect", back_populates="user", cascade="all, delete-orphan")
+    comment_likes = relationship("CommentLike", back_populates="user", cascade="all, delete-orphan")

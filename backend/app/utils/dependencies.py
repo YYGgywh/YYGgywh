@@ -33,6 +33,8 @@ RATE_LIMIT_CONFIG = {
     "/api/v1/comment/list": {"max_requests": 60, "window": 3600},  # 查询评论：60次/小时
     "/api/v1/comment/update": {"max_requests": 10, "window": 3600},  # 更新评论：10次/小时
     "/api/v1/comment/delete": {"max_requests": 10, "window": 3600},  # 删除评论：10次/小时
+    "/api/v1/comment/like/toggle": {"max_requests": 60, "window": 3600},  # 评论点赞：60次/小时
+    "/api/v1/comment/reply": {"max_requests": 10, "window": 3600},  # 回复评论：10次/小时
 }
 
 # 配置映射
@@ -55,6 +57,10 @@ RATE_LIMIT_MAPPINGS = {
     "rate_limit.update_comment.window": ("/api/v1/comment/update", "window"),
     "rate_limit.delete_comment.max_requests": ("/api/v1/comment/delete", "max_requests"),
     "rate_limit.delete_comment.window": ("/api/v1/comment/delete", "window"),
+    "rate_limit.toggle_comment_like.max_requests": ("/api/v1/comment/like/toggle", "max_requests"),
+    "rate_limit.toggle_comment_like.window": ("/api/v1/comment/like/toggle", "window"),
+    "rate_limit.reply_comment.max_requests": ("/api/v1/comment/reply", "max_requests"),
+    "rate_limit.reply_comment.window": ("/api/v1/comment/reply", "window"),
 }
 
 # 从数据库同步配置

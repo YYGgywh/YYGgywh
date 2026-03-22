@@ -48,3 +48,23 @@ export const deleteComment = async (commentId) => {
   });
   return response;
 };
+
+// 点赞/取消点赞评论
+export const toggleCommentLike = async (commentId) => {
+  const response = await api.post('/comment/like/toggle', {
+    comment_id: commentId
+  });
+  return response;
+};
+
+// 回复评论
+export const replyComment = async (panRecordId, parentId, content, isPublic = false, replyToUserId = null) => {
+  const response = await api.post('/comment/reply', {
+    pan_record_id: panRecordId,
+    parent_id: parentId,
+    content,
+    is_public: isPublic,
+    reply_to_user_id: replyToUserId
+  });
+  return response;
+};

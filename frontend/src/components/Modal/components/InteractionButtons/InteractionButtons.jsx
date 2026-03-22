@@ -1,9 +1,9 @@
 /*
  * @file            frontend/src/components/Modal/components/InteractionButtons/InteractionButtons.jsx
- * @description     互动按钮组件，包含点赞、收藏、评论、分享功能
+ * @description     互动按钮组件，包含点赞、收藏、评论、分享、浏览量功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-18 11:40:14
- * @lastModified    2026-03-18 13:07:31
+ * @lastModified    2026-03-22 12:31:08
  * Copyright © All rights reserved
 */
 
@@ -16,8 +16,12 @@ import styles from './InteractionButtons.desktop.module.css';
  * @param {number} props.likeCount - 点赞数
  * @param {number} props.collectCount - 收藏数
  * @param {number} props.commentCount - 评论数
+ * @param {number} props.viewCount - 浏览量
+ * @param {boolean} props.showViewCount - 是否显示浏览量（默认 false）
+ * @param {boolean} props.showShare - 是否显示分享按钮（默认 false）
  * @param {boolean} props.isLiked - 是否已点赞
  * @param {boolean} props.isCollected - 是否已收藏
+ * @param {string} props.variant - 样式变体：'default' | 'card'（默认 'default'）
  * @param {Function} props.onLike - 点赞回调函数
  * @param {Function} props.onCollect - 收藏回调函数
  * @param {Function} props.onComment - 评论回调函数
@@ -28,15 +32,19 @@ const InteractionButtons = ({
   likeCount = 0,
   collectCount = 0,
   commentCount = 0,
+  viewCount = 0,
+  showViewCount = false,
+  showShare = false,
   isLiked = false,
   isCollected = false,
+  variant = 'default',
   onLike = () => {},
   onCollect = () => {},
   onComment = () => {},
   onShare = () => {}
 }) => {
   return (
-    <div className={styles.interactionButtons}>
+    <div className={`${styles.interactionButtons} ${styles[variant]}`}>
       {/* 点赞按钮 */}
       <button 
         className={`${styles.interactionButton} ${isLiked ? styles.active : ''}`}
@@ -67,16 +75,29 @@ const InteractionButtons = ({
         <span className={styles.interactionCount}>{commentCount}</span>
       </button>
       
-      {/* 分享按钮 */}
-      <button className={styles.interactionButton} onClick={onShare}>
-        <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="18" cy="5" r="3"></circle>
-          <circle cx="6" cy="12" r="3"></circle>
-          <circle cx="18" cy="19" r="3"></circle>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-      </button>
+      {/* 分享按钮（根据 showShare 控制） */}
+      {showShare && (
+        <button className={styles.interactionButton} onClick={onShare}>
+          <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </button>
+      )}
+      
+      {/* 浏览量显示（根据 showViewCount 控制） */}
+      {showViewCount && (
+        <div className={styles.viewCount}>
+          <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <span className={styles.interactionCount}>{viewCount}</span>
+        </div>
+      )}
     </div>
   );
 };

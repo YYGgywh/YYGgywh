@@ -32,7 +32,7 @@ import avatar10 from '../assets/images/avatar-10.svg'; // 导入用户头像图�
 // 导入样式文件 - CSS Modules（桌面端样式）
 import styles from './HomePage.desktop.module.css'; // 导入桌面端样式模块
 // 移动端样式模块暂不导入，避免变量冲突
-import LikeButton from '../components/common/LikeButton'; // 导入点赞按钮组件
+import InteractionButtons from '../components/Modal/components/InteractionButtons/InteractionButtons'; // 导入互动按钮组件
 import { getUserInfo } from '../utils/storage'; // 导入获取用户信息的工具函数
 import CompactLiuYaoDisplay from '../components/common/CompactLiuYaoDisplay/CompactLiuYaoDisplay'; // 导入紧凑型六爻显示组件
 import PanDetailModal from '../components/Modal/PanDetailModal'; // 导入排盘详情弹窗组件
@@ -324,16 +324,38 @@ const HomePage = () => {
                   <span className={styles.postTime}>2小时前</span>
                 </div>
                 
-                {/* 卡片统计信息：点赞等 */}
+                {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}
                 <div className={styles.cardStats}>
-                  {/* 点赞按钮组件 */}
-                  <LikeButton
-                    panId={item.id} // 排盘记录 ID
-                    isLiked={item.is_liked || false} // 是否已点赞
-                    likeCount={item.like_count || 0} // 点赞数
-                    onLikeSuccess={(newLiked, newCount) => {
-                      // 点赞成功后的回调，可以更新本地数据
-                      console.log('点赞成功 - 状态:', newLiked, '数量:', newCount);
+                  {/* 互动按钮组件 */}
+                  <InteractionButtons
+                    variant="card"
+                    likeCount={item.like_count || 0}
+                    collectCount={item.collect_count || 0}
+                    commentCount={item.comment_count || 0}
+                    viewCount={item.view_count || 0}
+                    showViewCount={true}
+                    showShare={false}
+                    isLiked={item.is_liked || false}
+                    isCollected={item.is_collected || false}
+                    onLike={(e) => {
+                      e.stopPropagation();
+                      // 这里可以添加点赞API调用
+                      console.log('点赞:', item.id);
+                    }}
+                    onCollect={(e) => {
+                      e.stopPropagation();
+                      // 这里可以添加收藏API调用
+                      console.log('收藏:', item.id);
+                    }}
+                    onComment={(e) => {
+                      e.stopPropagation();
+                      // 点击评论打开弹窗
+                      handleCardClick(item);
+                    }}
+                    onShare={(e) => {
+                      e.stopPropagation();
+                      // 这里可以添加分享功能
+                      console.log('分享:', item.id);
                     }}
                   />
                 </div>

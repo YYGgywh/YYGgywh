@@ -10,7 +10,7 @@
 import React, { useState } from 'react';
 import { useImageLazyLoad } from '../../../hooks';
 import { formatRelativeTime } from '../../../utils';
-import LikeButton from '../../common/LikeButton';
+import InteractionButtons from '../../Modal/components/InteractionButtons/InteractionButtons';
 import styles from './WaterfallCard.desktop.module.css';
 
 /**
@@ -30,21 +30,6 @@ const WaterfallCard = ({ item, onClick }) => {
     item.hexagram_image || '',
     'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23ccc%22 font-size=%2214%22%3E六爻卦象%3C/text%3E%3C/svg%3E'
   );
-  
-  // 处理点赞
-  const handleLike = (e) => {
-    e.stopPropagation();
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
-    // 这里可以添加点赞API调用
-  };
-  
-  // 处理收藏
-  const handleCollect = (e) => {
-    e.stopPropagation();
-    setIsCollected(!isCollected);
-    // 这里可以添加收藏API调用
-  };
   
   // 截断标题
   const truncateTitle = (text, maxLength = 20) => {
@@ -93,26 +78,31 @@ const WaterfallCard = ({ item, onClick }) => {
         </div>
         
         <div className={styles.cardStats}>
-          <LikeButton
-            isLiked={isLiked}
+          <InteractionButtons
             likeCount={likeCount}
-            isLoggedIn={false}
-            onLike={(newLiked, newCount) => {
-              setIsLiked(newLiked);
-              setLikeCount(newCount);
-              // 这里可以添加点赞API调用
+            collectCount={item.collect_count || 0}
+            commentCount={item.comment_count || 0}
+            viewCount={item.view_count || 0}
+            showViewCount={true}
+            showShare={false}
+            isLiked={isLiked}
+            isCollected={isCollected}
+            onLike={(e) => {
+              e.stopPropagation();
+              setIsLiked(!isLiked);
+              setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+            }}
+            onCollect={(e) => {
+              e.stopPropagation();
+              setIsCollected(!isCollected);
+            }}
+            onComment={(e) => {
+              e.stopPropagation();
+            }}
+            onShare={(e) => {
+              e.stopPropagation();
             }}
           />
-          
-          <div className={`${styles.statItem} ${isCollected ? styles.collected : ''}`} onClick={handleCollect}>
-            <span className={styles.statIcon}>⭐</span>
-            <span className={styles.statCount}>{item.collect_count || 0}</span>
-          </div>
-          
-          <div className={styles.statItem}>
-            <span className={styles.statIcon}>👁</span>
-            <span className={styles.statCount}>{item.view_count || 0}</span>
-          </div>
         </div>
       </div>
     </div>
