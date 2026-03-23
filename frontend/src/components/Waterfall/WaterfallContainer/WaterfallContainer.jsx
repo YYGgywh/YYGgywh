@@ -9,10 +9,10 @@
 
 import React, { useState, useEffect, useCallback } from 'react'; // 导入React核心库和Hooks：useState用于状态管理，useEffect用于副作用处理，useCallback用于函数缓存优化
 import { useWaterfallLayout, useInfiniteScroll } from '../../../hooks'; // 导入自定义Hooks：useWaterfallLayout用于瀑布流布局管理，useInfiniteScroll用于无限滚动功能
-import WaterfallCard from '../WaterfallCard.desktop.module/WaterfallCard'; // 导入瀑布流卡片组件，用于显示单个排盘记录
+import WaterfallCard from '../WaterfallCard/WaterfallCard'; // 导入瀑布流卡片组件，用于显示单个排盘记录
 import LoadingDots from '../../common/LoadingDots/LoadingDots'; // 导入加载动画组件，用于显示加载状态
 import EmptyState from '../../common/EmptyState/EmptyState'; // 导入空状态组件，用于显示无数据时的提示
-import styles from './WaterfallContainer.desktop.module.css'; // 导入瀑布流容器样式文件
+import styles from './WaterfallContainer.desktop.css'; // 导入瀑布流容器样式文件
 
 /**
  * 瀑布流容器组件

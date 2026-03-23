@@ -12,13 +12,10 @@
 import React, { useState, useEffect } from 'react'; // 导入 React 核心库和 Hooks：useState（状态管理）、useEffect（副作用处理）
 import Navigation from '../components/Header/Navigation/Navigation'; // 导入导航栏组件
 import BackToTop from '../components/BackToTop/BackToTop'; // 导入返回顶部按钮组件
-import { getPublicPanList } from '../api/panApi'; // 导入获取公开排盘列表的 API 接口
+import { getPublicPanList, toggleLike, toggleCollect } from '../api/panApi'; // 导入获取公开排盘列表、点赞、收藏的 API 接口
 import { panTypeToChinese } from '../utils/methodMapping'; // 导入排盘类型映射工具
 import { getUserAvatar } from '../utils/avatarUtils'; // 导入头像工具函数
-import hexagram1 from '../assets/images/hexagram-1.svg'; // 导入卦象图片资源 1
-import hexagram2 from '../assets/images/hexagram-2.svg'; // 导入卦象图片资源 2
-import hexagram3 from '../assets/images/hexagram-3.svg'; // 导入卦象图片资源 3
-import hexagram4 from '../assets/images/hexagram-4.svg'; // 导入卦象图片资源 4
+
 import avatar1 from '../assets/images/avatar-1.svg'; // 导入用户头像图片资源 1
 import avatar2 from '../assets/images/avatar-2.svg'; // 导入用户头像图片资源 2
 import avatar3 from '../assets/images/avatar-3.svg'; // 导入用户头像图片资源 3
@@ -34,7 +31,11 @@ import styles from './HomePage.desktop.module.css'; // 导入桌面端样式模�
 // 移动端样式模块暂不导入，避免变量冲突
 import InteractionButtons from '../components/Modal/components/InteractionButtons/InteractionButtons'; // 导入互动按钮组件
 import { getUserInfo } from '../utils/storage'; // 导入获取用户信息的工具函数
-import CompactLiuYaoDisplay from '../components/common/CompactLiuYaoDisplay/CompactLiuYaoDisplay'; // 导入紧凑型六爻显示组件
+
+import CardTags from '../components/Card/CardTags/CardTags'; // 导入卡片标签组件
+import PointsInfo from '../components/Card/PointsInfo/PointsInfo'; // 导入积分信息组件
+import UserInfo from '../components/Modal/components/UserInfo/UserInfo'; // 导入用户信息组件
+import BriefDivinationQuery from '../components/DivinationInfo/components/DisplayComponents/BriefDivinationQuery/BriefDivinationQuery'; // 导入占卜信息组件
 import PanDetailModal from '../components/Modal/PanDetailModal'; // 导入排盘详情弹窗组件
 
 /**
@@ -53,6 +54,25 @@ const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
   // selectedPanData: 存储当前选中的排盘数据，初始值为 null（未选中）
   const [selectedPanData, setSelectedPanData] = useState(null);
+  // cardStates: 存储每个卡片的点赞和收藏状态
+  const [cardStates, setCardStates] = useState({});
+
+  // ==================== 副作用：同步 cardStates 到 selectedPanData ====================
+  // 当弹窗打开时，实时同步 cardStates 的变化到 selectedPanData
+  useEffect(() => {
+    if (showModal && selectedPanData && selectedPanData.id) {
+      const updatedState = cardStates[selectedPanData.id];
+      if (updatedState) {
+        setSelectedPanData(prev => ({
+          ...prev,
+          is_liked: updatedState.isLiked,
+          like_count: updatedState.likeCount,
+          is_collected: updatedState.isCollected,
+          collect_count: updatedState.collectCount
+        }));
+      }
+    }
+  }, [cardStates, showModal, selectedPanData?.id]);
 
   // ==================== 事件处理函数 ====================
   // 处理卡片点击事件
@@ -64,17 +84,29 @@ const HomePage = () => {
   };
 
   // 处理弹窗关闭事件
-  const handleModalClose = () => {
+  const handleModalClose = (updatedData) => {
     // 隐藏详情弹窗
     setShowModal(false);
     // 清空选中的排盘数据
     setSelectedPanData(null);
+    
+    // 如果弹窗中有数据更新，同步到首页卡片
+    if (updatedData && updatedData.id) {
+      setCardStates(prev => ({
+        ...prev,
+        [updatedData.id]: {
+          isLiked: updatedData.is_liked,
+          likeCount: updatedData.like_count,
+          isCollected: updatedData.is_collected,
+          collectCount: updatedData.collect_count
+        }
+      }));
+    }
   };
 
   // ==================== 静态资源 ====================
-  // 头像和卦象图片资源
+  // 头像图片资源
   const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8, avatar9, avatar10]; // 用户头像数组，共10个
-  const hexagramImages = [hexagram1, hexagram2, hexagram3, hexagram4]; // 卦象图片数组，共4个
 
   // 标签数据 - 可用于排盘记录的标签池
   const availableTags = ["学习", "心得", "实例", "解析", "八卦", "详解", "梅花易数", "技巧", "风水", "居家", "八字", "命理", "奇门遁甲", "教程", "面相", "运势", "姓名学", "起名", "塔罗牌", "占卜"];
@@ -147,22 +179,35 @@ const HomePage = () => {
             user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
             user_avatar: getUserAvatar(record.user?.avatar_url, record.user?.nickname), // 用户头像：优先使用用户头像，否则使用基于昵称的默认头像
             create_time: record.create_time, // 创建时间
-            hexagram_image: hexagramImages[index % hexagramImages.length], // 卦象图片：根据索引循环使用卦象数组
             like_count: record.like_count || 0, // 点赞数：默认为 0
             collect_count: record.collect_count || 0, // 收藏数：默认为 0
             view_count: record.view_count || 0, // 浏览数：默认为 0
             comment_count: record.comment_count || 0, // 评论数：默认为 0
             is_liked: record.is_liked || false, // 是否已点赞：默认为 false
+            is_collected: record.is_collected || false, // 是否已收藏：默认为 false
             pan_result: panResult, // 排盘结果对象
             pan_params: panParams, // 排盘参数对象
             method: panParams.method, // 起卦方式
             supplement: record.supplement, // 补充信息
             supplement_create_time: record.supplement_create_time, // 补充信息创建时间
             supplement_update_time: record.supplement_update_time, // 补充信息最后修改时间
-            supplement_modify_count: record.supplement_modify_count || 0 // 补充信息修改次数
+            supplement_modify_count: record.supplement_modify_count || 0, // 补充信息修改次数
+            points: record.points || 10 // 积分：默认为 10
           };
         });
 
+        // 初始化 cardStates 状态
+        const initialCardStates = {};
+        formattedRecords.forEach(record => {
+          initialCardStates[record.id] = {
+            isLiked: record.is_liked || false,
+            likeCount: record.like_count || 0,
+            isCollected: record.is_collected || false,
+            collectCount: record.collect_count || 0
+          };
+        });
+        setCardStates(initialCardStates);
+        
         // 更新排盘记录状态
         setPanRecords(formattedRecords);
       } else {
@@ -185,12 +230,12 @@ const HomePage = () => {
           user_nickname: "易经爱好者", // 用户昵称
           user_avatar: avatar1, // 用户头像
           create_time: new Date(Date.now() - 3600000).toISOString(), // 创建时间：1小时前
-          hexagram_image: hexagram1, // 卦象图片
           like_count: 234, // 点赞数
           collect_count: 156, // 收藏数
           view_count: 3500, // 浏览数
           comment_count: 67, // 评论数
-          is_liked: false // 是否已点赞
+          is_liked: false, // 是否已点赞
+          points: 15 // 积分
         },
         {
           id: 2, // 记录 ID
@@ -199,12 +244,12 @@ const HomePage = () => {
           user_nickname: "易学大师", // 用户昵称
           user_avatar: avatar2, // 用户头像
           create_time: new Date(Date.now() - 7200000).toISOString(), // 创建时间：2小时前
-          hexagram_image: hexagram2, // 卦象图片
           like_count: 567, // 点赞数
           collect_count: 342, // 收藏数
           view_count: 8900, // 浏览数
           comment_count: 123, // 评论数
-          is_liked: false // 是否已点赞
+          is_liked: false, // 是否已点赞
+          points: 20 // 积分
         }
       ];
       // 设置备用数据
@@ -274,92 +319,147 @@ const HomePage = () => {
               onClick={() => handleCardClick(item)} // 点击事件：显示详情弹窗
               style={{ cursor: 'pointer' }} // 鼠标样式：手型光标
             >
-              {/* 卡片图片容器 */}
-              <div className={styles.cardImageContainer}>
-                {/* 六爻排盘结果可视化展示 */}
-                <div className={styles.hexagramDisplay}>
-                  {/* 如果有本卦卦体，显示紧凑型六爻组件 */}
-                  {item.pan_result?.ben_gua_body ? (
-                    <CompactLiuYaoDisplay panResult={item.pan_result} />
-                  ) : (
-                    // 否则显示占位符 
-                    <div className={styles.hexagramPlaceholder}>
-                      <div className={styles.placeholderContent}>
-                        <span>六爻卦象</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                {/* 如果有标签，显示标签 */}
-                {item.tags && item.tags.length > 0 && (
-                  <div className={styles.cardTags}>
-                    {/* 最多显示2个标签 */}
-                    {item.tags.slice(0, 2).map((tag, index) => (
-                      <span key={index} className={styles.cardTag}>
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              
               {/* 卡片内容区域 */}
-              <div className={styles.cardContent}>
-                {/* 卡片标题 */}
-                <h3 className={styles.cardTitle}>{item.title}</h3>
-                
-                {/* 卡片元信息：用户信息和发布时间 */}
-                <div className={styles.cardMeta}>
-                  {/* 用户信息 */}
-                  <div className={styles.userInfo}>
-                    {/* 用户头像 */}
-                    <div className={styles.userAvatar}>
-                      <img src={item.user_avatar} alt={item.user_nickname} />
-                    </div>
-                    {/* 用户昵称 */}
-                    <span className={styles.userName}>{item.user_nickname}</span>
+                <div className={styles.cardContent}>
+                  {/* 卡片标签 */}
+                  <CardTags tags={item.tags} />
+                  
+                  {/* 占卜信息 */}
+                  <BriefDivinationQuery 
+                    formData={item.pan_params?.form_data}
+                    divinationData={item.pan_result}
+                    variant="card"
+                  />
+                  
+                  {/* 积分信息 */}
+                  <PointsInfo points={item.points} />
+                  
+                  {/* 卡片元信息：用户信息和发布时间 */}
+                  <div className={styles.cardMeta}>
+                    {/* 用户信息 */}
+                    <UserInfo 
+                      nickname={item.user_nickname}
+                      avatar={item.user_avatar}
+                      size="small"
+                    />
+                    
+                    {/* 发布时间 */}
+                    <span className={styles.postTime}>2小时前</span>
                   </div>
                   
-                  {/* 发布时间 */}
-                  <span className={styles.postTime}>2小时前</span>
+                  {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}
+                  <div className={styles.cardStats}>
+                    {/* 互动按钮组件 */}
+                    <InteractionButtons
+                      variant="card"
+                      likeCount={cardStates[item.id]?.likeCount || item.like_count || 0}
+                      collectCount={cardStates[item.id]?.collectCount || item.collect_count || 0}
+                      commentCount={item.comment_count || 0}
+                      viewCount={item.view_count || 0}
+                      showViewCount={true}
+                      showShare={false}
+                      isLiked={cardStates[item.id]?.isLiked || item.is_liked || false}
+                      isCollected={cardStates[item.id]?.isCollected || item.is_collected || false}
+                      onLike={async (e) => {
+                        e.stopPropagation();
+                        const cardState = cardStates[item.id] || { isLiked: item.is_liked || false, likeCount: item.like_count || 0 };
+                        const newLiked = !cardState.isLiked;
+                        
+                        // 先更新 UI
+                        setCardStates(prev => ({
+                          ...prev,
+                          [item.id]: {
+                            ...cardState,
+                            isLiked: newLiked,
+                            likeCount: newLiked ? cardState.likeCount + 1 : cardState.likeCount - 1
+                          }
+                        }));
+                        
+                        try {
+                          // 调用后端 API
+                          const response = await toggleLike(item.id);
+                          if (response.code === 200) {
+                            // API 调用成功，使用后端返回的数据
+                            setCardStates(prev => ({
+                              ...prev,
+                              [item.id]: {
+                                isLiked: response.data.is_liked,
+                                likeCount: response.data.like_count
+                              }
+                            }));
+                          } else {
+                            // API 调用失败，回滚 UI
+                            setCardStates(prev => ({
+                              ...prev,
+                              [item.id]: cardState
+                            }));
+                          }
+                        } catch (error) {
+                          console.error('点赞失败:', error);
+                          // API 调用失败，回滚 UI
+                          setCardStates(prev => ({
+                            ...prev,
+                            [item.id]: cardState
+                          }));
+                        }
+                      }}
+                      onCollect={async (e) => {
+                        e.stopPropagation();
+                        const cardState = cardStates[item.id] || { isCollected: item.is_collected || false, collectCount: item.collect_count || 0 };
+                        const newCollected = !cardState.isCollected;
+                        
+                        // 先更新 UI
+                        setCardStates(prev => ({
+                          ...prev,
+                          [item.id]: {
+                            ...cardState,
+                            isCollected: newCollected,
+                            collectCount: newCollected ? cardState.collectCount + 1 : cardState.collectCount - 1
+                          }
+                        }));
+                        
+                        try {
+                          // 调用后端 API
+                          const response = await toggleCollect(item.id);
+                          if (response.code === 200) {
+                            // API 调用成功，使用后端返回的数据
+                            setCardStates(prev => ({
+                              ...prev,
+                              [item.id]: {
+                                ...cardState,
+                                isCollected: response.data.is_collected,
+                                collectCount: response.data.collect_count
+                              }
+                            }));
+                          } else {
+                            // API 调用失败，回滚 UI
+                            setCardStates(prev => ({
+                              ...prev,
+                              [item.id]: cardState
+                            }));
+                          }
+                        } catch (error) {
+                          console.error('收藏失败:', error);
+                          // API 调用失败，回滚 UI
+                          setCardStates(prev => ({
+                            ...prev,
+                            [item.id]: cardState
+                          }));
+                        }
+                      }}
+                      onComment={(e) => {
+                        e.stopPropagation();
+                        // 点击评论打开弹窗
+                        handleCardClick(item);
+                      }}
+                      onShare={(e) => {
+                        e.stopPropagation();
+                        // 这里可以添加分享功能
+                        console.log('分享:', item.id);
+                      }}
+                    />
+                  </div>
                 </div>
-                
-                {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}
-                <div className={styles.cardStats}>
-                  {/* 互动按钮组件 */}
-                  <InteractionButtons
-                    variant="card"
-                    likeCount={item.like_count || 0}
-                    collectCount={item.collect_count || 0}
-                    commentCount={item.comment_count || 0}
-                    viewCount={item.view_count || 0}
-                    showViewCount={true}
-                    showShare={false}
-                    isLiked={item.is_liked || false}
-                    isCollected={item.is_collected || false}
-                    onLike={(e) => {
-                      e.stopPropagation();
-                      // 这里可以添加点赞API调用
-                      console.log('点赞:', item.id);
-                    }}
-                    onCollect={(e) => {
-                      e.stopPropagation();
-                      // 这里可以添加收藏API调用
-                      console.log('收藏:', item.id);
-                    }}
-                    onComment={(e) => {
-                      e.stopPropagation();
-                      // 点击评论打开弹窗
-                      handleCardClick(item);
-                    }}
-                    onShare={(e) => {
-                      e.stopPropagation();
-                      // 这里可以添加分享功能
-                      console.log('分享:', item.id);
-                    }}
-                  />
-                </div>
-              </div>
             </div>
           ))}
         </div>

@@ -11,6 +11,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useImageLazyLoad } from "../../hooks";
 import { formatStandardTime } from "../../utils";
 import { getFrontendUserInfo } from "../../utils/storage";
+import { toggleLike, toggleCollect } from "../../api/panApi";
 import PanImageViewer from "../PanImageViewer/PanImageViewer";
 import LiuYaoInfoContainer from "../LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer";
 import { UserInfo, PostHeader, CommentsSection, CommentInput, DivinationSupplementleInfo, EditSupplementModal } from "./components";
@@ -20,6 +21,7 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [isCollected, setIsCollected] = useState(false);
+  const [collectCount, setCollectCount] = useState(0);
   const [isFollowed, setIsFollowed] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [showCommentInput, setShowCommentInput] = useState(false);
@@ -31,21 +33,41 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
   const [activeButtons, setActiveButtons] = useState(['liuqin', 'fuchen', 'yinyang', 'colorChange']);
   const commentInputRef = useRef(null);
   const commentsSectionRef = useRef(null);
+  
+  // 使用 ref 存储最新状态，解决闭包问题
+  const stateRef = useRef({
+    isLiked,
+    likeCount,
+    isCollected,
+    collectCount
+  });
 
   const { imgRef, src, isLoaded, handleLoad } = useImageLazyLoad(
     data?.hexagram_image || "",
     "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgNjAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNmMGYwZjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2NjYyIgZm9udC1zaXplPSIxOCI+5rCR6Ieq5YirPC90ZXh0Pjwvc3ZnPg=="
   );
 
+  // 当 data 变化时（包括外部实时更新），同步到内部状态
   useEffect(() => {
     if (data) {
       setIsLiked(data.is_liked || false);
       setLikeCount(data.like_count || 0);
       setIsCollected(data.is_collected || false);
+      setCollectCount(data.collect_count || 0);
       setIsFollowed(data.is_followed || false);
       setCommentCount(data.comment_count || 0);
     }
-  }, [data]);
+  }, [data?.id, data?.is_liked, data?.like_count, data?.is_collected, data?.collect_count, data?.is_followed, data?.comment_count]);
+  
+  // 更新 ref 中的状态值
+  useEffect(() => {
+    stateRef.current = {
+      isLiked,
+      likeCount,
+      isCollected,
+      collectCount
+    };
+  }, [isLiked, likeCount, isCollected, collectCount]);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -56,7 +78,18 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
   const handleClose = () => {
     setShowCommentInput(false);
     setCommentContent("");
-    onClose && onClose();
+    
+    // 返回更新后的数据，用于同步首页卡片状态
+    // 使用 stateRef 获取最新状态，避免闭包问题
+    const updatedData = {
+      id: data?.id,
+      is_liked: stateRef.current.isLiked,
+      like_count: stateRef.current.likeCount,
+      is_collected: stateRef.current.isCollected,
+      collect_count: stateRef.current.collectCount
+    };
+    
+    onClose && onClose(updatedData);
   };
 
   useEffect(() => {
@@ -75,15 +108,60 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
     };
   }, [isOpen]);
 
-  const handleLike = (e) => {
+  const handleLike = async (e) => {
     e.stopPropagation();
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+    const newLiked = !isLiked;
+    
+    // 先更新 UI
+    setIsLiked(newLiked);
+    setLikeCount(newLiked ? likeCount + 1 : likeCount - 1);
+    
+    try {
+      // 调用后端 API
+      const response = await toggleLike(data.id);
+      if (response.code === 200) {
+        // API 调用成功，使用后端返回的数据
+        setIsLiked(response.data.is_liked);
+        setLikeCount(response.data.like_count);
+      } else {
+        // API 调用失败，回滚 UI
+        setIsLiked(isLiked);
+        setLikeCount(likeCount);
+      }
+    } catch (error) {
+      console.error('点赞失败:', error);
+      // API 调用失败，回滚 UI
+      setIsLiked(isLiked);
+      setLikeCount(likeCount);
+    }
   };
 
-  const handleCollect = (e) => {
+  const handleCollect = async (e) => {
     e.stopPropagation();
-    setIsCollected(!isCollected);
+    const newCollected = !isCollected;
+    
+    // 先更新 UI
+    setIsCollected(newCollected);
+    setCollectCount(newCollected ? collectCount + 1 : collectCount - 1);
+    
+    try {
+      // 调用后端 API
+      const response = await toggleCollect(data.id);
+      if (response.code === 200) {
+        // API 调用成功，使用后端返回的数据
+        setIsCollected(response.data.is_collected);
+        setCollectCount(response.data.collect_count);
+      } else {
+        // API 调用失败，回滚 UI
+        setIsCollected(isCollected);
+        setCollectCount(collectCount);
+      }
+    } catch (error) {
+      console.error('收藏失败:', error);
+      // API 调用失败，回滚 UI
+      setIsCollected(isCollected);
+      setCollectCount(collectCount);
+    }
   };
 
   const handleFollow = (e) => {
@@ -237,7 +315,7 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
               isLiked={isLiked}
               isCollected={isCollected}
               likeCount={likeCount}
-              collectCount={data.collect_count || 0}
+              collectCount={collectCount}
               commentCount={commentCount}
               onLike={handleLike}
               onCollect={handleCollect}

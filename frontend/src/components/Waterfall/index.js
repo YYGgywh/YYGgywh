@@ -1,4 +1,4 @@
 import WaterfallContainer from './WaterfallContainer/WaterfallContainer';
-import WaterfallCard from './WaterfallCard.desktop.module/WaterfallCard';
+import WaterfallCard from './WaterfallCard/WaterfallCard';
 
 export { WaterfallContainer, WaterfallCard };

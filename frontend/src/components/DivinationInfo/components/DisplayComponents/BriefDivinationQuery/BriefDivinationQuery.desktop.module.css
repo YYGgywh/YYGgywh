@@ -3,7 +3,7 @@
  * @description     简要占卜查询组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-14 16:30:00
- * @lastModified    2026-03-16 15:27:29
+ * @lastModified    2026-03-22 19:34:45
  * Copyright © All rights reserved
 */
 
@@ -32,4 +32,35 @@
   color: #333333;
   font-weight: normal;
   /* text-align: center; */
+}
+
+/* 卡片模式样式 */
+.briefDivinationQueryCard {
+  padding: 0 12px;
+  margin-bottom: 0px;
+  border-bottom: none;
+  line-height: 1.5;
+}
+
+.briefDivinationQueryCard .solarDate {
+  font-size: 12px;
+  color: #333333;
+  margin-bottom: 2px;
+}
+
+.briefDivinationQueryCard .lunarDate {
+  font-size: 12px;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.briefDivinationQueryCard .personalInfo {
+  font-size: 12px;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.briefDivinationQueryCard .questionText {
+  font-size: 12px;
+  color: #333333;
 }

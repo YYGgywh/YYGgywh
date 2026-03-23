@@ -1,5 +1,5 @@
 /*
- * @file            frontend/src/components/Waterfall/WaterfallCard.desktop.module/WaterfallCard.jsx
+ * @file            frontend/src/components/Waterfall/WaterfallCard/WaterfallCard.jsx
  * @description     瀑布流卡片组件，用于显示排盘记录
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-07 16:30:00
@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { useImageLazyLoad } from '../../../hooks';
 import { formatRelativeTime } from '../../../utils';
 import InteractionButtons from '../../Modal/components/InteractionButtons/InteractionButtons';
-import styles from './WaterfallCard.desktop.module.css';
+import styles from './WaterfallCard.desktop.css';
 
 /**
  * 瀑布流卡片组件

@@ -3,7 +3,7 @@
  * @description     简要占卜查询组件，用于展示求测者信息和占题的简要形式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-14 16:30:00
- * @lastModified    2026-03-19 13:49:09
+ * @lastModified    2026-03-22 18:15:42
  * Copyright © All rights reserved
 */
 
@@ -26,11 +26,24 @@ import {
  * @param {string} props.className - 自定义类名
  * @returns {JSX.Element|null} 返回简要占卜查询信息的 JSX 元素，无数据时返回 null
  */
-const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, className = '' }) => {
+const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, className = '', variant = 'default' }) => {
   const calendarInfo = divinationData.calendar_info || {};
   
   console.log('BriefDivinationQuery - formData:', formData);
   console.log('BriefDivinationQuery - divinationData:', divinationData);
+  
+  // 提取各个字段，如果不存在则使用空字符串
+  const location = formData.location || '';           // 属地
+  const firstName = formData.firstName || '';         // 名字
+  const lastName = formData.lastName || '';           // 姓氏
+  const gender = formData.gender || '';             // 性别
+  const birthYear = formData.birthYear || '';       // 出生年份
+  const question = formData.question || '';         // 占题
+  
+  // 构建生年信息：如果有出生年份，则添加"生人"后缀
+  const birthYearText = birthYear ? `${birthYear}生人` : '';
+  // 构建占题信息：如果有占题，则添加句号后缀
+  const questionText = question ? `${question} ？` : '';
   
   // 使用 React.useMemo 缓存简要占题文本的格式化结果
   // 只有当 formData 中的相关字段变化时才重新计算
@@ -42,21 +55,7 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
       return '';
     }
     
-    // 提取各个字段，如果不存在则使用空字符串
-    const location = formData.location || '';           // 属地
-    const firstName = formData.firstName || '';         // 名字
-    const lastName = formData.lastName || '';           // 姓氏
-    const gender = formData.gender || '';             // 性别
-    const birthYear = formData.birthYear || '';       // 出生年份
-    const question = formData.question || '';         // 占题
-    
     console.log('BriefDivinationQuery - fields:', { location, firstName, lastName, gender, birthYear, question });
-    
-    // 构建生年信息：如果有出生年份，则添加"生人"后缀
-    const birthYearText = birthYear ? `${birthYear}生人` : '';
-    
-    // 构建占题信息：如果有占题，则添加句号后缀
-    const questionText = question ? `${question} ？` : '';
     
     // 拼接所有信息，格式为：属地 姓名 性别 生年生人，占：占题。
     // 使用模板字符串进行拼接，各字段之间用空格分隔
@@ -65,13 +64,18 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     return result;
   }, [formData.location, formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.question]);
   
+  // 提取时间相关变量
+  const solarInfo = calendarInfo.solar_info;
+  const lunarInfo = calendarInfo.lunar_info;
+  const solarDate = solarInfo ? formatSolarDate(solarInfo) : '';
+  const solarTime = solarInfo ? formatSolarTime(solarInfo) : '';
+  const lunarDate = lunarInfo ? formatLunarDate(lunarInfo) : '';
+  const lunarTime = lunarInfo ? formatLunarTime(lunarInfo) : '';
+  
   // 使用 React.useMemo 缓存时间信息的格式化结果
   const timeText = React.useMemo(() => {
     console.log('BriefDivinationQuery - 开始格式化时间');
     console.log('BriefDivinationQuery - calendarInfo:', calendarInfo);
-    
-    const solarInfo = calendarInfo.solar_info;
-    const lunarInfo = calendarInfo.lunar_info;
     
     console.log('BriefDivinationQuery - solarInfo:', solarInfo);
     console.log('BriefDivinationQuery - lunarInfo:', lunarInfo);
@@ -80,11 +84,6 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
       console.log('BriefDivinationQuery - solarInfo 或 lunarInfo 为空');
       return '';
     }
-    
-    const solarDate = formatSolarDate(solarInfo);
-    const solarTime = formatSolarTime(solarInfo);
-    const lunarDate = formatLunarDate(lunarInfo);
-    const lunarTime = formatLunarTime(lunarInfo);
     
     console.log('BriefDivinationQuery - 格式化后的时间:', { solarDate, solarTime, lunarDate, lunarTime });
     
@@ -98,6 +97,24 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     return null;
   }
   
+  // 根据 variant 渲染不同的结构
+  if (variant === 'card') {
+    return (
+      <div 
+        className={`${styles.briefDivinationQuery} ${styles.briefDivinationQueryCard} ${className}`}
+        role="listitem"
+        aria-label="简要占题"
+      >
+        {/* 卡片模式：四行显示 */}
+        {solarDate && <div className={styles.solarDate}>{solarDate} {solarTime}</div>}
+        {lunarDate && <div className={styles.lunarDate}>（{lunarDate} {lunarTime}）</div>}
+        <div className={styles.personalInfo}>{`${location} ${firstName}${lastName} ${gender} ${birthYearText}`.trim()}</div>
+        {questionText && <div className={styles.questionText}>占：{questionText}</div>}
+      </div>
+    );
+  }
+  
+  // 默认模式：两行显示
   // 返回 JSX 元素，渲染简要占卜查询信息
   // role="listitem"：ARIA 角色，表示这是一个列表项
   // aria-label="简要占题"：为屏幕阅读器提供描述信息
@@ -132,7 +149,8 @@ BriefDivinationQuery.propTypes = {
       lunar_info: PropTypes.object    // lunar_info 属性必须是对象类型
     })
   }),
-  className: PropTypes.string         // className 属性必须是字符串类型
+  className: PropTypes.string,        // className 属性必须是字符串类型
+  variant: PropTypes.oneOf(['default', 'card'])  // variant 属性必须是 'default' 或 'card'
 };
 
 // 为 BriefDivinationQuery 组件添加 displayName，便于在 React DevTools 中调试

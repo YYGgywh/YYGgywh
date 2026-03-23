@@ -1,0 +1,40 @@
+/*
+ * @file            frontend/src/components/Card/PointsInfo/PointsInfo.desktop.module.css
+ * @description     积分信息组件样式 - 桌面端专用
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-22 16:46:00
+ * @lastModified    2026-03-22 19:35:36
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   积分信息组件样式
+   ============================================ */
+
+/* 积分信息容器 */
+.pointsInfo {
+  background-color: #fff2e8;
+  color: #fa8c16;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin: 0 12px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+/* 积分文本样式 */
+.pointsText {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .pointsInfo {
+    padding: 5px 10px;
+  }
+  
+  .pointsText {
+    font-size: 13px;
+  }
+}
