@@ -3,7 +3,7 @@
  * @description     简要占卜查询组件桌面端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-14 16:30:00
- * @lastModified    2026-03-22 19:34:45
+ * @lastModified    2026-03-23 11:12:09
  * Copyright © All rights reserved
 */
 
@@ -58,9 +58,11 @@
   font-size: 12px;
   color: #333333;
   margin-bottom: 4px;
+  text-align: right;
 }
 
 .briefDivinationQueryCard .questionText {
   font-size: 12px;
   color: #333333;
+  text-align: right;
 }

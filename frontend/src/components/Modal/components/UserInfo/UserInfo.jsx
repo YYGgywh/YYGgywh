@@ -20,11 +20,13 @@ const UserInfo = ({
   onFollow, // 关注/取消关注回调函数
   showAvatar = true, // 是否显示头像，默认为 true
   showUsername = true, // 是否显示用户名，默认为 true
-  showFollowButton = true // 是否显示关注按钮，默认为 true
+  showFollowButton = true, // 是否显示关注按钮，默认为 true
+  className = '', // 自定义类名
+  variant = 'default' // 显示风格，默认为 'default'
 }) => {
   // 渲染组件
   return (
-    <div className={styles.userInfoSection}>
+    <div className={`${styles.userInfoSection} ${styles[`userInfoSection${variant.charAt(0).toUpperCase() + variant.slice(1)}`]} ${className}`}>
       {/* 条件渲染：如果 showAvatar 为 true，则显示头像 */}
       {showAvatar && (
         <div className={styles.userAvatar}>

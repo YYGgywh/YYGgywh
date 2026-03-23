@@ -3,7 +3,7 @@
  * @description     UserInfo 组件样式文件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-17 15:30:00
- * @lastModified    2026-03-18 14:03:26
+ * @lastModified    2026-03-23 11:09:18
  * Copyright © All rights reserved
 */
 
@@ -82,6 +82,33 @@
   background-color: #E8E8E8;
 }
 
+/* 卡片模式样式 */
+.userInfoSectionCard {
+  padding:  0 0 0 12px;
+  gap: 6px;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.userInfoSectionCard .userAvatar {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+}
+
+.userInfoSectionCard .userName {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.userInfoSectionCard .followButton {
+  padding: 2px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
 /* 响应式调整 */
 @media (max-width: 768px) {
   .userInfoSection {
@@ -101,5 +128,24 @@
   .followButton {
     padding: 4px 12px;
     font-size: 12px;
+  }
+  
+  /* 卡片模式响应式 */
+  .userInfoSectionCard {
+    gap: 4px;
+  }
+  
+  .userInfoSectionCard .userAvatar {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .userInfoSectionCard .userName {
+    font-size: 9px;
+  }
+  
+  .userInfoSectionCard .followButton {
+    padding: 1px 6px;
+    font-size: 9px;
   }
 }

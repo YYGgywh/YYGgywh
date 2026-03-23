@@ -3,7 +3,7 @@
  * @description     首页组件 - 显示公开排盘记录列表，支持瀑布流布局和交互功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 13:38:55
- * @lastModified    2026-03-20 13:42:37
+ * @lastModified    2026-03-23 10:52:16
  * Copyright © All rights reserved
 */
 
@@ -338,9 +338,10 @@ const HomePage = () => {
                   <div className={styles.cardMeta}>
                     {/* 用户信息 */}
                     <UserInfo 
-                      nickname={item.user_nickname}
-                      avatar={item.user_avatar}
-                      size="small"
+                      userAvatar={item.user_avatar}
+                      userNickname={item.user_nickname}
+                      showFollowButton={false}
+                      variant="card"
                     />
                     
                     {/* 发布时间 */}
