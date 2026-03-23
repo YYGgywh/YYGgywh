@@ -136,13 +136,13 @@ async def get_statistics(
     user_count = db.query(User).filter(User.deleted_at.is_(None)).count()
     pan_record_count = db.query(PanRecord).count()
     comment_count = db.query(Comment).count()
-    pending_audit_count = db.query(PanRecord).filter(PanRecord.audit_status == 0).count()
+    pending_publish_count = db.query(PanRecord).filter(PanRecord.audit_status == 0).count()
     
     return create_success_response({
         "users": user_count,
         "pan_records": pan_record_count,
         "comments": comment_count,
-        "pending_audit": pending_audit_count
+        "pending_publish": pending_publish_count
     })
 
 
@@ -727,13 +727,26 @@ async def audit_pan_record(
     if not record:
         raise HTTPException(status_code=404, detail="排盘记录不存在")
     
-    record.audit_status = request.audit_status
+    # 根据当前状态和请求状态处理逻辑
+    if record.audit_status == 1 and request.audit_status == 0:
+        # 已发布状态 -> 待发布状态（隐藏操作）
+        record.audit_status = 0
+        message = "隐藏成功"
+    elif record.audit_status == 0 and request.audit_status == 1:
+        # 待发布状态 -> 已发布状态（发布操作）
+        record.audit_status = 1
+        message = "发布成功"
+    else:
+        # 其他状态变更（如拒绝）
+        record.audit_status = request.audit_status
+        message = "审核成功"
+    
     record.audit_remark = request.audit_remark
     record.audit_time = int(time.time())
     record.audit_user_id = current_user.id
     db.commit()
     
-    return create_success_response(None, "审核成功")
+    return create_success_response(None, message)
 
 
 @router.delete("/pan-records/{record_id}")
@@ -808,7 +821,7 @@ class BatchDeleteRequest(BaseModel):
 
 class BatchAuditRequest(BaseModel):
     record_ids: List[int] = Field(..., description="要审核的记录ID列表")
-    audit_status: int = Field(..., description="审核状态：1-通过，2-拒绝")
+    audit_status: int = Field(..., description="审核状态：0-待发布，1-已发布，2-已拒绝")
     audit_remark: Optional[str] = Field(None, description="审核备注")
 
 
@@ -856,18 +869,17 @@ async def batch_audit_pan_records(
     if not request.record_ids:
         raise HTTPException(status_code=400, detail="记录ID列表不能为空")
     
-    if request.audit_status not in [1, 2]:
-        raise HTTPException(status_code=400, detail="审核状态必须是1（通过）或2（拒绝）")
+    if request.audit_status not in [0, 1, 2]:
+        raise HTTPException(status_code=400, detail="审核状态必须是0（待发布）、1（已发布）或2（已拒绝）")
     
-    # 查询所有待审核的记录
+    # 查询所有有效的记录
     records = db.query(PanRecord).filter(
         PanRecord.id.in_(request.record_ids),
-        PanRecord.deleted_at.is_(None),
-        PanRecord.audit_status == 0
+        PanRecord.deleted_at.is_(None)
     ).all()
     
     if not records:
-        raise HTTPException(status_code=404, detail="未找到待审核的排盘记录")
+        raise HTTPException(status_code=404, detail="未找到有效的排盘记录")
     
     current_time = int(time.time())
     audited_count = 0
@@ -881,10 +893,12 @@ async def batch_audit_pan_records(
     
     db.commit()
     
-    status_text = "通过" if request.audit_status == 1 else "拒绝"
+    # 状态文本映射
+    status_map = {0: "待发布", 1: "已发布", 2: "已拒绝"}
+    status_text = status_map.get(request.audit_status, "未知状态")
     return create_success_response(
         {"audited_count": audited_count},
-        f"成功审核 {audited_count} 条记录，状态：{status_text}"
+        f"成功设置为{status_text} {audited_count} 条记录"
     )
 
 
@@ -989,7 +1003,7 @@ def export_to_excel(records):
     
     # 填充数据
     for row, record in enumerate(records, 2):
-        status_map = {0: "待审核", 1: "已通过", 2: "已拒绝"}
+        status_map = {0: "待发布", 1: "已发布", 2: "已拒绝"}
         pan_type_map = {"liuyao": "六爻", "bazi": "八字", "ziwei": "紫微斗数", "qimen": "奇门遁甲"}
         
         ws.cell(row=row, column=1, value=record.id)
@@ -1031,7 +1045,7 @@ def export_to_csv(records):
     
     # 写入数据
     for record in records:
-        status_map = {0: "待审核", 1: "已通过", 2: "已拒绝"}
+        status_map = {0: "待发布", 1: "已发布", 2: "已拒绝"}
         pan_type_map = {"liuyao": "六爻", "bazi": "八字", "ziwei": "紫微斗数", "qimen": "奇门遁甲"}
         
         writer.writerow([

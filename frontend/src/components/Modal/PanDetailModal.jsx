@@ -292,8 +292,8 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
           {/* 右侧头部区域 - 用户信息 */}
           <div className={styles.modalRightHeader}>
             <UserInfo
-              userAvatar={data.user_avatar}
-              userNickname={data.user_nickname}
+              userAvatar={data.user?.avatar_url || data.user_avatar}
+              userNickname={data.user?.nickname || data.user_nickname}
               isFollowed={isFollowed}
               onFollow={handleFollow}
             />

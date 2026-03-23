@@ -22,6 +22,7 @@ import styles from './InteractionButtons.desktop.module.css';
  * @param {boolean} props.isLiked - 是否已点赞
  * @param {boolean} props.isCollected - 是否已收藏
  * @param {string} props.variant - 样式变体：'default' | 'card'（默认 'default'）
+ * @param {boolean} props.readOnly - 是否只读模式，禁用所有按钮点击（默认 false）
  * @param {Function} props.onLike - 点赞回调函数
  * @param {Function} props.onCollect - 收藏回调函数
  * @param {Function} props.onComment - 评论回调函数
@@ -38,17 +39,20 @@ const InteractionButtons = ({
   isLiked = false,
   isCollected = false,
   variant = 'default',
+  className = '',
+  readOnly = false,
   onLike = () => {},
   onCollect = () => {},
   onComment = () => {},
   onShare = () => {}
 }) => {
   return (
-    <div className={`${styles.interactionButtons} ${styles[variant]}`}>
+    <div className={`${styles.interactionButtons} ${styles[variant]} ${className}`}>
       {/* 点赞按钮 */}
       <button 
-        className={`${styles.interactionButton} ${isLiked ? styles.active : ''}`}
-        onClick={onLike}
+        className={`${styles.interactionButton} ${isLiked ? styles.active : ''} ${readOnly ? styles.readOnly : ''}`}
+        onClick={readOnly ? undefined : onLike}
+        disabled={readOnly}
       >
         <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill={isLiked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
           <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
@@ -58,8 +62,9 @@ const InteractionButtons = ({
       
       {/* 收藏按钮 */}
       <button 
-        className={`${styles.interactionButton} ${isCollected ? styles.active : ''}`}
-        onClick={onCollect}
+        className={`${styles.interactionButton} ${isCollected ? styles.active : ''} ${readOnly ? styles.readOnly : ''}`}
+        onClick={readOnly ? undefined : onCollect}
+        disabled={readOnly}
       >
         <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill={isCollected ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -68,7 +73,11 @@ const InteractionButtons = ({
       </button>
       
       {/* 评论按钮 */}
-      <button className={styles.interactionButton} onClick={onComment}>
+      <button 
+        className={`${styles.interactionButton} ${readOnly ? styles.readOnly : ''}`}
+        onClick={readOnly ? undefined : onComment}
+        disabled={readOnly}
+      >
         <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
@@ -77,7 +86,11 @@ const InteractionButtons = ({
       
       {/* 分享按钮（根据 showShare 控制） */}
       {showShare && (
-        <button className={styles.interactionButton} onClick={onShare}>
+        <button 
+          className={`${styles.interactionButton} ${readOnly ? styles.readOnly : ''}`}
+          onClick={readOnly ? undefined : onShare}
+          disabled={readOnly}
+        >
           <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="18" cy="5" r="3"></circle>
             <circle cx="6" cy="12" r="3"></circle>

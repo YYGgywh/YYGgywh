@@ -3,7 +3,7 @@
  * @description     主要内容区域容器样式 - 桌面端专用（CSS Modules版本）
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:45:00
- * @lastModified    2026-03-14 11:01:00
+ * @lastModified    2026-03-23 18:28:46
  * Copyright © All rights reserved
 */
 
@@ -17,7 +17,7 @@
 
 /* 内容区域主体 */
 .mainContentBody {
-  padding: 24px;
+  padding: 12px;
 }
 
 /* 加载状态 */

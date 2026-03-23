@@ -278,8 +278,17 @@ const LiuYaoReault = React.memo(() => {
     
     setOperationLoading(true);
     try {
+      // 先保存排盘记录
       await autoSavePanRecord(divinationData, formData, supplement, true);
-      console.log('排盘记录发布成功');
+      
+      // 然后更新审核状态为已发布
+      if (recordId) {
+        await updatePan(recordId, {
+          audit_status: 1 // 1表示已发布
+        });
+        console.log('排盘记录发布成功');
+      }
+      
       // 登录用户，在新标签页打开用户中心页
       window.open('/user', '_blank');
     } catch (err) {

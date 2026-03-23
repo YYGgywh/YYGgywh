@@ -3,7 +3,7 @@
  * @description     排盘记录数据模型
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-26 14:15:00
- * @lastModified    2026-03-02 17:02:00
+ * @lastModified    2026-03-23 20:09:29
  * Copyright © All rights reserved
 """
 

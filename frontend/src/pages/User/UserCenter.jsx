@@ -20,7 +20,8 @@ import {
   UserIcon,
   RecordIcon
 } from '../../components/UserCenter';
-import { listPan } from '../../api/panApi';
+import PanDetailModal from '../../components/Modal/PanDetailModal';
+import { listPan, getPanDetail, toggleLike, toggleCollect, deletePan } from '../../api/panApi';
 import { isLoggedIn, removeToken, getUserInfo, setUserInfo as saveUserInfo } from '../../utils/storage';
 import {
   updateUserInfo,
@@ -53,6 +54,10 @@ const UserCenter = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+
+  // 弹窗状态
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPanData, setSelectedPanData] = useState(null);
 
   // 编辑状态
   const [editingNickname, setEditingNickname] = useState(false);
@@ -114,8 +119,55 @@ const UserCenter = () => {
       setLoading(true);
       setError('');
       const response = await listPan('liuyao', currentPage, pageSize);
-      setPanRecords(response.data);
-      setTotalPages(Math.ceil(response.data.length / pageSize) || 1);
+      
+      // 为每条记录获取完整数据
+      const recordsWithDetails = await Promise.all(
+        response.data.map(async (record) => {
+          try {
+            const detailResponse = await getPanDetail(record.id);
+            const detailData = detailResponse.data;
+            
+            // 提取 formData 和 divinationData
+            const formData = detailData.pan_params?.form_data || {};
+            const divinationData = detailData.pan_result || {};
+            
+            // 提取交互相关数据
+            const likeCount = detailData.like_count || 0;
+            const collectCount = detailData.collect_count || 0;
+            const commentCount = detailData.comment_count || 0;
+            const viewCount = detailData.view_count || 0;
+            const isLiked = detailData.is_liked || false;
+            const isCollected = detailData.is_collected || false;
+            
+            // 处理用户信息
+            const userNickname = detailData.user?.nickname || '匿名用户';
+            const userAvatar = detailData.user?.avatar_url || '';
+            const userId = detailData.user?.id || record.user_id || 0;
+            
+            return {
+              ...record,
+              formData,
+              divinationData,
+              like_count: likeCount,
+              collect_count: collectCount,
+              comment_count: commentCount,
+              view_count: viewCount,
+              is_liked: isLiked,
+              is_collected: isCollected,
+              user_nickname: userNickname,
+              user_avatar: userAvatar,
+              user_id: userId,
+              audit_status: detailData.audit_status || 0
+            };
+          } catch (err) {
+            console.error(`获取记录 ${record.id} 详情失败:`, err);
+            return record;
+          }
+        })
+      );
+      
+      setPanRecords(recordsWithDetails);
+      setTotalPages(Math.ceil(recordsWithDetails.length / pageSize) || 1);
     } catch (err) {
       setError(err.message || '获取排盘记录失败');
       setPanRecords([]);
@@ -187,11 +239,77 @@ const UserCenter = () => {
 
   // 排盘记录处理
   const handleViewDetail = (record) => {
-    // 跳转到排盘结果页面，传递 recordId
-    navigate(`/divination-result/${record.id}`);
+    // 打开详情弹窗
+    setSelectedPanData(record);
+    setShowModal(true);
+  };
+  
+  // 处理弹窗关闭事件
+  const handleModalClose = (updatedData) => {
+    // 隐藏详情弹窗
+    setShowModal(false);
+    setSelectedPanData(null);
+    
+    // 如果弹窗中有数据更新，重新获取排盘记录以同步状态
+    if (updatedData && updatedData.id) {
+      fetchPanRecords();
+    }
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+  
+  // 交互功能处理
+  const handleLike = async (recordId) => {
+    try {
+      await toggleLike(recordId);
+      // 重新获取排盘记录以更新状态
+      fetchPanRecords();
+    } catch (err) {
+      console.error('点赞失败:', err);
+    }
+  };
+  
+  const handleCollect = async (recordId) => {
+    try {
+      await toggleCollect(recordId);
+      // 重新获取排盘记录以更新状态
+      fetchPanRecords();
+    } catch (err) {
+      console.error('收藏失败:', err);
+    }
+  };
+  
+  const handleComment = (recordId) => {
+    // 跳转到详情页或打开评论模态框
+    navigate(`/divination-result/${recordId}#comments`);
+  };
+  
+  const handleShare = (recordId) => {
+    // 实现分享功能
+    console.log('分享记录:', recordId);
+  };
+
+  // 删除排盘记录处理
+  const handleDelete = async (recordId) => {
+    // 确认弹窗
+    if (!window.confirm('确定要删除这条排盘记录吗？删除后无法恢复。')) {
+      return;
+    }
+
+    try {
+      const response = await deletePan(recordId);
+      if (response.code === 200) {
+        // 删除成功，刷新列表
+        fetchPanRecords();
+        alert('删除成功！');
+      } else {
+        alert(response.msg || '删除失败');
+      }
+    } catch (err) {
+      console.error('删除失败:', err);
+      alert(err.message || '删除失败，请稍后重试');
+    }
   };
 
   // 时间格式化
@@ -241,6 +359,12 @@ const UserCenter = () => {
             totalPages={totalPages}
             onPageChange={handlePageChange}
             onViewDetail={handleViewDetail}
+            onLike={handleLike}
+            onCollect={handleCollect}
+            onComment={handleComment}
+            onShare={handleShare}
+            onDelete={handleDelete}
+            onRefresh={fetchPanRecords}
             formatTime={formatTime}
             panTypeToChinese={panTypeToChinese}
           />
@@ -274,6 +398,13 @@ const UserCenter = () => {
           }
         />
       </div>
+
+      {/* 排盘详情弹窗 */}
+      <PanDetailModal
+        isOpen={showModal}
+        onClose={handleModalClose}
+        data={selectedPanData}
+      />
     </div>
   );
 };

@@ -3,7 +3,7 @@
  * @description     排盘记录内容组件样式 - 桌面端专用（CSS Modules版本）
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:52:00
- * @lastModified    2026-03-14 11:06:17
+ * @lastModified    2026-03-23 18:27:03
  * Copyright © All rights reserved
 */
 
@@ -80,7 +80,7 @@
   background-color: #fafafa;
   border: 1px solid #f0f0f0;
   border-radius: 8px;
-  padding: 20px;
+  padding: 8px;
   transition: box-shadow 0.3s, border-color 0.3s;
 }
 
@@ -89,102 +89,51 @@
   border-color: #e0e0e0;
 }
 
-/* 记录卡片头部 */
-.recordCardHeader {
+/* 记录卡片上半部分：横向布局 */
+.recordCardTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  /* margin-bottom: 16px; */
+  gap: 20px;
 }
 
-/* 排盘类型标签 */
-.recordTypeBadge {
-  display: inline-block;
-  padding: 4px 12px;
-  background-color: #e3f2fd;
-  color: #1976d2;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+/* 左侧信息区 */
+.recordCardLeft {
+  flex: 1;
+  min-width: 0;
 }
 
-/* 记录时间 */
-.recordTime {
-  font-size: 13px;
-  color: #999;
+/* 右侧信息区 */
+.recordCardRight {
+  flex-shrink: 0;
+  width: 250px;
 }
 
-/* 记录卡片主体 */
-.recordCardBody {
-  margin-bottom: 16px;
+/* 分隔线 */
+.recordCardDivider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 0 0 8px 0;
 }
 
-/* 卦象结果 */
-.recordResult {
-  margin-bottom: 8px;
-}
-
-.resultLabel {
-  font-size: 14px;
-  color: #666;
-}
-
-.resultValue {
-  font-size: 16px;
-  color: #333;
-  font-weight: 600;
-}
-
-/* 补充说明 */
-.recordSupplement {
-  padding: 12px;
-  background-color: #fff;
-  border-radius: 4px;
-  border-left: 3px solid #ff9800;
-}
-
-.supplementLabel {
-  font-size: 13px;
-  color: #999;
-}
-
-.supplementValue {
-  font-size: 14px;
-  color: #666;
-}
-
-/* 记录卡片底部 */
-.recordCardFooter {
+/* 记录卡片下半部分：标签 + 交互按钮 */
+.recordCardBottom {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
-/* 操作按钮 */
-.recordActionBtn {
-  padding: 8px 16px;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s;
+/* 确保标签区域有足够空间 */
+.recordCardBottom :global(.cardTags) {
+  flex: 1;
+  min-width: 0;
 }
 
-.recordActionBtn:hover {
-  background-color: #f5f5f5;
-  border-color: #d0d0d0;
-}
-
-.recordActionBtnPrimary {
-  background-color: #2196f3;
-  color: #fff;
-  border-color: #2196f3;
-}
-
-.recordActionBtnPrimary:hover {
-  background-color: #1976d2;
-  border-color: #1976d2;
+/* 确保交互按钮区域正确显示 */
+.recordCardBottom :global(.interactionButtons) {
+  flex-shrink: 0;
 }
 
 /* 分页控制 */
@@ -225,4 +174,113 @@
 .pageInfo {
   font-size: 14px;
   color: #666;
+}
+
+/* MainContentArea 中的 BriefDivinationQuery 样式 */
+.briefDivinationQueryMain {
+  padding: 8px;
+  /* background-color: #f9f9f9; */
+  /* border-radius: 8px; */
+  border: 0px solid #e0e0e0;
+  margin: 0;
+}
+
+/* 覆盖默认模式的特定样式 */
+.briefDivinationQueryMain :global(.timeInfo) {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.briefDivinationQueryMain :global(.briefContent) {
+  font-size: 15px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* MainContentArea 中的 CardTags 样式 */
+.cardTagsMain {
+  background-color: transparent;
+  padding: 0 0 0 8px;
+  border-radius: 6px;
+}
+
+/* 覆盖 CardTags 的标签项样式 */
+.cardTagsMain :global(.tagItem) {
+  background-color: #e0e0e0;
+  color: #666;
+  font-size: 13px;
+  padding: 3px 10px;
+}
+
+.cardTagsMain :global(.tagItem):hover {
+  background-color: #666;
+  color: white;
+  transform: none;
+  box-shadow: none;
+}
+
+/* MainContentArea 中的 InteractionButtons 样式 */
+.interactionButtonsMain {
+  gap: 16px;
+  padding: 0;
+}
+
+/* 覆盖 InteractionButtons 的按钮样式 */
+.interactionButtonsMain :global(.interactionButton) {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s;
+}
+
+.interactionButtonsMain :global(.interactionButton):hover {
+  background-color: #e0e0e0;
+  border-color: #d0d0d0;
+}
+
+.interactionButtonsMain :global(.interactionButton.active) {
+  color: #1890ff;
+  background-color: #e6f0ff;
+  border-color: #1890ff;
+}
+
+/* 覆盖 InteractionButtons 的图标样式 */
+.interactionButtonsMain :global(.interactionIcon) {
+  width: 16px;
+  height: 16px;
+}
+
+/* 覆盖 InteractionButtons 的计数样式 */
+.interactionButtonsMain :global(.interactionCount) {
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+/* 覆盖 InteractionButtons 的浏览量样式 */
+.interactionButtonsMain :global(.viewCount) {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+}
+
+/* 操作按钮容器 */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  /* margin-left: auto; */
+}
+
+/* 发布按钮样式 */
+.publishButton {
+  width:48px;
+  height: 26px;
+}
+
+/* 删除按钮样式 */
+.deleteButton {
+  width: 48px;
+  height: 26px;
 }

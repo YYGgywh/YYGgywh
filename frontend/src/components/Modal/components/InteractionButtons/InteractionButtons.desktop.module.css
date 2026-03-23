@@ -1,16 +1,16 @@
 /*
  * @file            frontend/src/components/Modal/components/InteractionButtons/InteractionButtons.desktop.module.css
  * @description     互动按钮组件样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-18 11:40:14
- * @lastModified    2026-03-18 11:40:14
+ * @lastModified    2026-03-23 16:07:04
  * Copyright © All rights reserved
 */
 
 /* 互动按钮容器 */
 .interactionButtons {
   /* ===== CSS 变量定义（可被父组件覆盖） ===== */
-  --button-icon-size: 20px;
+  --button-icon-size: 16px;
   --button-font-size: 14px;
   --button-count-size: 12px;
   --button-gap: 16px;
@@ -18,7 +18,7 @@
   --button-hover-color: #333;
   --button-active-color: #ff4757;
   --button-hover-bg: #f5f5f5;
-  --view-color: #999;
+  --view-color: #666;
   
   /* ===== 基础样式 ===== */
   display: flex;
@@ -64,6 +64,18 @@
 /* 按钮激活状态（已点赞/收藏） */
 .interactionButton.active {
   color: var(--button-active-color);
+}
+
+/* 只读模式按钮 */
+.interactionButton.readOnly {
+  background: none; /* 透明背景 */
+  cursor: default;
+  /*opacity: 0.7;  透明度 */
+}
+
+.interactionButton.readOnly:hover {
+  background-color: transparent;
+  color: var(--button-color);
 }
 
 /* 互动图标 */
