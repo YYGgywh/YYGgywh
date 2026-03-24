@@ -17,6 +17,7 @@ from .comment import Comment
 from .comment_like import CommentLike
 from .pan_like import PanLike
 from .pan_collect import PanCollect
+from .user_follow import UserFollow
 from .admin_permission import AdminPermission
 from .system_log import SystemLog
 from .system_config import SystemConfig
@@ -36,6 +37,7 @@ __all__ = [
     'CommentLike',
     'PanLike',
     'PanCollect',
+    'UserFollow',
     'AdminPermission',
     'SystemLog',
     'SystemConfig'

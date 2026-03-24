@@ -11,6 +11,7 @@ from app.utils.token import create_access_token
 from app.utils.verify_code import generate_verify_code, verify_code, generate_email_verify_code, verify_email_code
 from app.utils.file_upload import save_uploaded_file, get_file_url
 from app.utils.dependencies import rate_limit_dependency, security_validation_dependency
+from app.services.user_follow_service import UserFollowService
 import re
 import json
 
@@ -66,9 +67,10 @@ class RegisterRequest(BaseModel):
     password: str = Field(..., min_length=6, pattern="^[a-zA-Z0-9_]{6,}$", description="密码，至少6位，允许字母、数字和下划线")
 
 class LoginRequest(BaseModel):
-    phone: str | None = Field(None, pattern="^1[3-9]\\d{9}$", description="手机号")
+    phone: str | None = Field(None, pattern="^1[3-9]\d{9}$", description="手机号")
+    email: str | None = Field(None, pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", description="邮箱地址")
     login_name: str | None = Field(None, description="登录名")
-    code: str | None = Field(None, pattern="^\\d{6}$", description="验证码")
+    code: str | None = Field(None, pattern="^\d{6}$", description="验证码")
     password: str | None = Field(None, min_length=6, description="密码")
 
 class UpdateLoginNameRequest(BaseModel):
@@ -236,6 +238,8 @@ async def login(request: LoginRequest, db: Session = Depends(get_db), fastapi_re
         user = db.query(User).filter(User.phone == request.phone).first()
     elif request.login_name:
         user = db.query(User).filter(User.login_name == request.login_name).first()
+    elif request.email:
+        user = db.query(User).filter(User.email == request.email).first()
     
     if not user:
         raise HTTPException(status_code=400, detail="用户未注册")
@@ -851,3 +855,177 @@ async def get_user_info(
             "update_time": current_user.update_time
         }
     )
+
+# 关注相关API
+class FollowRequest(BaseModel):
+    user_id: int = Field(..., description="被关注用户ID")
+
+class FollowResponse(BaseModel):
+    code: int = 200
+    msg: str
+    data: dict | None = None
+
+@router.post("/follow", response_model=FollowResponse)
+async def follow_user(
+    request: FollowRequest,
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    关注用户
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 调用关注服务
+    result = UserFollowService.follow_user(db, current_user.id, request.user_id)
+    return FollowResponse(msg=result["message"])
+
+@router.post("/unfollow", response_model=FollowResponse)
+async def unfollow_user(
+    request: FollowRequest,
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    取消关注用户
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 调用取消关注服务
+    result = UserFollowService.unfollow_user(db, current_user.id, request.user_id)
+    return FollowResponse(msg=result["message"])
+
+class CheckFollowRequest(BaseModel):
+    user_id: int = Field(..., description="目标用户ID")
+
+class CheckFollowResponse(BaseModel):
+    code: int = 200
+    msg: str = "查询成功"
+    data: dict
+
+@router.post("/check_follow", response_model=CheckFollowResponse)
+async def check_follow_status(
+    request: CheckFollowRequest,
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    检查关注状态
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 调用检查关注状态服务
+    result = UserFollowService.check_follow_status(db, current_user.id, request.user_id)
+    return CheckFollowResponse(data=result)
+
+class GetFollowListResponse(BaseModel):
+    code: int = 200
+    msg: str = "查询成功"
+    data: list
+
+@router.get("/following", response_model=GetFollowListResponse)
+async def get_following_list(
+    skip: int = 0,
+    limit: int = 20,
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    获取关注列表
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 调用获取关注列表服务
+    following_list = UserFollowService.get_following_list(db, current_user.id, skip, limit)
+    return GetFollowListResponse(data=following_list)
+
+@router.get("/followers", response_model=GetFollowListResponse)
+async def get_followers_list(
+    skip: int = 0,
+    limit: int = 20,
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    获取粉丝列表
+    """
+    from app.utils.token import decode_access_token
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 调用获取粉丝列表服务
+    followers_list = UserFollowService.get_followers_list(db, current_user.id, skip, limit)
+    return GetFollowListResponse(data=followers_list)

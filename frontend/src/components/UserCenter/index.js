@@ -9,7 +9,8 @@
 
 export { default as UserCenterLayout } from './UserCenterLayout/UserCenterLayout';
 export { default as SidebarNav } from './SidebarNav/SidebarNav';
-export { default as NavItem, UserIcon, RecordIcon } from './NavItem/NavItem';
+export { default as NavItem, UserIcon, RecordIcon, FollowIcon } from './NavItem/NavItem';
 export { default as MainContentArea } from './MainContentArea/MainContentArea';
 export { default as UserProfileContent } from './UserProfileContent/UserProfileContent';
 export { default as PanRecordsContent } from './PanRecordsContent/PanRecordsContent';
+export { default as FollowContent } from './FollowContent/FollowContent';

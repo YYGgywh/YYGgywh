@@ -60,3 +60,6 @@ class User(Base):
     likes = relationship("PanLike", back_populates="user", cascade="all, delete-orphan")
     collects = relationship("PanCollect", back_populates="user", cascade="all, delete-orphan")
     comment_likes = relationship("CommentLike", back_populates="user", cascade="all, delete-orphan")
+    # 关注关系
+    following = relationship("UserFollow", foreign_keys="UserFollow.follower_id", back_populates="user", cascade="all, delete-orphan")
+    followers = relationship("UserFollow", foreign_keys="UserFollow.followed_id", back_populates="followed", cascade="all, delete-orphan")

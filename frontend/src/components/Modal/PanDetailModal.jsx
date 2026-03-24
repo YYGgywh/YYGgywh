@@ -3,7 +3,7 @@
  * @description     排盘详情弹窗组件，实现小红书式左右分栏布局
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-06 17:20:00
- * @lastModified    2026-03-21 14:00:00
+ * @lastModified    2026-03-24 16:15:07
  * Copyright © All rights reserved
 */
 
@@ -12,6 +12,7 @@ import { useImageLazyLoad } from "../../hooks";
 import { formatStandardTime } from "../../utils";
 import { getFrontendUserInfo } from "../../utils/storage";
 import { toggleLike, toggleCollect } from "../../api/panApi";
+import { followUser, unfollowUser, checkFollowStatus } from "../../api/userApi";
 import PanImageViewer from "../PanImageViewer/PanImageViewer";
 import LiuYaoInfoContainer from "../LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer";
 import { UserInfo, PostHeader, CommentsSection, CommentInput, DivinationSupplementleInfo, EditSupplementModal } from "./components";
@@ -164,9 +165,40 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
     }
   };
 
-  const handleFollow = (e) => {
+  const handleFollow = async (e) => {
     e.stopPropagation();
-    setIsFollowed(!isFollowed);
+    
+    // 检查用户是否登录
+    const currentUser = getFrontendUserInfo();
+    if (!currentUser) {
+      alert('请先登录');
+      return;
+    }
+    
+    const newFollowed = !isFollowed;
+    
+    try {
+      if (newFollowed) {
+        // 关注用户
+        const response = await followUser(data.user_id);
+        if (response.code === 200) {
+          setIsFollowed(true);
+        } else {
+          alert(response.msg || '关注失败');
+        }
+      } else {
+        // 取消关注
+        const response = await unfollowUser(data.user_id);
+        if (response.code === 200) {
+          setIsFollowed(false);
+        } else {
+          alert(response.msg || '取消关注失败');
+        }
+      }
+    } catch (error) {
+      console.error('关注操作失败:', error);
+      alert('网络错误，请稍后重试');
+    }
   };
 
   const handleCommentInputClick = (e) => {
@@ -296,6 +328,7 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
               userNickname={data.user?.nickname || data.user_nickname}
               isFollowed={isFollowed}
               onFollow={handleFollow}
+              disabled={getFrontendUserInfo()?.id === data.user_id}
             />
           </div>
 

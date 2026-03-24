@@ -64,6 +64,9 @@ def generate_verify_code(phone: str) -> str:
         send_record[key]["count"] += 1
     
     # 模拟发送验证码（实际环境中应调用短信API）
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(f"向手机号 {phone} 发送验证码：{code}")
     print(f"向手机号 {phone} 发送验证码：{code}")
     return code
 

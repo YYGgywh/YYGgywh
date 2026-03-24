@@ -52,6 +52,7 @@ async def verify_token_middleware(request: Request, call_next):
         "/api/v1/admin/login",
         "/api/v1/pan/public/list",
         "/api/v1/pan/detail",
+        "/api/v1/comment/list",
         "/docs",
         "/redoc",
         "/openapi.json",

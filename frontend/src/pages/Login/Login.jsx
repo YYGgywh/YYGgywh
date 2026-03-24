@@ -24,6 +24,7 @@ const Login = () => {
     phone: '',
     email: '',
     loginName: '',
+    account: '',
     code: '',
     password: ''
   });
@@ -115,11 +116,35 @@ const Login = () => {
         setActiveTab('login');
       } else {
         // 登录
+        let phone = null;
+        let loginName = null;
+        
+        let email = null;
+        
+        if (loginMethod === 'password') {
+          // 密码登录，根据输入内容判断类型
+          const account = formData.account.trim();
+          if (/^1[3-9]\d{9}$/.test(account)) {
+            // 手机号
+            phone = account;
+          } else if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(account)) {
+            // 邮箱
+            email = account;
+          } else {
+            // 登录名
+            loginName = account;
+          }
+        } else {
+          // 验证码登录
+          phone = formData.phone;
+        }
+        
         const response = await loginApi(
-          formData.phone,
-          formData.loginName,
+          phone,
+          loginName,
           loginMethod === 'code' ? formData.code : null,
-          loginMethod === 'password' ? formData.password : null
+          loginMethod === 'password' ? formData.password : null,
+          email
         );
         // 存储token和用户信息
         setToken(response.data.token);
@@ -226,12 +251,12 @@ const Login = () => {
             </div>
           ) : activeTab === 'login' && loginMethod === 'password' ? (
             <div className={styles.formGroup}>
-              <label htmlFor="phone">账号</label>
+              <label htmlFor="account">账号</label>
               <input
                 type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
+                id="account"
+                name="account"
+                value={formData.account}
                 onChange={handleInputChange}
                 placeholder="请输入手机号、邮箱或登录名"
                 required

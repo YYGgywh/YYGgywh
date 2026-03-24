@@ -53,8 +53,8 @@ export const validateForm = (formData, type, registerMethod = 'phone', loginMeth
       }
     } else if (type === 'login' && loginMethod === 'password') {
       // 密码登录时，不验证格式，只验证是否为空
-      if (!formData.phone) {
-        errors.phone = '请输入账号';
+      if (!formData.account) {
+        errors.account = '请输入账号';
       }
     } else {
       // 验证码登录或注册时，验证手机号格式

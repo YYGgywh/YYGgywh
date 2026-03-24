@@ -59,11 +59,12 @@ export const registerByEmail = async (email, code, password, loginName) => {
 };
 
 // 用户登录
-export const login = async (phone, loginName, code, password) => {
+export const login = async (phone, loginName, code, password, email) => {
   try {
     const params = {};
     if (phone) params.phone = phone;
     if (loginName) params.login_name = loginName;
+    if (email) params.email = email;
     if (code) params.code = code;
     if (password) params.password = password;
     
@@ -163,6 +164,60 @@ export const uploadAvatar = async (file) => {
     formData.append('file', file);
     const response = await api.post('/user/upload_avatar', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 关注用户
+export const followUser = async (userId) => {
+  try {
+    const response = await api.post('/user/follow', { user_id: userId });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 取消关注用户
+export const unfollowUser = async (userId) => {
+  try {
+    const response = await api.post('/user/unfollow', { user_id: userId });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 检查关注状态
+export const checkFollowStatus = async (userId) => {
+  try {
+    const response = await api.post('/user/check_follow', { user_id: userId });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取关注列表
+export const getFollowingList = async (skip = 0, limit = 20) => {
+  try {
+    const response = await api.get('/user/following', {
+      params: { skip, limit }
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 获取粉丝列表
+export const getFollowersList = async (skip = 0, limit = 20) => {
+  try {
+    const response = await api.get('/user/followers', {
+      params: { skip, limit }
     });
     return response;
   } catch (error) {

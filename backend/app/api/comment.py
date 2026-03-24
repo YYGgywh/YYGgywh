@@ -16,15 +16,18 @@ from app.utils.dependencies import rate_limit_dependency, security_validation_de
 router = APIRouter(tags=["comment"])
 
 # 根据payload获取当前用户
-def get_current_user_from_payload(payload: dict = Depends(get_current_user), db: Session = Depends(get_db)):
+def get_current_user_from_payload(payload: Optional[dict] = Depends(get_current_user), db: Session = Depends(get_db)):
     """根据payload获取当前用户"""
+    if not payload:
+        return None
+    
     user_id = payload.get("user_id")
     if not user_id:
-        raise HTTPException(status_code=401, detail="用户未认证")
+        return None
     
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        raise HTTPException(status_code=401, detail="用户不存在")
+        return None
     return user
 
 # 请求模型
@@ -110,7 +113,7 @@ class ReplyCommentResponse(BaseModel):
     data: dict
 
 @router.post("/add", response_model=AddCommentResponse)
-async def add_comment(request: AddCommentRequest, current_user: User = Depends(get_current_user_from_payload), db: Session = Depends(get_db), req: Request = Depends(rate_limit_dependency), sec: Request = Depends(security_validation_dependency)):
+async def add_comment(request: AddCommentRequest, current_user: Optional[User] = Depends(get_current_user_from_payload), db: Session = Depends(get_db), req: Request = Depends(rate_limit_dependency), sec: Request = Depends(security_validation_dependency)):
     """
     添加评论
     
@@ -134,6 +137,13 @@ async def add_comment(request: AddCommentRequest, current_user: User = Depends(g
     }
     ```
     """
+    # 检查用户是否登录
+    if not current_user:
+        raise HTTPException(
+            status_code=401, 
+            detail="请先登录后再发表评论"
+        )
+    
     # 敏感词检测
     from app.utils.sensitive_word_filter import create_filter
     filter = create_filter(db)
@@ -172,7 +182,7 @@ async def list_comment(
     pan_record_id: int = Query(..., description="排盘记录ID"),
     page: int = Query(default=1, ge=1, description="页码"),
     size: int = Query(default=10, ge=1, le=100, description="每页数量"),
-    current_user: User = Depends(get_current_user_from_payload),
+    current_user: Optional[User] = Depends(get_current_user_from_payload),
     db: Session = Depends(get_db),
     req: Request = Depends(rate_limit_dependency)
 ):
@@ -213,37 +223,64 @@ async def list_comment(
     
     # 查询一级评论（parent_id 为 NULL，关联用户信息和排盘记录，根据权限过滤）
     from sqlalchemy import or_
+    
+    # 构建过滤条件
+    filters = [
+        Comment.pan_record_id == pan_record_id,
+        Comment.is_visible == 1,
+        Comment.deleted_at.is_(None),
+        Comment.parent_id.is_(None),  # 只查询一级评论
+    ]
+    
+    # 根据用户登录状态添加权限过滤
+    if current_user:
+        # 登录用户：公开评论 或 评论作者是当前用户 或 排盘作者是当前用户
+        filters.append(
+            or_(
+                Comment.is_public == 1,
+                Comment.user_id == current_user.id,
+                PanRecord.user_id == current_user.id
+            )
+        )
+    else:
+        # 未登录用户：只显示公开评论
+        filters.append(Comment.is_public == 1)
+    
     comments = db.query(Comment, User).join(
         User, Comment.user_id == User.id
     ).join(
         PanRecord, Comment.pan_record_id == PanRecord.id
     ).filter(
-        Comment.pan_record_id == pan_record_id,
-        Comment.is_visible == 1,
-        Comment.deleted_at.is_(None),
-        Comment.parent_id.is_(None),  # 只查询一级评论
-        # 权限过滤：公开评论 或 评论作者是当前用户 或 排盘作者是当前用户
-        or_(
-            Comment.is_public == 1,
-            Comment.user_id == current_user.id,
-            PanRecord.user_id == current_user.id
-        )
+        *filters
     ).order_by(Comment.create_time.desc()).offset(offset).limit(size).all()
     
     # 查询总数（只统计一级评论，使用相同的过滤条件）
-    total = db.query(Comment).join(
-        PanRecord, Comment.pan_record_id == PanRecord.id
-    ).filter(
+    # 构建总数查询的过滤条件
+    total_filters = [
         Comment.pan_record_id == pan_record_id,
         Comment.is_visible == 1,
         Comment.deleted_at.is_(None),
         Comment.parent_id.is_(None),  # 只统计一级评论
-        # 权限过滤：公开评论 或 评论作者是当前用户 或 排盘作者是当前用户
-        or_(
-            Comment.is_public == 1,
-            Comment.user_id == current_user.id,
-            PanRecord.user_id == current_user.id
+    ]
+    
+    # 根据用户登录状态添加权限过滤
+    if current_user:
+        # 登录用户：公开评论 或 评论作者是当前用户 或 排盘作者是当前用户
+        total_filters.append(
+            or_(
+                Comment.is_public == 1,
+                Comment.user_id == current_user.id,
+                PanRecord.user_id == current_user.id
+            )
         )
+    else:
+        # 未登录用户：只显示公开评论
+        total_filters.append(Comment.is_public == 1)
+    
+    total = db.query(Comment).join(
+        PanRecord, Comment.pan_record_id == PanRecord.id
+    ).filter(
+        *total_filters
     ).count()
     
     # 构建响应数据
@@ -252,10 +289,12 @@ async def list_comment(
     items = []
     for comment, user in comments:
         # 查询当前用户是否已点赞该评论
-        like = db.query(CommentLike).filter(
-            CommentLike.user_id == current_user.id,
-            CommentLike.comment_id == comment.id
-        ).first()
+        like = None
+        if current_user:
+            like = db.query(CommentLike).filter(
+                CommentLike.user_id == current_user.id,
+                CommentLike.comment_id == comment.id
+            ).first()
         
         # 查询该评论的点赞总数
         like_count = db.query(CommentLike).filter(
@@ -263,28 +302,43 @@ async def list_comment(
         ).count()
         
         # 查询该评论的回复列表
-        replies = db.query(Comment, User).join(
-            User, Comment.user_id == User.id
-        ).filter(
+        # 构建回复过滤条件
+        reply_filters = [
             Comment.parent_id == comment.id,
             Comment.is_visible == 1,
             Comment.deleted_at.is_(None),
-            # 权限过滤：公开回复 或 回复作者是当前用户 或 排盘作者是当前用户
-            or_(
-                Comment.is_public == 1,
-                Comment.user_id == current_user.id,
-                author_id == current_user.id
+        ]
+        
+        # 根据用户登录状态添加权限过滤
+        if current_user:
+            # 登录用户：公开回复 或 回复作者是当前用户 或 排盘作者是当前用户
+            reply_filters.append(
+                or_(
+                    Comment.is_public == 1,
+                    Comment.user_id == current_user.id,
+                    author_id == current_user.id
+                )
             )
+        else:
+            # 未登录用户：只显示公开回复
+            reply_filters.append(Comment.is_public == 1)
+        
+        replies = db.query(Comment, User).join(
+            User, Comment.user_id == User.id
+        ).filter(
+            *reply_filters
         ).order_by(Comment.create_time.asc()).all()
         
         # 构建回复列表
         reply_items = []
         for reply, reply_user in replies:
             # 查询当前用户是否已点赞该回复
-            reply_like = db.query(CommentLike).filter(
-                CommentLike.user_id == current_user.id,
-                CommentLike.comment_id == reply.id
-            ).first()
+            reply_like = None
+            if current_user:
+                reply_like = db.query(CommentLike).filter(
+                    CommentLike.user_id == current_user.id,
+                    CommentLike.comment_id == reply.id
+                ).first()
             
             # 查询该回复的点赞总数
             reply_like_count = db.query(CommentLike).filter(

@@ -17,8 +17,10 @@ import {
   MainContentArea,
   UserProfileContent,
   PanRecordsContent,
+  FollowContent,
   UserIcon,
-  RecordIcon
+  RecordIcon,
+  FollowIcon
 } from '../../components/UserCenter';
 import PanDetailModal from '../../components/Modal/PanDetailModal';
 import { listPan, getPanDetail, toggleLike, toggleCollect, deletePan } from '../../api/panApi';
@@ -35,7 +37,8 @@ import { panTypeToChinese } from '../../utils/methodMapping';
 // 导航项配置
 const NAV_ITEMS = [
   { id: 'userCenter', label: '用户中心', icon: UserIcon },
-  { id: 'panRecords', label: '排盘记录', icon: RecordIcon }
+  { id: 'panRecords', label: '排盘记录', icon: RecordIcon },
+  { id: 'followList', label: '关注列表', icon: FollowIcon }
 ];
 
 const UserCenter = () => {
@@ -369,6 +372,8 @@ const UserCenter = () => {
             panTypeToChinese={panTypeToChinese}
           />
         );
+      case 'followList':
+        return <FollowContent />;
       default:
         return null;
     }

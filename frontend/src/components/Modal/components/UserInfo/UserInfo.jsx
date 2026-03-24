@@ -1,9 +1,9 @@
 /*
- * @file            frontend/src/components/common/UserInfo/UserInfo.jsx
+ * @file            frontend/src/components/Modal/components/UserInfo/UserInfo.jsx
  * @description     用户信息展示组件，包含头像、用户名和关注按钮
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-17 18:30:00
- * @lastModified    2026-03-18 10:08:34
+ * @lastModified    2026-03-24 16:14:11
  * Copyright © All rights reserved
 */
 
@@ -18,6 +18,7 @@ const UserInfo = ({
   userNickname, // 用户昵称
   isFollowed = false, // 是否已关注，默认为 false
   onFollow, // 关注/取消关注回调函数
+  disabled = false, // 是否禁用关注按钮，默认为 false
   showAvatar = true, // 是否显示头像，默认为 true
   showUsername = true, // 是否显示用户名，默认为 true
   showFollowButton = true, // 是否显示关注按钮，默认为 true
@@ -61,8 +62,9 @@ const UserInfo = ({
       {/* 条件渲染：如果 showFollowButton 为 true 且提供了 onFollow 回调，则显示关注按钮 */}
       {showFollowButton && onFollow && (
         <button
-          className={`${styles.followButton} ${isFollowed ? styles.followed : ''}`}
+          className={`${styles.followButton} ${isFollowed ? styles.followed : ''} ${disabled ? styles.disabled : ''}`}
           onClick={onFollow}
+          disabled={disabled}
         >
           {/* 根据 isFollowed 状态显示不同的按钮文本 */}
           {isFollowed ? '已关注' : '关注'}

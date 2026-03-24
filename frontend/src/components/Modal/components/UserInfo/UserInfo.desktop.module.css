@@ -82,6 +82,26 @@
   background-color: #E8E8E8;
 }
 
+.followButton.loading {
+  cursor: not-allowed;
+  opacity: 0.7;
+  background-color: #9CA3AF;
+}
+
+.followButton.followed.loading {
+  background-color: #D1D5DB;
+}
+
+.followButton.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: #9CA3AF;
+}
+
+.followButton.followed.disabled {
+  background-color: #D1D5DB;
+}
+
 /* 卡片模式样式 */
 .userInfoSectionCard {
   padding:  0 0 0 12px;

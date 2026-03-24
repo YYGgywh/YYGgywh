@@ -47,6 +47,14 @@ const CommentInput = ({
 
   const handleCommentInputClick = (e) => {
     e.stopPropagation();
+    
+    // 检查用户是否登录
+    if (!currentUser) {
+      // 在新标签页打开登录页面
+      window.open('/login', '_blank');
+      return;
+    }
+    
     setShowCommentInput(true);
   };
 
