@@ -10,11 +10,13 @@
 import React, { useState, useEffect } from 'react'; // 导入React核心库和Hooks
 import { useNavigate, useLocation } from 'react-router-dom'; // 导入useNavigate和useLocation钩子
 import styles from './Navigation.desktop.module.css'; // 导入Navigation组件样式（CSS Modules）
+import mobileStyles from './Navigation.mobile.module.css'; // 导入移动端样式模块
 import Logo from '../Logo/Logo'; // 导入Logo组件
 import MenuItem from '../MenuItem/MenuItem'; // 导入MenuItem组件
 import Button from '../Button/Button'; // 导入Button组件
 import { menuItems } from '../menuConfig';
 import { isLoggedIn } from '../../../utils/storage'; // 导入登录状态检查
+import yinYangIcon from '../../../assets/images/taiji.svg'; // 导入阴阳图标
 
 // 定义Navigation组件
 const Navigation = () => {
@@ -22,6 +24,34 @@ const Navigation = () => {
   const location = useLocation(); // 获取当前路由位置
   const [isScrolled, setIsScrolled] = useState(false); // 定义滚动状态，默认为false
   const [activeMenu, setActiveMenu] = useState('广场'); // 定义激活菜单状态，默认为'广场'
+  const [isMobile, setIsMobile] = useState(() => {
+    // 初始化时检测屏幕尺寸
+    return window.innerWidth < 768;
+  }); // 检测屏幕尺寸，判断是否为移动端
+  const [activeTab, setActiveTab] = useState('论剑'); // 移动端标签激活状态
+  
+  // 监听窗口大小变化，更新响应式状态
+  useEffect(() => {
+    const handleResize = () => {
+      // 防抖处理，避免频繁触发
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 立即执行一次，确保初始状态正确
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
 
   // URL路径到菜单项的映射
   const pathToMenuMap = {
@@ -75,56 +105,157 @@ const Navigation = () => {
     }
   };
 
-  // 返回JSX
-  return (
-    <nav className={`${styles.navigation} ${isScrolled ? styles.scrolled : ''}`}> {/* 渲染导航元素，设置动态类名 */}
-      <div className={styles.navigationContainer}> {/* 渲染导航容器 */}
-        <div className={styles.navigationLeft}> {/* 渲染左侧导航区域 */}
-          <Logo /> {/* 渲染Logo组件 */}
-          <ul className={styles.navigationMenu}> {/* 渲染导航菜单列表 */}
-            {/* 遍历菜单项数组，渲染每个菜单项 */}
+  // 渲染移动端导航
+  const renderMobileNavigation = () => (
+    <>
+      {/* 顶部导航 */}
+      <nav className={currentStyles.navigation}>
+        <div className={currentStyles.navigationContainer}>
+          {/* 左侧汉堡菜单 */}
+          <div className={currentStyles.navigationLeft}>
+            <div className={currentStyles.hamburgerMenu}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          
+          {/* 中间标签栏 */}
+          <div className={currentStyles.navTabs}>
+            <div 
+              className={`${currentStyles.tabItem} ${activeTab === '关注' ? currentStyles.active : ''}`}
+              onClick={() => setActiveTab('关注')}
+            >
+              关注
+            </div>
+            <div 
+              className={`${currentStyles.tabItem} ${activeTab === '论剑' ? currentStyles.active : ''}`}
+              onClick={() => setActiveTab('论剑')}
+            >
+              论剑
+            </div>
+            <div 
+              className={`${currentStyles.tabItem} ${activeTab === '同城' ? currentStyles.active : ''}`}
+              onClick={() => setActiveTab('同城')}
+            >
+              同城
+            </div>
+          </div>
+          
+          {/* 右侧搜索按钮 */}
+          <div className={currentStyles.searchButton}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </div>
+        </div>
+      </nav>
+      
+      {/* 底部导航 */}
+      <div className={currentStyles.bottomNavigation}>
+        <div className={`${currentStyles.navItem} ${activeMenu === '广场' ? currentStyles.active : ''}`} onClick={() => navigate('/')}>
+          <div className={currentStyles.navIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <span className={currentStyles.navText}>首页</span>
+        </div>
+        
+        <div className={currentStyles.navItem} onClick={() => navigate('/divination/liuyao')}>
+          <div className={currentStyles.navIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <span className={currentStyles.navText}>经楼</span>
+        </div>
+        
+        {/* 阴阳图标 */}
+        <div className={currentStyles.yinYangContainer}>
+          <div className={currentStyles.yinYangIcon} onClick={() => navigate('/divination/liuyao')}>
+            <img src={yinYangIcon} alt="阴阳" />
+          </div>
+        </div>
+        
+        <div className={currentStyles.navItem}>
+          <div className={currentStyles.navIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <span className={currentStyles.navText}>消息</span>
+        </div>
+        
+        <div className={currentStyles.navItem} onClick={() => handleLoginClick()}>
+          <div className={currentStyles.navIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <span className={currentStyles.navText}>我</span>
+        </div>
+      </div>
+    </>
+  );
+
+  // 渲染桌面端导航
+  const renderDesktopNavigation = () => (
+    <nav className={`${styles.navigation} ${isScrolled ? styles.scrolled : ''}`}>
+      <div className={styles.navigationContainer}>
+        <div className={styles.navigationLeft}>
+          <Logo />
+          <ul className={styles.navigationMenu}>
             {menuItems.map((item) => (
-              // 渲染MenuItem组件
               <MenuItem
-                key={item.name} // 设置key为菜单项名称
-                name={item.name} // 传递菜单项名称
-                hasDropdown={item.hasDropdown} // 传递是否有下拉菜单
-                dropdownItems={item.dropdownItems} // 传递下拉菜单项
-                dropdownConfig={item.dropdownConfig} // 传递下拉菜单配置
-                href={item.href} // 传递链接地址
-                isActive={activeMenu === item.name} // 传递是否激活
-                onClick={() => handleMenuClick(item.name)} // 传递点击事件处理函数
-              /> // 结束MenuItem组件
-            ))} {/* 结束map循环 */}
-          </ul> {/* 结束导航菜单列表 */}
-        </div> {/* 结束左侧导航区域 */}
+                key={item.name}
+                name={item.name}
+                hasDropdown={item.hasDropdown}
+                dropdownItems={item.dropdownItems}
+                dropdownConfig={item.dropdownConfig}
+                href={item.href}
+                isActive={activeMenu === item.name}
+                onClick={() => handleMenuClick(item.name)}
+              />
+            ))}
+          </ul>
+        </div>
 
-        <div className={styles.navigationRight}> {/* 渲染右侧导航区域 */}
-          <div className={styles.navigationUtils}> {/* 渲染导航工具区域 */}
-            <a href="#" className={styles.navigationLink}>帮助中心</a> {/* 渲染帮助中心链接 */}
-            <a href="#" className={styles.navigationLink}>中文/EN</a> {/* 渲染语言切换链接 */}
-          </div> {/* 结束导航工具区域 */}
+        <div className={styles.navigationRight}>
+          <div className={styles.navigationUtils}>
+            <a href="#" className={styles.navigationLink}>帮助中心</a>
+            <a href="#" className={styles.navigationLink}>中文/EN</a>
+          </div>
 
-          <div className={styles.navigationActions}> {/* 渲染导航操作区域 */}
+          <div className={styles.navigationActions}>
             <Button 
               variant="secondary" 
               onClick={handleLoginClick}
             >
               {isLoggedIn() ? '用户中心' : '登录'}
-            </Button> {/* 渲染登录按钮 */}
+            </Button>
             <Button 
               variant="primary" 
               onClick={handleTryClick}
             >
               免费试用
-            </Button> {/* 渲染免费试用按钮 */}
-          </div> {/* 结束导航操作区域 */}
+            </Button>
+          </div>
           
-        </div> {/* 结束右侧导航区域 */}
-      </div> {/* 结束导航容器 */}
+        </div>
+      </div>
+    </nav>
+  );
 
-    </nav> // 结束导航元素
-
+  // 返回JSX
+  return (
+    <>
+      {isMobile ? renderMobileNavigation() : renderDesktopNavigation()}
+    </>
   ); // 结束return
   
 }; // 结束组件定义

@@ -3,7 +3,7 @@
  * @description     首页组件 - 显示公开排盘记录列表，支持瀑布流布局和交互功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 13:38:55
- * @lastModified    2026-03-23 10:52:16
+ * @lastModified    2026-03-25 16:38:17
  * Copyright © All rights reserved
 */
 
@@ -28,7 +28,8 @@ import avatar9 from '../assets/images/avatar-9.svg'; // 导入用户头像图片
 import avatar10 from '../assets/images/avatar-10.svg'; // 导入用户头像图片资源 10
 // 导入样式文件 - CSS Modules（桌面端样式）
 import styles from './HomePage.desktop.module.css'; // 导入桌面端样式模块
-// 移动端样式模块暂不导入，避免变量冲突
+// 导入移动端样式模块
+import mobileStyles from './HomePage.mobile.module.css'; // 导入移动端样式模块
 import InteractionButtons from '../components/Modal/components/InteractionButtons/InteractionButtons'; // 导入互动按钮组件
 import { getUserInfo } from '../utils/storage'; // 导入获取用户信息的工具函数
 
@@ -43,6 +44,36 @@ import PanDetailModal from '../components/Modal/PanDetailModal'; // 导入排盘
  * 功能：显示公开排盘记录列表，支持瀑布流布局、卡片点击、点赞等交互
  */
 const HomePage = () => {
+  // ==================== 响应式样式管理 ====================  
+  // 检测屏幕尺寸，判断是否为移动端
+  const [isMobile, setIsMobile] = useState(() => {
+    // 初始化时检测屏幕尺寸
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新响应式状态
+  useEffect(() => {
+    const handleResize = () => {
+      // 防抖处理，避免频繁触发
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 立即执行一次，确保初始状态正确
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   // ==================== 状态管理 ====================
   // panRecords: 存储排盘记录列表，初始值为空数组
   const [panRecords, setPanRecords] = useState([]);
@@ -273,9 +304,9 @@ const HomePage = () => {
     // 加载状态：显示加载动画
     if (loading) {
       return (
-        <div className={styles.loadingContainer}>
+        <div className={currentStyles.loadingContainer}>
           {/* 加载动画 */}
-          <div className={styles.loadingSpinner}></div>
+          <div className={currentStyles.loadingSpinner}></div>
           {/* 加载提示文本 */}
           <p>加载中...</p>
         </div>
@@ -285,11 +316,11 @@ const HomePage = () => {
     // 错误状态：显示错误信息和重试按钮
     if (error) {
       return (
-        <div className={styles.errorContainer}>
+        <div className={currentStyles.errorContainer}>
           {/* 错误信息 */}
           <p>{error}</p>
           {/* 重试按钮 */}
-          <button className={styles.retryButton} onClick={fetchPanRecords}>
+          <button className={currentStyles.retryButton} onClick={fetchPanRecords}>
             重试
           </button>
         </div>
@@ -299,7 +330,7 @@ const HomePage = () => {
     // 空状态：显示暂无数据提示
     if (panRecords.length === 0) {
       return (
-        <div className={styles.emptyContainer}>
+        <div className={currentStyles.emptyContainer}>
           {/* 空状态提示 */}
           <p>暂无排盘记录</p>
         </div>
@@ -308,19 +339,19 @@ const HomePage = () => {
 
     // 正常状态：显示排盘记录列表
     return (
-      <div className={styles.waterfallContainer}>
+      <div className={currentStyles.waterfallContainer}>
         {/* 瀑布流网格布局 */}
-        <div className={styles.waterfallGrid}>
+        <div className={currentStyles.waterfallGrid}>
           {/* 遍历排盘记录，渲染每个卡片 */}
           {panRecords.map((item) => (
             <div 
               key={item.id} // 使用记录 ID 作为唯一 key
-              className={styles.waterfallCard} // 卡片样式
+              className={currentStyles.waterfallCard} // 卡片样式
               onClick={() => handleCardClick(item)} // 点击事件：显示详情弹窗
               style={{ cursor: 'pointer' }} // 鼠标样式：手型光标
             >
               {/* 卡片内容区域 */}
-                <div className={styles.cardContent}>
+                <div className={currentStyles.cardContent}>
                   {/* 卡片标签 */}
                   <CardTags tags={item.tags} />
                   
@@ -335,7 +366,7 @@ const HomePage = () => {
                   <PointsInfo points={item.points} />
                   
                   {/* 卡片元信息：用户信息和发布时间 */}
-                  <div className={styles.cardMeta}>
+                  <div className={currentStyles.cardMeta}>
                     {/* 用户信息 */}
                     <UserInfo 
                       userAvatar={item.user_avatar}
@@ -345,11 +376,11 @@ const HomePage = () => {
                     />
                     
                     {/* 发布时间 */}
-                    <span className={styles.postTime}>2小时前</span>
+                    <span className={currentStyles.postTime}>2小时前</span>
                   </div>
                   
                   {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}
-                  <div className={styles.cardStats}>
+                  <div className={currentStyles.cardStats}>
                     {/* 互动按钮组件 */}
                     <InteractionButtons
                       variant="card"
@@ -471,31 +502,31 @@ const HomePage = () => {
   // ==================== 组件渲染 ====================
   // 返回组件的 JSX 结构
   return (
-    <div className={styles.appContainer}>
+    <div className={currentStyles.appContainer}>
       {/* 页面头部：固定导航栏 */}
-      <header className={styles.appHeader}>
+      <header className={currentStyles.appHeader}>
         {/* 导航栏组件 */}
         <Navigation />
       </header>
       
       {/* 页面主内容区域 */}
-      <main className={styles.appMain}>
+      <main className={currentStyles.appMain}>
         {/* 首页容器：包含推荐标签和瀑布流内容 */}
-        <div className={styles.homeContainer}>
+        <div className={currentStyles.homeContainer}>
           {/* 推荐标签栏 */}
-          <div className={styles.recommendedTags}>
+          <div className={currentStyles.recommendedTags}>
             {/* 全部标签 - 激活状态 */}
-            <div className={`${styles.tagItem} ${styles.active}`}>全部</div>
+            <div className={`${currentStyles.tagItem} ${currentStyles.active}`}>全部</div>
             {/* 六爻标签 */}
-            <div className={styles.tagItem}>六爻</div>
+            <div className={currentStyles.tagItem}>六爻</div>
             {/* 四柱标签 */}
-            <div className={styles.tagItem}>四柱</div>
+            <div className={currentStyles.tagItem}>四柱</div>
             {/* 风水标签 */}
-            <div className={styles.tagItem}>风水</div>
+            <div className={currentStyles.tagItem}>风水</div>
             {/* 命理标签 */}
-            <div className={styles.tagItem}>命理</div>
+            <div className={currentStyles.tagItem}>命理</div>
             {/* 占卜标签 */}
-            <div className={styles.tagItem}>占卜</div>
+            <div className={currentStyles.tagItem}>占卜</div>
           </div>
           
           {/* 瀑布流容器：根据状态渲染加载、错误、空状态或正常内容 */}

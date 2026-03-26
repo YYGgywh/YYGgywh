@@ -46,6 +46,28 @@
    适用于移动设备的样式规则
    ============================================ */
 
+/* 页面容器样式 */
+.appContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 页面头部样式 */
+.appHeader {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* 页面主内容区域 */
+.appMain {
+  flex: 1;
+  padding-bottom: 80px;
+}
+
 /* 首页容器样式 - 移动端 */
 .homeContainer {
   /* 最大宽度 - 100% */
@@ -54,84 +76,209 @@
   padding: var(--container-padding);
 }
 
-/* 瀑布流网格布局 - 中屏幕 */
-@media (max-width: 768px) {
-  /* 调整网格列数 */
-  .waterfallGrid {
-    /* 网格列数 - 2列 */
-    grid-template-columns: repeat(2, 1fr);
-    /* 网格间距 - 使用变量 */
-    gap: var(--card-gap);
-  }
-  
-  /* 卡片内容区域 - 移动端 */
-  .cardContent {
-    /* 内边距 - 使用变量 */
-    padding: var(--card-content-padding);
-  }
-  
-  /* 卡片标题样式 - 移动端 */
-  .cardTitle {
-    /* 字体大小 - 使用变量 */
-    font-size: var(--card-title-font-size);
-  }
-  
-  /* 卡片统计信息区域 - 移动端 */
-  .cardStats {
-    /* 间距 */
-    gap: 10px;
-  }
-  
-  /* 统计图标 - 移动端 */
-  .statIcon {
-    /* 字体大小 */
-    font-size: 12px;
-  }
-  
-  /* 统计数字 - 移动端 */
-  .statCount {
-    /* 字体大小 */
-    font-size: 9px;
-  }
+/* 推荐标签样式 */
+.recommendedTags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  height: 35px;
+  align-items: center;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* 瀑布流网格布局 - 小屏幕 */
-@media (max-width: 480px) {
-  /* 调整网格列数 */
+.recommendedTags::-webkit-scrollbar {
+  display: none;
+}
+
+/* 标签项样式 */
+.tagItem {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 20px;
+  background-color: white;
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tagItem.active {
+  background-color: #1890ff;
+  color: white;
+  box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+}
+
+/* 瀑布流容器样式 */
+.waterfallContainer {
+  margin-top: 16px;
+}
+
+/* 瀑布流网格布局 - 默认两列 */
+.waterfallGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--card-gap);
+}
+
+/* 卡片样式 */
+.waterfallCard {
+  background-color: white;
+  border: 1px solid rgba(19, 0, 255, 0.56);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.waterfallCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 卡片内容区域 */
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--card-content-padding);
+}
+
+/* 卡片元信息区域 */
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  color: #666;
+}
+
+/* 发布时间 */
+.postTime {
+  font-size: 9px;
+  color: #999;
+  padding-right: 12px;
+}
+
+/* 卡片统计信息区域 */
+.cardStats {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: #666;
+  justify-content: center;
+}
+
+/* 加载状态样式 */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #666;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e0e0e0;
+  border-top: 3px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 错误状态样式 */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #666;
+  text-align: center;
+}
+
+.errorContainer p {
+  margin-bottom: 16px;
+  color: #ff4d4f;
+}
+
+.retryButton {
+  padding: 8px 16px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.retryButton:hover {
+  background-color: #40a9ff;
+}
+
+/* 空状态样式 */
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #666;
+  text-align: center;
+}
+
+/* 小屏幕适配 - 超小屏幕（< 360px）单列 */
+@media (max-width: 359px) {
+  /* 调整网格列数为单列 */
   .waterfallGrid {
-    /* 网格列数 - 1列 */
     grid-template-columns: 1fr;
-    /* 网格间距 - 使用变量 */
     gap: var(--card-gap-small);
   }
   
   /* 卡片内容区域 - 小屏幕 */
   .cardContent {
-    /* 内边距 - 使用变量 */
     padding: var(--card-content-padding-small);
-  }
-  
-  /* 卡片标题样式 - 小屏幕 */
-  .cardTitle {
-    /* 字体大小 - 使用变量 */
-    font-size: var(--card-title-font-size-small);
+    gap: 8px;
   }
   
   /* 卡片统计信息区域 - 小屏幕 */
   .cardStats {
-    /* 间距 - 使用变量 */
-    gap: var(--stat-gap-small);
+    gap: 8px;
   }
-  
-  /* 统计图标 - 小屏幕 */
-  .statIcon {
-    /* 字体大小 - 使用变量 */
-    font-size: var(--stat-icon-font-size-small);
+}
+
+/* 中等屏幕适配（768px - 1024px）三列 */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* 调整网格列数为三列 */
+  .waterfallGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--card-gap);
   }
-  
-  /* 统计数字 - 小屏幕 */
-  .statCount {
-    /* 字体大小 - 使用变量 */
-    font-size: var(--stat-count-font-size-small);
+}
+
+/* 大屏幕适配（> 1024px）四列 */
+@media (min-width: 1025px) {
+  /* 调整网格列数为四列 */
+  .waterfallGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--card-gap);
   }
 }
