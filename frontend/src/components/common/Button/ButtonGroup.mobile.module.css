@@ -1,0 +1,78 @@
+/*
+ * @file            frontend/src/components/common/Button/ButtonGroup.mobile.module.css
+ * @description     按钮组组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 15:45:00
+ * @lastModified    2026-03-26 15:45:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   基础按钮组样式
+   定义按钮组容器的基础布局和外观
+   ============================================ */
+
+.buttonGroup {
+  display: flex;           /* 使用弹性布局 */
+  align-items: center;     /* 子元素垂直居中对齐 */
+  justify-content: space-evenly; /* 子元素在主轴上均匀分布 */
+}
+
+/* ============================================
+   排列方向样式
+   定义按钮组的水平或垂直排列方式
+   ============================================ */
+
+/* 水平排列（默认） */
+.buttonGroupHorizontal {
+  flex-direction: row;     /* 主轴方向为水平，子元素从左到右排列 */
+}
+
+/* 垂直排列 */
+.buttonGroupVertical {
+  flex-direction: column;  /* 主轴方向为垂直，子元素从上到下排列 */
+}
+
+/* ============================================
+   间距样式
+   定义按钮组内各按钮之间的间距大小
+   ============================================ */
+
+/* 小间距 */
+.buttonGroupSpacingSmall {
+  gap: 3px;                /* 按钮之间间隔3px */
+}
+
+/* 中间距（默认） */
+.buttonGroupSpacingMedium {
+  gap: 6px;                /* 按钮之间间隔6px */
+}
+
+/* 大间距 */
+.buttonGroupSpacingLarge {
+  gap: 8px;               /* 按钮之间间隔8px */
+}
+
+/* ============================================
+   响应式设计
+   适配小屏幕设备的样式调整
+   ============================================ */
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .buttonGroup {
+    justify-content: center;
+  }
+  
+  .buttonGroupSpacingSmall {
+    gap: 2px;
+  }
+  
+  .buttonGroupSpacingMedium {
+    gap: 4px;
+  }
+  
+  .buttonGroupSpacingLarge {
+    gap: 6px;
+  }
+}

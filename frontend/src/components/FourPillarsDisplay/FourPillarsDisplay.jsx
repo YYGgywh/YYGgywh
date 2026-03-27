@@ -3,7 +3,7 @@
  * @description     四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-22 11:00:00
- * @lastModified    2026-03-17 11:26:04
+ * @lastModified    2026-03-26 17:32:59
  * Copyright © All rights reserved
 */
 
@@ -14,7 +14,9 @@ import { getXunKongDisplay } from '../../utils/xunKongUtils'; // 导入旬空判
 import '../../styles/elementColors.css'; // 导入五行颜色样式
 
 // 导入桌面端样式
-import styles from "./FourPillarsDisplay.desktop.module.css";
+import desktopStyles from "./FourPillarsDisplay.desktop.module.css";
+// 导入移动端样式
+import mobileStyles from "./FourPillarsDisplay.mobile.module.css";
 
 // 默认显示配置
 const defaultDisplayConfig = {
@@ -68,7 +70,7 @@ const calculateDisplayState = (config, rowKey, columnKey) => {
 };
 
 // 四柱显示组件，用于显示年、月、日、时四柱的干支和空亡信息
-const Pillar = ({ label, gan, zhi, vacancy, className, displayConfig, rowKey }) => {
+const Pillar = ({ label, gan, zhi, vacancy, className, displayConfig, rowKey, styles }) => {
   const prefix = className;
   
   // 计算各元素的显示状态
@@ -131,8 +133,11 @@ const FourPillarsDisplay = React.memo(({
   hourPillarInfo = {}, // 时柱信息对象，包含时干、时柱地支和时柱空亡
   className = '', // 自定义类名，用于添加额外的样式
   isColorMode = false, // 是否启用彩色模式
-  displayConfig = defaultDisplayConfig // 显示配置
+  displayConfig = defaultDisplayConfig, // 显示配置
+  isMobile = false // 是否为移动端
 }) => {
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 从ganzhiInfo中解构出所有四柱信息
   const {
     lunar_year_gan_exact = '', // 年柱的干支
@@ -201,6 +206,7 @@ const FourPillarsDisplay = React.memo(({
           className={row.className}
           displayConfig={displayConfig}
           rowKey={row.key}
+          styles={styles}
         />
       ))}
     </div>
@@ -252,7 +258,8 @@ FourPillarsDisplay.propTypes = {
         vacancy: PropTypes.bool
       })
     })
-  })
+  }),
+  isMobile: PropTypes.bool
 };
 
 // 为 FourPillarsDisplay 组件添加 displayName，便于在 React DevTools 中调试

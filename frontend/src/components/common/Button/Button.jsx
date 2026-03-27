@@ -8,11 +8,12 @@
 */
 
 // 导入 React 核心库
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // 导入 PropTypes 用于类型检查
 import PropTypes from 'prop-types';
 // 导入 CSS Modules 样式文件
 import styles from './Button.desktop.module.css';
+import mobileStyles from './Button.mobile.module.css';
 
 /**
  * 基础按钮组件
@@ -31,6 +32,34 @@ const Button = React.memo(({
   ariaLabel,         // 无障碍访问标签
   ...props           // 其他属性，会传递给底层 button 元素
 }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   /**
    * 构建按钮的 CSS 类名字符串
    * @returns {string} 完整的 CSS 类名字符串
@@ -38,21 +67,21 @@ const Button = React.memo(({
   const getButtonClassName = () => {
     // 定义基础类名数组
     const classNames = [
-      styles.button,  // 基础按钮样式
+      currentStyles.button,  // 基础按钮样式
       // 根据 type 属性添加对应的样式类（如 buttonPrimary）
-      styles[`button${type.charAt(0).toUpperCase() + type.slice(1)}`],
+      currentStyles[`button${type.charAt(0).toUpperCase() + type.slice(1)}`],
       // 根据 size 属性添加对应的样式类（如 buttonMedium）
-      styles[`button${size.charAt(0).toUpperCase() + size.slice(1)}`]
+      currentStyles[`button${size.charAt(0).toUpperCase() + size.slice(1)}`]
     ];
     
     // 如果按钮被禁用，添加禁用状态类名
     if (disabled) {
-      classNames.push(styles.buttonDisabled);
+      classNames.push(currentStyles.buttonDisabled);
     }
     
     // 如果按钮处于加载状态，添加加载状态类名
     if (loading) {
-      classNames.push(styles.buttonLoading);
+      classNames.push(currentStyles.buttonLoading);
     }
     
     // 如果传入了额外的类名，添加到数组
@@ -123,12 +152,12 @@ const Button = React.memo(({
     >
       {/* 加载状态指示器 */}
       {loading && (
-        <span className={styles.loadingIndicator}>
-          <span className={styles.loadingSpinner}></span>
+        <span className={currentStyles.loadingIndicator}>
+          <span className={currentStyles.loadingSpinner}></span>
         </span>
       )}
       {/* 按钮文本内容 */}
-      <span className={styles.buttonText}>
+      <span className={currentStyles.buttonText}>
         {children}
       </span>
     </button>

@@ -1,0 +1,149 @@
+/*
+ * @file            frontend/src/components/Header/MenuItem/MenuItem.mobile.module.css
+ * @description     导航菜单项组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:20:00
+ * @lastModified    2026-03-26 17:20:00
+ * Copyright © All rights reserved
+*/
+
+.menuItem {
+  position: relative; 
+  display: flex; 
+  align-items: center; 
+}
+
+
+.menuLink {
+  display: flex; 
+  align-items: center; 
+  gap: 4px; 
+  padding: 6px 8px; 
+  color: #333333; 
+  text-decoration: none; 
+  font-size: 0.875rem; 
+  font-weight: 500; 
+  line-height: 1.4; 
+  transition: all 0.2s ease; 
+  border-radius: 4px; 
+  position: relative; 
+  touch-action: manipulation;
+}
+
+
+.menuLink:hover {
+  color: #1890FF; 
+  background-color: #F9FAFB; 
+}
+
+
+.menuLink.active {
+  color: #1890FF; 
+  font-weight: 600; 
+}
+
+
+.menuLink.active::after {
+  content: ''; 
+  position: absolute; 
+  bottom: 0; 
+  left: 8px; 
+  right: 8px; 
+  height: 2px; 
+  background-color: #1890FF; 
+  border-radius: 1px; 
+}
+
+
+
+.dropdownArrow {
+  color: #666666; 
+  transition: transform 0.2s ease, color 0.2s ease; 
+  width: 10px; 
+  height: 10px; 
+}
+
+
+.menuItem:hover .dropdownArrow {
+  color: #1890FF; 
+  transform: translateY(1px); 
+}
+
+
+.dropdownMenu {
+  position: absolute; 
+  top: 100%; 
+  left: 0; 
+  background-color: #FFFFFF; 
+  border-radius: 6px; 
+  box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.1); 
+  z-index: 100; 
+  opacity: 0; 
+  transform: translateY(3px); 
+  animation: dropdownFadeIn 0.2s ease forwards; 
+  min-width: fit-content !important; 
+  width: auto !important; 
+}
+
+
+@keyframes dropdownFadeIn {
+  
+  from {
+    opacity: 0; 
+    transform: translateY(-3px); 
+  } 
+  
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
+
+
+.dropdownMenuSimple {
+  min-width: 70px; 
+  list-style: none; 
+  padding-top: 6px; 
+  padding-bottom: 6px; 
+}
+
+
+.dropdownMenuSimple .dropdownItem {
+  display: block; 
+  padding: 10px 14px; 
+  color: #333333; 
+  text-decoration: none; 
+  font-size: 0.8125rem; 
+  font-weight: 400; 
+  transition: all 0.2s ease; 
+  touch-action: manipulation;
+}
+
+
+.dropdownMenuSimple .dropdownItem:hover {
+  background-color: #F9FAFB; 
+  color: #1890FF; 
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .menuLink {
+    padding: 5px 6px; 
+    font-size: 0.8125rem; 
+    gap: 3px; 
+  }
+  
+  .dropdownArrow {
+    width: 8px; 
+    height: 8px; 
+  }
+  
+  .dropdownMenuSimple {
+    min-width: 60px; 
+  }
+  
+  .dropdownMenuSimple .dropdownItem {
+    padding: 8px 12px; 
+    font-size: 0.75rem; 
+  }
+}

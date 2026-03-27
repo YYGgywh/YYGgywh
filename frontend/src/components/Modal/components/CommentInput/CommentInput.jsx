@@ -15,7 +15,8 @@ import EmojiPicker from '../../../common/EmojiPicker/EmojiPicker';
 import { getFrontendUserInfo } from '../../../../utils/storage';
 import SmilingFaceIcon from '../../../../assets/images/smiling face.svg';
 import AtIcon from '../../../../assets/images/@.svg';
-import styles from './CommentInput.desktop.module.css';
+import desktopStyles from './CommentInput.desktop.module.css';
+import mobileStyles from './CommentInput.mobile.module.css';
 
 const MAX_LENGTH = 1000;
 
@@ -37,7 +38,33 @@ const CommentInput = ({
   const [error, setError] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
   const commentInputRef = useRef(null);
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
 
   // 获取当前用户信息
   useEffect(() => {
@@ -162,6 +189,7 @@ const CommentInput = ({
             onCollect={onCollect}
             onComment={handleCommentInputClick}
             onShare={onShare}
+            isMobile={isMobile}
           />
         </div>
       ) : (

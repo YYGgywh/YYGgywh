@@ -1,0 +1,78 @@
+/*
+ * @file            frontend/src/components/Header/Logo/Logo.mobile.module.css
+ * @description     圆运阁品牌Logo组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:05:00
+ * @lastModified    2026-03-26 17:05:00
+ * Copyright © All rights reserved
+*/
+
+.logo {
+  display: flex; 
+  align-items: center; 
+  gap: 4px; 
+  text-decoration: none; 
+  transition: opacity 0.2s ease; 
+}
+
+
+.logo:hover {
+  opacity: 0.8; 
+}
+
+
+.logoIcon {
+  width: 32px; 
+  height: 32px; 
+  flex-shrink: 0; 
+}
+
+
+.logoTextContainer {
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+
+.logoTextMain {
+  font-size: 0.875rem; 
+  font-weight: 700; 
+  color: #000000; 
+  letter-spacing: 0.5px; 
+  line-height: 1; 
+}
+
+
+.logoTextSub {
+  font-size: 0.625rem; 
+  font-weight: 500; 
+  color: #000000; 
+  letter-spacing: 0.3px; 
+  line-height: 1; 
+  margin-top: 2px; 
+  width: 100%; 
+  text-align: justify; 
+  text-justify: distribute; 
+  text-align-last: justify; 
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .logo {
+    gap: 3px; 
+  }
+  
+  .logoIcon {
+    width: 28px; 
+    height: 28px; 
+  }
+  
+  .logoTextMain {
+    font-size: 0.75rem; 
+  }
+  
+  .logoTextSub {
+    font-size: 0.5625rem; 
+  }
+}

@@ -7,9 +7,10 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; /* 引入 PropTypes 库，用于类型检查 */
-import styles from './BriefDivinationQuery.desktop.module.css';
+import desktopStyles from './BriefDivinationQuery.desktop.module.css';
+import mobileStyles from './BriefDivinationQuery.mobile.module.css';
 import {
   formatSolarDate,
   formatSolarTime,
@@ -24,9 +25,43 @@ import {
  * @param {Object} props.formData - 表单数据对象，包含求测者信息和占题
  * @param {Object} props.divinationData - 占卜数据对象，包含日历信息
  * @param {string} props.className - 自定义类名
+ * @param {boolean} props.isMobile - 是否为移动端（默认 false）
  * @returns {JSX.Element|null} 返回简要占卜查询信息的 JSX 元素，无数据时返回 null
  */
-const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, className = '', variant = 'default' }) => {
+const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, className = '', variant = 'default', isMobile: propIsMobile = false }) => {
+  // 移动端状态管理，优先使用 props 传递的 isMobile 值
+  const [isMobile, setIsMobile] = useState(() => {
+    if (propIsMobile !== undefined) {
+      return propIsMobile;
+    }
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    // 仅当未通过 props 传递 isMobile 时才监听窗口变化
+    if (propIsMobile === undefined) {
+      const handleResize = () => {
+        clearTimeout(window.resizeTimeout);
+        window.resizeTimeout = setTimeout(() => {
+          setIsMobile(window.innerWidth < 768);
+        }, 100);
+      };
+      
+      // 初始执行一次
+      handleResize();
+      // 添加窗口大小变化监听器
+      window.addEventListener('resize', handleResize);
+      // 组件卸载时移除监听器
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(window.resizeTimeout);
+      };
+    }
+  }, [propIsMobile]);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   const calendarInfo = divinationData.calendar_info || {};
   
   console.log('BriefDivinationQuery - formData:', formData);
@@ -80,17 +115,23 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     console.log('BriefDivinationQuery - solarInfo:', solarInfo);
     console.log('BriefDivinationQuery - lunarInfo:', lunarInfo);
     
-    if (!solarInfo || !lunarInfo) {
-      console.log('BriefDivinationQuery - solarInfo 或 lunarInfo 为空');
+    if (!solarInfo) {
+      console.log('BriefDivinationQuery - solarInfo 为空');
       return '';
     }
     
     console.log('BriefDivinationQuery - 格式化后的时间:', { solarDate, solarTime, lunarDate, lunarTime });
     
-    const result = `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）`;
+    // 根据 isMobile 状态决定是否包含农历日期
+    let result;
+    if (isMobile) {
+      result = `${solarDate} ${solarTime}`;
+    } else {
+      result = lunarInfo ? `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）` : `${solarDate} ${solarTime}`;
+    }
     console.log('BriefDivinationQuery - timeText:', result);
     return result;
-  }, [calendarInfo.solar_info, calendarInfo.lunar_info]);
+  }, [calendarInfo.solar_info, calendarInfo.lunar_info, isMobile]);
   
   // 如果没有数据，则不渲染任何内容
   if (!briefText) {
@@ -107,8 +148,8 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
       >
         {/* 卡片模式：四行显示 */}
         {solarDate && <div className={styles.solarDate}>{solarDate} {solarTime}</div>}
-        {lunarDate && <div className={styles.lunarDate}>（{lunarDate} {lunarTime}）</div>}
-        <div className={styles.personalInfo}>{`${location} ${firstName}${lastName} ${gender} ${birthYearText}`.trim()}</div>
+        {!isMobile && lunarDate && <div className={styles.lunarDate}>（{lunarDate} {lunarTime}）</div>}
+        {!isMobile && <div className={styles.personalInfo}>{`${location} ${firstName}${lastName} ${gender} ${birthYearText}`.trim()}</div>}
         {questionText && <div className={styles.questionText}>占：{questionText}</div>}
       </div>
     );
@@ -150,7 +191,8 @@ BriefDivinationQuery.propTypes = {
     })
   }),
   className: PropTypes.string,        // className 属性必须是字符串类型
-  variant: PropTypes.oneOf(['default', 'card'])  // variant 属性必须是 'default' 或 'card'
+  variant: PropTypes.oneOf(['default', 'card']),  // variant 属性必须是 'default' 或 'card'
+  isMobile: PropTypes.bool            // isMobile 属性必须是布尔类型
 };
 
 // 为 BriefDivinationQuery 组件添加 displayName，便于在 React DevTools 中调试

@@ -1,9 +1,9 @@
 /*
  * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoGridDisplay/LiuYaoGridDisplay.mobile.module.css
  * @description     六爻排盘网格展示组件移动端样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 11:50:00
- * @lastModified    2026-03-13 11:50:00
+ * @lastModified    2026-03-26 18:41:55
  * Copyright © All rights reserved
 */
 
@@ -60,7 +60,7 @@
 .yaoGan,
 .yaoZhi,
 .yaoSiYin {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   white-space: nowrap;
 }
 
@@ -87,7 +87,7 @@
 
 .liuYaoDetails p,
 .liuYaoAccessory p {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: var(--text-color);
   text-indent: 0;
 }
@@ -108,7 +108,7 @@
 }
 
 .chongHe {
-  font-size: 0.5rem;
+  font-size: 0.625rem;
   padding: 0 2px;
 }
 
@@ -150,7 +150,7 @@
 /* 移动端适配 */
 @media (max-width: 480px) {
   .liuYaoGrid {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
   
   .gridCell {
@@ -164,6 +164,6 @@
   .yaoGan,
   .yaoZhi,
   .yaoSiYin {
-    font-size: 0.625rem;
+    font-size: 0.875rem;
   }
 }

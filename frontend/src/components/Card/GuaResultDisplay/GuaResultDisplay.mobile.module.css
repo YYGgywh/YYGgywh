@@ -1,0 +1,46 @@
+/*
+ * @file            frontend/src/components/Card/GuaResultDisplay/GuaResultDisplay.mobile.module.css
+ * @description     卦象结果显示组件样式 - 移动端专用
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 14:30:00
+ * @lastModified    2026-03-26 14:30:00
+ * Copyright © All rights reserved
+*/
+
+/* 卦象结果显示容器 */
+.guaResultDisplay {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+/* 结果标签 */
+.resultLabel {
+  font-size: 12px;
+  color: #666;
+  margin-right: 6px;
+  font-weight: 500;
+}
+
+/* 结果值 */
+.resultValue {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .guaResultDisplay {
+    padding: 4px;
+  }
+  
+  .resultLabel {
+    font-size: 11px;
+    margin-right: 4px;
+  }
+  
+  .resultValue {
+    font-size: 11px;
+  }
+}

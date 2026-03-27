@@ -8,19 +8,23 @@
 */
 
 // 导入 React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // 导入时间格式化工具函数
 import { formatStandardTime } from '../../../../utils';
 // 导入样式文件
-import styles from './PostHeader.desktop.module.css';
+import desktopStyles from './PostHeader.desktop.module.css';
+import mobileStyles from './PostHeader.mobile.module.css';
 
 // 帖子头部组件，接收数据和配置参数作为 props
 const PostHeader = ({ 
   data, // 帖子数据对象
   showTitle = true, // 是否显示标题，默认为 true
   showTags = true, // 是否显示标签，默认为 true
-  showMeta = true // 是否显示发布元数据，默认为 true
+  showMeta = true, // 是否显示发布元数据，默认为 true
+  isMobile = false // 是否为移动端
 }) => {
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 渲染组件
   return (
     <div className={styles.postHeader}>

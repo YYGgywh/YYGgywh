@@ -16,7 +16,8 @@ import { followUser, unfollowUser, checkFollowStatus } from "../../api/userApi";
 import PanImageViewer from "../PanImageViewer/PanImageViewer";
 import LiuYaoInfoContainer from "../LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer";
 import { UserInfo, PostHeader, CommentsSection, CommentInput, DivinationSupplementleInfo, EditSupplementModal } from "./components";
-import styles from "./PanDetailModal.desktop.module.css";
+import desktopStyles from "./PanDetailModal.desktop.module.css";
+import mobileStyles from "./PanDetailModal.mobile.module.css";
 
 const PanDetailModal = ({ isOpen, onClose, data }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -32,8 +33,34 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [activeButtons, setActiveButtons] = useState(['liuqin', 'fuchen', 'yinyang', 'colorChange']);
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
   const commentInputRef = useRef(null);
   const commentsSectionRef = useRef(null);
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   // 使用 ref 存储最新状态，解决闭包问题
   const stateRef = useRef({
@@ -268,94 +295,210 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
 
   if (!isOpen || !data) return null;
 
+  // 桌面端布局
+  if (!isMobile) {
+    return (
+      <div className={styles.modalOverlay} onClick={handleOverlayClick}>
+        <div className={styles.modalContent}>
+          {/* 左侧区域 */}
+          <div className={styles.modalLeftContent}>
+            {/* 左侧头部区域 */}
+            <div className={styles.modalLeftHeader}>
+              <PostHeader data={data} showTitle={false} isMobile={isMobile} />
+            </div>
+
+            {/* 左侧主体区域 - 上下垂直分栏 */}
+            <div className={styles.modalLeftBody}>
+              {/* 左侧主体区域上部 - 六爻排盘信息 */}
+              <div className={styles.modalLeftBodyTop}>
+                {data.pan_result ? (
+                  <LiuYaoInfoContainer
+                    divinationData={data.pan_result}
+                    formData={data.pan_params?.form_data || {
+                      question: data.question,
+                      method: data.method
+                    }}
+                    activeButtons={activeButtons}
+                    onButtonClick={handleDisplayControlClick}
+                    isColorMode={activeButtons.includes('colorChange')}
+                    isMobile={isMobile}
+                  />
+                ) : (
+                  <div className="no-data-placeholder">
+                    暂无排盘数据
+                  </div>
+                )}
+              </div>
+
+              {/* 左侧主体区域下部 - 占卜补充信息 */}
+              <div className={styles.modalLeftBodyBottom}>
+                <DivinationSupplementleInfo
+                    data={data}
+                    showMethod={false}
+                    showSupplement={true}
+                    showSupplementTime={true}
+                    canEdit={isPostOwner()}
+                    onEditSupplement={handleEditSupplement}
+                    isMobile={isMobile}
+                  />
+              </div>
+            </div>
+
+            {/* 左侧底部区域 - 版权信息 */}
+            <div className={styles.modalLeftFooter}>
+              <span className={styles.footerText}>© 2026 圆运阁古易文化</span>
+            </div>
+          </div>
+
+          {/* 右侧区域 */}
+          <div className={styles.modalRightContent}>
+            {/* 右侧头部区域 - 用户信息 */}
+            <div className={styles.modalRightHeader}>
+              <UserInfo
+                userAvatar={data.user?.avatar_url || data.user_avatar}
+                userNickname={data.user?.nickname || data.user_nickname}
+                isFollowed={isFollowed}
+                onFollow={handleFollow}
+                disabled={getFrontendUserInfo()?.id === data.user_id}
+                isMobile={isMobile}
+              />
+            </div>
+
+            {/* 右侧主体区域 - 评论列表 */}
+            <div className={styles.modalRightBody}>
+              <CommentsSection 
+                ref={commentsSectionRef}
+                panRecordId={data.id}
+                onCommentCountChange={handleCommentCountChange}
+                isMobile={isMobile}
+              />
+            </div>
+
+            {/* 右侧底部区域 - 评论输入 */}
+            <div className={styles.modalRightFooter}>
+              <CommentInput
+                panRecordId={data.id}
+                isLiked={isLiked}
+                isCollected={isCollected}
+                likeCount={likeCount}
+                collectCount={collectCount}
+                commentCount={commentCount}
+                onLike={handleLike}
+                onCollect={handleCollect}
+                onShare={() => console.log('分享')}
+                onCommentSuccess={handleCommentSuccess}
+                isMobile={isMobile}
+              />
+            </div>
+          </div>
+        </div>
+
+        {showImageViewer && (
+          <PanImageViewer
+            images={[data.hexagram_image]}
+            initialIndex={0}
+            onClose={() => setShowImageViewer(false)}
+            isMobile={isMobile}
+          />
+        )}
+
+        {showEditModal && (
+          <EditSupplementModal
+            isOpen={showEditModal}
+            onClose={() => setShowEditModal(false)}
+            data={editData}
+            onSuccess={handleEditSuccess}
+            isMobile={isMobile}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // 移动端布局
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modalContent}>
-        {/* 左侧区域 */}
-        <div className={styles.modalLeftContent}>
-          {/* 左侧头部区域 */}
-          <div className={styles.modalLeftHeader}>
-            <PostHeader data={data} showTitle={false} />
+        {/* 顶部固定 - 用户信息 */}
+        <div className={styles.modalTopFixed}>
+          <UserInfo
+            userAvatar={data.user?.avatar_url || data.user_avatar}
+            userNickname={data.user?.nickname || data.user_nickname}
+            isFollowed={isFollowed}
+            onFollow={handleFollow}
+            onClose={handleClose}
+            disabled={getFrontendUserInfo()?.id === data.user_id}
+            isMobile={isMobile}
+          />
+        </div>
+
+        {/* 可滚动内容区域 */}
+        <div className={styles.modalScrollContent}>
+          {/* 头部信息 */}
+          <div className={styles.modalHeader}>
+            <PostHeader data={data} showTitle={false} isMobile={isMobile} />
           </div>
 
-          {/* 左侧主体区域 - 上下垂直分栏 */}
-          <div className={styles.modalLeftBody}>
-            {/* 左侧主体区域上部 - 六爻排盘信息 */}
-            <div className={styles.modalLeftBodyTop}>
-              {data.pan_result ? (
-                <LiuYaoInfoContainer
-                  divinationData={data.pan_result}
-                  formData={data.pan_params?.form_data || {
-                    question: data.question,
-                    method: data.method
-                  }}
-                  activeButtons={activeButtons}
-                  onButtonClick={handleDisplayControlClick}
-                  isColorMode={activeButtons.includes('colorChange')}
-                />
-              ) : (
-                <div className="no-data-placeholder">
-                  暂无排盘数据
-                </div>
-              )}
-            </div>
+          {/* 六爻排盘信息 */}
+          <div className={styles.modalLiuYaoInfo}>
+            {data.pan_result ? (
+              <LiuYaoInfoContainer
+                divinationData={data.pan_result}
+                formData={data.pan_params?.form_data || {
+                  question: data.question,
+                  method: data.method
+                }}
+                activeButtons={activeButtons}
+                onButtonClick={handleDisplayControlClick}
+                isColorMode={activeButtons.includes('colorChange')}
+                isMobile={isMobile}
+              />
+            ) : (
+              <div className="no-data-placeholder">
+                暂无排盘数据
+              </div>
+            )}
+          </div>
 
-            {/* 左侧主体区域下部 - 占卜补充信息 */}
-            <div className={styles.modalLeftBodyBottom}>
-              <DivinationSupplementleInfo
+          {/* 占卜补充信息 */}
+          <div className={styles.modalSupplementInfo}>
+            <DivinationSupplementleInfo
                 data={data}
                 showMethod={false}
                 showSupplement={true}
                 showSupplementTime={true}
                 canEdit={isPostOwner()}
                 onEditSupplement={handleEditSupplement}
+                isMobile={isMobile}
               />
-            </div>
           </div>
 
-          {/* 左侧底部区域 - 版权信息 */}
-          <div className={styles.modalLeftFooter}>
-            <span className={styles.footerText}>© 2026 圆运阁古易文化</span>
-          </div>
-        </div>
-
-        {/* 右侧区域 */}
-        <div className={styles.modalRightContent}>
-          {/* 右侧头部区域 - 用户信息 */}
-          <div className={styles.modalRightHeader}>
-            <UserInfo
-              userAvatar={data.user?.avatar_url || data.user_avatar}
-              userNickname={data.user?.nickname || data.user_nickname}
-              isFollowed={isFollowed}
-              onFollow={handleFollow}
-              disabled={getFrontendUserInfo()?.id === data.user_id}
-            />
-          </div>
-
-          {/* 右侧主体区域 - 评论列表 */}
-          <div className={styles.modalRightBody}>
+          {/* 评论列表 */}
+          <div className={styles.modalComments}>
             <CommentsSection 
               ref={commentsSectionRef}
               panRecordId={data.id}
               onCommentCountChange={handleCommentCountChange}
+              isMobile={isMobile}
             />
           </div>
+        </div>
 
-          {/* 右侧底部区域 - 评论输入 */}
-          <div className={styles.modalRightFooter}>
-            <CommentInput
-              panRecordId={data.id}
-              isLiked={isLiked}
-              isCollected={isCollected}
-              likeCount={likeCount}
-              collectCount={collectCount}
-              commentCount={commentCount}
-              onLike={handleLike}
-              onCollect={handleCollect}
-              onShare={() => console.log('分享')}
-              onCommentSuccess={handleCommentSuccess}
-            />
-          </div>
+        {/* 底部固定 - 评论输入 */}
+        <div className={styles.modalBottomFixed}>
+          <CommentInput
+            panRecordId={data.id}
+            isLiked={isLiked}
+            isCollected={isCollected}
+            likeCount={likeCount}
+            collectCount={collectCount}
+            commentCount={commentCount}
+            onLike={handleLike}
+            onCollect={handleCollect}
+            onShare={() => console.log('分享')}
+            onCommentSuccess={handleCommentSuccess}
+            isMobile={isMobile}
+          />
         </div>
       </div>
 
@@ -364,17 +507,19 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
           images={[data.hexagram_image]}
           initialIndex={0}
           onClose={() => setShowImageViewer(false)}
+          isMobile={isMobile}
         />
       )}
 
       {showEditModal && (
-        <EditSupplementModal
-          isOpen={showEditModal}
-          onClose={() => setShowEditModal(false)}
-          data={editData}
-          onSuccess={handleEditSuccess}
-        />
-      )}
+          <EditSupplementModal
+            isOpen={showEditModal}
+            onClose={() => setShowEditModal(false)}
+            data={editData}
+            onSuccess={handleEditSuccess}
+            isMobile={isMobile}
+          />
+        )}
     </div>
   );
 };

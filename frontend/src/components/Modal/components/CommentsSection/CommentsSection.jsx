@@ -11,21 +11,8 @@ import React, { useState, useEffect, useCallback, useRef, forwardRef, useImperat
 import { listComment, toggleCommentLike, replyComment } from '../../../../api/commentApi';
 import { formatStandardTime } from '../../../../utils';
 import Avatar from '../../../common/Avatar';
-import styles from './CommentsSection.desktop.module.css';
-
-// 骨架屏组件
-const CommentSkeleton = () => (
-  <div className={styles.commentItem}>
-    <div className={styles.commentUserAvatar}>
-      <div className={styles.skeletonAvatar} />
-    </div>
-    <div className={styles.commentContentSection}>
-      <div className={styles.skeletonLine} style={{ width: '30%', height: '14px' }} />
-      <div className={styles.skeletonLine} style={{ width: '100%', height: '14px' }} />
-      <div className={styles.skeletonLine} style={{ width: '60%', height: '14px' }} />
-    </div>
-  </div>
-);
+import desktopStyles from './CommentsSection.desktop.module.css';
+import mobileStyles from './CommentsSection.mobile.module.css';
 
 const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) => {
   const [comments, setComments] = useState([]);
@@ -38,11 +25,51 @@ const CommentsSection = forwardRef(({ panRecordId, onCommentCountChange }, ref) 
   const [replyContent, setReplyContent] = useState('');
   const [replySubmitting, setReplySubmitting] = useState(false);
   const [replyToUser, setReplyToUser] = useState(null);  // 回复目标用户信息
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
 
   const pageSize = 10;
   const observerRef = useRef(null);
   const lastCommentRef = useRef(null);
   const replyInputRef = useRef(null);
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
+
+  // 骨架屏组件
+  const CommentSkeleton = () => (
+    <div className={styles.commentItem}>
+      <div className={styles.commentUserAvatar}>
+        <div className={styles.skeletonAvatar} />
+      </div>
+      <div className={styles.commentContentSection}>
+        <div className={styles.skeletonLine} style={{ width: '30%', height: '14px' }} />
+        <div className={styles.skeletonLine} style={{ width: '100%', height: '14px' }} />
+        <div className={styles.skeletonLine} style={{ width: '60%', height: '14px' }} />
+      </div>
+    </div>
+  );
 
   const fetchComments = useCallback(async (pageNum = 1, isLoadMore = false) => {
     if (!panRecordId) return;

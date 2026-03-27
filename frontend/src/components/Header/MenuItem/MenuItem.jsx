@@ -8,13 +8,42 @@
 */
 
 import React, { useState, useRef, useEffect } from 'react'; // 导入React核心库和Hooks
-import './MenuItem.css'; // 导入MenuItem组件样式
+import desktopStyles from './MenuItem.desktop.module.css'; // 导入MenuItem组件样式
+import mobileStyles from './MenuItem.mobile.module.css'; // 导入MenuItem组件移动端样式
 import DropdownMenu from '../DropdownMenu/DropdownMenu'; // 导入下拉菜单组件
 
 // 定义MenuItem组件，接收name、hasDropdown、dropdownItems、dropdownConfig、isActive、onClick、href参数
 const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfig = null, isActive = false, onClick, href }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownTimerRef = useRef(null); // 定义下拉菜单定时器引用
+  
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
 
   // 定义鼠标移入处理函数
   const handleMouseEnter = () => {
@@ -55,7 +84,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
   const renderSimpleDropdown = () => (
     // 渲染无序列表元素
     <ul
-      className="dropdown-menu dropdown-menu-simple" // 设置类名
+      className={`${styles.dropdownMenu} ${styles.dropdownMenuSimple}`} // 设置类名
       onMouseEnter={handleMouseEnter} // 绑定鼠标移入事件
       onMouseLeave={handleMouseLeave} // 绑定鼠标移出事件
     > {/* 结束ul元素开始 */}
@@ -63,7 +92,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
       {/* 遍历下拉菜单项数组，渲染每个菜单项 */}
       {dropdownItems.map((item, index) => (
         <li key={index}> {/* 渲染列表项，使用index作为key */}
-          <a href="#" className="dropdown-item"> {/* 渲染链接元素，设置类名 */}
+          <a href="#" className={styles.dropdownItem}> {/* 渲染链接元素，设置类名 */}
             {item.title} {/* 渲染菜单项文本 */}
           </a> {/* 结束链接元素 */}
         </li> // 结束列表项
@@ -75,7 +104,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
   return (
     // 渲染列表项元素
     <li
-      className="menu-item" // 设置类名
+      className={styles.menuItem} // 设置类名
       onMouseEnter={handleMouseEnter} // 绑定鼠标移入事件
       onMouseLeave={handleMouseLeave} // 绑定鼠标移出事件
     > {/* 结束li元素开始 */}
@@ -83,7 +112,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
       {/* 渲染链接元素 */}
       <a
         href={href || '#'} // 设置链接地址，优先使用传入的href属性
-        className={`menu-link ${isActive ? 'active' : ''}`} // 设置动态类名，激活时添加active类
+        className={`${styles.menuLink} ${isActive ? styles.active : ''}`} // 设置动态类名，激活时添加active类
         // 绑定点击事件
         onClick={(e) => {
           if (href) {
@@ -102,7 +131,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
         {hasDropdown && (
           // 渲染SVG图标
           <svg
-            className="dropdown-arrow" // 设置类名
+            className={styles.dropdownArrow} // 设置类名
             width="12" // 设置宽度
             height="12" // 设置高度
             viewBox="0 0 12 12" // 设置视口
@@ -124,7 +153,7 @@ const MenuItem = ({ name, hasDropdown = false, dropdownItems = [], dropdownConfi
         dropdownConfig ? (
           <DropdownMenu
             columns={dropdownConfig.columns}
-            className="community"
+            className={styles.community}
           />
         ) : (
           renderSimpleDropdown()

@@ -1,0 +1,56 @@
+/*
+ * @file            frontend/src/components/Card/CardTags/CardTags.mobile.module.css
+ * @description     卡片标签组件样式 - 移动端专用
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 14:00:00
+ * @lastModified    2026-03-26 11:39:43
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   卡片标签组件样式 - 移动端专用
+   ============================================ */
+
+/* 标签容器 */
+.cardTags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  background-color: #1300ff33;
+  padding: 6px 10px;
+}
+
+/* 标签项样式 */
+.tagItem {
+  padding: 3px 8px;
+  border-radius: 14px;
+  background-color: #e6f0ff;
+  color: #1890ff;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* 标签 hover 效果 */
+.tagItem:hover {
+  background-color: #1890ff;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .cardTags {
+    gap: 3px;
+    padding: 4px 8px;
+  }
+  
+  .tagItem {
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+}

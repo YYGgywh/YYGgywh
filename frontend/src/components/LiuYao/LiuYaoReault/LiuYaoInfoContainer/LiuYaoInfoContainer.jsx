@@ -3,13 +3,14 @@
  * @description     六爻信息容器组件，整合六爻相关的所有信息展示
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-16 00:00:00
- * @lastModified    2026-03-16 00:00:00
+ * @lastModified    2026-03-26 18:27:56
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styles from './LiuYaoInfoContainer.desktop.module.css';
+import desktopStyles from './LiuYaoInfoContainer.desktop.module.css';
+import mobileStyles from './LiuYaoInfoContainer.mobile.module.css';
 
 // 导入子组件
 import BriefDivinationQuery from '../../../DivinationInfo/components/DisplayComponents/BriefDivinationQuery/BriefDivinationQuery';
@@ -46,6 +47,34 @@ const LiuYaoInfoContainer = ({
   className = '',
   style = {}
 }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
+  
   /**
    * 构建容器CSS类名字符串
    * 组合基础类名和额外类名
@@ -79,6 +108,7 @@ const LiuYaoInfoContainer = ({
         formData={formData}
         divinationData={divinationData}
         className={styles.briefDivinationQuery}
+        isMobile={isMobile}
       />
 
       {/* 四柱展示组件，显示干支信息 */}
@@ -87,6 +117,7 @@ const LiuYaoInfoContainer = ({
         isColorMode={checkIsColorMode()}
         displayConfig={fourPillarsDisplayConfig}
         className={styles.fourPillarsDisplay}
+        isMobile={isMobile}
       />
 
       {/* 六爻网格展示组件，显示卦象信息 */}
@@ -95,6 +126,7 @@ const LiuYaoInfoContainer = ({
         isColorMode={checkIsColorMode()}
         displayConfig={liuYaoDisplayConfig}
         className={styles.liuYaoGridDisplay}
+        isMobile={isMobile}
       />
 
       {/* 显示控制组件，用于控制展示样式和模式切换 */}

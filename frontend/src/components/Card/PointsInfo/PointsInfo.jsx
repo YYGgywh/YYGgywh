@@ -7,9 +7,10 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './PointsInfo.desktop.module.css';
+import mobileStyles from './PointsInfo.mobile.module.css';
 
 /**
  * 积分信息组件
@@ -21,14 +22,42 @@ import styles from './PointsInfo.desktop.module.css';
  * @returns {JSX.Element|null} 返回积分信息的 JSX 元素，无积分时返回 null
  */
 const PointsInfo = ({ points, className = '' }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   // 如果没有积分，不渲染任何内容
   if (points === undefined || points === null || points <= 0) {
     return null;
   }
 
   return (
-    <div className={`${styles.pointsInfo} ${className}`}>
-      <span className={styles.pointsText}>悬赏积分 {points}分</span>
+    <div className={`${currentStyles.pointsInfo} ${className}`}>
+      <span className={currentStyles.pointsText}>悬赏积分 {points}分</span>
     </div>
   );
 };

@@ -3,13 +3,12 @@
  * @description     用户中心页面组件，重构后采用两栏布局结构
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-03-14 12:00:00
+ * @lastModified    2026-03-26 12:36:12
  * Copyright © All rights reserved
 */
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './UserCenter.css';
 import Navigation from '../../components/Header/Navigation/Navigation';
 import {
   UserCenterLayout,
@@ -46,6 +45,37 @@ const UserCenter = () => {
 
   // 导航状态
   const [activeNav, setActiveNav] = useState('userCenter');
+
+  // 动态加载样式
+  useEffect(() => {
+    const loadStyles = () => {
+      const isMobile = window.innerWidth < 768;
+      const styleId = 'user-center-style';
+      
+      // 移除旧样式
+      const existingStyle = document.getElementById(styleId);
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+      
+      // 添加新样式
+      const styleLink = document.createElement('link');
+      styleLink.id = styleId;
+      styleLink.rel = 'stylesheet';
+      styleLink.href = isMobile ? './UserCenter.mobile.css' : './UserCenter.desktop.css';
+      document.head.appendChild(styleLink);
+    };
+    
+    // 初始加载
+    loadStyles();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', loadStyles);
+    
+    return () => {
+      window.removeEventListener('resize', loadStyles);
+    };
+  }, []);
 
   // 用户数据状态
   const [userInfo, setUserInfo] = useState(null);

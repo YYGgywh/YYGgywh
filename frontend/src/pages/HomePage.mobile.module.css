@@ -3,7 +3,7 @@
  * @description     首页样式 - 移动端专用（CSS Modules版本）
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-07 18:00:00
- * @lastModified    2026-03-07 18:00:00
+ * @lastModified    2026-03-26 20:15:34
  * Copyright © All rights reserved
 */
 
@@ -14,7 +14,7 @@
 :root {
   /* ===== 移动端尺寸变量 ===== */
   /* 容器内边距 - 移动端 */
-  --container-padding: 16px;
+  --container-padding: 12px;
   /* 卡片内边距 - 移动端 */
   --card-content-padding: 10px;
   /* 卡片标题字体大小 - 移动端 */
@@ -150,7 +150,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: var(--card-content-padding);
+  /* padding: var(--card-content-padding); */
 }
 
 /* 卡片元信息区域 */

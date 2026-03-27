@@ -1,0 +1,59 @@
+/*
+ * @file            frontend/src/pages/User/UserCenter.mobile.css
+ * @description     用户中心页面移动端样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-26 18:50:00
+ * @lastModified    2026-03-26 18:50:00
+ * Copyright © All rights reserved
+*/
+
+/* 用户中心页面容器 */
+.user-center-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 页面头部 */
+.user-center-header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 页面主体 */
+.user-center-body {
+  padding: 12px 0;
+}
+
+/* 错误提示 */
+.user-center-error {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+/* 移动端布局调整 */
+@media (max-width: 768px) {
+  .user-center-body {
+    padding: 10px 0;
+  }
+  
+  .user-center-error {
+    margin: 0 10px 10px;
+  }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .user-center-body {
+    padding: 8px 0;
+  }
+  
+  .user-center-error {
+    padding: 8px 10px;
+    font-size: 11px;
+    margin: 0 8px 8px;
+  }
+}

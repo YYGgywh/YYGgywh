@@ -3,7 +3,7 @@
  * @description     首页组件 - 显示公开排盘记录列表，支持瀑布流布局和交互功能
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-05 13:38:55
- * @lastModified    2026-03-25 16:38:17
+ * @lastModified    2026-03-27 09:25:37
  * Copyright © All rights reserved
 */
 
@@ -12,7 +12,7 @@
 import React, { useState, useEffect } from 'react'; // 导入 React 核心库和 Hooks：useState（状态管理）、useEffect（副作用处理）
 import Navigation from '../components/Header/Navigation/Navigation'; // 导入导航栏组件
 import BackToTop from '../components/BackToTop/BackToTop'; // 导入返回顶部按钮组件
-import { getPublicPanList, toggleLike, toggleCollect } from '../api/panApi'; // 导入获取公开排盘列表、点赞、收藏的 API 接口
+import { getPublicPanList, toggleLike, toggleCollect, getPanDetail } from '../api/panApi'; // 导入获取公开排盘列表、点赞、收藏的 API 接口
 import { panTypeToChinese } from '../utils/methodMapping'; // 导入排盘类型映射工具
 import { getUserAvatar } from '../utils/avatarUtils'; // 导入头像工具函数
 
@@ -26,6 +26,33 @@ import avatar7 from '../assets/images/avatar-7.svg'; // 导入用户头像图片
 import avatar8 from '../assets/images/avatar-8.svg'; // 导入用户头像图片资源 8
 import avatar9 from '../assets/images/avatar-9.svg'; // 导入用户头像图片资源 9
 import avatar10 from '../assets/images/avatar-10.svg'; // 导入用户头像图片资源 10
+
+/**
+ * 计算相对时间
+ * @param {string} createTime - 创建时间字符串
+ * @returns {string} 相对时间字符串，如"2小时前"、"1天前"等
+ */
+const getRelativeTime = (createTime) => {
+  if (!createTime) return '';
+  
+  const now = new Date();
+  const createDate = new Date(createTime);
+  const diffMs = now - createDate;
+  const diffSecs = Math.floor(diffMs / 1000);
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+  
+  if (diffDays > 0) {
+    return `${diffDays}天前`;
+  } else if (diffHours > 0) {
+    return `${diffHours}小时前`;
+  } else if (diffMins > 0) {
+    return `${diffMins}分钟前`;
+  } else {
+    return '刚刚';
+  }
+};
 // 导入样式文件 - CSS Modules（桌面端样式）
 import styles from './HomePage.desktop.module.css'; // 导入桌面端样式模块
 // 导入移动端样式模块
@@ -82,9 +109,16 @@ const HomePage = () => {
   // error: 存储错误信息，初始值为 null（无错误）
   const [error, setError] = useState(null);
   // showModal: 控制弹窗显示状态，初始值为 false（不显示）
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(() => {
+    // 从localStorage中恢复弹窗状态
+    return localStorage.getItem('panDetailModalOpen') === 'true';
+  });
   // selectedPanData: 存储当前选中的排盘数据，初始值为 null（未选中）
-  const [selectedPanData, setSelectedPanData] = useState(null);
+  const [selectedPanData, setSelectedPanData] = useState(() => {
+    // 从localStorage中恢复选中的排盘数据
+    const savedData = localStorage.getItem('selectedPanData');
+    return savedData ? JSON.parse(savedData) : null;
+  });
   // cardStates: 存储每个卡片的点赞和收藏状态
   const [cardStates, setCardStates] = useState({});
 
@@ -105,6 +139,17 @@ const HomePage = () => {
     }
   }, [cardStates, showModal, selectedPanData?.id]);
 
+  // ==================== 副作用：存储弹窗状态到 localStorage ====================
+  // 当弹窗状态或选中的排盘数据变化时，存储到localStorage
+  useEffect(() => {
+    localStorage.setItem('panDetailModalOpen', showModal.toString());
+    if (selectedPanData) {
+      localStorage.setItem('selectedPanData', JSON.stringify(selectedPanData));
+    } else {
+      localStorage.removeItem('selectedPanData');
+    }
+  }, [showModal, selectedPanData]);
+
   // ==================== 事件处理函数 ====================
   // 处理卡片点击事件
   const handleCardClick = (item) => {
@@ -120,6 +165,10 @@ const HomePage = () => {
     setShowModal(false);
     // 清空选中的排盘数据
     setSelectedPanData(null);
+    
+    // 从localStorage中移除相关数据
+    localStorage.removeItem('panDetailModalOpen');
+    localStorage.removeItem('selectedPanData');
     
     // 如果弹窗中有数据更新，同步到首页卡片
     if (updatedData && updatedData.id) {
@@ -298,6 +347,89 @@ const HomePage = () => {
     fetchPanRecords();
   }, []); // 空依赖数组表示只在组件挂载时执行一次
 
+  // ==================== 副作用：当选中的排盘数据变化时，刷新数据 ====================
+  // 当selectedPanData变化时，重新获取该排盘的最新数据
+  useEffect(() => {
+    const fetchPanDetail = async () => {
+      if (showModal && selectedPanData && selectedPanData.id) {
+        try {
+          console.log('刷新排盘数据:', selectedPanData.id);
+          
+          // 调用API获取最新的排盘详情
+          const response = await getPanDetail(selectedPanData.id);
+          if (response.code === 200) {
+            // 处理API返回的数据，确保与组件期望的结构一致
+            const record = response.data;
+            
+            // 解析排盘参数和结果对象
+            let panParams = {};
+            let panResult = {};
+            try {
+              // 解析排盘参数：如果是字符串则解析为对象，否则直接使用
+              panParams = typeof record.pan_params === 'string' ? JSON.parse(record.pan_params) : record.pan_params || {};
+              // 解析排盘结果：如果是字符串则解析为对象，否则直接使用
+              panResult = typeof record.pan_result === 'string' ? JSON.parse(record.pan_result) : record.pan_result || {};
+            } catch (e) {
+              // 解析失败时输出错误日志
+              console.error('解析排盘数据失败:', e);
+            }
+
+            // 生成标签：第一个标签是排盘类型，第二个标签是占卜类型
+            const tags = [];
+            
+            // 第一个标签：排盘类型（pan_type）
+            if (record.pan_type) {
+              const panTypeTag = panTypeToChinese(record.pan_type);
+              if (panTypeTag) {
+                tags.push(panTypeTag);
+              }
+            }
+            
+            // 第二个标签：占卜类型（divinationType）
+            if (panParams.form_data?.divinationType) {
+              const divinationTypeTag = panParams.form_data.divinationType;
+              if (divinationTypeTag && !tags.includes(divinationTypeTag)) {
+                tags.push(divinationTypeTag);
+              }
+            }
+
+            // 格式化数据，确保与组件期望的结构一致
+            const formattedRecord = {
+              id: record.id, // 记录 ID
+              title: record.supplement || panParams.question || "未填写标题", // 标题：优先使用补充信息，其次使用问题，最后使用默认值
+              tags: tags, // 生成的标签
+              user_id: record.user?.id, // 用户ID：用于判断是否是发帖主
+              user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
+              user_avatar: getUserAvatar(record.user?.avatar_url, record.user?.nickname), // 用户头像：优先使用用户头像，否则使用基于昵称的默认头像
+              create_time: record.create_time, // 创建时间
+              like_count: record.like_count || 0, // 点赞数：默认为 0
+              collect_count: record.collect_count || 0, // 收藏数：默认为 0
+              view_count: record.view_count || 0, // 浏览数：默认为 0
+              comment_count: record.comment_count || 0, // 评论数：默认为 0
+              is_liked: record.is_liked || false, // 是否已点赞：默认为 false
+              is_collected: record.is_collected || false, // 是否已收藏：默认为 false
+              pan_result: panResult, // 排盘结果对象
+              pan_params: panParams, // 排盘参数对象
+              method: panParams.method, // 起卦方式
+              supplement: record.supplement, // 补充信息
+              supplement_create_time: record.supplement_create_time, // 补充信息创建时间
+              supplement_update_time: record.supplement_update_time, // 补充信息最后修改时间
+              supplement_modify_count: record.supplement_modify_count || 0, // 补充信息修改次数
+              points: record.points || 10 // 积分：默认为 10
+            };
+
+            // 使用API返回的最新数据更新selectedPanData
+            setSelectedPanData(formattedRecord);
+          }
+        } catch (error) {
+          console.error('获取排盘详情失败:', error);
+        }
+      }
+    };
+    
+    fetchPanDetail();
+  }, [showModal, selectedPanData?.id]);
+
   // ==================== 渲染函数 ====================
   // 渲染排盘记录
   const renderPanRecords = () => {
@@ -360,6 +492,7 @@ const HomePage = () => {
                     formData={item.pan_params?.form_data}
                     divinationData={item.pan_result}
                     variant="card"
+                    isMobile={isMobile}
                   />
                   
                   {/* 积分信息 */}
@@ -376,7 +509,7 @@ const HomePage = () => {
                     />
                     
                     {/* 发布时间 */}
-                    <span className={currentStyles.postTime}>2小时前</span>
+                    <span className={currentStyles.postTime}>{getRelativeTime(item.create_time)}</span>
                   </div>
                   
                   {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}
@@ -390,8 +523,10 @@ const HomePage = () => {
                       viewCount={item.view_count || 0}
                       showViewCount={true}
                       showShare={false}
+                      showCollect={false}
                       isLiked={cardStates[item.id]?.isLiked || item.is_liked || false}
                       isCollected={cardStates[item.id]?.isCollected || item.is_collected || false}
+                      isMobile={isMobile}
                       onLike={async (e) => {
                         e.stopPropagation();
                         const cardState = cardStates[item.id] || { isLiked: item.is_liked || false, likeCount: item.like_count || 0 };

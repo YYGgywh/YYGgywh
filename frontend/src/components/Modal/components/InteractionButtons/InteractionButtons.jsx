@@ -7,8 +7,9 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
-import styles from './InteractionButtons.desktop.module.css';
+import React, { useState, useEffect } from 'react';
+import desktopStyles from './InteractionButtons.desktop.module.css';
+import mobileStyles from './InteractionButtons.mobile.module.css';
 
 /**
  * 互动按钮组件
@@ -23,6 +24,7 @@ import styles from './InteractionButtons.desktop.module.css';
  * @param {boolean} props.isCollected - 是否已收藏
  * @param {string} props.variant - 样式变体：'default' | 'card'（默认 'default'）
  * @param {boolean} props.readOnly - 是否只读模式，禁用所有按钮点击（默认 false）
+ * @param {boolean} props.isMobile - 是否为移动端（默认 false）
  * @param {Function} props.onLike - 点赞回调函数
  * @param {Function} props.onCollect - 收藏回调函数
  * @param {Function} props.onComment - 评论回调函数
@@ -36,16 +38,51 @@ const InteractionButtons = ({
   viewCount = 0,
   showViewCount = false,
   showShare = false,
+  showCollect = true,
   isLiked = false,
   isCollected = false,
   variant = 'default',
   className = '',
   readOnly = false,
+  isMobile: propIsMobile = false,
   onLike = () => {},
   onCollect = () => {},
   onComment = () => {},
   onShare = () => {}
 }) => {
+  // 移动端状态管理，优先使用 props 传递的 isMobile 值
+  const [isMobile, setIsMobile] = useState(() => {
+    if (propIsMobile !== undefined) {
+      return propIsMobile;
+    }
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    // 仅当未通过 props 传递 isMobile 时才监听窗口变化
+    if (propIsMobile === undefined) {
+      const handleResize = () => {
+        clearTimeout(window.resizeTimeout);
+        window.resizeTimeout = setTimeout(() => {
+          setIsMobile(window.innerWidth < 768);
+        }, 100);
+      };
+      
+      // 初始执行一次
+      handleResize();
+      // 添加窗口大小变化监听器
+      window.addEventListener('resize', handleResize);
+      // 组件卸载时移除监听器
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(window.resizeTimeout);
+      };
+    }
+  }, [propIsMobile]);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   return (
     <div className={`${styles.interactionButtons} ${styles[variant]} ${className}`}>
       {/* 点赞按钮 */}
@@ -60,17 +97,19 @@ const InteractionButtons = ({
         <span className={styles.interactionCount}>{likeCount}</span>
       </button>
       
-      {/* 收藏按钮 */}
-      <button 
-        className={`${styles.interactionButton} ${isCollected ? styles.active : ''} ${readOnly ? styles.readOnly : ''}`}
-        onClick={readOnly ? undefined : onCollect}
-        disabled={readOnly}
-      >
-        <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill={isCollected ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-        <span className={styles.interactionCount}>{collectCount}</span>
-      </button>
+      {/* 收藏按钮（根据showCollect控制显示） */}
+      {showCollect && (
+        <button 
+          className={`${styles.interactionButton} ${isCollected ? styles.active : ''} ${readOnly ? styles.readOnly : ''}`}
+          onClick={readOnly ? undefined : onCollect}
+          disabled={readOnly}
+        >
+          <svg className={styles.interactionIcon} width="20" height="20" viewBox="0 0 24 24" fill={isCollected ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span className={styles.interactionCount}>{collectCount}</span>
+        </button>
+      )}
       
       {/* 评论按钮 */}
       <button 

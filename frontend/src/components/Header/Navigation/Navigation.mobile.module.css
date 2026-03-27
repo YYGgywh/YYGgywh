@@ -3,7 +3,7 @@
  * @description     导航栏样式 - 移动端专用（CSS Modules版本）
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-25 10:00:00
- * @lastModified    2026-03-25 15:34:03
+ * @lastModified    2026-03-27 09:42:28
  * Copyright © All rights reserved
 */
 
@@ -78,12 +78,13 @@
   gap: var(--nav-item-gap);
   flex: 1;
   justify-content: center;
+  align-items: flex-end;
 }
 
 /* 标签项 */
 .tabItem {
-  font-size: var(--tab-font-size);
-  font-weight: 500;
+  font-size: var(--font-size-base);
+  /* font-weight: 500; */
   color: #666;
   padding: 4px 8px;
   position: relative;
@@ -92,6 +93,8 @@
 
 .tabItem.active {
   color: #1890ff;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
 }
 
 .tabItem.active::after {

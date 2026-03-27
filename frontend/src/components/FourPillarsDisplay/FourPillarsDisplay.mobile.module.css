@@ -1,10 +1,9 @@
 /*
  * @file            frontend/src/components/FourPillarsDisplay/FourPillarsDisplay.mobile.module.css
  * @description     四柱显示组件样式 - 移动端专用（CSS Modules版本）
- *                  针对移动设备优化，调整尺寸和间距
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 12:00:00
- * @lastModified    2026-03-13 12:00:00
+ * @lastModified    2026-03-26 18:40:31
  * Copyright © All rights reserved
 */
 
@@ -29,7 +28,7 @@
 .monthPillarsInfoLabel,
 .dayPillarsInfoLabel,
 .hourPillarsInfoLabel {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: #8e8e8e;
 }
 
@@ -41,9 +40,9 @@
 .monthPillarsInfoZhi,
 .dayPillarsInfoZhi,
 .hourPillarsInfoZhi {
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: #333;
-  font-weight: bolder;
+  /* font-weight: bolder; */
   transition: color 0.3s ease;
 }
 

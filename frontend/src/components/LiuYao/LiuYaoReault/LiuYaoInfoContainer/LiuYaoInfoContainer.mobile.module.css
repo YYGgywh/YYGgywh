@@ -1,0 +1,62 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoReault/LiuYaoInfoContainer/LiuYaoInfoContainer.mobile.module.css
+ * @description     六爻信息容器组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:30:00
+ * @lastModified    2026-03-26 17:23:12
+ * Copyright © All rights reserved
+*/
+
+/**
+ * 六爻信息容器
+ * 定义六爻信息容器的整体样式
+ */
+.liuYaoInfoContainer {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  /* 盒模型属性 */
+  /* padding: 12px; */
+  
+  /* 视觉属性 */
+  background-color: var(--bg-white);
+  border-radius: var(--radius-md);
+  /* border: 1px solid var(--border-color); */
+}
+
+/**
+ * 六爻网格展示组件样式
+ * 定义六爻网格展示组件的容器样式
+ */
+.liuYaoGridDisplay {
+  /* 布局属性 */
+  display: flex;
+  flex-direction: column;
+  
+  /* 盒模型属性 */
+  padding: 8px;
+  
+  /* 视觉属性 */
+  background-color: var(--bg-gray-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/**
+ * 超小屏幕适配
+ * 适配360px以下的屏幕
+ */
+@media (max-width: 359px) {
+  .liuYaoInfoContainer {
+    /* 小屏幕样式调整 */
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .liuYaoGridDisplay {
+    /* 小屏幕内边距调整 */
+    padding: 6px;
+  }
+}

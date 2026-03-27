@@ -7,9 +7,10 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './GuaResultDisplay.desktop.module.css';
+import mobileStyles from './GuaResultDisplay.mobile.module.css';
 
 /**
  * 卦象结果显示组件
@@ -19,6 +20,34 @@ import styles from './GuaResultDisplay.desktop.module.css';
  * @returns {JSX.Element} 卦象结果显示组件
  */
 const GuaResultDisplay = ({ panResult, className = '' }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   if (!panResult) {
     return null;
   }
@@ -27,9 +56,9 @@ const GuaResultDisplay = ({ panResult, className = '' }) => {
   const bianGuaName = panResult.bian_gua_head?.name;
 
   return (
-    <div className={`${styles.guaResultDisplay} ${className}`}>
-      <span className={styles.resultLabel}>卦象：</span>
-      <span className={styles.resultValue}>
+    <div className={`${currentStyles.guaResultDisplay} ${className}`}>
+      <span className={currentStyles.resultLabel}>卦象：</span>
+      <span className={currentStyles.resultValue}>
         {benGuaName}
         {bianGuaName && ` → ${bianGuaName}`}
       </span>

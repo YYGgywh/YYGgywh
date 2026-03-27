@@ -1,32 +1,38 @@
 /*
- * @file            frontend/src/components/Modal/components/CommentInput/CommentInput.desktop.module.css
- * @description     CommentInput 组件样式文件
+ * @file            frontend/src/components/Modal/components/CommentInput/CommentInput.mobile.module.css
+ * @description     CommentInput 组件移动端样式文件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
- * @createTime      2026-03-18 10:00:00
- * @lastModified    2026-03-27 09:24:00
+ * @createTime      2026-03-26 17:40:00
+ * @lastModified    2026-03-26 18:55:20
  * Copyright © All rights reserved
 */
+
+/* 评论输入区域 */
+.commentInputArea {
+  padding-top: 0px;
+}
 
 .inputContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .inputWrapper {
   display: flex;
+  flex: auto;
   align-items: center;
   width: fit-content;
-  gap: 8px;
+  gap: 10px;
   background-color: #f5f5f5;
   border-radius: 20px;
   padding: 0 0 0 8px;
 }
 
 .userAvatar {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
@@ -40,29 +46,29 @@
 
 .inputWrapper .commentInputPlaceholder {
   flex: 1;
-  padding: 8px 8px;
-  max-width: 84px;
+  padding: 8px 14px;
+  /* max-width: 80px; */
   background-color: #f5f5f5;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
   color: #999;
   cursor: text;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
 /* 评论输入包装器 */
 .commentInputWrapper {
   background-color: #fafafa;
   border-radius: 12px;
-  padding: 0 16px;
+  padding: 12px;
 }
 
 /* 评论输入头部 */
 .commentInputHeader {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  /* margin-bottom: 16px; */
+  gap: 10px;
 }
 
 /* 评论输入主体 */
@@ -70,21 +76,16 @@
   flex: 1;
 }
 
-/* 评论输入表单 
-.commentInputForm {
-  margin-bottom: 12px;
-}
-*/
 /* 评论输入字段 */
 .commentInputField {
   width: 100%;
   padding: 10px 0;
   border: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   resize: none;
-  min-height: 40px;
+  min-height: 36px;
   max-height: 100px;
   overflow-y: auto;
   word-wrap: break-word;
@@ -129,14 +130,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid #CECECE;
 }
 
 /* 底部左侧按钮 */
 .footerLeft {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   position: relative;
 }
 
@@ -152,9 +153,10 @@
   border: none;
   color: #999;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   border-radius: 4px;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
 .footerButton:hover {
@@ -165,20 +167,21 @@
 /* 底部右侧按钮 */
 .footerRight {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 
 /* 取消按钮 */
 .cancelButton {
-  padding: 6px 12px;
+  padding: 4px 10px;
   background: none;
   border: 1px solid #e8e8e8;
   border-radius: 16px;
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
   cursor: pointer;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
 .cancelButton:hover:not(:disabled) {
@@ -194,15 +197,16 @@
 
 /* 发送按钮 */
 .sendButton {
-  padding: 8px 16px;
+  padding: 6px 14px;
   background-color: #ff4757;
   color: white;
   border: none;
   border-radius: 18px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
 .sendButton:hover:not(:disabled) {
@@ -216,68 +220,63 @@
   transform: none;
 }
 
-/* 响应式调整 */
-@media (max-width: 768px) {
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
   .commentInputArea {
-    padding-top: 10px;
+    padding-top: 8px;
   }
   
   .inputContainer {
-    gap: 10px;
+    gap: 8px;
   }
   
   .inputWrapper {
-    gap: 10px;
+    gap: 8px;
   }
   
   .userAvatar {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
   
   .inputWrapper .commentInputPlaceholder {
-    padding: 8px 14px;
-    font-size: 13px;
+    padding: 6px 10px;
+    font-size: 12px;
+    max-width: 70px;
   }
   
   .commentInputWrapper {
-    padding: 12px;
+    padding: 10px;
   }
   
   .commentInputHeader {
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 8px;
   }
   
   .commentInputField {
-    font-size: 13px;
-    min-height: 36px;
-  }
-  
-  .emoji {
-    width: 20px;
-    height: 20px;
+    font-size: 12px;
+    min-height: 32px;
   }
   
   .commentInputFooter {
-    padding-top: 10px;
+    padding-top: 8px;
   }
   
   .footerLeft {
-    gap: 10px;
+    gap: 8px;
   }
   
   .footerRight {
-    gap: 10px;
+    gap: 8px;
   }
   
   .cancelButton {
-    padding: 4px 10px;
-    font-size: 13px;
+    padding: 4px 8px;
+    font-size: 12px;
   }
   
   .sendButton {
-    padding: 6px 14px;
-    font-size: 13px;
+    padding: 4px 12px;
+    font-size: 12px;
   }
 }

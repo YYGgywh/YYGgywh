@@ -1,0 +1,588 @@
+/*
+ * @file            frontend/src/components/Modal/components/CommentsSection/CommentsSection.mobile.module.css
+ * @description     评论区域组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:50:00
+ * @lastModified    2026-03-26 19:42:16
+ * Copyright © All rights reserved
+*/
+
+/* 评论区域容器 */
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 12px;
+  /* overflow-y: auto; */
+}
+
+/* 评论列表区域 */
+.commentsList {
+  flex: 1;
+  /* overflow-y: auto; */
+  /* max-height: 300px; */
+}
+
+/* 评论标题 */
+.commentsList h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+/* 单个评论项 */
+.commentItem {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 评论用户头像 */
+.commentUserAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.commentUserAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 评论内容区域 */
+.commentContentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 评论头部信息 */
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 评论头部左侧（用户名和作者标识） */
+.commentHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 评论用户名 */
+.commentUserName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 作者标识 */
+.authorBadge {
+  font-size: 11px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background-color: #f0f9ff;
+  color: #1677ff;
+}
+
+/* 评论头部右侧（时间和地点） */
+.commentHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 评论时间 */
+.commentTime {
+  font-size: 11px;
+  color: #999;
+}
+
+/* 评论内容 */
+.commentText {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-word;
+}
+
+/* 评论操作按钮 */
+.commentActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+/* 评论操作按钮样式 */
+.commentActionBtn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: #999;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+  touch-action: manipulation;
+}
+
+.commentActionBtn:hover {
+  color: #333;
+}
+
+/* 点赞状态 */
+.liked {
+  color: #ff4757;
+}
+
+.liked:hover {
+  color: #ff6b81;
+}
+
+/* 操作图标 */
+.actionIcon {
+  width: 14px;
+  height: 14px;
+}
+
+/* 操作计数 */
+.actionCount {
+  font-size: 11px;
+}
+
+/* 无评论提示 */
+.noComments {
+  text-align: center;
+  padding: 30px 0;
+  color: #999;
+  font-size: 13px;
+}
+
+.noComments svg {
+  margin-bottom: 10px;
+}
+
+.noComments p {
+  margin: 0;
+}
+
+/* 错误状态 */
+.errorState {
+  text-align: center;
+  padding: 30px 0;
+  color: #ff4d4f;
+  font-size: 13px;
+}
+
+.errorState p {
+  margin: 0 0 12px 0;
+}
+
+.retryBtn {
+  padding: 6px 20px;
+  background-color: #1677ff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  touch-action: manipulation;
+}
+
+.retryBtn:hover {
+  background-color: #4096ff;
+}
+
+/* 加载更多状态 */
+.loadingMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 0;
+  color: #999;
+  font-size: 13px;
+}
+
+.loadingSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #f0f0f0;
+  border-top-color: #1677ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 骨架屏样式 */
+.skeletonAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeletonLine {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 滚动条样式 */
+.commentsList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.commentsList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.commentsList::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.commentsList::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 回复列表区域 */
+.repliesSection {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #f0f0f0;
+}
+
+/* 单个回复项 */
+.replyItem {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.replyItem:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* 回复用户头像 */
+.replyUserAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 回复内容区域 */
+.replyContentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* 回复头部 */
+.replyHeader {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* 回复用户名 */
+.replyUserName {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 作者标识（小） */
+.authorBadgeSmall {
+  font-size: 9px;
+  padding: 1px 3px;
+  border-radius: 2px;
+  background-color: #f0f9ff;
+  color: #1677ff;
+}
+
+/* 回复时间 */
+.replyTime {
+  font-size: 10px;
+  color: #999;
+  margin-left: auto;
+}
+
+/* 回复内容 */
+.replyText {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #333;
+  word-break: break-word;
+}
+
+/* 回复操作按钮 */
+.replyActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+/* 回复操作按钮样式 */
+.replyActionBtn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  font-size: 10px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+  touch-action: manipulation;
+}
+
+.replyActionBtn:hover {
+  color: #333;
+}
+
+/* 操作图标（小） */
+.actionIconSmall {
+  width: 12px;
+  height: 12px;
+}
+
+/* 回复输入区域 */
+.replyInputSection {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fafafa;
+  border-radius: 6px;
+}
+
+/* 回复输入框 */
+.replyInput {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.replyInput:focus {
+  border-color: #1677ff;
+}
+
+.replyInput::placeholder {
+  color: #999;
+}
+
+/* 回复输入操作按钮 */
+.replyInputActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* 取消按钮 */
+.replyCancelBtn {
+  padding: 4px 12px;
+  background-color: #fff;
+  color: #666;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+
+.replyCancelBtn:hover {
+  color: #333;
+  border-color: #999;
+}
+
+/* 提交按钮 */
+.replySubmitBtn {
+  padding: 4px 12px;
+  background-color: #1677ff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  touch-action: manipulation;
+}
+
+.replySubmitBtn:hover:not(:disabled) {
+  background-color: #4096ff;
+}
+
+.replySubmitBtn:disabled {
+  background-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+/* 操作按钮激活状态 */
+.commentActionBtn.active {
+  color: #1677ff;
+}
+
+/* 加载更多触发元素 */
+.loadMoreTrigger {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 回复箭头样式 */
+.replyArrow {
+  color: #999;
+  font-size: 11px;
+  margin: 0 3px;
+}
+
+/* 回复目标用户样式 */
+.replyToUser {
+  color: #1677ff;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* 回复输入框头部 */
+.replyInputHeader {
+  margin-bottom: 6px;
+}
+
+/* 回复提示文字 */
+.replyToHint {
+  font-size: 11px;
+  color: #1677ff;
+  background-color: #e6f4ff;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .commentsSection {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .commentsList {
+    max-height: 250px;
+  }
+  
+  .commentsList h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .commentItem {
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .commentUserAvatar {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .commentUserName {
+    font-size: 12px;
+  }
+  
+  .commentText {
+    font-size: 12px;
+  }
+  
+  .commentActions {
+    gap: 10px;
+  }
+  
+  .repliesSection {
+    margin-top: 8px;
+    padding-left: 8px;
+  }
+  
+  .replyItem {
+    gap: 4px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .replyUserAvatar {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .replyUserName {
+    font-size: 11px;
+  }
+  
+  .replyText {
+    font-size: 11px;
+  }
+  
+  .replyInputSection {
+    margin-top: 8px;
+    padding: 8px;
+  }
+  
+  .replyInput {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .replyCancelBtn,
+  .replySubmitBtn {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+}

@@ -12,7 +12,9 @@ import React from 'react';
 // 导入 PropTypes 库，用于组件 props 的类型检查，提升代码健壮性
 import PropTypes from 'prop-types';
 // 导入桌面端样式（CSS Modules）
-import styles from './LiuYaoGridDisplay.desktop.module.css';
+import desktopStyles from './LiuYaoGridDisplay.desktop.module.css';
+// 导入移动端样式（CSS Modules）
+import mobileStyles from './LiuYaoGridDisplay.mobile.module.css';
 // 导入五行颜色样式
 import '../../../../styles/elementColors.css';
 
@@ -104,8 +106,11 @@ const LiuYaoGridDisplay = React.memo(({
   showLiuShen = true, 
   showShiYing = true, 
   showFuShen = true,
-  displayConfig = defaultDisplayConfig 
+  displayConfig = defaultDisplayConfig,
+  isMobile = false
 }) => {
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 使用 React.useMemo 缓存是否有伏神的判断结果
   // 依赖项：divinationData.ben_gua_head?.fu_shen_wei_list
   // 优化目的：避免每次渲染都判断是否有伏神
@@ -569,7 +574,8 @@ LiuYaoGridDisplay.propTypes = {
         bianShiYing: PropTypes.bool
       })
     })
-  })
+  }),
+  isMobile: PropTypes.bool
 };
 
 // 为 LiuYaoGridDisplay 组件添加 displayName，便于在 React DevTools 中调试

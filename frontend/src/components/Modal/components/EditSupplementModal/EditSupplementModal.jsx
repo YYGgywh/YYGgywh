@@ -9,12 +9,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { updatePan } from '../../../../api/panApi';
-import styles from './EditSupplementModal.module.css';
+import desktopStyles from './EditSupplementModal.desktop.module.css';
+import mobileStyles from './EditSupplementModal.mobile.module.css';
 
-const EditSupplementModal = ({ isOpen, onClose, data, onSuccess }) => {
+const EditSupplementModal = ({ isOpen, onClose, data, onSuccess, isMobile = false }) => {
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
 
   useEffect(() => {
     if (isOpen && data) {

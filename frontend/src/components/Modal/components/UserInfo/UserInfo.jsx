@@ -8,9 +8,12 @@
 */
 
 // 导入 React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // 导入样式文件
-import styles from './UserInfo.desktop.module.css';
+import desktopStyles from './UserInfo.desktop.module.css';
+import mobileStyles from './UserInfo.mobile.module.css';
+// 导入返回按钮图标
+import goBackSvg from '../../../../assets/images/go back.svg';
 
 // 用户信息组件，接收用户信息和配置参数作为 props
 const UserInfo = ({ 
@@ -18,6 +21,7 @@ const UserInfo = ({
   userNickname, // 用户昵称
   isFollowed = false, // 是否已关注，默认为 false
   onFollow, // 关注/取消关注回调函数
+  onClose, // 关闭回调函数
   disabled = false, // 是否禁用关注按钮，默认为 false
   showAvatar = true, // 是否显示头像，默认为 true
   showUsername = true, // 是否显示用户名，默认为 true
@@ -25,9 +29,51 @@ const UserInfo = ({
   className = '', // 自定义类名
   variant = 'default' // 显示风格，默认为 'default'
 }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 渲染组件
   return (
     <div className={`${styles.userInfoSection} ${styles[`userInfoSection${variant.charAt(0).toUpperCase() + variant.slice(1)}`]} ${className}`}>
+      {/* 移动端返回按钮 */}
+      {isMobile && onClose && (
+        <button 
+          className={styles.backButton}
+          onClick={onClose}
+          aria-label="关闭"
+        >
+          <img 
+            src={goBackSvg} 
+            alt="返回"
+            className={styles.backIcon}
+          />
+        </button>
+      )}
+      
       {/* 条件渲染：如果 showAvatar 为 true，则显示头像 */}
       {showAvatar && (
         <div className={styles.userAvatar}>

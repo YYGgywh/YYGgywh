@@ -1,0 +1,166 @@
+/*
+ * @file            frontend/src/components/Modal/components/DivinationSupplementleInfo/DivinationSupplementleInfo.mobile.module.css
+ * @description     DivinationSupplementleInfo 组件移动端样式文件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 18:00:00
+ * @lastModified    2026-03-26 18:00:00
+ * Copyright © All rights reserved
+*/
+
+.divinationInfo {
+  border-bottom: 1px solid #f5f5f5;
+  padding: 12px 0;
+}
+
+.divinationInfo h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 6px;
+  align-items: flex-start;
+}
+
+.infoRowSupplement {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+}
+
+.infoRow .infoLabel {
+  width: 70px;
+  font-size: 12px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.infoRow .infoValue {
+  flex: 1;
+  font-size: 12px;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.infoRowSupplement .infoLabel {
+  width: 70px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.infoLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.editButton {
+  padding: 2px 10px;
+  font-size: 11px;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+.editButton:hover {
+  color: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.infoRowSupplement .infoValue {
+  font-size: 12px;
+  color: #333;
+  font-weight: 400;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 段落样式 */
+.paragraph {
+  margin: 0 0 4px 0;
+  text-indent: 1.5em;
+  line-height: 1.4;
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* 补充信息时间容器 */
+.supplementTimeContainer {
+  margin-top: 8px;
+  border-top: 1px solid #f0f0f0;
+  text-align: right;
+}
+
+.supplementTime {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .divinationInfo {
+    padding: 10px 0;
+  }
+  
+  .divinationInfo h3 {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .infoRow {
+    margin-bottom: 4px;
+  }
+  
+  .infoRowSupplement {
+    margin-bottom: 4px;
+  }
+  
+  .infoRow .infoLabel {
+    width: 65px;
+    font-size: 11px;
+  }
+  
+  .infoRow .infoValue {
+    font-size: 11px;
+  }
+  
+  .infoRowSupplement .infoLabel {
+    width: 65px;
+    font-size: 11px;
+  }
+  
+  .infoRowSupplement .infoValue {
+    font-size: 11px;
+  }
+  
+  .editButton {
+    padding: 2px 8px;
+    font-size: 10px;
+  }
+  
+  .paragraph {
+    text-indent: 1.2em;
+    margin-bottom: 3px;
+  }
+  
+  .supplementTimeContainer {
+    margin-top: 6px;
+  }
+  
+  .supplementTime {
+    font-size: 10px;
+  }
+}

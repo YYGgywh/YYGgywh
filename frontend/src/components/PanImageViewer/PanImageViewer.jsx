@@ -8,9 +8,10 @@
 */
 
 // 导入 React 核心库和必要的 hooks
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // 导入组件样式文件
-import styles from './PanImageViewer.desktop.module.css';
+import desktopStyles from './PanImageViewer.desktop.module.css';
+import mobileStyles from './PanImageViewer.mobile.module.css';
 
 /**
  * 图片查看器组件
@@ -19,10 +20,38 @@ import styles from './PanImageViewer.desktop.module.css';
  * @param {Array} props.images 图片数组
  * @param {number} props.initialIndex 初始索引
  * @param {Function} props.onClose 关闭回调
+ * @param {boolean} props.isMobile 是否为移动端
  */
-const PanImageViewer = ({ images = [], initialIndex = 0, onClose }) => {
+const PanImageViewer = ({ images = [], initialIndex = 0, onClose, isMobile: propIsMobile = false }) => {
   // 状态管理：当前显示的图片索引
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => propIsMobile !== undefined ? propIsMobile : window.innerWidth < 768);
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    if (propIsMobile === undefined) {
+      const handleResize = () => {
+        clearTimeout(window.resizeTimeout);
+        window.resizeTimeout = setTimeout(() => {
+          setIsMobile(window.innerWidth < 768);
+        }, 100);
+      };
+      
+      // 初始执行一次
+      handleResize();
+      // 添加窗口大小变化监听器
+      window.addEventListener('resize', handleResize);
+      // 组件卸载时移除监听器
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(window.resizeTimeout);
+      };
+    }
+  }, [propIsMobile]);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   // 处理关闭图片查看器
   const handleClose = () => {

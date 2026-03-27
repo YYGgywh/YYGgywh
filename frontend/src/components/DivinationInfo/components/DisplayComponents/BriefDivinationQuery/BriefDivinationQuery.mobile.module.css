@@ -1,31 +1,120 @@
 /*
  * @file            frontend/src/components/DivinationInfo/components/DisplayComponents/BriefDivinationQuery/BriefDivinationQuery.mobile.module.css
- * @description     简要占卜查询组件移动端样式
- * @author          Gordon <gordon_cao@qq.com>
- * @createTime      2026-03-14 16:30:00
- * @lastModified    2026-03-14 16:30:00
+ * @description     BriefDivinationQuery 组件移动端样式文件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 19:00:00
+ * @lastModified    2026-03-26 20:16:45
  * Copyright © All rights reserved
 */
 
+/* 简要占卜查询容器 */
 .briefDivinationQuery {
-  padding: 6px 10px;
-  margin-bottom: 8px;
-  font-size: 13px;
-  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 0 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 时间信息 */
+.timeInfo {
+  font-size: 11px;
+  color: #999;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 简要内容 */
+.briefContent {
+  font-size: var(--font-size-sm);
   color: #333;
-  border-bottom: 1px solid #e8e8e8;
-  transition: all 0.3s ease;
+  line-height: 1.4;
+  word-break: break-word; 
 }
 
-.briefDivinationQuery:hover {
-  background-color: #f9f9f9;
-  border-bottom-color: #d9d9d9;
+/* 卡片模式 */
+.briefDivinationQueryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 10px;
+  border-bottom: none;
 }
 
-@media screen and (max-width: 480px) {
+/* 公历日期 */
+.solarDate {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 农历日期 */
+.lunarDate {
+  font-size: 10px;
+  color: #999;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 个人信息 */
+.personalInfo {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 占题文本 */
+.questionText {
+  font-size: 14px;
+  /* font-weight: 500; */
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
   .briefDivinationQuery {
-    padding: 5px 8px;
-    margin-bottom: 6px;
+    gap: 4px;
+    padding: 6px 0;
+  }
+  
+  .timeInfo {
+    font-size: 10px;
+  }
+  
+  .briefContent {
+    font-size: 12px;
+  }
+  
+  .briefDivinationQueryCard {
+    gap: 3px;
+    padding: 4px 0;
+  }
+  
+  .solarDate {
+    font-size: 10px;
+  }
+  
+  .lunarDate {
+    font-size: 9px;
+  }
+  
+  .personalInfo {
+    font-size: 11px;
+  }
+  
+  .questionText {
     font-size: 12px;
   }
 }

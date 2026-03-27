@@ -1,0 +1,88 @@
+/*
+ * @file            frontend/src/components/Modal/components/PostHeader/PostHeader.mobile.module.css
+ * @description     PostHeader 组件移动端样式文件
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 18:30:00
+ * @lastModified    2026-03-26 14:48:46
+ * Copyright © All rights reserved
+*/
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  /* padding: 12px 0; */
+}
+
+.postTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tagsSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  /* margin-bottom: 6px; */
+}
+
+.tag {
+  padding: 2px 8px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  font-size: 11px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: #999;
+}
+
+.postTime {
+  display: flex;
+  align-items: center;
+}
+
+.postLocation {
+  display: flex;
+  align-items: center;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .postHeader {
+    padding: 10px 0;
+  }
+  
+  .postTitle {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  
+  .tagsSection {
+    gap: 3px;
+    margin-bottom: 4px;
+  }
+  
+  .tag {
+    padding: 1px 6px;
+    font-size: 10px;
+  }
+  
+  .postMeta {
+    gap: 6px;
+    font-size: 9px;
+  }
+}

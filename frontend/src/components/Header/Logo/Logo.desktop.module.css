@@ -1,4 +1,13 @@
 
+/*
+ * @file            frontend/src/components/Header/Logo/Logo.desktop.module.css
+ * @description     圆运阁品牌Logo组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:00:00
+ * @lastModified    2026-03-26 17:00:00
+ * Copyright © All rights reserved
+*/
+
 .logo {
   display: flex; 
   align-items: center; 
@@ -13,21 +22,21 @@
 }
 
 
-.logo-icon {
+.logoIcon {
   width: 40px; 
   height: 40px; 
   flex-shrink: 0; 
 }
 
 
-.logo-text-container {
+.logoTextContainer {
   display: flex; 
   flex-direction: column; 
   align-items: flex-start; 
 }
 
 
-.logo-text-main {
+.logoTextMain {
   font-size: 1.125rem; 
   font-weight: 700; 
   color: #000000; 
@@ -36,7 +45,7 @@
 }
 
 
-.logo-text-sub {
+.logoTextSub {
   font-size: 0.75rem; 
   font-weight: 500; 
   color: #000000; 

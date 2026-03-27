@@ -1,0 +1,41 @@
+/*
+ * @file            frontend/src/components/Card/PointsInfo/PointsInfo.mobile.module.css
+ * @description     积分信息组件样式 - 移动端专用
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 14:45:00
+ * @lastModified    2026-03-26 11:51:31
+ * Copyright © All rights reserved
+*/
+
+/* ============================================
+   积分信息组件样式 - 移动端专用
+   ============================================ */
+
+/* 积分信息容器 */
+.pointsInfo {
+  background-color: #fff2e8;
+  color: #fa8c16;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 0 8px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+/* 积分文本样式 */
+.pointsText {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .pointsInfo {
+    padding: 3px 6px;
+    margin: 0 6px;
+  }
+  
+  .pointsText {
+    font-size: 11px;
+  }
+}

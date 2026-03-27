@@ -1,0 +1,127 @@
+/*
+ * @file            frontend/src/components/Modal/components/InteractionButtons/InteractionButtons.mobile.module.css
+ * @description     互动按钮组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 18:20:00
+ * @lastModified    2026-03-26 18:20:00
+ * Copyright © All rights reserved
+*/
+
+/* 互动按钮容器 */
+.interactionButtons {
+  /* ===== CSS 变量定义（可被父组件覆盖） ===== */
+  --button-icon-size: 16px;
+  --button-font-size: 12px;
+  --button-count-size: 10px;
+  --button-gap: 12px;
+  --button-color: #666;
+  --button-hover-color: #333;
+  --button-active-color: #ff4757;
+  --button-hover-bg: #f5f5f5;
+  --view-color: #666;
+  
+  /* ===== 基础样式 ===== */
+  display: flex;
+  align-items: center;
+  gap: var(--button-gap);
+  padding: 6px 0;
+}
+
+/* 卡片样式变体 - 用于首页卡片 */
+.card {
+  --button-icon-size: 14px;
+  --button-font-size: 11px;
+  --button-count-size: 10px;
+  --button-gap: 10px;
+  --button-color: #888;
+  --button-hover-color: #333;
+  --button-active-color: #ff4757;
+  --button-hover-bg: rgba(0, 0, 0, 0.05);
+  --view-color: #aaa;
+}
+
+/* 单个互动按钮 */
+.interactionButton {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--button-color);
+  font-size: var(--button-font-size);
+  transition: all 0.2s ease;
+  padding: 6px 8px;
+  border-radius: 4px;
+  touch-action: manipulation;
+}
+
+/* 按钮悬停效果 */
+.interactionButton:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--button-hover-color);
+}
+
+/* 按钮激活状态（已点赞/收藏） */
+.interactionButton.active {
+  color: var(--button-active-color);
+}
+
+/* 只读模式按钮 */
+.interactionButton.readOnly {
+  background: none; /* 透明背景 */
+  cursor: default;
+}
+
+.interactionButton.readOnly:hover {
+  background-color: transparent;
+  color: var(--button-color);
+}
+
+/* 互动图标 */
+.interactionIcon {
+  flex-shrink: 0;
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+}
+
+/* 互动计数 */
+.interactionCount {
+  font-size: var(--button-count-size);
+  font-weight: 500;
+}
+
+/* 浏览量显示（不可点击） */
+.viewCount {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--view-color);
+  font-size: var(--button-font-size);
+  padding: 6px 8px;
+  cursor: default;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .interactionButtons {
+    gap: 10px;
+    padding: 4px 0;
+  }
+  
+  .card {
+    --button-icon-size: 12px;
+    --button-font-size: 10px;
+    --button-gap: 8px;
+  }
+  
+  .interactionButton {
+    padding: 4px 6px;
+    gap: 2px;
+  }
+  
+  .viewCount {
+    padding: 4px 6px;
+    gap: 2px;
+  }
+}

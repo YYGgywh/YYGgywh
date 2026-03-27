@@ -3,12 +3,13 @@
  * @description     统一的头像组件，支持自定义头像和默认头像
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-21 13:00:00
- * @lastModified    2026-03-21 13:37:01
+ * @lastModified    2026-03-26 11:56:48
  * Copyright © All rights reserved
 */
 
-import React from 'react';
-import styles from './Avatar.module.css';
+import React, { useState, useEffect } from 'react';
+import styles from './Avatar.desktop.module.css';
+import mobileStyles from './Avatar.mobile.module.css';
 
 const Avatar = ({ 
   src, 
@@ -18,14 +19,42 @@ const Avatar = ({
   className = '',
   onError 
 }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   const sizeClasses = {
-    small: styles.avatarSmall,
-    medium: styles.avatarMedium,
-    large: styles.avatarLarge,
-    xlarge: styles.avatarXLarge
+    small: currentStyles.avatarSmall,
+    medium: currentStyles.avatarMedium,
+    large: currentStyles.avatarLarge,
+    xlarge: currentStyles.avatarXLarge
   };
 
-  const sizeClass = sizeClasses[size] || styles.avatarMedium;
+  const sizeClass = sizeClasses[size] || currentStyles.avatarMedium;
 
   // 生成基于昵称的默认头像
   const generateDefaultAvatar = () => {
@@ -74,7 +103,7 @@ const Avatar = ({
     <img 
       src={avatarSrc}
       alt={alt}
-      className={`${styles.avatar} ${sizeClass} ${className}`}
+      className={`${currentStyles.avatar} ${sizeClass} ${className}`}
       onError={handleError}
       loading="lazy"
     />

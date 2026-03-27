@@ -1,12 +1,21 @@
 
-.menu-item {
+/*
+ * @file            frontend/src/components/Header/MenuItem/MenuItem.desktop.module.css
+ * @description     导航菜单项组件桌面端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-26 17:15:00
+ * @lastModified    2026-03-26 17:15:00
+ * Copyright © All rights reserved
+*/
+
+.menuItem {
   position: relative; 
   display: flex; 
   align-items: center; 
 }
 
 
-.menu-link {
+.menuLink {
   display: flex; 
   align-items: center; 
   gap: 6px; 
@@ -22,19 +31,19 @@
 }
 
 
-.menu-link:hover {
+.menuLink:hover {
   color: #1890FF; 
   background-color: #F9FAFB; 
 }
 
 
-.menu-link.active {
+.menuLink.active {
   color: #1890FF; 
   font-weight: 600; 
 }
 
 
-.menu-link.active::after {
+.menuLink.active::after {
   content: ''; 
   position: absolute; 
   bottom: 0; 
@@ -47,19 +56,19 @@
 
 
 
-.dropdown-arrow {
+.dropdownArrow {
   color: #666666; 
   transition: transform 0.2s ease, color 0.2s ease; 
 }
 
 
-.menu-item:hover .dropdown-arrow {
+.menuItem:hover .dropdownArrow {
   color: #1890FF; 
   transform: translateY(2px); 
 }
 
 
-.dropdown-menu {
+.dropdownMenu {
   position: absolute; 
   top: 100%; 
   left: 0; 
@@ -89,7 +98,7 @@
 }
 
 
-.dropdown-menu-simple {
+.dropdownMenuSimple {
   min-width: 80px; 
   list-style: none; 
   padding-top: 8px; 
@@ -97,7 +106,7 @@
 }
 
 
-.dropdown-menu-simple .dropdown-item {
+.dropdownMenuSimple .dropdownItem {
   display: block; 
   padding: 12px 16px; 
   color: #333333; 
@@ -108,7 +117,7 @@
 }
 
 
-.dropdown-menu-simple .dropdown-item:hover {
+.dropdownMenuSimple .dropdownItem:hover {
   background-color: #F9FAFB; 
   color: #1890FF; 
 }

@@ -8,9 +8,10 @@
 */
 
 // 导入 React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // 导入样式文件
-import styles from './DivinationSupplementleInfo.desktop.module.css';
+import desktopStyles from './DivinationSupplementleInfo.desktop.module.css';
+import mobileStyles from './DivinationSupplementleInfo.mobile.module.css';
 // 导入映射工具
 import { methodToChinese } from '../../../../utils/methodMapping';
 // 导入时间格式化工具
@@ -25,6 +26,33 @@ const DivinationSupplementleInfo = ({
   onEditSupplement, // 编辑补充信息的回调函数
   canEdit = true // 是否可以编辑补充信息，默认为 true
 }) => {
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 调试：打印 data 对象结构
   console.log('DivinationSupplementleInfo data:', data);
   // 解析 pan_params JSON 数据
