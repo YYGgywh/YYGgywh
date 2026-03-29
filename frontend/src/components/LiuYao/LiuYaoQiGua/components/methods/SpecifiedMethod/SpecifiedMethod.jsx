@@ -3,25 +3,30 @@
  * @description     指定起卦组件，用户手动指定每爻爻象生成卦象
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-09 18:00:00
- * @lastModified    2026-03-15 20:40:21
+ * @lastModified    2026-03-28 10:00:00
  * Copyright © All rights reserved
 */
 
 import React, { useState } from 'react';  // 导入 React 核心库和 Hooks
-import commonStyles from '../MethodCommon.desktop.module.css';  // 导入通用样式文件
+import desktopStyles from '../MethodCommon.desktop.module.css';  // 导入桌面端通用样式文件
+import mobileStyles from '../MethodCommon.mobile.module.css';  // 导入移动端通用样式文件
 import LiuYaoService from '../../../../../../services/liuyaoService';  // 导入六爻服务层
 import YaoDisplay from '../../YaoComponents/YaoDisplay/YaoDisplay';  // 导入 YaoDisplay 组件
 import ActionButton from '../../../../components/ActionButton/ActionButton';  // 导入 ActionButton 组件
+import MethodDescription from '../MethodDescription/MethodDescription';  // 导入 MethodDescription 组件
 
 /**
  * @description     指定起卦组件
+ * @param           {boolean}   isMobile             是否为移动端
  * @param           {Function}  onReset               重置回调函数
  * @param           {Function}  onSpecifiedDivination   指定起卦回调函数
  * @return          {JSX}                          指定起卦界面 JSX 元素
  */
 
 // 定义 SpecifiedMethod 组件
-const SpecifiedMethod = ({ onReset, onSpecifiedDivination }) => {
+const SpecifiedMethod = ({ isMobile, onReset, onSpecifiedDivination }) => {
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : desktopStyles;
   // 爻位选择状态，跟踪每个爻位的阳阴选择状态：'yang' | 'yin' | 'yang-active' | 'yin-active' | null (未选中)
   const [yaoSelections, setYaoSelections] = useState({
     shang: null,  // 上爻选择
@@ -272,47 +277,93 @@ const SpecifiedMethod = ({ onReset, onSpecifiedDivination }) => {
 
   // 渲染指定起卦组件
   return (
-    <div className={commonStyles.methodContainer}>  {/* 指定起卦容器 */}
-      <div className={commonStyles.contentRow}>  {/* 内容行 */}
-        <div className={commonStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
-          <div className={commonStyles.contentContainer}>  {/* 内容容器 */}
-            <h3>指定起卦：</h3>  {/* 标题 */}
-            <p>根据线下卜具摇得卦象，用本六爻排盘自动生成卦象，完成六爻纳甲装卦。</p>  {/* 描述 */}
-            <ol>  {/* 操作步骤列表 */}
-              <li>已得卦象，依象装纳。对应爻位，点选阴阳。</li>  {/* 步骤1 */}
-              <li>若为动爻，再点即可。依色分辨，一目了然。</li>  {/* 步骤2 */}
-            </ol>
-          </div>
-          <div className={commonStyles.divinationActions}>  {/* 操作按钮区域 */}
+    <div className={currentStyles.methodContainer}>  {/* 指定起卦容器 */}
+      {isMobile ? (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 移动端 */}
+          <MethodDescription
+            title="指定起卦："
+            description="根据线下卜具摇得卦象，用本六爻排盘自动生成卦象，完成六爻纳甲装卦。"
+            steps={[
+              "已得卦象，依象装纳。对应爻位，点选阴阳。",
+              "若为动爻，再点即可。依色分辨，一目了然。"
+            ]}
+            className={currentStyles.contentContainer}
+          />
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="buttons"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            yaoSelections={yaoSelections}
+            onYaoSelect={handleYaoButtonClick}
+          />
+          
+          <ActionButton className={currentStyles.divinationActions}>
             {/* 暂时隐藏指定起卦按钮，目前该按钮没有任何需求功能 */}
             <ActionButton
-              type="primary"  // 主要操作类型
-              onClick={handleSpecifiedDivination}  // 点击事件
-              style={{ visibility: 'hidden' }}  // 隐藏按钮但保留占位空间
-              className="throw-button"  // 额外类名
+              type="primary"
+              onClick={handleSpecifiedDivination}
+              style={{ visibility: 'hidden' }}
+              className="throw-button"
             >
-              指定起卦  {/* 按钮文字 */}
+              指定起卦
             </ActionButton>
             <ActionButton
-              type="danger"  // 危险操作类型
-              onClick={handleReset}  // 点击事件
-              disabled={!hasAnySelection}  // 禁用状态
-              className="reset-button"  // 额外类名
+              type="danger"
+              onClick={handleReset}
+              disabled={!hasAnySelection}
+              className="reset-button"
             >
-              全部重设  {/* 按钮文字 */}
+              全部重设
+            </ActionButton>
+          </ActionButton>
+        </div>
+      ) : (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 桌面端 */}
+          <div className={currentStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
+            <MethodDescription
+              title="指定起卦："
+              description="根据线下卜具摇得卦象，用本六爻排盘自动生成卦象，完成六爻纳甲装卦。"
+              steps={[
+                "已得卦象，依象装纳。对应爻位，点选阴阳。",
+                "若为动爻，再点即可。依色分辨，一目了然。"
+              ]}
+              className={currentStyles.contentContainer}
+            />
+            <ActionButton className={currentStyles.divinationActions}>
+              {/* 暂时隐藏指定起卦按钮，目前该按钮没有任何需求功能 */}
+              <ActionButton
+                type="primary"
+                onClick={handleSpecifiedDivination}
+                style={{ visibility: 'hidden' }}
+                className="throw-button"
+              >
+                指定起卦
+              </ActionButton>
+              <ActionButton
+                type="danger"
+                onClick={handleReset}
+                disabled={!hasAnySelection}
+                className="reset-button"
+              >
+                全部重设
+              </ActionButton>
             </ActionButton>
           </div>
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="buttons"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            yaoSelections={yaoSelections}
+            onYaoSelect={handleYaoButtonClick}
+          />
         </div>
-        
-        <YaoDisplay
-          className={commonStyles.yaoDisplay}
-          mode="buttons"
-          yaoValues={yaoValues}
-          yaoOddCounts={yaoOddCounts}
-          yaoSelections={yaoSelections}
-          onYaoSelect={handleYaoButtonClick}
-        />
-      </div>
+      )}
     </div>
   );
 };

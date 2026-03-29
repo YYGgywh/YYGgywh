@@ -3,7 +3,7 @@
  * @description     PanDetailModal 组件移动端样式文件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-26 19:30:00
- * @lastModified    2026-03-26 17:00:36
+ * @lastModified    2026-03-29 14:25:22
  * Copyright © All rights reserved
 */
 
@@ -63,7 +63,7 @@
 
 /* 六爻排盘信息 */
 .modalLiuYaoInfo {
-  padding: 12px 16px;
+  padding: 12px 16px 12px 14px;
   border-bottom: 1px solid #f0f0f0;
 }
 

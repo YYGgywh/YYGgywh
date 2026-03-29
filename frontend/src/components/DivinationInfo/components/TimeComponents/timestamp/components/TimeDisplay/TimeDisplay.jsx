@@ -7,8 +7,9 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import desktopStyles from './TimeDisplay.desktop.module.css';
+import mobileStyles from './TimeDisplay.mobile.module.css';
 
 const TimeDisplay = ({
   solarDate,      // 公历日期
@@ -20,8 +21,20 @@ const TimeDisplay = ({
   showTime = true,    // 是否显示时间部分
   className = ''  // 额外类名
 }) => {
-  // 使用桌面端样式
-  const styles = desktopStyles;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 定义是否为移动端状态
+
+  // 监听屏幕尺寸变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   // 构建网格数据
   const rows = solarFirst 

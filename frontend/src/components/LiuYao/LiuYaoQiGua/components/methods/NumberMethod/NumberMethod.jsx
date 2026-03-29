@@ -3,25 +3,30 @@
  * @description     报数起卦组件，通过输入数字生成卦象，实现顺序输入
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-08 16:30:00
- * @lastModified    2026-03-15 20:41:29
+ * @lastModified    2026-03-28 20:28:20
  * Copyright © All rights reserved
 */
 
 import React, { useState, useRef, useEffect } from 'react';  // 导入 React 核心库和 Hooks
 import LiuYaoService from '../../../../../../services/liuyaoService';  // 导入六爻服务层
-import commonStyles from '../MethodCommon.desktop.module.css';  // 导入通用样式文件
+import desktopStyles from '../MethodCommon.desktop.module.css';  // 导入桌面端通用样式文件
+import mobileStyles from '../MethodCommon.mobile.module.css';  // 导入移动端通用样式文件
 import YaoDisplay from '../../YaoComponents/YaoDisplay/YaoDisplay';  // 导入 YaoDisplay 组件
 import ActionButton from '../../../../components/ActionButton/ActionButton';  // 导入 ActionButton 组件
+import MethodDescription from '../MethodDescription/MethodDescription';  // 导入 MethodDescription 组件
 
 /**
  * @description     报数起卦组件
+ * @param           {boolean}   isMobile             是否为移动端
  * @param           {Function}  onReset              重置回调函数
  * @param           {Function}  onNumberDivination    报数起卦回调函数
  * @return          {JSX}                          报数起卦界面 JSX 元素
  */
 
 // 定义 NumberMethod 组件
-const NumberMethod = ({ onReset, onNumberDivination }) => {
+const NumberMethod = ({ isMobile, onReset, onNumberDivination }) => {
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : desktopStyles;
   // 爻值状态
   const [yaoValues, setYaoValues] = useState({
     shang: '', // 上爻值
@@ -287,24 +292,45 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
 
   // 渲染组件
   return (
-    <div className={commonStyles.methodContainer}>  {/* 报数起卦容器 */}
-      <div className={commonStyles.contentRow}>  {/* 内容行 */}
-        <div className={commonStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
-          <div className={commonStyles.contentContainer}>  {/* 内容容器 */}
-            <h3>报数起卦：</h3>  {/* 标题 */}
-            <p>根据占时的心念，随机填入数字，每爻3个数，可以0开头，随心报数则可。以数字拟六爻阴阳成卦机制，简单快捷。</p>  {/* 描述 */}
-            <ol>  {/* 操作步骤列表 */}
-              <li>诚心静默，排除杂念。心念占事，勿作他想。</li>  {/* 步骤1 */}
-              <li>心念占事，随心报数。每爻三数，六爻卦成。</li>  {/* 步骤2 */}
-            </ol>
-          </div>
-          <div className={commonStyles.divinationActions}>  {/* 操作按钮区域 */}
+    <div className={currentStyles.methodContainer}>  {/* 报数起卦容器 */}
+      {isMobile ? (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 移动端 */}
+          <MethodDescription
+            title="报数起卦："
+            description="根据占时的心念，随机填入数字，每爻3个数，可以0开头，随心报数则可。以数字拟六爻阴阳成卦机制，简单快捷。"
+            steps={[
+              "诚心静默，排除杂念。心念占事，勿作他想。",
+              "心念占事，随心报数。每爻三数，六爻卦成。"
+            ]}
+            className={currentStyles.contentContainer}
+          />
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="input"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            disabledYaos={disabledYaos}
+            onYaoChange={handleYaoChange}
+            onYaoDoubleClick={handleYaoDoubleClick}
+            onYaoInputValidation={handleInputValidation}
+            yaoRefs={yaoRefs}
+            inputProps={{
+              type: 'number',
+              placeholder: '待输入',
+              minLength: 3,
+              maxLength: 3,
+              pattern: '\\d{3}'
+            }}
+          />
+          
+          <ActionButton className={currentStyles.divinationActions}>
             <ActionButton
               ref={generateButtonRef}
               type="primary"
               onClick={handleGenerateDivination}
               disabled={!allInputsValid || isGenerating}
-              size="medium"
             >
               {isGenerating ? '卦象已成' : '生成卦象'}
             </ActionButton>
@@ -312,31 +338,63 @@ const NumberMethod = ({ onReset, onNumberDivination }) => {
               type="danger"
               onClick={handleReset}
               disabled={!hasValidInput}
-              size="medium"
             >
               重新报数
             </ActionButton>
-          </div>
+          </ActionButton>
         </div>
-        
-        <YaoDisplay
-          className={commonStyles.yaoDisplay}
-          mode="input"
-          yaoValues={yaoValues}
-          yaoOddCounts={yaoOddCounts}
-          disabledYaos={disabledYaos}
-          onYaoChange={handleYaoChange}
-          onYaoDoubleClick={handleYaoDoubleClick}
-          onYaoInputValidation={handleInputValidation}
-          yaoRefs={yaoRefs}
-          inputProps={{
-            placeholder: '待输入',
-            minLength: 3,
-            maxLength: 3,
-            pattern: '\\d{3}'
-          }}
-        />
-      </div>
+      ) : (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 桌面端 */}
+          <div className={currentStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
+            <MethodDescription
+              title="报数起卦："
+              description="根据占时的心念，随机填入数字，每爻3个数，可以0开头，随心报数则可。以数字拟六爻阴阳成卦机制，简单快捷。"
+              steps={[
+                "诚心静默，排除杂念。心念占事，勿作他想。",
+                "心念占事，随心报数。每爻三数，六爻卦成。"
+              ]}
+              className={currentStyles.contentContainer}
+            />
+            <ActionButton className={currentStyles.divinationActions}>
+              <ActionButton
+                ref={generateButtonRef}
+                type="primary"
+                onClick={handleGenerateDivination}
+                disabled={!allInputsValid || isGenerating}
+              >
+                {isGenerating ? '卦象已成' : '生成卦象'}
+              </ActionButton>
+              <ActionButton
+                type="danger"
+                onClick={handleReset}
+                disabled={!hasValidInput}
+              >
+                重新报数
+              </ActionButton>
+            </ActionButton>
+          </div>
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="input"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            disabledYaos={disabledYaos}
+            onYaoChange={handleYaoChange}
+            onYaoDoubleClick={handleYaoDoubleClick}
+            onYaoInputValidation={handleInputValidation}
+            yaoRefs={yaoRefs}
+            inputProps={{
+              type: 'number',
+              placeholder: '待输入',
+              minLength: 3,
+              maxLength: 3,
+              pattern: '\\d{3}'
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

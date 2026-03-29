@@ -12,7 +12,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // 导入桌面端样式（CSS Modules）
-import styles from './LiuYaoReault.desktop.module.css';
+import desktopStyles from './LiuYaoReault.desktop.module.css';
+// 导入移动端样式（CSS Modules）
+import mobileStyles from './LiuYaoReault.mobile.module.css';
 // 导入占卜信息展示组件
 import DivinationInfoDisplay from '../../DivinationInfo/components/DisplayComponents/DivinationInfoDisplay/DivinationInfoDisplay';
 // 导入六爻信息容器组件
@@ -27,6 +29,8 @@ import { savePan, updatePan, getPanDetail } from '../../../api/panApi';
 import { isLoggedIn } from '../../../utils/storage';
 // 导入起卦方式映射工具
 import { methodToEnglish } from '../../../utils/methodMapping';
+// 导入移动端顶部导航组件
+import MobileTopNavigation from '../../common/MobileTopNavigation/MobileTopNavigation';
 
 /**
  * 解析占卜数据
@@ -97,11 +101,43 @@ const validateDivinationData = (data) => {
 /**
  * 六爻排盘结果展示组件
  * 使用React.memo进行性能优化，避免不必要的重新渲染
+ * @param {Object} props - 组件属性
+ * @param {Object} props.formData - 表单数据（可选，用于弹窗模式）
+ * @param {Object} props.divinationData - 占卜数据（可选，用于弹窗模式）
+ * @param {boolean} props.isModal - 是否为弹窗模式
  * @returns {JSX.Element} 返回排盘结果展示的JSX元素
  */
-const LiuYaoReault = React.memo(() => {
+const LiuYaoReault = React.memo(({ formData: propFormData, divinationData: propDivinationData, isModal = false }) => {
   // 从 URL 参数获取 recordId
   const { recordId: urlRecordId } = useParams();
+  
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   // 占卜数据状态，存储从后端返回的排盘结果
   const [divinationData, setDivinationData] = useState(null);
@@ -307,6 +343,13 @@ const LiuYaoReault = React.memo(() => {
   };
 
   /**
+   * 处理返回按钮点击事件
+   */
+  const handleBack = () => {
+    window.history.back();
+  };
+
+  /**
    * 从后端加载排盘记录详情
    * 当 URL 中有 recordId 参数时执行
    */
@@ -380,6 +423,20 @@ const LiuYaoReault = React.memo(() => {
    * 只在组件首次挂载时执行一次，并且只在没有URL参数时执行
    */
   useEffect(() => {
+    // 如果是弹窗模式且传入了数据，直接使用传入的数据
+    if (isModal && propFormData && propDivinationData) {
+      console.log('弹窗模式 - 传入的数据:', { propFormData, propDivinationData });
+      
+      // 处理数据结构，提取实际的数据对象
+      const actualDivinationData = propDivinationData?.liuyao_config_data || propDivinationData;
+      
+      setFormData(propFormData);
+      setDivinationData(actualDivinationData);
+      setHasInitialized(true);
+      return;
+    }
+    
+    // 正常模式：从localStorage或URL获取数据
     if (!hasInitialized && !urlRecordId) {
       try {
         // 从localStorage获取排盘结果数据
@@ -433,14 +490,8 @@ const LiuYaoReault = React.memo(() => {
       
       // 标记组件已初始化，防止重复执行
       setHasInitialized(true);
-      // 不要立即删除localStorage，以便在保存时能获取完整数据
-      // 延迟删除，确保保存逻辑能获取到数据
-      const timer = setTimeout(() => {
-        localStorage.removeItem('divinationResult');
-      }, 1000);
-      
-      // 清除定时器
-      return () => clearTimeout(timer);
+      // 不自动删除localStorage，以便页面刷新后仍能恢复数据
+      // 数据会在用户重新排盘时被新数据覆盖
     } else if (!hasInitialized && urlRecordId) {
       // 有URL参数时，只标记已初始化，不执行本地存储读取逻辑
       setHasInitialized(true);
@@ -481,6 +532,27 @@ const LiuYaoReault = React.memo(() => {
    */
   return (
     <div id="LiuYaoReault" className={styles.liuYaoReaultContainer}>
+      {/* 移动端顶部导航 */}
+      {isMobile && (
+        <MobileTopNavigation
+          title="六爻卦式"
+          onBack={handleBack}
+          showBackButton={true}
+          iconColor="#FFFFFF"
+        />
+      )}
+      
+      {/* 桌面端顶部红色标题栏 */}
+      {!isMobile && (
+        <div className={styles.header}>
+          <button className={styles.backButton} onClick={handleBack}>
+            &lt;
+          </button>
+          <h1 className={styles.title}>六爻卦式</h1>
+          <div className={styles.headerRight}></div>
+        </div>
+      )}
+
       {/* 占卜信息展示组件，显示基本信息 */}
       <DivinationInfoDisplay formData={formData} divinationData={divinationData} />
 

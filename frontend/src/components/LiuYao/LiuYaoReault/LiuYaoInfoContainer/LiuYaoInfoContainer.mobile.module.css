@@ -3,7 +3,7 @@
  * @description     六爻信息容器组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-26 17:30:00
- * @lastModified    2026-03-26 17:23:12
+ * @lastModified    2026-03-29 16:56:55
  * Copyright © All rights reserved
 */
 
@@ -22,7 +22,7 @@
   
   /* 视觉属性 */
   background-color: var(--bg-white);
-  border-radius: var(--radius-md);
+  /* border-radius: var(--radius-md); */
   /* border: 1px solid var(--border-color); */
 }
 

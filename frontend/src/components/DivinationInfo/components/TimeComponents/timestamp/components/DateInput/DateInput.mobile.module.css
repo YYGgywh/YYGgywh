@@ -3,8 +3,8 @@
  * @description     统一的时间输入框组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-12 15:00:00
- * @lastModified    2026-03-12 15:00:00
- * Copyright  All rights reserved
+ * @lastModified    2026-03-29 12:07:13
+ * Copyright © All rights reserved
 */
 
 /**
@@ -12,6 +12,7 @@
  */
 .timeInput {
   height: 24px;
+  width: 24px;
   padding: 0 4px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);

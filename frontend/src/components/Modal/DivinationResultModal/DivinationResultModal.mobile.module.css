@@ -1,0 +1,86 @@
+/*
+ * @file            frontend/src/components/Modal/DivinationResultModal/DivinationResultModal.mobile.module.css
+ * @description     移动端六爻排盘结果弹窗组件样式
+ * @author          Gordon <gordon_cao@qq.com>
+ * @createTime      2026-03-29 10:00:00
+ * @lastModified    2026-03-29 10:00:00
+ * Copyright © All rights reserved
+*/
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContainer {
+  width: 100%;
+  max-width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: white;
+  animation: slideUp 0.3s ease-out;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modalContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+
+
+@media screen and (min-width: 768px) {
+  .modalOverlay {
+    align-items: center;
+  }
+  
+  .modalContainer {
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 90vh;
+    border-radius: 8px;
+    animation: scaleIn 0.3s ease-out;
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

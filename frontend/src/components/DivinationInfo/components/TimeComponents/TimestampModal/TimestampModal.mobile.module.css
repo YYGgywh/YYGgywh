@@ -3,7 +3,7 @@
  * @description     时间戳设置弹窗组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 21:00:00
- * @lastModified    2026-03-09 21:00:00
+ * @lastModified    2026-03-29 12:26:09
  * Copyright © All rights reserved
 */
 
@@ -66,12 +66,30 @@
 }
 
 /**
+ * 键盘弹出时的弹窗样式
+ * 当软键盘弹出时，弹窗需要调整位置以避免被遮挡
+ */
+.timestampModal.keyboardVisible {
+  /* 布局属性 */
+  position: absolute; /* 改为绝对定位，允许动态调整bottom值 */
+  left: 50%; /* 水平居中 */
+  transform: translateX(-50%); /* 水平居中修正 */
+  
+  /* 盒模型属性 */
+  margin: 0; /* 清除默认margin，避免定位偏移 */
+  max-height: none; /* 移除固定的最大高度，使用动态计算的高度 */
+  
+  /* 视觉属性 */
+  transition: bottom 0.2s ease, max-height 0.2s ease; /* 平滑过渡动画 */
+}
+
+/**
  * 模态框头部区域
  * 定义弹窗头部的样式
  */
 .modalHeader {
   /* 盒模型属性 */
-  padding: var(--spacing-md); /* 内边距为中间距 */
+  padding: var(--spacing-md) var(--spacing-lg); /* 内边距为中间距 */
   
   /* 视觉属性 */
   background-color: var(--bg-gray-light); /* 浅灰色背景 */
@@ -457,7 +475,10 @@
   }
   
   .timestampTabs {
-    flex-wrap: wrap; /* 允许换行 */
+    /* flex-wrap: wrap; 允许换行 */
+    display: flex;
+    justify-content: center;
+    /* border-bottom: 1px solid var(--border-color); */
   }
   
   .tabButton {

@@ -3,62 +3,61 @@
  * @description     六爻起卦主容器组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 13:30:00
- * @lastModified    2026-03-09 13:30:00
+ * @lastModified    2026-03-28 21:05:00
  * Copyright © All rights reserved
 */
+
+
+
+/* ===== 求占者信息容器 ===== */
+.divinationInfoContainer {
+  /* background-color: white; */
+  padding: 0 12px;
+  /* border-bottom: 1px solid #E5E7EB; */
+}
 
 /* ===== 六爻起卦外层容器 ===== */
 /* 外层容器样式 - 定义整个六爻起卦组件的包装容器（移动端） */
 .liuYaoWrapper {
-  /* ===== 布局变量定义 ===== */
-  /* 定义容器内部元素间距，移动端使用较小的间距 */
-  --wrapper-gap: var(--spacing-lg, 16px);
-  /* 定义容器最大宽度，移动端占满屏幕 */
-  --wrapper-max-width: 100%;
-  /* 定义容器内边距，移动端使用较小的内边距 */
-  --wrapper-padding: var(--spacing-sm, 8px);
-  /* 定义容器边框颜色 */
-  --wrapper-border-color: #1890FF;
-  /* 定义容器圆角 */
-  --wrapper-border-radius: var(--border-radius-lg, 12px);
-  /* 定义容器顶部外边距 */
-  --wrapper-margin-top: var(--spacing-sm, 8px);
-  
   /* ===== 布局属性 ===== */
   /* 使用Flex布局，垂直方向排列子元素 */
   display: flex;
   /* 设置主轴方向为垂直方向 */
   flex-direction: column;
-  /* 使用CSS变量定义子元素间距 */
-  gap: var(--wrapper-gap);
+  /* 子元素间距为0 */
+  gap: 0;
   /* 设置最大宽度 */
-  max-width: var(--wrapper-max-width);
-  /* 水平居中 */
-  margin: var(--wrapper-margin-top) auto 0;
-  /* 设置内边距 */
-  padding: var(--wrapper-padding);
-  /* 设置边框 */
-  border: 1px solid var(--wrapper-border-color);
-  /* 设置圆角 */
-  border-radius: var(--wrapper-border-radius);
+  max-width: 100%;
+  /* 无外边距 */
+  margin: 0;
+  /* 无内边距 */
+  padding: 0;
+  /* 无边框 */
+  border: none;
+  /* 无圆角 */
+  border-radius: 0;
   /* 确保盒模型计算正确 */
   box-sizing: border-box;
+  /* 背景色 */
+  background: linear-gradient(to bottom, #1890ff 0%, #ffffff 70%, #ffffff 70%, #ffffff 100%);
+  /* 最小高度 */
+  min-height: 100vh;
 }
 
 /* ===== 六爻起卦主容器 ===== */
 /* 主容器样式 - 包含侧边导航和起卦内容区域（移动端） */
 .liuYaoContainer {
-  /* ===== 布局变量定义 ===== */
-  /* 定义容器内部元素间距，移动端使用较小的间距 */
-  --container-gap: var(--spacing-md, 12px);
-  
   /* ===== 布局属性 ===== */
   /* 使用Flex布局，移动端改为垂直方向排列 */
   display: flex;
   /* 移动端改为垂直方向排列 */
   flex-direction: column;
-  /* 使用CSS变量定义子元素间距 */
-  gap: var(--container-gap);
+  /* 子元素间距 */
+  gap: 0px;
+  /* 内边距 */
+  padding: 12px;
+  /* 背景色 */
+  /* background-color: #F5F5F5; */
 }
 
 /* ===== 起卦内容容器 ===== */
@@ -70,7 +69,7 @@
   /* 定义容器圆角 */
   --content-border-radius: var(--border-radius-md, 8px);
   /* 定义容器内边距，移动端使用较小的内边距 */
-  --content-padding: var(--spacing-md, 12px);
+  --content-padding: var(--spacing-md, 16px);
   /* 定义容器背景色 */
   --content-bg-color: #FFFFFF;
   /* 定义容器阴影 */
@@ -80,15 +79,17 @@
   /* 占据剩余空间 */
   flex: 1;
   /* 设置边框 */
-  border: 1px solid var(--content-border-color);
+  /* border: 1px solid var(--content-border-color); */
   /* 设置圆角 */
-  border-radius: var(--content-border-radius);
+  /* border-radius: var(--content-border-radius); */
   /* 设置内边距 */
   padding: var(--content-padding);
   /* 设置背景色 */
   background-color: var(--content-bg-color);
   /* 设置阴影 */
   box-shadow: var(--content-box-shadow);
+  /* 最小高度 */
+  min-height: 300px;
 }
 
 /* ===== 排盘按钮容器 ===== */
@@ -99,6 +100,12 @@
   display: flex;
   /* 水平居中 */
   justify-content: center;
+  /* 内边距 */
+  padding: 16px;
+  /* 背景色 */
+  background-color: #F5F5F5;
+  /* 圆角 */
+  border-radius: 0 0 8px 8px;
 }
 
 /* ===== 排盘按钮 ===== */
@@ -156,4 +163,43 @@
   cursor: not-allowed;
   /* 移除阴影 */
   box-shadow: none;
+}
+
+/* ===== 响应式适配 ===== */
+/* 小屏幕适配（<375px）*/
+@media screen and (max-width: 374px) {
+  .topNavigation {
+    padding: 10px 12px;
+  }
+  
+  .pageTitle {
+    font-size: 16px;
+  }
+  
+  .backButton {
+    font-size: 20px;
+  }
+  
+  .divinationInfoContainer {
+    padding: 8px;
+  }
+  
+  .liuYaoContainer {
+    padding: 8px;
+    gap: 0px;
+  }
+  
+  .liuYaoContent {
+    padding: 12px;
+    min-height: 250px;
+  }
+  
+  .divinationButtonContainer {
+    padding: 12px;
+  }
+}
+
+/* 中等屏幕适配（375px-768px）*/
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  /* 标准移动端样式，无需额外调整 */
 }

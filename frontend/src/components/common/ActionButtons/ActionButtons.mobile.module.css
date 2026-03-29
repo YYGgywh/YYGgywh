@@ -3,15 +3,10 @@
  * @description     操作按钮组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-26 15:00:00
- * @lastModified    2026-03-26 15:00:00
+ * @lastModified    2026-03-29 17:28:04
  * Copyright © All rights reserved
 */
 
-.actionButtons {
-  margin-top: 16px;
-}
-
-/* 超小屏幕适配 */
 @media (max-width: 359px) {
   .actionButtons {
     margin-top: 12px;

@@ -3,7 +3,7 @@
  * @description     六爻起卦主容器组件，协调各子组件的状态和布局
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-15 20:55:19
+ * @lastModified    2026-03-28 21:12:40
  * Copyright © All rights reserved
 */
 
@@ -14,12 +14,17 @@ import React, {
   useEffect // 副作用 Hook，用于处理组件挂载、更新和卸载时的操作
 } from 'react';  
 import styles from './LiuYaoQiGua.desktop.module.css';  // 导入桌面端样式文件（CSS Modules）
+import mobileStyles from './LiuYaoQiGua.mobile.module.css';  // 导入移动端样式文件（CSS Modules）
 import { Button } from '../../common/Button';  // 导入统一的按钮组件
+import MobileTopNavigation from '../../common/MobileTopNavigation/MobileTopNavigation';  // 导入移动端顶部导航组件
 import NavigationSidebar from './components/NavigationSidebar/NavigationSidebar';  // 导入侧边导航组件
 import MethodContent from './components/MethodContent/MethodContent';  // 导入方法内容组件
+import DivinationInfo from '../../DivinationInfo/DivinationInfo';  // 导入求占者信息组件
 import LiuYaoService from '../../../services/liuyaoService';  // 导入六爻服务层
 import { useApp } from '../../../contexts/AppContext';  // 导入应用全局上下文 Hook
 import { useLiuyao } from '../../../contexts/LiuyaoContext';  // 导入六爻排盘上下文 Hook
+import { useNavigate } from 'react-router-dom';  // 导入路由导航 Hook
+
 
 /**
  * @description     六爻起卦主容器组件
@@ -38,6 +43,29 @@ const LiuYaoQiGua = () => {
     setDivineResult // 设置排盘结果方法
   } = useLiuyao();  // 从六爻排盘上下文获取方法
   
+  // 导航实例
+  const navigate = useNavigate();
+  
+  // 屏幕尺寸检测
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+
+  
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
+  
   // 使用 ref 来存储最新的状态值
   const formDataRef = useRef(formData);  // 表单数据的 ref 引用
   const timestampRef = useRef(timestamp);  // 时间戳的 ref 引用
@@ -46,6 +74,8 @@ const LiuYaoQiGua = () => {
   useEffect(() => {
     formDataRef.current = formData;  // 更新表单数据 ref
   }, [formData]);  // 依赖 formData
+  
+
   
   useEffect(() => {
     timestampRef.current = timestamp;  // 更新时间戳 ref
@@ -77,9 +107,6 @@ const LiuYaoQiGua = () => {
   const threeDigitsArrayRef = useRef([]);  // 三位数数组的 ref 引用
   
   const yaoOrder = LiuYaoService.YAO_ORDER;  // 爻位顺序
-
-  // API 基础地址配置
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';  // 从环境变量获取API基础地址，默认为本地地址
 
   // 起卦方式列表
   const divinationMethods = [
@@ -406,7 +433,9 @@ const LiuYaoQiGua = () => {
       // 尝试调用后端排盘接口，获取排盘结果
       try {
         // 发起排盘请求
-        const divineResponse = await fetch(`${API_BASE_URL}/api/v1/liuyao/assemble-liuya`, {  // 使用环境变量配置的API基础地址
+        const apiBaseUrl = LiuYaoService.getApiBaseUrl();
+        console.log('[LiuYaoQiGua] 排盘请求地址:', apiBaseUrl);
+        const divineResponse = await fetch(`${apiBaseUrl}/api/v1/liuyao/assemble-liuya`, {  // 使用动态获取的API基础地址
           method: 'POST',  // 请求方法
           // 请求头，指定发送 JSON 格式数据
           headers: {
@@ -439,8 +468,14 @@ const LiuYaoQiGua = () => {
       
       localStorage.setItem('divinationResult', JSON.stringify(allData));  // 存储到本地存储
       
-      // 6. 在新标签页中打开结果页面
-      window.open('/divination-result', '_blank');  // 打开新标签页
+      // 6. 根据设备类型选择显示方式
+      if (isMobile) {
+        // 移动端：直接跳转到结果页面
+        window.location.href = '/divination-result';
+      } else {
+        // 桌面端：在新标签页中打开结果页面
+        window.open('/divination-result', '_blank');  // 打开新标签页
+      }
     }
     // 处理开始排盘错误
     catch (error) {
@@ -448,45 +483,70 @@ const LiuYaoQiGua = () => {
     }
   };
 
+  // 处理返回操作
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   // 7. 返回 JSX 元素
   return (
-    <div className={styles.liuYaoWrapper}> {/* 六爻起卦外层容器 */}
-      <div className={styles.liuYaoContainer}> {/* 六爻起卦主容器 */}
-        {/* 侧边导航组件 */}
+    <div className={currentStyles.liuYaoWrapper}>
+      {/* 顶部导航栏 */}
+      <MobileTopNavigation
+        title="六爻排盘"
+        onBack={handleBack}
+        showBackButton={true}
+        iconColor="#FFFFFF"
+      />
+      
+      {/* 求占者信息 */}
+      {isMobile && (
+        <div className={currentStyles.divinationInfoContainer}>
+          <DivinationInfo />
+        </div>
+      )}
+      
+      {/* 起卦内容 */}
+      <div className={currentStyles.liuYaoContainer}>
+        {/* 横排导航 */}
         <NavigationSidebar
-          methods={divinationMethods} // 起卦方法数组
-          selectedMethod={selectedMethod} // 当前选中的起卦方法
-          onMethodSelect={handleMethodSelect} // 方法选择回调函数
+          methods={divinationMethods}
+          selectedMethod={selectedMethod}
+          onMethodSelect={handleMethodSelect}
         />
-        <div className={styles.liuYaoContent}> {/* 起卦内容容器 */}
-          {/* 起卦方法内容组件 */}
+        
+        {/* 起卦方法内容 */}
+        <div className={currentStyles.liuYaoContent}>
           <MethodContent
-            selectedMethod={selectedMethod} // 当前选中的起卦方法
-            yaoValues={yaoValues} // 六爻值数组
-            yaoOddCounts={yaoOddCounts} // 六爻奇数计数数组
-            onThrow={handleThrow} // 抛掷骰子回调函数
-            onReset={handleReset} // 重置回调函数
-            onOneClickDivination={handleOneClickDivination} // 一键起卦回调函数
-            onNumberDivination={handleNumberDivination} // 数字起卦回调函数
-            onSpecifiedDivination={handleSpecifiedDivination} // 指定起卦回调函数
-            currentYaoIndex={currentYaoIndex} // 当前抛掷的爻索引
-            yaoOrder={yaoOrder} // 六爻顺序数组
-            isResetEnabled={isResetEnabled} // 是否启用重置按钮
+            selectedMethod={selectedMethod}
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            onThrow={handleThrow}
+            onReset={handleReset}
+            onOneClickDivination={handleOneClickDivination}
+            onNumberDivination={handleNumberDivination}
+            onSpecifiedDivination={handleSpecifiedDivination}
+            currentYaoIndex={currentYaoIndex}
+            yaoOrder={yaoOrder}
+            isResetEnabled={isResetEnabled}
           />
         </div>
       </div>
-      <div className={styles.divinationButtonContainer}> {/* 排盘按钮容器 */}
-          {/* 排盘按钮 */}
-          <Button
-            type="confirm"
-            size="large"
-            disabled={!isDivinationButtonEnabled}
-            onClick={handleStartDivination}
-            ariaLabel="开始排盘"
-          >
-            开始排盘
-          </Button>
-        </div>
+      
+      {/* 排盘按钮 */}
+      <div className={currentStyles.divinationButtonContainer}>
+        <Button
+          type="confirm"
+          size="large"
+          disabled={!isDivinationButtonEnabled}
+          onClick={handleStartDivination}
+          ariaLabel="开始排盘"
+        >
+          开始排盘
+        </Button>
+      </div>
+      
+
     </div>
   );
 };

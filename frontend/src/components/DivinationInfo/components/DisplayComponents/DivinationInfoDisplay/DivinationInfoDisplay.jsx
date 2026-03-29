@@ -7,7 +7,7 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { methodToChinese } from '../../../../../utils/methodMapping';
 // 导入时间格式化工具函数，用于将原始数据格式化为可读的日期时间字符串
@@ -23,7 +23,9 @@ import {
 } from '../../../../../utils/formatTimeUtils';
 
 // 导入组件样式文件，定义组件的视觉样式
-import styles from './DivinationInfoDisplay.desktop.module.css';
+import desktopStyles from './DivinationInfoDisplay.desktop.module.css';
+// 导入移动端样式（CSS Modules）
+import mobileStyles from './DivinationInfoDisplay.mobile.module.css';
 
 // 导入简要占卜查询组件
 import BriefDivinationQuery from '../BriefDivinationQuery/BriefDivinationQuery';
@@ -35,12 +37,19 @@ const formatDateTimeInfo = (solarInfo, lunarInfo) => ({
   lunarTime: formatLunarTime(lunarInfo)
 });
 
-const formatJieqiInfo = (prevJie, nextJie) => ({
-  prevJieDate: formatJieqiDate(prevJie?.time || ''),
-  prevJieTime: formatJieqiTime(prevJie?.time || ''),
-  nextJieDate: formatJieqiDate(nextJie?.time || ''),
-  nextJieTime: formatJieqiTime(nextJie?.time || '')
-});
+const formatJieqiInfo = (prevJie, nextJie) => {
+  console.log('formatJieqiInfo - 输入数据:', { prevJie, nextJie });
+  
+  const result = {
+    prevJieDate: formatJieqiDate(prevJie?.time || ''),
+    prevJieTime: formatJieqiTime(prevJie?.time || ''),
+    nextJieDate: formatJieqiDate(nextJie?.time || ''),
+    nextJieTime: formatJieqiTime(nextJie?.time || '')
+  };
+  
+  console.log('formatJieqiInfo - 输出结果:', result);
+  return result;
+};
 
 const validateFormData = (formData) => {
   if (!formData || typeof formData !== 'object') {
@@ -68,7 +77,10 @@ const validateDivinationData = (divinationData) => {
 //   - location (string): 属地，默认值为空字符串
 //   - divinationType (string): 占类，默认值为空字符串
 //   - subType (string): 子类型，默认值为空字符串
-const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', birthYear = '', location = '', divinationType = '', subType = '', method = '' }) => {
+//   - method (string): 起卦方式，默认值为空字符串
+//   - styles (object): 样式对象
+//   - isMobile (boolean): 是否为移动端
+const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', birthYear = '', location = '', divinationType = '', subType = '', method = '', styles, isMobile = false }) => {
   const fullName = React.useMemo(() => `${firstName}${lastName}`.trim(), [firstName, lastName]);
   const displayType = React.useMemo(() => subType ? `${divinationType}·${subType}` : divinationType, [divinationType, subType]);
   const displayMethod = React.useMemo(() => methodToChinese(method), [method]);
@@ -78,42 +90,47 @@ const SeekerInfo = React.memo(({ firstName = '', lastName = '', gender = '', bir
   // aria-label="求测者信息"：为屏幕阅读器提供描述信息
   return (
     <div className={styles.seekerInfo} role="list" aria-label="求测者信息">
-      {/* 姓名信息容器 */}
-      <div className={styles.nameInfoContainer}>
-        {/* 姓名标签，显示"姓名：" */}
-        <span className={styles.nameLabel}>姓名：</span>
-        {/* 姓名信息，显示拼接后的完整姓名 */}
-        <span className={styles.nameInfo}>{fullName}</span>
-      </div>
-      {/* 性别信息容器 */}
-      <div className={styles.genderInfoContainer}>
-        {/* 性别标签，显示"性别：" */}
-        <span className={styles.genderLabel}>性别：</span>
-        {/* 性别信息，显示性别 */}
-        <span className={styles.genderInfo}>{gender}</span>
-      </div>
-      {/* 出生年份信息容器 */}
-      <div className={styles.birthYearInfoContainer}>
-        {/* 出生年份标签，显示"生年：" */}
-        <span className={styles.birthYearLabel}>生年：</span>
-        {/* 出生年份信息，显示出生年份 */}
-        <span className={styles.birthYearInfo}>{birthYear}</span>
-      </div>
-      {/* 属地信息容器 */}
-      <div className={styles.locationInfoContainer}>
-        {/* 属地标签，显示"属地：" */}
-        <span className={styles.locationLabel}>属地：</span>
-        {/* 属地信息，显示属地 */}
-        <span className={styles.locationInfo}>{location}</span>
-      </div>
-      {/* 占类信息容器 */}
+      {/* 仅在桌面端显示的信息 */}
+      {!isMobile && (
+        <>
+          {/* 姓名信息容器 */}
+          <div className={styles.nameInfoContainer}>
+            {/* 姓名标签，显示"姓名：" */}
+            <span className={styles.nameLabel}>姓名：</span>
+            {/* 姓名信息，显示拼接后的完整姓名 */}
+            <span className={styles.nameInfo}>{fullName}</span>
+          </div>
+          {/* 性别信息容器 */}
+          <div className={styles.genderInfoContainer}>
+            {/* 性别标签，显示"性别：" */}
+            <span className={styles.genderLabel}>性别：</span>
+            {/* 性别信息，显示性别 */}
+            <span className={styles.genderInfo}>{gender}</span>
+          </div>
+          {/* 出生年份信息容器 */}
+          <div className={styles.birthYearInfoContainer}>
+            {/* 出生年份标签，显示"生年：" */}
+            <span className={styles.birthYearLabel}>生年：</span>
+            {/* 出生年份信息，显示出生年份 */}
+            <span className={styles.birthYearInfo}>{birthYear}</span>
+          </div>
+          {/* 属地信息容器 */}
+          <div className={styles.locationInfoContainer}>
+            {/* 属地标签，显示"属地：" */}
+            <span className={styles.locationLabel}>属地：</span>
+            {/* 属地信息，显示属地 */}
+            <span className={styles.locationInfo}>{location}</span>
+          </div>
+        </>
+      )}
+      {/* 占类信息容器（移动端和桌面端都显示） */}
       <div className={styles.divinationTypeContainer}>
         {/* 占类标签，显示"占类：" */}
         <span className={styles.divinationTypeLabel}>占类：</span>
         {/* 占类信息，显示格式化后的占类（可能包含子类型） */}
         <span className={styles.divinationTypeInfo}>{displayType}</span>
       </div>
-      {/* 起卦方式信息容器 */}
+      {/* 起卦方式信息容器（移动端和桌面端都显示） */}
       {displayMethod && (
         <div className={styles.methodInfoContainer}>
           {/* 起卦方式标签，显示"起卦：" */}
@@ -136,7 +153,9 @@ SeekerInfo.propTypes = {
   location: PropTypes.string,
   divinationType: PropTypes.string,
   subType: PropTypes.string,
-  method: PropTypes.string
+  method: PropTypes.string,
+  styles: PropTypes.object.isRequired,
+  isMobile: PropTypes.bool
 };
 
 // 为 SeekerInfo 组件添加 displayName，便于在 React DevTools 中调试
@@ -146,7 +165,8 @@ SeekerInfo.displayName = 'SeekerInfo';
 // 使用 React.memo 包装组件，避免不必要的重渲染
 // props 参数说明：
 //   - question (string): 占题，默认值为空字符串
-const DivinationQuery = React.memo(({ question = '' }) => {
+//   - styles (object): 样式对象
+const DivinationQuery = React.memo(({ question = '', styles }) => {
   // 返回 JSX 元素，渲染占卜查询信息容器
   return (
     <div className={styles.divinationQuery} role="list" aria-label="占卜内容信息">
@@ -163,7 +183,8 @@ const DivinationQuery = React.memo(({ question = '' }) => {
 
 // 为 DivinationQuery 组件添加 PropTypes 类型定义
 DivinationQuery.propTypes = {
-  question: PropTypes.string        // question 必须是字符串类型
+  question: PropTypes.string,        // question 必须是字符串类型
+  styles: PropTypes.object.isRequired
 };
 
 // 为 DivinationQuery 组件添加 displayName，便于在 React DevTools 中调试
@@ -176,7 +197,8 @@ DivinationQuery.displayName = 'DivinationQuery';
 //   - lunarInfo (object): 农历信息对象，包含干支年、中文月、中文日、时辰
 //   - prevJie (object): 上一个节气信息对象，包含 name（节气名称）和 time（节气时间）
 //   - nextJie (object): 下一个节气信息对象，包含 name（节气名称）和 time（节气时间）
-const DateTimeInfo = React.memo(({ solarInfo, lunarInfo, prevJie, nextJie }) => {
+//   - styles (object): 样式对象
+const DateTimeInfo = React.memo(({ solarInfo, lunarInfo, prevJie, nextJie, styles, isMobile }) => {
   const formattedDateTime = React.useMemo(() => formatDateTimeInfo(solarInfo, lunarInfo), [solarInfo, lunarInfo]);
   const formattedJieqi = React.useMemo(() => formatJieqiInfo(prevJie, nextJie), [prevJie?.time, nextJie?.time]);
   
@@ -201,8 +223,12 @@ const DateTimeInfo = React.memo(({ solarInfo, lunarInfo, prevJie, nextJie }) => 
     }
   }, [prevJie?.time, nextJie?.time]);
   
+  // 桌面端：鼠标移入显示农历
   const handleMouseEnter = () => setIsLunar(true);
   const handleMouseLeave = () => setIsLunar(false);
+  
+  // 移动端：点击切换公历/农历
+  const handleClick = () => setIsLunar(!isLunar);
   
   const displayDate = isLunar ? formattedDateTime.lunarDate : formattedDateTime.solarDate;
   const displayTime = isLunar ? formattedDateTime.lunarTime : formattedDateTime.solarTime;
@@ -217,8 +243,10 @@ const DateTimeInfo = React.memo(({ solarInfo, lunarInfo, prevJie, nextJie }) => 
       {/* 西历信息行 */}
       <div 
         className={`${styles.calendarRow} ${styles.solarRow}`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+        onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+        onClick={isMobile ? handleClick : undefined}
+        style={{ cursor: isMobile ? 'pointer' : 'default' }}
       >
         {/* 上一个节气 */}
         <div className={styles.calendarItem}>
@@ -268,7 +296,9 @@ DateTimeInfo.propTypes = {
   nextJie: PropTypes.shape({    // nextJie 必须是对象类型，且包含以下属性
     name: PropTypes.string,     // name 属性必须是字符串类型
     time: PropTypes.string       // time 属性必须是字符串类型
-  })
+  }),
+  styles: PropTypes.object.isRequired,
+  isMobile: PropTypes.bool
 };
 
 // 为 DateTimeInfo 组件添加 displayName，便于在 React DevTools 中调试
@@ -280,8 +310,49 @@ DateTimeInfo.displayName = 'DateTimeInfo';
 //   - formData (object): 表单数据对象，包含求测者信息、占题、占类等，默认值为空对象
 //   - divinationData (object): 占卜数据对象，包含日历信息、节气信息等，默认值为空对象
 const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, loading = false, error = null }) => {
-  const calendarInfo = divinationData.calendar_info || {};
+  // 移动端状态管理
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化，更新移动端状态
+  useEffect(() => {
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => {
+        setIsMobile(window.innerWidth < 768);
+      }, 100);
+    };
+    
+    // 初始执行一次
+    handleResize();
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', handleResize);
+    // 组件卸载时移除监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(window.resizeTimeout);
+    };
+  }, []);
+  
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
+  
+  // 检查数据结构，处理liuyao_config_data的情况
+  const actualDivinationData = divinationData.liuyao_config_data || divinationData;
+  const calendarInfo = actualDivinationData.calendar_info || {};
   const jieqiInfo = calendarInfo.jieqi_info?.jieqi_result_a || {};
+  
+  console.log('DivinationInfoDisplay - 数据检查:', {
+    originalDivinationData: divinationData,
+    actualDivinationData,
+    calendarInfo,
+    jieqiInfo,
+    solarInfo: calendarInfo.solar_info,
+    lunarInfo: calendarInfo.lunar_info,
+    prevJie: jieqiInfo.prev_jie,
+    nextJie: jieqiInfo.next_jie
+  });
   
   const seekerInfoProps = React.useMemo(() => ({
     firstName: formData.firstName,
@@ -291,19 +362,24 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
     location: formData.location,
     divinationType: formData.divinationType,
     subType: formData.subType,
-    method: formData.method
-  }), [formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.location, formData.divinationType, formData.subType, formData.method]);
+    method: formData.method,
+    styles,
+    isMobile
+  }), [formData.firstName, formData.lastName, formData.gender, formData.birthYear, formData.location, formData.divinationType, formData.subType, formData.method, styles, isMobile]);
   
   const divinationQueryProps = React.useMemo(() => ({
-    question: formData.question
-  }), [formData.question]);
+    question: formData.question,
+    styles
+  }), [formData.question, styles]);
   
   const dateTimeInfoProps = React.useMemo(() => ({
     solarInfo: calendarInfo.solar_info,
     lunarInfo: calendarInfo.lunar_info,
     prevJie: jieqiInfo.prev_jie,
-    nextJie: jieqiInfo.next_jie
-  }), [calendarInfo.solar_info, calendarInfo.lunar_info, jieqiInfo.prev_jie, jieqiInfo.next_jie]);
+    nextJie: jieqiInfo.next_jie,
+    styles,
+    isMobile
+  }), [calendarInfo.solar_info, calendarInfo.lunar_info, jieqiInfo.prev_jie, jieqiInfo.next_jie, styles, isMobile]);
 
   if (loading) {
     return (
@@ -338,11 +414,13 @@ const DivinationInfoDisplay = React.memo(({ formData = {}, divinationData = {}, 
           <SeekerInfo {...seekerInfoProps} />
         </div>
 
-        {/* 中间信息区域：包含占卜查询信息 */}
-        <div className={styles.infoMiddle}>
-          {/* 渲染 DivinationQuery 子组件，传入缓存的 props */}
-          <DivinationQuery {...divinationQueryProps} />
-        </div>
+        {/* 中间信息区域：包含占卜查询信息（仅在桌面端显示） */}
+        {!isMobile && (
+          <div className={styles.infoMiddle}>
+            {/* 渲染 DivinationQuery 子组件，传入缓存的 props */}
+            <DivinationQuery {...divinationQueryProps} />
+          </div>
+        )}
 
         {/* 底部信息区域：包含日期时间信息和节气信息 */}
         <div className={styles.infoBottom}>

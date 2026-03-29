@@ -21,6 +21,7 @@ import TimeDisplay from '../TimeDisplay/TimeDisplay'; // 导入时间显示组�
 import DateInputGroup from '../DateInput/DateInputGroup'; // 导入日期输入框组组件
 import DateInput from '../DateInput/DateInput'; // 导入日期输入框组件
 import desktopStyles from './LunarTime.desktop.module.css'; // 导入桌面端样式
+import mobileStyles from './LunarTime.mobile.module.css'; // 导入移动端样式
 
 // 导入验证工具函数集合
 import {
@@ -41,8 +42,20 @@ import {
 
 // 定义农历时间组件,接收props参数
 const LunarTime = ({ onTimeChange, confirmedTime }) => {
-  // 使用桌面端样式
-  const styles = desktopStyles;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 定义是否为移动端状态
+
+  // 监听屏幕尺寸变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   // 定义时间数据状态,存储用户输入的时间值
   const [timeData, setTimeData] = useState({

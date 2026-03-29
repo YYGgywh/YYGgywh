@@ -3,15 +3,17 @@
  * @description     占卜信息收集表单，包含姓名、性别、生年、属地、占类、占题和时间戳
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-09 18:28:46
+ * @lastModified    2026-03-27 21:30:00
  * Copyright © All rights reserved
 */
 
 // 引入 React 核心钩子：useState 用于管理组件内部状态
 import React, {
-  useState   // 状态管理钩子，用于声明和更新组件内部状态
+  useState,   // 状态管理钩子，用于声明和更新组件内部状态
+  useEffect
 } from 'react';
 import styles from './DivinationInfo.desktop.module.css'; // 导入占卜信息表单样式
+import mobileStyles from './DivinationInfo.mobile.module.css'; // 导入移动端样式
 import TimestampModal from './components/TimeComponents/TimestampModal/TimestampModal'; // 导入时间戳设置弹窗组件
 import { useApp } from '../../contexts/AppContext'; // 导入应用全局上下文Hook
 import FormInput from './components/FormComponents/FormInput/FormInput'; // 导入可复用的输入框组件
@@ -25,6 +27,24 @@ const DivinationInfo = () => {
   const { formData, setFormData, setTimestamp } = useApp(); // 从应用全局上下文中获取表单数据和设置函数
   const [isTimestampModalOpen, setIsTimestampModalOpen] = useState(false); // 定义时间戳弹窗打开状态，默认为false
   const [submittedTimestamp, setSubmittedTimestamp] = useState(null); // 定义已提交的时间戳状态，默认为null
+  
+  // 屏幕尺寸检测
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : styles;
 
   // 提取通用的字段更新函数
   const updateField = (fieldName, value) => {
@@ -91,9 +111,10 @@ const DivinationInfo = () => {
 
   // 返回JSX
   return (
-    <div className={styles.divinationInfoContainer}> {/* 包含整个占卜信息表单的容器 */}
-      <form className={styles.divinationForm} onSubmit={handleSubmit}> {/* 占卜信息表单 */}
-        <div className={styles.formRow}> {/* 姓名行 */}
+    <div className={currentStyles.divinationInfoContainer}> {/* 包含整个占卜信息表单的容器 */}
+      <form className={currentStyles.divinationForm} onSubmit={handleSubmit}> {/* 占卜信息表单 */}
+        {/* 姓名、性别、生年行 */}
+        <div className={currentStyles.formRow}> {/* 姓名行 */}
           {/* 姓输入框 */}
           <FormInput
             name="firstName" // 姓输入框的名称，用于表单提交时识别
@@ -133,26 +154,55 @@ const DivinationInfo = () => {
             placeholder="生年"
             variant="birthYear" // 生年输入框的样式变体，用于设置宽度
           />
-          {/* 月日输入框 */}
-          <FormInput
-            name="location" // 月日输入框的名称，用于表单提交时识别
-            placeholder="属地" // 月日输入框的占位符
-            value={formData.location} // 月日输入框的当前值，从表单数据中获取
-            onChange={handleChange} // 月日输入框值改变时的处理函数，用于更新表单数据
-            onDoubleClick={() => handleDoubleClick('location')} // 双击月日输入框时的处理函数，用于清空输入框
-            className="location-input" // 月日输入框的类名，用于样式化
-            variant="location" // 月日输入框的样式变体，用于设置宽度
-          />
-          <div className={`${styles.formRow} ${styles.formRowTimestamp}`}> {/* 占题时间戳行 */}
-            <TimestampDisplay
-              timestamp={submittedTimestamp}
-              onClick={handleTimestampClick}
-              onRefresh={handleTimestampRefresh}
-            />
-          </div>
+          
+          {/* 桌面端：属地和时间戳 */}
+          {!isMobile && (
+            <>
+              {/* 月日输入框 */}
+              <FormInput
+                name="location" // 月日输入框的名称，用于表单提交时识别
+                placeholder="属地" // 月日输入框的占位符
+                value={formData.location} // 月日输入框的当前值，从表单数据中获取
+                onChange={handleChange} // 月日输入框值改变时的处理函数，用于更新表单数据
+                onDoubleClick={() => handleDoubleClick('location')} // 双击月日输入框时的处理函数，用于清空输入框
+                className="location-input" // 月日输入框的类名，用于样式化
+                variant="location" // 月日输入框的样式变体，用于设置宽度
+              />
+              <div className={`${currentStyles.formRow} ${currentStyles.formRowTimestamp}`}> {/* 占题时间戳行 */}
+                <TimestampDisplay
+                  timestamp={submittedTimestamp}
+                  onClick={handleTimestampClick}
+                  onRefresh={handleTimestampRefresh}
+                />
+              </div>
+            </>
+          )}
         </div>
+        
+        {/* 移动端：属地和时间戳单独一行 */}
+        {isMobile && (
+          <div className={currentStyles.formRow}>
+            {/* 月日输入框 */}
+            <FormInput
+              name="location" // 月日输入框的名称，用于表单提交时识别
+              placeholder="属地" // 月日输入框的占位符
+              value={formData.location} // 月日输入框的当前值，从表单数据中获取
+              onChange={handleChange} // 月日输入框值改变时的处理函数，用于更新表单数据
+              onDoubleClick={() => handleDoubleClick('location')} // 双击月日输入框时的处理函数，用于清空输入框
+              className="location-input" // 月日输入框的类名，用于样式化
+              variant="location" // 月日输入框的样式变体，用于设置宽度
+            />
+            <div className={`${currentStyles.formRow} ${currentStyles.formRowTimestamp}`}> {/* 占题时间戳行 */}
+              <TimestampDisplay
+                timestamp={submittedTimestamp}
+                onClick={handleTimestampClick}
+                onRefresh={handleTimestampRefresh}
+              />
+            </div>
+          </div>
+        )}
 
-        <div className={styles.formRow}> {/* 占类选择行 */}
+        <div className={currentStyles.formRow}> {/* 占类选择行 */}
           <DivinationTypeDropdown
             selectedType={formData.divinationType}
             onTypeSelect={handleTypeSelect}

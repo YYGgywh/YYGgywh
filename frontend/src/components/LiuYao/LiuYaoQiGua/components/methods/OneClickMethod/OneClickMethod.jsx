@@ -3,18 +3,21 @@
  * @description     一键成卦组件，快速生成完整卦象
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-02-08 12:10:00
- * @lastModified    2026-03-15 20:40:49
+ * @lastModified    2026-03-28 10:00:00
  * Copyright © All rights reserved
 */
 
 import React from 'react';  // 导入 React 核心库
-import commonStyles from '../MethodCommon.desktop.module.css';  // 导入通用样式文件
+import desktopStyles from '../MethodCommon.desktop.module.css';  // 导入桌面端通用样式文件
+import mobileStyles from '../MethodCommon.mobile.module.css';  // 导入移动端通用样式文件
 import LiuYaoService from '../../../../../../services/liuyaoService';  // 导入六爻服务层
 import YaoDisplay from '../../YaoComponents/YaoDisplay/YaoDisplay';  // 导入 YaoDisplay 组件
 import ActionButton from '../../../../components/ActionButton/ActionButton';  // 导入 ActionButton 组件
+import MethodDescription from '../MethodDescription/MethodDescription';  // 导入 MethodDescription 组件
 
 /**
  * @description     一键成卦组件
+ * @param           {boolean}   isMobile              是否为移动端
  * @param           {Object}    yaoValues             爻值状态对象
  * @param           {Object}    yaoOddCounts          爻奇数计数状态对象
  * @param           {Function}  onReset               重置回调函数
@@ -26,12 +29,15 @@ import ActionButton from '../../../../components/ActionButton/ActionButton';  //
 
 // 定义一键成卦组件
 const OneClickMethod = ({
+  isMobile,        // 是否为移动端
   yaoValues, // 爻值状态对象
   yaoOddCounts, // 爻奇数计数状态对象
   onReset, // 重置回调函数
   onOneClickDivination, // 一键成卦回调函数
   currentYaoIndex, // 当前爻位索引
   isResetEnabled }) => { // 是否启用重置按钮
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : desktopStyles;
 
   /**
    * @description     处理一键成卦
@@ -81,23 +87,33 @@ const OneClickMethod = ({
   
   // 渲染一键成卦组件
   return (
-    <div className={commonStyles.methodContainer}>  {/* 一键成卦容器 */}
-      <div className={commonStyles.contentRow}>  {/* 内容行 */}
-        <div className={commonStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
-          <div className={commonStyles.contentContainer}>  {/* 内容容器 */}
-            <h3>一键起卦：</h3>  {/* 标题 */}
-            <p>快速生成完整卦象，适合初学者或需要快速起卦的场景。</p>  {/* 描述 */}
-            <ol>  {/* 操作步骤列表 */}
-              <li>诚心静默，排除杂念。</li>  {/* 步骤1 */}
-              <li>心念占事，一键成卦。</li>  {/* 步骤2 */}
-            </ol>
-          </div>
-          <div className={commonStyles.divinationActions}>  {/* 操作按钮区域 */}
+    <div className={currentStyles.methodContainer}>  {/* 一键成卦容器 */}
+      {isMobile ? (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 移动端 */}
+          <MethodDescription
+            title="一键起卦："
+            description="快速生成完整卦象，适合初学者或需要快速起卦的场景。"
+            steps={[
+              "诚心静默，排除杂念。",
+              "心念占事，一键成卦。"
+            ]}
+            className={currentStyles.contentContainer}
+          />
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="display"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            isOneClick={true}
+          />
+          
+          <ActionButton className={currentStyles.divinationActions}>
             <ActionButton
               type="primary"
               onClick={handleOneClickDivination}
               disabled={isButtonDisabled}
-              size="medium"
             >
               {getButtonText()}
             </ActionButton>
@@ -105,21 +121,51 @@ const OneClickMethod = ({
               type="danger"
               onClick={onReset}
               disabled={!isResetEnabled}
-              size="medium"
             >
               重新起卦
             </ActionButton>
-          </div>
+          </ActionButton>
         </div>
-        
-        <YaoDisplay
-          className={commonStyles.yaoDisplay}
-          mode="display"
-          yaoValues={yaoValues}
-          yaoOddCounts={yaoOddCounts}
-          isOneClick={true}
-        />
-      </div>
+      ) : (
+        <div className={currentStyles.contentRow}>  {/* 内容行 - 桌面端 */}
+          <div className={currentStyles.liuYaoInfo}>  {/* 六爻信息区域 */}
+            <MethodDescription
+              title="一键起卦："
+              description="快速生成完整卦象，适合初学者或需要快速起卦的场景。"
+              steps={[
+                "诚心静默，排除杂念。",
+                "心念占事，一键成卦。"
+              ]}
+              className={currentStyles.contentContainer}
+            />
+            <ActionButton className={currentStyles.divinationActions}>
+              <ActionButton
+                type="primary"
+                onClick={handleOneClickDivination}
+                disabled={isButtonDisabled}
+              >
+                {getButtonText()}
+              </ActionButton>
+              <ActionButton
+                type="danger"
+                onClick={onReset}
+                disabled={!isResetEnabled}
+              >
+                重新起卦
+              </ActionButton>
+            </ActionButton>
+          </div>
+          
+          <YaoDisplay
+            isMobile={isMobile}
+            className={currentStyles.yaoDisplay}
+            mode="display"
+            yaoValues={yaoValues}
+            yaoOddCounts={yaoOddCounts}
+            isOneClick={true}
+          />
+        </div>
+      )}
     </div>
   );
 };

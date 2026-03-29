@@ -3,12 +3,12 @@
  * @description     应用主组件 - 集成导航、内容和页脚，使用 React Router 管理路由
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-10 10:00:00
- * @lastModified    2026-03-07 18:49:30
+ * @lastModified    2026-03-27 20:55:00
  * Copyright © All rights reserved
 */
 
 // 导入 React 核心库，用于创建 React 组件
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 // 导入 React Router 相关组件：BrowserRouter（路由器）、Routes（路由配置）、Route（单个路由）、Navigate（重定向组件）
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 // 导入样式文件 - CSS Modules（桌面端样式）
@@ -63,30 +63,76 @@ import SystemConfigManagement from './pages/Admin/SystemConfigManagement'
 
 // 定义六爻排盘页面组件
 // 这是一个组合组件，包含占卜信息输入和六爻起卦功能
-const LiuYaoPage = () => (
-  <div className={styles.appContainer}>
-    <header className={styles.appHeader}>
-      <Navigation />
-    </header>
-    <main className={styles.appMain}>
-      <DivinationInfo />
-      <LiuYaoQiGua />
-    </main>
-  </div>
-);
+const LiuYaoPage = () => {
+  // 屏幕尺寸检测
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // 移动端直接渲染 LiuYaoQiGua 组件（它已经包含了所有移动端所需的布局）
+  if (isMobile) {
+    return <LiuYaoQiGua />;
+  }
+  
+  // 桌面端渲染完整布局
+  return (
+    <div className={styles.appContainer}>
+      <header className={styles.appHeader}>
+        <Navigation />
+      </header>
+      <main className={styles.appMain}>
+        <DivinationInfo />
+        <LiuYaoQiGua />
+      </main>
+    </div>
+  );
+};
 
 // 定义结果页面组件
 // 这是一个展示六爻排盘结果的页面
-const ResultPage = () => (
-  <div className={styles.appContainer}>
-    <header className={styles.appHeader}>
-      <Navigation />
-    </header>
-    <main className={styles.appMain}>
-      <LiuYaoReault />
-    </main>
-  </div>
-);
+const ResultPage = () => {
+  // 屏幕尺寸检测
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // 移动端直接渲染 LiuYaoReault 组件（它已经包含了所有移动端所需的布局）
+  if (isMobile) {
+    return <LiuYaoReault />;
+  }
+  
+  // 桌面端渲染完整布局
+  return (
+    <div className={styles.appContainer}>
+      <header className={styles.appHeader}>
+        <Navigation />
+      </header>
+      <main className={styles.appMain}>
+        <LiuYaoReault />
+      </main>
+    </div>
+  );
+};
 
 // 定义 App 主组件
 // 这是应用的根组件，负责路由配置和全局状态管理

@@ -3,7 +3,7 @@
  * @description     爻位显示组件，支持三种模式：display（只读）、input（可编辑）、buttons（按钮选择）
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-03-08 20:15:00
- * @lastModified    2026-03-08 20:30:00
+ * @lastModified    2026-03-28 20:30:00
  * Copyright © All rights reserved
 */
 
@@ -11,9 +11,11 @@ import React from 'react';
 import YaoInput from '../YaoInput/YaoInput';
 import YaoButton from '../YaoButton/YaoButton';
 import { getYaoComponent } from '../../../../utils/yaoUtils';
-import styles from './YaoDisplay.desktop.module.css';
+import desktopStyles from './YaoDisplay.desktop.module.css';
+import mobileStyles from './YaoDisplay.mobile.module.css';
 
 const YaoDisplay = ({
+  isMobile,
   className,
   mode,
   yaoValues,
@@ -29,6 +31,8 @@ const YaoDisplay = ({
   currentYaoIndex = -1,
   isOneClick = false
 }) => {
+  // 选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   const yaoOrder = ['shang', 'wu', 'si', 'san', 'er', 'chu'];
   const yaoLabels = { shang: '上爻', wu: '五爻', si: '四爻', san: '三爻', er: '二爻', chu: '初爻' };
   const [focusedYao, setFocusedYao] = React.useState(null);
@@ -107,6 +111,7 @@ const YaoDisplay = ({
                 onInput={onYaoInputValidation}
                 onFocus={() => setFocusedYao(yao)}
                 onBlur={() => setFocusedYao(null)}
+                type={inputProps.type}
                 minLength={inputProps.minLength}
                 maxLength={inputProps.maxLength}
                 pattern={inputProps.pattern}

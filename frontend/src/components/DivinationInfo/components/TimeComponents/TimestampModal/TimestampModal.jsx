@@ -3,7 +3,7 @@
  * @description     时间戳设置弹窗主组件，管理选项卡状态和协调三个时间组件
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-30 11:00:00
- * @lastModified    2026-03-16 10:59:16
+ * @lastModified    2026-03-29 10:22:39
  * Copyright © All rights reserved
 */
 
@@ -13,11 +13,57 @@ import LunarTime from '../timestamp/components/LunarTime/LunarTime'; // 导入�
 import FourPillarsTime from '../timestamp/components/FourPillarsTime/FourPillarsTime'; // 导入四柱时间组件
 import SolarListResult from '../timestamp/components/SolarListResult/SolarListResult'; // 导入独立的四柱结果列表组件
 import { Button } from '../../../../common/Button'; // 导入统一的按钮组件
-import styles from './TimestampModal.desktop.module.css'; // 导入组件样式文件
+import desktopStyles from './TimestampModal.desktop.module.css'; // 导入桌面端样式
+import mobileStyles from './TimestampModal.mobile.module.css'; // 导入移动端样式
 
 // 定义时间戳弹窗组件，接收关闭和提交回调函数
 const TimestampModal = ({ onClose, onSubmit }) => {
   const [activeTab, setActiveTab] = useState('gregorian'); // 定义当前激活的选项卡状态，默认为公历
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 定义是否为移动端状态
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); // 定义键盘是否可见状态
+  const [keyboardHeight, setKeyboardHeight] = useState(0); // 定义键盘高度状态
+
+  // 监听屏幕尺寸变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 监听软键盘弹出和收起
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleVisualViewportChange = () => {
+      if (!window.visualViewport) return;
+
+      const currentViewportHeight = window.visualViewport.height;
+      const windowHeight = window.innerHeight;
+      const heightDifference = windowHeight - currentViewportHeight;
+
+      // 如果视口高度减少超过150px，认为键盘弹出
+      if (heightDifference > 150) {
+        setIsKeyboardVisible(true);
+        setKeyboardHeight(heightDifference);
+        console.log('键盘弹出，高度:', heightDifference);
+      } else {
+        setIsKeyboardVisible(false);
+        setKeyboardHeight(0);
+        console.log('键盘收起');
+      }
+    };
+
+    window.visualViewport?.addEventListener('resize', handleVisualViewportChange);
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleVisualViewportChange);
+    };
+  }, [isMobile]);
+
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   // 定义选中时间状态，存储三个选项卡的时间数据
   const [selectedTime, setSelectedTime] = useState({
     gregorian: null, // 公历时间数据
@@ -552,10 +598,30 @@ const TimestampModal = ({ onClose, onSubmit }) => {
     
     console.log('全清时间输入值'); // 输出全清完成日志
   };
+
+  // 计算弹容器的动态样式
+  const getModalContentStyle = () => {
+    if (!isMobile || !isKeyboardVisible) {
+      return {};
+    }
+
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    const modalMaxHeight = viewportHeight - keyboardHeight - 40; // 减去键盘高度和额外间距
+
+    return {
+      maxHeight: `${modalMaxHeight}px`,
+      position: 'absolute',
+      bottom: `${keyboardHeight}px`
+    };
+  };
+
   // 返回JSX结构
   return (
     <div className={styles.modalOverlay}> {/* 模态框遮罩层 */}
-      <div className={`${styles.modalContent} ${styles.timestampModal}`}> {/* 模态框内容容器 */}
+      <div 
+        className={`${styles.modalContent} ${styles.timestampModal} ${isKeyboardVisible ? styles.keyboardVisible : ''}`} 
+        style={getModalContentStyle()}
+      > {/* 模态框内容容器 */}
         <div className={styles.modalHeader}> {/* 模态框头部区域 */}
           <div className={styles.timestampTabs}> {/* 选项卡容器 */}
             {/* 公历选项卡按钮 */}

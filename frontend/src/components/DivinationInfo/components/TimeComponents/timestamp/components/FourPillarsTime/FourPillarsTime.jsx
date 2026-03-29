@@ -11,6 +11,7 @@
 import React, { useState, useEffect, useRef } from 'react'; // 导入React及状态管理、副作用和引用钩子
 // 导入CSS Modules样式文件
 import desktopStyles from './FourPillarsTime.desktop.module.css';
+import mobileStyles from './FourPillarsTime.mobile.module.css'; // 导入移动端样式
 // 导入四柱工具函数
 import { getTianGanList, validateYearGanInput, validateYearZhiInput, validateDayGanInput, validateDayZhiInput, validateMonthZhiInput, validateHourZhiInput, calculateMonthGan, calculateHourGan } from '../../../../../../../utils/fourPillarsUtils'; // 导入天干地支相关工具函数
 import GanZhiSelector from '../GanZhiSelector/GanZhiSelector'; // 导入天干地支选择器组件
@@ -48,8 +49,20 @@ const FourPillarsTime = ({ // 组件参数解构
   const [lunarDate, setLunarDate] = useState(''); // 定义农历日期状态,存储格式化后的农历日期
   const [lunarTime, setLunarTime] = useState(''); // 定义农历时间状态,存储格式化后的农历时间
   
-  // 使用桌面端样式
-  const styles = desktopStyles;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 定义是否为移动端状态
+
+  // 监听屏幕尺寸变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
   
   const skipNotifyRef = useRef(false); // 使用ref存储跳过通知的标记,避免不必要的父组件更新
   

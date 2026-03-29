@@ -1,21 +1,21 @@
 /*
  * @file            frontend/src/components/common/DisplayControl/DisplayControl.mobile.module.css
  * @description     显示控制组件移动端样式
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-13 11:00:00
- * @lastModified    2026-03-13 11:00:00
+ * @lastModified    2026-03-29 14:21:50
  * Copyright © All rights reserved
 */
 
 .root {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   padding: 6px 4px 0px;
-  margin: 8px 0px 0px;
+  /* margin: 8px 0px 0px; */
   border-top: 1px solid #e8e8e8;
   flex-wrap: wrap;
-  gap: 6px;
+  /* gap: 6px; */
 }
 
 .button {

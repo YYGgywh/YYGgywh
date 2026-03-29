@@ -1,0 +1,46 @@
+/*
+ * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/methods/MethodDescription/MethodDescription.desktop.module.css
+ * @description     起卦方法说明组件样式 - 桌面端
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-28 17:00:00
+ * @lastModified    2026-03-28 17:00:00
+ * Copyright © All rights reserved
+*/
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+ol {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  margin-bottom: var(--spacing-sm);
+}
+
+li:last-child {
+  margin-bottom: 0;
+}

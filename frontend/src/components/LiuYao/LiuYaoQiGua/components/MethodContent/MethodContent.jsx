@@ -3,12 +3,13 @@
  * @description     方法内容组件，根据选择的起卦方式显示对应的内容
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-01-28 12:00:00
- * @lastModified    2026-03-09 13:00:00
+ * @lastModified    2026-03-28 15:08:31
  * Copyright © All rights reserved
 */
 
-import React from 'react'; // 导入React核心库
+import React, { useState, useEffect } from 'react'; // 导入React核心库和Hooks
 import desktopStyles from './MethodContent.desktop.module.css'; // 导入桌面端样式文件
+import mobileStyles from './MethodContent.mobile.module.css'; // 导入移动端样式文件
 import StepByStepMethod from '../methods/StepByStepMethod/StepByStepMethod'; // 导入逐爻起卦组件
 import OneClickMethod from '../methods/OneClickMethod/OneClickMethod'; // 导入一键起卦组件
 import NumberMethod from '../methods/NumberMethod/NumberMethod'; // 导入报数起卦组件
@@ -28,6 +29,24 @@ const MethodContent = ({
   yaoOrder, // 爻位顺序
   isResetEnabled // 重置按钮启用状态
 }) => {
+  // 屏幕尺寸检测
+  const [isMobile, setIsMobile] = useState(() => {
+    return window.innerWidth < 768;
+  });
+  
+  // 监听窗口大小变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // 选择样式
+  const currentStyles = isMobile ? mobileStyles : desktopStyles;
+  
   // 定义渲染方法内容的函数
   const renderMethodContent = () => {
     // 根据选择的起卦方式进行条件渲染
@@ -37,6 +56,7 @@ const MethodContent = ({
         return (
           // 逐爻起卦组件
           <StepByStepMethod 
+            isMobile={isMobile}
             yaoValues={yaoValues} // 传递爻值
             yaoOddCounts={yaoOddCounts} // 传递爻奇数个数
             onThrow={onThrow} // 传递投掷回调
@@ -52,6 +72,7 @@ const MethodContent = ({
         return (
           // 一键起卦组件
           <OneClickMethod 
+            isMobile={isMobile}
             yaoValues={yaoValues} // 传递爻值
             yaoOddCounts={yaoOddCounts} // 传递爻奇数个数
             onThrow={onThrow} // 传递投掷回调
@@ -68,6 +89,7 @@ const MethodContent = ({
         return (
           // 报数起卦组件
           <NumberMethod 
+            isMobile={isMobile}
             onReset={onReset} // 传递重置回调
             onNumberDivination={onNumberDivination} // 传递报数起卦回调
           />
@@ -78,6 +100,7 @@ const MethodContent = ({
         return (
           // 指定起卦组件
           <SpecifiedMethod 
+            isMobile={isMobile}
             onReset={onReset} // 传递重置回调
             onSpecifiedDivination={onSpecifiedDivination} // 传递指定起卦回调
           />
@@ -88,6 +111,7 @@ const MethodContent = ({
         return (
           // 逐爻起卦组件
           <StepByStepMethod 
+            isMobile={isMobile}
             yaoValues={yaoValues} // 传递爻值
             yaoOddCounts={yaoOddCounts} // 传递爻奇数个数
             onThrow={onThrow} // 传递投掷回调
@@ -100,7 +124,7 @@ const MethodContent = ({
     }
   };
 
-  return <div className={desktopStyles.methodContent}>{renderMethodContent()}</div>; // 返回方法内容容器，包含渲染的方法内容
+  return <div className={currentStyles.methodContent}>{renderMethodContent()}</div>; // 返回方法内容容器，包含渲染的方法内容
 }; // 结束组件定义
 
 export default MethodContent; // 导出MethodContent组件作为默认导出

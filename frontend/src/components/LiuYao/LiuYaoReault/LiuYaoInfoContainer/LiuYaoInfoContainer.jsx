@@ -97,6 +97,11 @@ const LiuYaoInfoContainer = ({
     return isColorMode || activeButtons.includes('colorChange');
   };
 
+  // 处理数据结构，提取实际的数据对象
+  const actualDivinationData = divinationData?.liuyao_config_data || divinationData || {};
+  const calendarInfo = actualDivinationData?.calendar_info || {};
+  const ganzhiInfo = calendarInfo?.ganzhi_info || {};
+
   /**
    * 渲染六爻信息容器
    * 包含简要占题、四柱信息、六爻详细排盘和显示控制
@@ -106,14 +111,14 @@ const LiuYaoInfoContainer = ({
       {/* 简要占题组件，显示占卜问题和时间 */}
       <BriefDivinationQuery
         formData={formData}
-        divinationData={divinationData}
+        divinationData={actualDivinationData}
         className={styles.briefDivinationQuery}
         isMobile={isMobile}
       />
 
       {/* 四柱展示组件，显示干支信息 */}
       <FourPillarsDisplay
-        ganzhiInfo={divinationData?.calendar_info?.ganzhi_info || {}}
+        ganzhiInfo={ganzhiInfo}
         isColorMode={checkIsColorMode()}
         displayConfig={fourPillarsDisplayConfig}
         className={styles.fourPillarsDisplay}
@@ -122,7 +127,7 @@ const LiuYaoInfoContainer = ({
 
       {/* 六爻网格展示组件，显示卦象信息 */}
       <LiuYaoGridDisplay
-        divinationData={divinationData}
+        divinationData={actualDivinationData}
         isColorMode={checkIsColorMode()}
         displayConfig={liuYaoDisplayConfig}
         className={styles.liuYaoGridDisplay}

@@ -3,7 +3,7 @@
  * @description     方法内容组件移动端样式，作为起卦方法内容的容器
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-09 13:00:00
- * @lastModified    2026-03-09 13:00:00
+ * @lastModified    2026-03-27 21:20:00
  * Copyright © All rights reserved
 */
 
@@ -21,4 +21,17 @@
   flex-direction: column;
   /* 使用CSS变量定义子元素间距 */
   gap: var(--method-content-gap);
+}
+
+/* ===== 响应式适配 ===== */
+/* 小屏幕适配（<375px）*/
+@media screen and (max-width: 374px) {
+  .methodContent {
+    --method-content-gap: var(--spacing-md, 12px);
+  }
+}
+
+/* 中等屏幕适配（375px-768px）*/
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  /* 标准移动端样式，无需额外调整 */
 }

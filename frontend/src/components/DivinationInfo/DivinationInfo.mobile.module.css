@@ -3,23 +3,24 @@
  * @description     占卜信息组件移动端样式文件，包含表单输入、模态框、时间选择器等UI元素的视觉样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-12 15:00:00
- * @lastModified    2026-03-12 15:00:00
+ * @lastModified    2026-03-28 21:19:44
  * Copyright © All rights reserved
 */
 
 .divinationInfoContainer {
   max-width: 100%;
   margin: 0 auto;
-  padding: 8px;
-  border: 1px solid var(--primary-color);
-  border-radius: var(--radius-lg);
+  /* padding: 8px; */
+  /* border: 1px solid var(--primary-color); */
+  /* border-radius: var(--radius-lg); */
 }
 
 .divinationForm {
-  border-radius: var(--radius-lg);
+  /* border-radius: var(--radius-lg); */
   padding: 8px;
   background-color: var(--bg-white);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md); /* 卡片阴影 */
+  margin-top: 4px;
 }
 
 .formRow {
@@ -27,7 +28,7 @@
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   -webkit-box-align: center;
@@ -42,22 +43,23 @@
 
 .formRowTimestamp {
   margin-bottom: 0;
-  width: 100%;
+  /* width: 100%; */
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 @media screen and (max-width: 480px) {
   .divinationInfoContainer {
-    padding: 6px;
+    padding: 0px;
   }
 
   .divinationForm {
-    padding: 6px;
+    padding: 12px 6px;
   }
 
   .formRow {
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-md);
+    justify-content: space-between
   }
 }

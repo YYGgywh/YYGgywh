@@ -125,7 +125,8 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
     // 根据 isMobile 状态决定是否包含农历日期
     let result;
     if (isMobile) {
-      result = `${solarDate} ${solarTime}`;
+      // 移动端也显示农历日期
+      result = lunarInfo ? `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）` : `${solarDate} ${solarTime}`;
     } else {
       result = lunarInfo ? `${solarDate} ${solarTime}（${lunarDate} ${lunarTime}）` : `${solarDate} ${solarTime}`;
     }
@@ -148,7 +149,7 @@ const BriefDivinationQuery = React.memo(({ formData = {}, divinationData = {}, c
       >
         {/* 卡片模式：四行显示 */}
         {solarDate && <div className={styles.solarDate}>{solarDate} {solarTime}</div>}
-        {!isMobile && lunarDate && <div className={styles.lunarDate}>（{lunarDate} {lunarTime}）</div>}
+        {lunarDate && <div className={styles.lunarDate}>（{lunarDate} {lunarTime}）</div>}
         {!isMobile && <div className={styles.personalInfo}>{`${location} ${firstName}${lastName} ${gender} ${birthYearText}`.trim()}</div>}
         {questionText && <div className={styles.questionText}>占：{questionText}</div>}
       </div>

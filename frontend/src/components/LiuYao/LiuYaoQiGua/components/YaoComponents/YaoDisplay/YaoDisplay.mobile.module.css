@@ -1,25 +1,50 @@
 /*
  * @file            frontend/src/components/LiuYao/LiuYaoQiGua/components/YaoComponents/YaoDisplay/YaoDisplay.mobile.module.css
  * @description     爻位显示组件样式 - 移动端
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-08 20:15:00
- * @lastModified    2026-03-08 21:12:00
+ * @lastModified    2026-03-28 21:22:08
  * Copyright © All rights reserved
 */
 
 .root {
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-md);
 }
 
 .item {
+  display: flex;
+  align-items: center;
   gap: var(--spacing-md);
   min-height: var(--item-min-height);
+  justify-content: center;
 }
 
 .label {
   font-size: var(--font-size-sm);
+  /* width: 60px; */
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+.labelActive {
+  color: var(--text-global);
+  font-weight: 700;
+  text-shadow: 0 0 2px #c000004d;
+}
+
+.labelDisabled {
+  color: var(--text-disabled);
+  font-weight: 400;
 }
 
 .buttonsContainer {
+  display: flex;
   gap: var(--spacing-sm);
 }
+
+.component {
+  flex-shrink: 0; /* 防止组件缩放 */
+  min-width: 60px;
+ }

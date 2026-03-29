@@ -7,8 +7,9 @@
  * Copyright © All rights reserved
 */
 
-import React, { useRef, useEffect } from 'react';
-import styles from './DateInput.desktop.module.css'; // 导入桌面端样式
+import React, { useRef, useEffect, useState } from 'react';
+import desktopStyles from './DateInput.desktop.module.css'; // 导入桌面端样式
+import mobileStyles from './DateInput.mobile.module.css'; // 导入移动端样式
 
 /**
  * 统一的时间输入框组件
@@ -43,6 +44,21 @@ const DateInput = ({
   className = '',
   inputRefs = null
 }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // 定义是否为移动端状态
+
+  // 监听屏幕尺寸变化
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 根据屏幕尺寸选择样式
+  const styles = isMobile ? mobileStyles : desktopStyles;
+
   const inputRef = useRef(null);
 
   // 存储输入框引用到父组件传递的对象中
