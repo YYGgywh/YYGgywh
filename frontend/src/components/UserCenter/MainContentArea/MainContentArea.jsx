@@ -7,8 +7,9 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './MainContentArea.desktop.module.css';
+import mobileStyles from './MainContentArea.mobile.module.css';
 
 /**
  * 主要内容区域容器组件
@@ -17,12 +18,25 @@ import styles from './MainContentArea.desktop.module.css';
  * @param {boolean} props.loading - 是否加载中
  */
 const MainContentArea = ({ children, loading = false }) => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const currentStyles = isMobile ? mobileStyles : styles;
+
   return (
-    <div className={styles.mainContentArea}>
-      <div className={`${styles.mainContentBody} ${loading ? styles.mainContentBodyLoading : ''}`}>
+    <div className={currentStyles.mainContentArea}>
+      <div className={`${currentStyles.mainContentBody} ${loading ? currentStyles.mainContentBodyLoading : ''}`}>
         {loading ? (
-          <div className={styles.mainContentLoading}>
-            <div className={styles.loadingSpinner}></div>
+          <div className={currentStyles.mainContentLoading}>
+            <div className={currentStyles.loadingSpinner}></div>
             <span>加载中...</span>
           </div>
         ) : (

@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from 'react';
 import styles from './UserProfileContent.desktop.module.css';
+import mobileStyles from './UserProfileContent.mobile.module.css';
 import CalendarService from '../../../services/calendarService';
 import { updateUserInfo, getNameLimitInfo, getGenderLimitInfo, getBirthTimeLimitInfo, getVirtualGenderLimitInfo } from '../../../api/userApi';
 import Avatar from '../../common/Avatar';
@@ -130,6 +131,18 @@ const UserProfileContent = ({
   onUserInfoUpdate
 }) => {
   const [activeTab, setActiveTab] = useState('basic');
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const currentStyles = isMobile ? mobileStyles : styles;
   
   // 性别编辑状态
   const [editingGender, setEditingGender] = useState(false);
@@ -588,12 +601,12 @@ const UserProfileContent = ({
   }, []);
 
   if (!userInfo) {
-    return <div className={styles.userProfileEmpty}>加载用户信息...</div>;
+    return <div className={currentStyles.userProfileEmpty}>加载用户信息...</div>;
   }
 
   // 渲染基本信息选项卡内容
   const renderBasicInfo = () => (
-    <div className={styles.profileTable}>
+    <div className={currentStyles.profileTable}>
       {/* 头像行 */}
       <div className={styles.profileRow}>
         <div className={styles.profileLabel}>头像</div>

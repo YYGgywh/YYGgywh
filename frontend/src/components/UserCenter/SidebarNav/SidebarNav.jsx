@@ -7,9 +7,10 @@
  * Copyright © All rights reserved
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavItem from '../NavItem/NavItem';
 import styles from './SidebarNav.desktop.module.css';
+import mobileStyles from './SidebarNav.mobile.module.css';
 
 /**
  * 侧边栏导航组件
@@ -20,9 +21,22 @@ import styles from './SidebarNav.desktop.module.css';
  * @param {Function} props.onLogout - 退出登录回调函数
  */
 const SidebarNav = ({ items, activeId, onNavClick, onLogout }) => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const currentStyles = isMobile ? mobileStyles : styles;
+
   return (
-    <nav className={styles.sidebarNav}>
-      <ul className={styles.sidebarNavList}>
+    <nav className={currentStyles.sidebarNav}>
+      <ul className={currentStyles.sidebarNavList}>
         {items.map((item) => (
           <NavItem
             key={item.id}
@@ -34,9 +48,9 @@ const SidebarNav = ({ items, activeId, onNavClick, onLogout }) => {
           />
         ))}
       </ul>
-      <div className={styles.sidebarNavFooter}>
-        <button className={styles.sidebarLogoutBtn} onClick={onLogout}>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.logoutIcon}>
+      <div className={currentStyles.sidebarNavFooter}>
+        <button className={currentStyles.sidebarLogoutBtn} onClick={onLogout}>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={currentStyles.logoutIcon}>
             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M16 17l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
