@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from app.db.database import get_db
 from app.models.user import User
+from app.models.user_follow import UserFollow
 from app.utils.password import hash_password, verify_password, check_password_strength
 from app.utils.token import create_access_token
 from app.utils.verify_code import generate_verify_code, verify_code, generate_email_verify_code, verify_email_code
@@ -1029,3 +1030,50 @@ async def get_followers_list(
     # 调用获取粉丝列表服务
     followers_list = UserFollowService.get_followers_list(db, current_user.id, skip, limit)
     return GetFollowListResponse(data=followers_list)
+
+
+class GetUserStatsResponse(BaseModel):
+    code: int = 200
+    msg: str = "查询成功"
+    data: dict
+
+
+@router.get("/stats", response_model=GetUserStatsResponse)
+async def get_user_stats(
+    db: Session = Depends(get_db),
+    authorization: str = Header(None, description="Bearer Token")
+):
+    """
+    获取用户统计数据
+    """
+    from app.utils.token import decode_access_token
+    from app.services.user_stats_service import UserStatsService
+    
+    # 验证Token
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="未提供有效的认证信息")
+    
+    token = authorization.replace("Bearer ", "")
+    payload = decode_access_token(token)
+    
+    if not payload or "user_id" not in payload:
+        raise HTTPException(status_code=401, detail="无效的Token")
+    
+    # 获取当前用户
+    current_user = db.query(User).filter(User.id == payload["user_id"]).first()
+    if not current_user:
+        raise HTTPException(status_code=401, detail="用户不存在")
+    
+    # 从用户统计表获取数据
+    stats = UserStatsService.get_user_stats(db, current_user.id)
+    
+    return GetUserStatsResponse(
+        data={
+            "likes": stats["total_likes"],
+            "post_likes": stats["post_likes"],
+            "comment_likes": stats["comment_likes"],
+            "follows": stats["follows"],
+            "followers": stats["followers"],
+            "mutual_follows": stats["mutual_follows"]
+        }
+    )

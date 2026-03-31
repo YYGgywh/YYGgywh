@@ -204,27 +204,47 @@ const PanDetailModal = ({ isOpen, onClose, data }) => {
     
     const newFollowed = !isFollowed;
     
+    // 先更新 UI
+    setIsFollowed(newFollowed);
+    
     try {
       if (newFollowed) {
         // 关注用户
         const response = await followUser(data.user_id);
-        if (response.code === 200) {
-          setIsFollowed(true);
-        } else {
+        if (response.code !== 200) {
+          // API 调用失败，回滚 UI
+          setIsFollowed(isFollowed);
           alert(response.msg || '关注失败');
         }
       } else {
         // 取消关注
         const response = await unfollowUser(data.user_id);
-        if (response.code === 200) {
-          setIsFollowed(false);
-        } else {
+        if (response.code !== 200) {
+          // API 调用失败，回滚 UI
+          setIsFollowed(isFollowed);
           alert(response.msg || '取消关注失败');
         }
       }
     } catch (error) {
       console.error('关注操作失败:', error);
-      alert('网络错误，请稍后重试');
+      // API 调用失败，回滚 UI
+      setIsFollowed(isFollowed);
+      
+      // 特殊处理常见错误
+      if (error.response && error.response.data) {
+        const errorDetail = error.response.data.detail;
+        if (errorDetail === '已经关注该用户') {
+          // 后端提示已经关注，更新 UI 为已关注状态
+          setIsFollowed(true);
+        } else if (errorDetail === '未关注该用户') {
+          // 后端提示未关注，更新 UI 为未关注状态
+          setIsFollowed(false);
+        } else {
+          alert(errorDetail || '网络错误，请稍后重试');
+        }
+      } else {
+        alert('网络错误，请稍后重试');
+      }
     }
   };
 

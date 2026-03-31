@@ -1,9 +1,9 @@
 /*
  * @file            frontend/src/components/UserCenter/PanRecordsContent/PanRecordsContent.mobile.module.css
  * @description     排盘记录内容组件样式 - 移动端专用（CSS Modules版本）
- * @author          Gordon <gordon_cao@qq.com>
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:52:00
- * @lastModified    2026-03-14 12:00:00
+ * @lastModified    2026-03-30 13:00:00
  * Copyright © All rights reserved
 */
 
@@ -12,6 +12,100 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* 记录类型标签栏 - 移动端适配 */
+.recordTypeSection {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 记录卡片 - 移动端适配 */
+.recordCard {
+  background-color: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.recordCard:active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* 记录卡片顶部 - 移动端适配 */
+.recordCardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* 记录卡片左侧 - 移动端适配 */
+.recordCardLeft {
+  flex: 1;
+}
+
+/* 记录卡片右侧 - 移动端适配 */
+.recordCardRight {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 简要问卜详情 - 移动端适配 */
+.briefDivinationQueryMain {
+  font-size: 13px;
+  line-height: 1.4;
+  color: #666;
+}
+
+/* 记录卡片分隔线 - 移动端适配 */
+.recordCardDivider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 12px 0;
+}
+
+/* 记录卡片底部 - 移动端适配 */
+.recordCardBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 卡片标签 - 移动端适配 */
+.cardTagsMain {
+  margin-bottom: 8px;
+}
+
+/* 交互按钮 - 移动端适配 */
+.interactionButtonsMain {
+  margin-bottom: 8px;
+}
+
+/* 操作按钮 - 移动端适配 */
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* 发布按钮 - 移动端适配 */
+.publishButton {
+  flex: 1;
+  min-width: 80px;
+}
+
+/* 删除按钮 - 移动端适配 */
+.deleteButton {
+  flex: 1;
+  min-width: 80px;
 }
 
 /* 加载状态 - 移动端适配 */

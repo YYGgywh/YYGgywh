@@ -3,7 +3,7 @@
  * @description     用户中心页面组件，重构后采用两栏布局结构
  * @author          Gordon <gordon_cao@qq.com>
  * @createTime      2026-02-27 10:00:00
- * @lastModified    2026-03-26 12:36:12
+ * @lastModified    2026-03-30 15:12:22
  * Copyright © All rights reserved
 */
 
@@ -21,6 +21,7 @@ import {
   RecordIcon,
   FollowIcon
 } from '../../components/UserCenter';
+import MobileUserCenterLayout from '../../components/UserCenter/MobileUserCenter/MobileUserCenterLayout/MobileUserCenterLayout';
 import PanDetailModal from '../../components/Modal/PanDetailModal';
 import { listPan, getPanDetail, toggleLike, toggleCollect, deletePan } from '../../api/panApi';
 import { isLoggedIn, removeToken, getUserInfo, setUserInfo as saveUserInfo } from '../../utils/storage';
@@ -29,7 +30,8 @@ import {
   uploadAvatar,
   getNicknameLimitInfo,
   getLoginNameLimitInfo,
-  updateLoginName
+  updateLoginName,
+  getUserStats
 } from '../../api/userApi';
 import { panTypeToChinese } from '../../utils/methodMapping';
 
@@ -45,35 +47,27 @@ const UserCenter = () => {
 
   // 导航状态
   const [activeNav, setActiveNav] = useState('userCenter');
+  // 设备状态
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  // 移动端内容标签
+  const [activeContentTab, setActiveContentTab] = useState('记录');
+  // 移动端记录类型
+  const [activeRecordType, setActiveRecordType] = useState('六爻');
 
-  // 动态加载样式
+  // 设备检测
   useEffect(() => {
-    const loadStyles = () => {
-      const isMobile = window.innerWidth < 768;
-      const styleId = 'user-center-style';
-      
-      // 移除旧样式
-      const existingStyle = document.getElementById(styleId);
-      if (existingStyle) {
-        existingStyle.remove();
-      }
-      
-      // 添加新样式
-      const styleLink = document.createElement('link');
-      styleLink.id = styleId;
-      styleLink.rel = 'stylesheet';
-      styleLink.href = isMobile ? './UserCenter.mobile.css' : './UserCenter.desktop.css';
-      document.head.appendChild(styleLink);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
     
-    // 初始加载
-    loadStyles();
+    // 初始检测
+    handleResize();
     
     // 监听窗口大小变化
-    window.addEventListener('resize', loadStyles);
+    window.addEventListener('resize', handleResize);
     
     return () => {
-      window.removeEventListener('resize', loadStyles);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -105,18 +99,40 @@ const UserCenter = () => {
 
   // 检查登录状态并初始化
   useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate('/login');
-      return;
-    }
-    const user = getUserInfo();
-    if (user) {
-      setUserInfo(user);
-      setNewNickname(user.nickname || '');
-      setNewLoginName(user.login_name || '');
-      fetchNicknameLimitInfo();
-      fetchLoginNameLimitInfo();
-    }
+    const initializeUserInfo = async () => {
+      if (!isLoggedIn()) {
+        navigate('/login');
+        return;
+      }
+      const user = getUserInfo();
+      if (user) {
+        setUserInfo(user);
+        setNewNickname(user.nickname || '');
+        setNewLoginName(user.login_name || '');
+        fetchNicknameLimitInfo();
+        fetchLoginNameLimitInfo();
+        
+        // 获取用户统计数据
+        try {
+          const statsResponse = await getUserStats();
+          const updatedUserInfo = {
+            ...user,
+            likes: statsResponse.data.likes || 0,
+            post_likes: statsResponse.data.post_likes || 0,
+            comment_likes: statsResponse.data.comment_likes || 0,
+            mutual_follows: statsResponse.data.mutual_follows || 0,
+            follows: statsResponse.data.follows || 0,
+            followers: statsResponse.data.followers || 0
+          };
+          setUserInfo(updatedUserInfo);
+          saveUserInfo(updatedUserInfo);
+        } catch (err) {
+          console.error('获取用户统计数据失败:', err);
+        }
+      }
+    };
+    
+    initializeUserInfo();
   }, [navigate]);
 
   // 获取排盘记录
@@ -409,29 +425,66 @@ const UserCenter = () => {
     }
   };
 
+  // 处理移动端内容标签切换
+  const handleContentTabChange = (tabId) => {
+    setActiveContentTab(tabId);
+  };
+
+  // 处理移动端记录类型切换
+  const handleRecordTypeChange = (typeId) => {
+    setActiveRecordType(typeId);
+  };
+
   return (
     <div className="user-center-page">
-      <header className="user-center-header">
-        <Navigation />
-      </header>
+      {!isMobile && (
+        <header className="user-center-header">
+          <Navigation />
+        </header>
+      )}
 
       <div className="user-center-body">
-        <UserCenterLayout
-          sidebar={
-            <SidebarNav
-              items={NAV_ITEMS}
-              activeId={activeNav}
-              onNavClick={setActiveNav}
-              onLogout={handleLogout}
-            />
-          }
-          mainContent={
-            <MainContentArea>
-              {error && <div className="user-center-error">{error}</div>}
-              {renderContent()}
-            </MainContentArea>
-          }
-        />
+        {isMobile ? (
+          <MobileUserCenterLayout
+            userInfo={userInfo}
+            activeContentTab={activeContentTab}
+            activeRecordType={activeRecordType}
+            records={panRecords}
+            onContentTabChange={handleContentTabChange}
+            onRecordTypeChange={handleRecordTypeChange}
+            onAvatarUpload={handleAvatarUpload}
+            onProfileUpdate={handleUserInfoUpdate}
+            onRecordAction={(action, data) => {
+              switch (action) {
+                case 'view':
+                  handleViewDetail(data);
+                  break;
+                case 'delete':
+                  handleDelete(data);
+                  break;
+                default:
+                  break;
+              }
+            }}
+          />
+        ) : (
+          <UserCenterLayout
+            sidebar={
+              <SidebarNav
+                items={NAV_ITEMS}
+                activeId={activeNav}
+                onNavClick={setActiveNav}
+                onLogout={handleLogout}
+              />
+            }
+            mainContent={
+              <MainContentArea>
+                {error && <div className="user-center-error">{error}</div>}
+                {renderContent()}
+              </MainContentArea>
+            }
+          />
+        )}
       </div>
 
       {/* 排盘详情弹窗 */}

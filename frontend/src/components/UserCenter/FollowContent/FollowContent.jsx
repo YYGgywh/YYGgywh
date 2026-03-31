@@ -10,18 +10,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './FollowContent.desktop.module.css';
 import mobileStyles from './FollowContent.mobile.module.css';
-
-// 根据设备类型选择样式
-const isMobile = window.innerWidth < 768;
-const style = isMobile ? mobileStyles : styles;
 import { getFollowingList, getFollowersList, unfollowUser } from '../../../api/userApi';
 import { isLoggedIn, getUserInfo } from '../../../utils/storage';
 import { getUserAvatar } from '../../../utils/avatarUtils';
 
-/**
- * 关注列表页面组件
- */
+// 根据设备类型选择样式
 const FollowContent = () => {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
   const [activeTab, setActiveTab] = useState('following'); // 'following' 或 'followers'
   const [followingList, setFollowingList] = useState([]);
   const [followersList, setFollowersList] = useState([]);
@@ -29,6 +24,21 @@ const FollowContent = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const currentStyles = isMobile ? mobileStyles : styles;
+
+  /**
+ * 关注列表页面组件
+ */
 
   // 加载关注列表
   const loadFollowingList = async (reset = false) => {
@@ -148,25 +158,25 @@ const FollowContent = () => {
 
   // 渲染用户项
   const renderUserItem = (user) => (
-    <div key={user.user_id} className={style.userItem}>
-      <div className={style.userAvatar}>
+    <div key={user.user_id} className={currentStyles.userItem}>
+      <div className={currentStyles.userAvatar}>
         <img 
           src={getUserAvatar(user.avatar, user.nickname)} 
           alt={user.nickname} 
-          className={style.avatarImage}
+          className={currentStyles.avatarImage}
         />
       </div>
-      <div className={style.userInfo}>
-        <div className={style.userNickname}>{user.nickname || '未设置昵称'}</div>
+      <div className={currentStyles.userInfo}>
+        <div className={currentStyles.userNickname}>{user.nickname || '未设置昵称'}</div>
         {user.follow_time && (
-          <div className={style.followTime}>
+          <div className={currentStyles.followTime}>
             关注时间：{new Date(user.follow_time * 1000).toLocaleString('zh-CN')}
           </div>
         )}
       </div>
       {activeTab === 'following' && (
         <button 
-          className={style.unfollowButton}
+          className={currentStyles.unfollowButton}
           onClick={() => handleUnfollow(user.user_id)}
         >
           取消关注
@@ -176,18 +186,18 @@ const FollowContent = () => {
   );
 
   return (
-    <div className={style.followContent}>
-      <div className={style.followHeader}>
-        <h2 className={style.followTitle}>关注管理</h2>
-        <div className={style.tabContainer}>
+    <div className={currentStyles.followContent}>
+      <div className={currentStyles.followHeader}>
+        <h2 className={currentStyles.followTitle}>关注管理</h2>
+        <div className={currentStyles.tabContainer}>
           <button
-            className={`${style.tabButton} ${activeTab === 'following' ? style.activeTab : ''}`}
+            className={`${currentStyles.tabButton} ${activeTab === 'following' ? currentStyles.activeTab : ''}`}
             onClick={() => setActiveTab('following')}
           >
             我关注的
           </button>
           <button
-            className={`${style.tabButton} ${activeTab === 'followers' ? style.activeTab : ''}`}
+            className={`${currentStyles.tabButton} ${activeTab === 'followers' ? currentStyles.activeTab : ''}`}
             onClick={() => setActiveTab('followers')}
           >
             关注我的
@@ -196,17 +206,17 @@ const FollowContent = () => {
       </div>
 
       {error && (
-        <div className={style.errorMessage}>
+        <div className={currentStyles.errorMessage}>
           {error}
         </div>
       )}
 
-      <div className={style.userList}>
+      <div className={currentStyles.userList}>
         {activeTab === 'following' ? (
           followingList.length > 0 ? (
             followingList.map(user => renderUserItem(user))
           ) : (
-            <div className={style.emptyState}>
+            <div className={currentStyles.emptyState}>
               {loading ? '加载中...' : '您还没有关注任何人'}
             </div>
           )
@@ -214,7 +224,7 @@ const FollowContent = () => {
           followersList.length > 0 ? (
             followersList.map(user => renderUserItem(user))
           ) : (
-            <div className={style.emptyState}>
+            <div className={currentStyles.emptyState}>
               {loading ? '加载中...' : '还没有人关注您'}
             </div>
           )
@@ -222,9 +232,9 @@ const FollowContent = () => {
       </div>
 
       {hasMore && !loading && (
-        <div className={style.loadMoreContainer}>
+        <div className={currentStyles.loadMoreContainer}>
           <button 
-            className={style.loadMoreButton}
+            className={currentStyles.loadMoreButton}
             onClick={handleLoadMore}
           >
             加载更多
@@ -233,7 +243,7 @@ const FollowContent = () => {
       )}
 
       {loading && (
-        <div className={style.loadingState}>
+        <div className={currentStyles.loadingState}>
           加载中...
         </div>
       )}

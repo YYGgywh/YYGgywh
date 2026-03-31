@@ -3,7 +3,7 @@
  * @description     卡片标签组件，用于显示卡片顶部的标签列表
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-22 16:45:00
- * @lastModified    2026-03-22 17:05:11
+ * @lastModified    2026-03-30 12:00:00
  * Copyright © All rights reserved
 */
 
@@ -14,14 +14,25 @@ import mobileStyles from './CardTags.mobile.module.css';
 
 /**
  * 卡片标签组件
- * 显示卡片顶部的标签列表，支持最多3个标签
+ * 显示卡片顶部的标签列表，支持纯展示和交互切换两种模式
  * 
  * @param {Object} props 组件属性
  * @param {Array} props.tags 标签数组
  * @param {string} props.className 自定义类名
+ * @param {string} props.activeTag 当前激活的标签值（可选，启用交互模式）
+ * @param {Function} props.onTagClick 标签点击回调函数（可选，启用交互模式）
+ * @param {boolean} props.interactive 是否启用交互模式（可选，控制 cursor 样式）
+ * @param {number} props.maxTags 最多显示标签数量（可选，默认3）
  * @returns {JSX.Element|null} 返回标签列表的 JSX 元素，无标签时返回 null
  */
-const CardTags = ({ tags = [], className = '' }) => {
+const CardTags = ({ 
+  tags = [], 
+  className = '',
+  activeTag,
+  onTagClick,
+  interactive = false,
+  maxTags = 3
+}) => {
   // 移动端状态管理
   const [isMobile, setIsMobile] = useState(() => {
     return window.innerWidth < 768;
@@ -55,13 +66,27 @@ const CardTags = ({ tags = [], className = '' }) => {
     return null;
   }
 
-  // 最多显示3个标签
-  const displayTags = tags.slice(0, 3);
+  // 最多显示指定数量的标签
+  const displayTags = tags.slice(0, maxTags);
+
+  // 判断是否为交互模式
+  const isInteractive = interactive || activeTag !== undefined || onTagClick !== undefined;
+
+  // 处理标签点击事件
+  const handleTagClick = (tag) => {
+    if (onTagClick) {
+      onTagClick(tag);
+    }
+  };
 
   return (
-    <div className={`${currentStyles.cardTags} ${className}`}>
+    <div className={`${currentStyles.cardTags} ${isInteractive ? currentStyles.interactive : ''} ${className}`}>
       {displayTags.map((tag, index) => (
-        <span key={index} className={currentStyles.tagItem}>
+        <span 
+          key={index} 
+          className={`${currentStyles.tagItem} ${activeTag === tag ? currentStyles.activeTagItem : ''}`}
+          onClick={() => handleTagClick(tag)}
+        >
           {tag}
         </span>
       ))}
@@ -72,7 +97,11 @@ const CardTags = ({ tags = [], className = '' }) => {
 // 为 CardTags 组件添加 PropTypes 类型定义
 CardTags.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
-  className: PropTypes.string
+  className: PropTypes.string,
+  activeTag: PropTypes.string,
+  onTagClick: PropTypes.func,
+  interactive: PropTypes.bool,
+  maxTags: PropTypes.number
 };
 
 // 为 CardTags 组件添加 displayName，便于在 React DevTools 中调试

@@ -3,7 +3,7 @@
  * @description     卡片标签组件样式 - 桌面端专用
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-22 16:45:00
- * @lastModified    2026-03-22 19:30:39
+ * @lastModified    2026-03-30 12:00:00
  * Copyright © All rights reserved
 */
 
@@ -41,6 +41,25 @@
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+}
+
+/* 交互模式容器 */
+.interactive {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* 激活态标签 */
+.activeTagItem {
+  background-color: #1890ff;
+  color: white;
+  box-shadow: 0 2px 6px rgba(24, 144, 255, 0.35);
+}
+
+.activeTagItem:hover {
+  background-color: #40a9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(24, 144, 255, 0.4);
 }
 
 /* 响应式设计 */

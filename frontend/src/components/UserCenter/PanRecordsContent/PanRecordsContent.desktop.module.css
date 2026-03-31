@@ -3,7 +3,7 @@
  * @description     排盘记录内容组件样式 - 桌面端专用（CSS Modules版本）
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:52:00
- * @lastModified    2026-03-23 18:27:03
+ * @lastModified    2026-03-30 13:00:00
  * Copyright © All rights reserved
 */
 
@@ -12,6 +12,14 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+/* 记录类型标签栏 */
+.recordTypeSection {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 加载状态 */

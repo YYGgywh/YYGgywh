@@ -1,0 +1,260 @@
+/*
+ * @file            frontend/src/components/UserCenter/MobileUserCenter/MobileUserCenterLayout/MobileUserCenterLayout.mobile.module.css
+ * @description     移动端用户中心布局容器组件移动端样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-30 12:57:00
+ * @lastModified    2026-03-30 18:43:39
+ * Copyright © All rights reserved
+*/
+
+/* ============================================ 
+   移动端用户中心布局容器样式 - 移动端
+   ============================================ */
+
+.mobileUserCenterLayout {
+  padding: 12px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 内容标签栏 */
+.contentTabs {
+  display: flex;
+  background-color: #fff;
+  /* border-radius: 12px; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.contentTab {
+  flex: 1;
+  padding: 6px;
+  background-color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  touch-action: manipulation;
+}
+
+.contentTab:active {
+  color: #1890ff;
+  background-color: #f0f7ff;
+}
+
+.activeContentTab {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.activeContentTab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #1890ff;
+  border-radius: 3px 3px 0 0;
+}
+
+.disabledTab {
+  color: #999;
+  cursor: not-allowed;
+}
+
+.disabledTab:active {
+  color: #999;
+  background-color: #fafafa;
+}
+
+/* 记录类型标签栏 */
+.recordTypeSection {
+  margin-bottom: 8px;
+}
+
+/* 内容区域 */
+.contentArea {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  min-height: 300px;
+}
+
+/* 占位内容 */
+.placeholderContent {
+  width: 100%;
+}
+
+.placeholderContent h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+}
+
+.placeholderContent p {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+/* 空状态 */
+.emptyState {
+  text-align: center;
+  padding: 30px 16px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 1px dashed #e8e8e8;
+}
+
+.emptyState p {
+  font-size: 14px;
+  color: #999;
+  margin: 0 0 16px 0;
+}
+
+.emptyButton {
+  padding: 8px 16px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+.emptyButton:active {
+  background-color: #40a9ff;
+  transform: scale(0.98);
+}
+
+/* 记录列表 */
+.recordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recordItem {
+  padding: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.recordItem:active {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+}
+
+.recordHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.recordType {
+  padding: 3px 10px;
+  background-color: #e6f0ff;
+  color: #1890ff;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.recordDate {
+  font-size: 11px;
+  color: #999;
+}
+
+.recordContent {
+  margin-bottom: 10px;
+}
+
+.recordTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.recordDesc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.recordActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  padding: 5px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background-color: white;
+  color: #666;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+.actionButton:active {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .mobileUserCenterLayout {
+    padding: 8px;
+  }
+  
+  .contentTab {
+    padding: 12px 12px;
+    font-size: 13px;
+  }
+  
+  .contentArea {
+    padding: 12px;
+  }
+  
+  .recordItem {
+    padding: 10px;
+  }
+  
+  .recordHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .recordActions {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .actionButton {
+    width: 100%;
+    text-align: center;
+  }
+}

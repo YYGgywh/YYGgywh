@@ -63,3 +63,5 @@ class User(Base):
     # 关注关系
     following = relationship("UserFollow", foreign_keys="UserFollow.follower_id", back_populates="user", cascade="all, delete-orphan")
     followers = relationship("UserFollow", foreign_keys="UserFollow.followed_id", back_populates="followed", cascade="all, delete-orphan")
+    # 统计数据
+    stats = relationship("UserStats", back_populates="user", uselist=False, cascade="all, delete-orphan")

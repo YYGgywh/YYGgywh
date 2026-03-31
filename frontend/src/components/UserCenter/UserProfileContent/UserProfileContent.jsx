@@ -608,18 +608,18 @@ const UserProfileContent = ({
   const renderBasicInfo = () => (
     <div className={currentStyles.profileTable}>
       {/* 头像行 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>头像</div>
-        <div className={styles.profileValue + ' ' + styles.profileValueAvatar}>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>头像</div>
+        <div className={currentStyles.profileValue + ' ' + currentStyles.profileValueAvatar}>
           <Avatar 
             src={userInfo.avatar}
             alt="用户头像"
             size="xlarge"
-            className={styles.avatarPreview}
+            className={currentStyles.avatarPreview}
             nickname={userInfo.nickname || userInfo.login_name}
           />
         </div>
-        <div className={styles.profileAction}>
+        <div className={currentStyles.profileAction}>
           <input
             type="file"
             id="avatarInput"
@@ -628,14 +628,14 @@ const UserProfileContent = ({
             style={{ display: 'none' }}
           />
           <button
-            className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+            className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
             onClick={() => document.getElementById('avatarInput').click()}
           >
             更换
           </button>
           {avatarFile && (
             <button
-              className={styles.actionBtn + ' ' + styles.actionBtnSuccess}
+              className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnSuccess}
               onClick={onAvatarUpload}
             >
               保存
@@ -645,29 +645,29 @@ const UserProfileContent = ({
       </div>
 
       {/* UID */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>UID</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.id !== undefined && userInfo.id !== null ? userInfo.id : '-'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>UID</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.id !== undefined && userInfo.id !== null ? userInfo.id : '-'}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 角色 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>角色</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{getRoleText(userInfo.role)}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>角色</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{getRoleText(userInfo.role)}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 登录名 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>登录名</div>
-        <div className={styles.profileValue}>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>登录名</div>
+        <div className={currentStyles.profileValue}>
           {editingLoginName ? (
-            <div className={styles.editMode}>
+            <div className={currentStyles.editMode}>
               <input
                 type="text"
                 value={newLoginName}
@@ -684,23 +684,23 @@ const UserProfileContent = ({
                     input.style.boxShadow = '';
                   }, 500);
                 }}
-                className={styles.editInput + ' ' + styles.nameInput}
+                className={currentStyles.editInput + ' ' + currentStyles.nameInput}
                 maxLength="20"
                 placeholder="请输入登录名"
               />
               {loginNameLimitInfo && (
-                <span className={`${styles.editHint} ${loginNameLimitInfo.remaining_count === 0 ? styles.editHintExceeded : ''}`}>
+                <span className={`${currentStyles.editHint} ${loginNameLimitInfo.remaining_count === 0 ? currentStyles.editHintExceeded : ''}`}>
                   {getYearEndDate()}前修改次数：{loginNameLimitInfo.login_name_modify_count}/4次
                   {loginNameLimitInfo.remaining_count === 0 && '（已达上限）'}
                 </span>
               )}
             </div>
           ) : (
-            <div className={styles.valueWithLimit}>
-              <span className={styles.valueText}>{userInfo.login_name || '未设置'}</span>
+            <div className={currentStyles.valueWithLimit}>
+              <span className={currentStyles.valueText}>{userInfo.login_name || '未设置'}</span>
               {loginNameLimitInfo && (
-                <div className={styles.limitInfoInline}>
-                  <span className={`${styles.limitText} ${loginNameLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+                <div className={currentStyles.limitInfoInline}>
+                  <span className={`${currentStyles.limitText} ${loginNameLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                     {getYearEndDate()}前修改次数：{loginNameLimitInfo.login_name_modify_count}/4次
                     {loginNameLimitInfo.remaining_count === 0 && '（已达上限）'}
                   </span>
@@ -709,19 +709,19 @@ const UserProfileContent = ({
             </div>
           )}
         </div>
-        <div className={styles.profileAction}>
+        <div className={currentStyles.profileAction}>
           {editingLoginName ? (
-            <div className={styles.actionGroup}>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={onLoginNameCancel}>
+            <div className={currentStyles.actionGroup}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={onLoginNameCancel}>
                 取消
               </button>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={onLoginNameSave}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={onLoginNameSave}>
                 保存
               </button>
             </div>
           ) : (
             <button
-              className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+              className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
               onClick={onLoginNameEdit}
               disabled={loginNameLimitInfo?.remaining_count === 0}
             >
@@ -732,11 +732,11 @@ const UserProfileContent = ({
       </div>
 
       {/* 昵称 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>昵称</div>
-        <div className={styles.profileValue}>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>昵称</div>
+        <div className={currentStyles.profileValue}>
           {editingNickname ? (
-            <div className={styles.editMode}>
+            <div className={currentStyles.editMode}>
               <input
                 type="text"
                 value={newNickname}
@@ -753,23 +753,23 @@ const UserProfileContent = ({
                     input.style.boxShadow = '';
                   }, 500);
                 }}
-                className={styles.editInput + ' ' + styles.nameInput}
+                className={currentStyles.editInput + ' ' + currentStyles.nameInput}
                 maxLength="20"
                 placeholder="请输入昵称"
               />
               {nicknameLimitInfo && (
-                <span className={`${styles.editHint} ${nicknameLimitInfo.remaining_count === 0 ? styles.editHintExceeded : ''}`}>
+                <span className={`${currentStyles.editHint} ${nicknameLimitInfo.remaining_count === 0 ? currentStyles.editHintExceeded : ''}`}>
                   {getYearEndDate()}前修改次数：{nicknameLimitInfo.nickname_modify_count}/12次
                   {nicknameLimitInfo.remaining_count === 0 && '（已达上限）'}
                 </span>
               )}
             </div>
           ) : (
-            <div className={styles.valueWithLimit}>
-              <span className={styles.valueText}>{userInfo.nickname || '未设置'}</span>
+            <div className={currentStyles.valueWithLimit}>
+              <span className={currentStyles.valueText}>{userInfo.nickname || '未设置'}</span>
               {nicknameLimitInfo && (
-                <div className={styles.limitInfoInline}>
-                  <span className={`${styles.limitText} ${nicknameLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+                <div className={currentStyles.limitInfoInline}>
+                  <span className={`${currentStyles.limitText} ${nicknameLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                     {getYearEndDate()}前修改次数：{nicknameLimitInfo.nickname_modify_count}/12次
                     {nicknameLimitInfo.remaining_count === 0 && '（已达上限）'}
                   </span>
@@ -778,19 +778,19 @@ const UserProfileContent = ({
             </div>
           )}
         </div>
-        <div className={styles.profileAction}>
+        <div className={currentStyles.profileAction}>
           {editingNickname ? (
-            <div className={styles.actionGroup}>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={onNicknameCancel}>
+            <div className={currentStyles.actionGroup}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={onNicknameCancel}>
                 取消
               </button>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={onNicknameSave}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={onNicknameSave}>
                 保存
               </button>
             </div>
           ) : (
             <button
-              className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+              className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
               onClick={onNicknameEdit}
               disabled={nicknameLimitInfo?.remaining_count === 0}
             >
@@ -798,14 +798,14 @@ const UserProfileContent = ({
             </button>
           )}
         </div>
-    </div>
+      </div>
 
       {/* 虚拟性别 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>虚拟性别</div>
-        <div className={styles.profileValue}>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>虚拟性别</div>
+        <div className={currentStyles.profileValue}>
           {editingVirtualGender ? (
-            <div className={styles.editMode}>
+            <div className={currentStyles.editMode}>
               <select
                 value={newVirtualGender}
                 onChange={(e) => handleVirtualGenderChange(e.target.value)}
@@ -821,7 +821,7 @@ const UserProfileContent = ({
                     select.style.boxShadow = '';
                   }, 500);
                 }}
-                className={styles.editInput + ' ' + styles.editSelect}
+                className={currentStyles.editInput + ' ' + currentStyles.editSelect}
               >
                 <option value="">请选择</option>
                 <option value="0">男</option>
@@ -829,20 +829,20 @@ const UserProfileContent = ({
                 <option value="2">保密</option>
               </select>
               {virtualGenderError && (
-                <span className={styles.editHint + ' ' + styles.editHintError}>{virtualGenderError}</span>
+                <span className={currentStyles.editHint + ' ' + currentStyles.editHintError}>{virtualGenderError}</span>
               )}
-              <span className={`${styles.editHint} ${virtualGenderLimitInfo.remaining_count === 0 ? styles.editHintExceeded : ''}`}>
+              <span className={`${currentStyles.editHint} ${virtualGenderLimitInfo.remaining_count === 0 ? currentStyles.editHintExceeded : ''}`}>
                 {getYearEndDate()}前修改次数：{virtualGenderLimitInfo.virtual_gender_modify_count}/4次
                 {virtualGenderLimitInfo.remaining_count === 0 && '（已达上限）'}
               </span>
             </div>
           ) : (
-            <div className={styles.valueWithLimit}>
-              <span className={styles.valueText}>
+            <div className={currentStyles.valueWithLimit}>
+              <span className={currentStyles.valueText}>
                 {userInfo.virtual_gender !== undefined && userInfo.virtual_gender !== null ? getGenderText(userInfo.virtual_gender) : '-'}
               </span>
-              <div className={styles.limitInfoInline}>
-                <span className={`${styles.limitText} ${virtualGenderLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+              <div className={currentStyles.limitInfoInline}>
+                <span className={`${currentStyles.limitText} ${virtualGenderLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                   {getYearEndDate()}前修改次数：{virtualGenderLimitInfo.virtual_gender_modify_count}/4次
                   {virtualGenderLimitInfo.remaining_count === 0 && '（已达上限）'}
                 </span>
@@ -850,19 +850,19 @@ const UserProfileContent = ({
             </div>
           )}
         </div>
-        <div className={styles.profileAction}>
+        <div className={currentStyles.profileAction}>
           {editingVirtualGender ? (
-            <div className={styles.actionGroup}>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={handleVirtualGenderCancel}>
+            <div className={currentStyles.actionGroup}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={handleVirtualGenderCancel}>
                 取消
               </button>
-              <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={handleVirtualGenderSave}>
+              <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={handleVirtualGenderSave}>
                 保存
               </button>
             </div>
           ) : (
             <button
-              className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+              className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
               onClick={handleVirtualGenderEdit}
               disabled={virtualGenderLimitInfo.remaining_count === 0}
             >
@@ -873,48 +873,48 @@ const UserProfileContent = ({
       </div>
 
       {/* 创建时间 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>创建时间</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{formatTimestamp(userInfo.create_time)}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>创建时间</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{formatTimestamp(userInfo.create_time)}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 更新时间 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>更新时间</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{formatTimestamp(userInfo.update_time)}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>更新时间</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{formatTimestamp(userInfo.update_time)}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 登录时间 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>登录时间</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{formatTimestamp(userInfo.last_login_time)}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>登录时间</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{formatTimestamp(userInfo.last_login_time)}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 登录IP */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>登录IP</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.last_login_ip || '-'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>登录IP</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.last_login_ip || '-'}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
 
       {/* 登录次数 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>登录次数</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.login_count || 0}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>登录次数</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.login_count || 0}</span>
         </div>
-        <div className={styles.profileAction}></div>
+        <div className={currentStyles.profileAction}></div>
       </div>
     </div>
   );
@@ -998,23 +998,23 @@ const UserProfileContent = ({
 
     
     return (
-      <div className={styles.profileTable}>
+      <div className={currentStyles.profileTable}>
         {/* 网站说明内容 */}
-        <div className={styles.profileRow}>
-          <div className={styles.profileLabel}>说明</div>
-          <div className={styles.profileValue}>
-            <span className={styles.valueText + ' ' + styles.valueTextReadonly}>以下内容为选择性填写项目，请用户尽量提供真实准确的个人信息。所填写的信息将被用于网站为注册用户生成个人命理排盘结果时进行数据提取与分析。请注意，此部分信息包含个人隐私敏感内容，网站承诺将采取合理的技术与管理措施保障信息安全与隐秘性。用户可根据自身意愿自主决定是否填写以及填写内容的真实性与完整性。</span>
+        <div className={currentStyles.profileRow}>
+          <div className={currentStyles.profileLabel}>说明</div>
+          <div className={currentStyles.profileValue}>
+            <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>以下内容为选择性填写项目，请用户尽量提供真实准确的个人信息。所填写的信息将被用于网站为注册用户生成个人命理排盘结果时进行数据提取与分析。请注意，此部分信息包含个人隐私敏感内容，网站承诺将采取合理的技术与管理措施保障信息安全与隐秘性。用户可根据自身意愿自主决定是否填写以及填写内容的真实性与完整性。</span>
           </div>
-          <div className={styles.profileAction}></div>
+          <div className={currentStyles.profileAction}></div>
         </div>
 
         {/* 姓名 */}
-        <div className={styles.profileRow}>
-          <div className={styles.profileLabel}>姓名</div>
-          <div className={styles.profileValue}>
+        <div className={currentStyles.profileRow}>
+          <div className={currentStyles.profileLabel}>姓名</div>
+          <div className={currentStyles.profileValue}>
             {editingName ? (
-              <div className={styles.editMode}>
-                <div className={styles.nameInputs}>
+              <div className={currentStyles.editMode}>
+                <div className={currentStyles.nameInputs}>
                   <input
                     type="text"
                     value={newLastName}
@@ -1032,7 +1032,7 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="姓"
-                    className={styles.editInput + ' ' + styles.nameInput}
+                    className={currentStyles.editInput + ' ' + currentStyles.nameInput}
                     maxLength={10}
                   />
                   <input
@@ -1052,23 +1052,23 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="名"
-                    className={styles.editInput + ' ' + styles.nameInput}
+                    className={currentStyles.editInput + ' ' + currentStyles.nameInput}
                     maxLength={10}
                   />
                 </div>
                 {nameError && (
-                  <span className={styles.editHint + ' ' + styles.editHintError}>{nameError}</span>
+                  <span className={currentStyles.editHint + ' ' + currentStyles.editHintError}>{nameError}</span>
                 )}
               </div>
             ) : (
-              <div className={styles.valueWithLimit}>
-                <span className={styles.valueText}>
+              <div className={currentStyles.valueWithLimit}>
+                <span className={currentStyles.valueText}>
                   {userInfo.last_name && userInfo.first_name 
                     ? `${userInfo.last_name}${userInfo.first_name}` 
                     : '-'}
                 </span>
-                <div className={styles.limitInfoInline}>
-                  <span className={`${styles.limitText} ${nameLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+                <div className={currentStyles.limitInfoInline}>
+                  <span className={`${currentStyles.limitText} ${nameLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                     {getYearEndDate()}前修改次数：{nameLimitInfo.name_modify_count}/2次
                     {nameLimitInfo.remaining_count === 0 && '（已达上限）'}
                   </span>
@@ -1076,19 +1076,19 @@ const UserProfileContent = ({
               </div>
             )}
           </div>
-          <div className={styles.profileAction}>
+          <div className={currentStyles.profileAction}>
             {editingName ? (
-              <div className={styles.actionGroup}>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={handleNameCancel}>
+              <div className={currentStyles.actionGroup}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={handleNameCancel}>
                   取消
                 </button>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={handleNameSave}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={handleNameSave}>
                   保存
                 </button>
               </div>
             ) : (
               <button
-                className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+                className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
                 onClick={() => handleFortuneEdit('name')}
                 disabled={nameLimitInfo.remaining_count === 0}
               >
@@ -1099,12 +1099,12 @@ const UserProfileContent = ({
         </div>
 
         {/* 出生公历 */}
-        <div className={styles.profileRow}>
-          <div className={styles.profileLabel}>出生公历</div>
-          <div className={styles.profileValue}>
+        <div className={currentStyles.profileRow}>
+          <div className={currentStyles.profileLabel}>出生公历</div>
+          <div className={currentStyles.profileValue}>
             {editingBirthTime ? (
-              <div className={styles.editMode}>
-                <div className={styles.birthTimeInputs}>
+              <div className={currentStyles.editMode}>
+                <div className={currentStyles.birthTimeInputs}>
                   <input
                     type="text"
                     value={birthTimeData.year}
@@ -1123,10 +1123,10 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="年"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeYear}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeYear}
                     maxLength={4}
                   />
-                  <span className={styles.birthTimeSeparator}>年</span>
+                  <span className={currentStyles.birthTimeSeparator}>年</span>
                   <input
                     type="text"
                     value={birthTimeData.month}
@@ -1145,10 +1145,10 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="月"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeMonth}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeMonth}
                     maxLength={2}
                   />
-                  <span className={styles.birthTimeSeparator}>月</span>
+                  <span className={currentStyles.birthTimeSeparator}>月</span>
                   <input
                     type="text"
                     value={birthTimeData.day}
@@ -1167,10 +1167,10 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="日"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeDay}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeDay}
                     maxLength={2}
                   />
-                  <span className={styles.birthTimeSeparator}>日</span>
+                  <span className={currentStyles.birthTimeSeparator}>日</span>
                   <input
                     type="text"
                     value={birthTimeData.hour}
@@ -1189,10 +1189,10 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="时"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeHour}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeHour}
                     maxLength={2}
                   />
-                  <span className={styles.birthTimeSeparator}>时</span>
+                  <span className={currentStyles.birthTimeSeparator}>时</span>
                   <input
                     type="text"
                     value={birthTimeData.minute}
@@ -1211,10 +1211,10 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="分"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeMinute}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeMinute}
                     maxLength={2}
                   />
-                  <span className={styles.birthTimeSeparator}>分</span>
+                  <span className={currentStyles.birthTimeSeparator}>分</span>
                   <input
                     type="text"
                     value={birthTimeData.second}
@@ -1233,23 +1233,23 @@ const UserProfileContent = ({
                       }, 500);
                     }}
                     placeholder="秒"
-                    className={styles.editInput + ' ' + styles.birthTimeInput + ' ' + styles.birthTimeSecond}
+                    className={currentStyles.editInput + ' ' + currentStyles.birthTimeInput + ' ' + currentStyles.birthTimeSecond}
                     maxLength={2}
                   />
-                  <span className={styles.birthTimeSeparator}>秒</span>
+                  <span className={currentStyles.birthTimeSeparator}>秒</span>
                 </div>
                 {birthTimeError && (
-                  <span className={styles.editHint + ' ' + styles.editHintError}>{birthTimeError}</span>
+                  <span className={currentStyles.editHint + ' ' + currentStyles.editHintError}>{birthTimeError}</span>
                 )}
               </div>
             ) : (
-              <div className={styles.valueWithLimit}>
-                <div className={styles.fortuneTimeDisplay}>
-                  <span className={styles.datePart}>{getSolarBirthTimeInfo().date}</span>
-                  <span className={styles.timePart}>{getSolarBirthTimeInfo().time}</span>
+              <div className={currentStyles.valueWithLimit}>
+                <div className={currentStyles.fortuneTimeDisplay}>
+                  <span className={currentStyles.datePart}>{getSolarBirthTimeInfo().date}</span>
+                  <span className={currentStyles.timePart}>{getSolarBirthTimeInfo().time}</span>
                 </div>
-                <div className={styles.limitInfoInline}>
-                  <span className={`${styles.limitText} ${birthTimeLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+                <div className={currentStyles.limitInfoInline}>
+                  <span className={`${currentStyles.limitText} ${birthTimeLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                     {getYearEndDate()}前修改次数：{birthTimeLimitInfo.birth_time_modify_count}/2次
                     {birthTimeLimitInfo.remaining_count === 0 && '（已达上限）'}
                   </span>
@@ -1257,19 +1257,19 @@ const UserProfileContent = ({
               </div>
             )}
           </div>
-          <div className={styles.profileAction}>
+          <div className={currentStyles.profileAction}>
             {editingBirthTime ? (
-              <div className={styles.actionGroup}>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={handleBirthTimeCancel}>
+              <div className={currentStyles.actionGroup}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={handleBirthTimeCancel}>
                   取消
                 </button>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={handleBirthTimeSave}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={handleBirthTimeSave}>
                   保存
                 </button>
               </div>
             ) : (
               <button
-                className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+                className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
                 onClick={() => handleFortuneEdit('birthTime')}
                 disabled={birthTimeLimitInfo.remaining_count === 0}
               >
@@ -1280,23 +1280,23 @@ const UserProfileContent = ({
         </div>
 
         {/* 出生农历 */}
-        <div className={styles.profileRow}>
-          <div className={styles.profileLabel}>出生农历</div>
-          <div className={styles.profileValue}>
-            <div className={styles.fortuneTimeDisplay}>
-              <span className={styles.datePart}>{getLunarBirthTimeInfo().date}</span>
-              <span className={styles.timePart}>{getLunarBirthTimeInfo().time}</span>
+        <div className={currentStyles.profileRow}>
+          <div className={currentStyles.profileLabel}>出生农历</div>
+          <div className={currentStyles.profileValue}>
+            <div className={currentStyles.fortuneTimeDisplay}>
+              <span className={currentStyles.datePart}>{getLunarBirthTimeInfo().date}</span>
+              <span className={currentStyles.timePart}>{getLunarBirthTimeInfo().time}</span>
             </div>
           </div>
-          <div className={styles.profileAction}></div>
+          <div className={currentStyles.profileAction}></div>
         </div>
 
         {/* 性别 */}
-        <div className={styles.profileRow}>
-          <div className={styles.profileLabel}>性别</div>
-          <div className={styles.profileValue}>
+        <div className={currentStyles.profileRow}>
+          <div className={currentStyles.profileLabel}>性别</div>
+          <div className={currentStyles.profileValue}>
             {editingGender ? (
-              <div className={styles.editMode}>
+              <div className={currentStyles.editMode}>
                 <select
                   value={newGender}
                   onChange={(e) => handleGenderChange(e.target.value)}
@@ -1312,23 +1312,23 @@ const UserProfileContent = ({
                       select.style.boxShadow = '';
                     }, 500);
                   }}
-                  className={styles.editInput + ' ' + styles.editSelect}
+                  className={currentStyles.editInput + ' ' + currentStyles.editSelect}
                 >
                   <option value="">请选择</option>
                   <option value="0">男</option>
                   <option value="1">女</option>
                 </select>
                 {genderError && (
-                  <span className={styles.editHint + ' ' + styles.editHintError}>{genderError}</span>
+                  <span className={currentStyles.editHint + ' ' + currentStyles.editHintError}>{genderError}</span>
                 )}
               </div>
             ) : (
-              <div className={styles.valueWithLimit}>
-                <span className={styles.valueText}>
+              <div className={currentStyles.valueWithLimit}>
+                <span className={currentStyles.valueText}>
                   {userInfo.gender !== undefined && userInfo.gender !== null ? getGenderText(userInfo.gender) : '-'}
                 </span>
-                <div className={styles.limitInfoInline}>
-                  <span className={`${styles.limitText} ${genderLimitInfo.remaining_count === 0 ? styles.limitTextExceeded : ''}`}>
+                <div className={currentStyles.limitInfoInline}>
+                  <span className={`${currentStyles.limitText} ${genderLimitInfo.remaining_count === 0 ? currentStyles.limitTextExceeded : ''}`}>
                     {getYearEndDate()}前修改次数：{genderLimitInfo.gender_modify_count}/2次
                     {genderLimitInfo.remaining_count === 0 && '（已达上限）'}
                   </span>
@@ -1336,19 +1336,19 @@ const UserProfileContent = ({
               </div>
             )}
           </div>
-          <div className={styles.profileAction}>
+          <div className={currentStyles.profileAction}>
             {editingGender ? (
-              <div className={styles.actionGroup}>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextCancel} onClick={handleGenderCancel}>
+              <div className={currentStyles.actionGroup}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextCancel} onClick={handleGenderCancel}>
                   取消
                 </button>
-                <button className={styles.actionBtn + ' ' + styles.actionBtnTextSave} onClick={handleGenderSave}>
+                <button className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnTextSave} onClick={handleGenderSave}>
                   保存
                 </button>
               </div>
             ) : (
               <button
-                className={styles.actionBtn + ' ' + styles.actionBtnPrimary}
+                className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnPrimary}
                 onClick={() => handleFortuneEdit('gender')}
                 disabled={genderLimitInfo.remaining_count === 0}
               >
@@ -1363,61 +1363,61 @@ const UserProfileContent = ({
 
   // 渲染安全中心选项卡内容
   const renderSecurityCenter = () => (
-    <div className={styles.profileTable}>
+    <div className={currentStyles.profileTable}>
       {/* 手机 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>手机</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.phone || '-'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>手机</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.phone || '-'}</span>
         </div>
-        <div className={styles.profileAction}>
-          <span className={styles.actionHint}>暂不可修改</span>
+        <div className={currentStyles.profileAction}>
+          <span className={currentStyles.actionHint}>暂不可修改</span>
         </div>
       </div>
 
       {/* 邮箱 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>邮箱</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.email || '-'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>邮箱</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.email || '-'}</span>
         </div>
-        <div className={styles.profileAction}>
-          <span className={styles.actionHint}>暂不可修改</span>
+        <div className={currentStyles.profileAction}>
+          <span className={currentStyles.actionHint}>暂不可修改</span>
         </div>
       </div>
 
       {/* 微信 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>微信</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.wechat_openid ? '已绑定' : '未绑定'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>微信</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.wechat_openid ? '已绑定' : '未绑定'}</span>
         </div>
-        <div className={styles.profileAction}>
-          <span className={styles.actionHint}>暂不可修改</span>
+        <div className={currentStyles.profileAction}>
+          <span className={currentStyles.actionHint}>暂不可修改</span>
         </div>
       </div>
 
       {/* 密码 */}
-      <div className={styles.profileRow}>
-        <div className={styles.profileLabel}>密码</div>
-        <div className={styles.profileValue}>
-          <span className={styles.valueText + ' ' + styles.valueTextReadonly}>{userInfo.password ? '已设置' : '未设置'}</span>
+      <div className={currentStyles.profileRow}>
+        <div className={currentStyles.profileLabel}>密码</div>
+        <div className={currentStyles.profileValue}>
+          <span className={currentStyles.valueText + ' ' + currentStyles.valueTextReadonly}>{userInfo.password ? '已设置' : '未设置'}</span>
         </div>
-        <div className={styles.profileAction}>
-          <span className={styles.actionHint}>暂不可修改</span>
+        <div className={currentStyles.profileAction}>
+          <span className={currentStyles.actionHint}>暂不可修改</span>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className={styles.userProfileContent}>
+    <div className={currentStyles.userProfileContent}>
       {/* 选项卡 */}
-      <div className={styles.profileTabs}>
+      <div className={currentStyles.profileTabs}>
         {TABS.map((tab) => (
           <button
             key={tab.id}
-            className={`${styles.profileTab} ${activeTab === tab.id ? styles.profileTabActive : ''}`}
+            className={`${currentStyles.profileTab} ${activeTab === tab.id ? currentStyles.profileTabActive : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
@@ -1426,7 +1426,7 @@ const UserProfileContent = ({
       </div>
 
       {/* 选项卡内容 */}
-      <div className={styles.profileTabContent}>
+      <div className={currentStyles.profileTabContent}>
         {activeTab === 'basic' ? renderBasicInfo() : activeTab === 'fortune' ? renderFortuneInfo() : renderSecurityCenter()}
       </div>
     </div>

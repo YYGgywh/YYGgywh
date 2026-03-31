@@ -38,10 +38,20 @@ class LikeService:
             PanLike.pan_id == pan_id
         ).first()
         
+        # 获取排盘记录的作者ID
+        record = self.db.query(PanRecord).filter(PanRecord.id == pan_id).first()
+        if not record:
+            return {"is_liked": False, "like_count": 0}
+        
+        author_id = record.user_id
+        
         if like:
             # 取消点赞
             self.db.delete(like)
             self.pan_service.decrement_like_count(pan_id)
+            # 更新作者的统计数据
+            from app.services.user_stats_service import UserStatsService
+            UserStatsService.update_post_likes(self.db, author_id, -1)
             self.db.commit()
             
             # 获取当前点赞数
@@ -60,6 +70,9 @@ class LikeService:
             )
             self.db.add(new_like)
             self.pan_service.increment_like_count(pan_id)
+            # 更新作者的统计数据
+            from app.services.user_stats_service import UserStatsService
+            UserStatsService.update_post_likes(self.db, author_id, 1)
             self.db.commit()
             
             # 获取当前点赞数

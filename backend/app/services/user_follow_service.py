@@ -45,6 +45,17 @@ class UserFollowService:
             followed_id=followed_id
         )
         db.add(new_follow)
+        
+        # 更新统计数据
+        from app.services.user_stats_service import UserStatsService
+        # 更新关注者的关注数
+        UserStatsService.update_follows(db, follower_id, 1)
+        # 更新被关注者的粉丝数
+        UserStatsService.update_followers(db, followed_id, 1)
+        # 更新互关数
+        UserStatsService.update_mutual_follows(db, follower_id)
+        UserStatsService.update_mutual_follows(db, followed_id)
+        
         db.commit()
         db.refresh(new_follow)
         
@@ -70,6 +81,17 @@ class UserFollowService:
         
         # 删除关注关系
         db.delete(follow_relation)
+        
+        # 更新统计数据
+        from app.services.user_stats_service import UserStatsService
+        # 更新关注者的关注数
+        UserStatsService.update_follows(db, follower_id, -1)
+        # 更新被关注者的粉丝数
+        UserStatsService.update_followers(db, followed_id, -1)
+        # 更新互关数
+        UserStatsService.update_mutual_follows(db, follower_id)
+        UserStatsService.update_mutual_follows(db, followed_id)
+        
         db.commit()
         
         return {"message": "取消关注成功"}
@@ -114,9 +136,17 @@ class UserFollowService:
             UserFollow.followed_id == followed_id
         ).first()
         
+        # 更新统计数据
+        from app.services.user_stats_service import UserStatsService
+        
         if follow:
             # 已关注 -> 取消关注（直接删除）
             db.delete(follow)
+            # 更新统计数据
+            UserStatsService.update_follows(db, follower_id, -1)
+            UserStatsService.update_followers(db, followed_id, -1)
+            UserStatsService.update_mutual_follows(db, follower_id)
+            UserStatsService.update_mutual_follows(db, followed_id)
             db.commit()
             
             return {
@@ -129,6 +159,11 @@ class UserFollowService:
                 followed_id=followed_id
             )
             db.add(new_follow)
+            # 更新统计数据
+            UserStatsService.update_follows(db, follower_id, 1)
+            UserStatsService.update_followers(db, followed_id, 1)
+            UserStatsService.update_mutual_follows(db, follower_id)
+            UserStatsService.update_mutual_follows(db, followed_id)
             db.commit()
             
             return {

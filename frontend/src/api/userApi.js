@@ -224,3 +224,13 @@ export const getFollowersList = async (skip = 0, limit = 20) => {
     throw error;
   }
 };
+
+// 获取用户统计数据
+export const getUserStats = async () => {
+  try {
+    const response = await api.get('/user/stats');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

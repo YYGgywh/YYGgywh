@@ -1,0 +1,46 @@
+/*
+ * @file            frontend/src/components/UserCenter/MobileUserCenter/StatsSection/StatsSection.mobile.module.css
+ * @description     移动端用户中心数据统计组件样式
+ * @author          圆运阁古易文化 <gordon_cao@qq.com>
+ * @createTime      2026-03-30 15:00:00
+ * @lastModified    2026-03-30 15:00:00
+ * Copyright © All rights reserved
+*/
+
+/* ============================================ 
+   数据统计组件样式 - 移动端
+   ============================================ */
+
+.statsSection {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 359px) {
+  .statValue {
+    font-size: 16px;
+  }
+  
+  .statLabel {
+    font-size: 11px;
+  }
+}

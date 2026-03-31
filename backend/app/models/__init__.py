@@ -12,6 +12,7 @@ from .dto_models import (
 )
 
 from .user import User
+from .user_stats import UserStats
 from .pan_record import PanRecord
 from .comment import Comment
 from .comment_like import CommentLike
@@ -32,6 +33,7 @@ __all__ = [
     'SolarConversionDTO',
     'LunarConversionDTO',
     'User',
+    'UserStats',
     'PanRecord',
     'Comment',
     'CommentLike',
