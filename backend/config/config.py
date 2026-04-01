@@ -17,6 +17,9 @@ class Settings:
     SERVER_HOST: str = os.getenv("SERVER_HOST", "0.0.0.0")
     SERVER_PORT: int = int(os.getenv("SERVER_PORT", "8000"))
     
+    # 生产环境基础URL配置
+    BASE_URL: str = os.getenv("BASE_URL", f"http://{SERVER_HOST}:{SERVER_PORT}")
+    
     # API配置
     API_V1_STR: str = "/api/v1"
     

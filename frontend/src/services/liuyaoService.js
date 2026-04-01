@@ -27,33 +27,14 @@ class LiuYaoService {
   
   /**
    * 获取API基础URL
-   * 优先使用环境变量，其次使用当前页面主机地址，最后使用默认本地地址
+   * 直接硬编码生产环境的API基础URL
    * @returns {string} API基础URL
    */
   static getApiBaseUrl() {
-    // 获取当前页面信息
-    const { protocol, hostname, host } = window.location;
-    
-    console.log('[LiuYaoService] 当前页面地址:', window.location.href);
-    console.log('[LiuYaoService] 当前主机名:', hostname);
-    console.log('[LiuYaoService] 环境变量 REACT_APP_API_BASE_URL:', process.env.REACT_APP_API_BASE_URL);
-    
-    // 1. 如果当前页面不是localhost，使用当前主机地址（支持局域网访问）
-    if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
-      const apiUrl = `${protocol}//${hostname}:8000`;
-      console.log('[LiuYaoService] 使用局域网地址:', apiUrl);
-      return apiUrl;
-    }
-    
-    // 2. 优先使用环境变量（如果是localhost访问）
-    if (process.env.REACT_APP_API_BASE_URL) {
-      console.log('[LiuYaoService] 使用环境变量:', process.env.REACT_APP_API_BASE_URL);
-      return process.env.REACT_APP_API_BASE_URL;
-    }
-    
-    // 3. 默认使用本地地址
-    console.log('[LiuYaoService] 使用默认本地地址: http://localhost:8000');
-    return 'http://localhost:8000';
+    // 直接返回生产环境的API基础URL
+    const apiUrl = 'http://115.191.48.226:8000';
+    console.log('[LiuYaoService] 使用生产环境地址:', apiUrl);
+    return apiUrl;
   }
   
   /**

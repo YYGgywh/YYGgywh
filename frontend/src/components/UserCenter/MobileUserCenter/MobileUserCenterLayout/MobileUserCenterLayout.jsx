@@ -40,7 +40,8 @@ const MobileUserCenterLayout = ({
   onRecordTypeChange,
   onAvatarUpload,
   onProfileUpdate,
-  onRecordAction
+  onRecordAction,
+  onLogout
 }) => {
   // 移动端状态管理
   const [isMobile, setIsMobile] = useState(() => {
@@ -164,6 +165,7 @@ const MobileUserCenterLayout = ({
         userInfo={userInfo}
         onAvatarUpload={onAvatarUpload}
         onProfileUpdate={onProfileUpdate}
+        onLogout={onLogout}
       />
       
       {/* 内容标签栏 */}

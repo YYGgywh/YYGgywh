@@ -106,102 +106,109 @@ const Navigation = () => {
   };
 
   // 渲染移动端导航
-  const renderMobileNavigation = () => (
-    <>
-      {/* 顶部导航 */}
-      <nav className={currentStyles.navigation}>
-        <div className={currentStyles.navigationContainer}>
-          {/* 左侧汉堡菜单 */}
-          <div className={currentStyles.navigationLeft}>
-            <div className={currentStyles.hamburgerMenu}>
-              <span></span>
-              <span></span>
-              <span></span>
+  const renderMobileNavigation = () => {
+    // 检查当前路径是否为用户中心
+    const isUserCenter = location.pathname.includes('/user');
+    
+    return (
+      <>
+        {/* 顶部导航 - 仅在非用户中心页面显示 */}
+        {!isUserCenter && (
+          <nav className={currentStyles.navigation}>
+            <div className={currentStyles.navigationContainer}>
+              {/* 左侧汉堡菜单 */}
+              <div className={currentStyles.navigationLeft}>
+                <div className={currentStyles.hamburgerMenu}>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              
+              {/* 中间标签栏 */}
+              <div className={currentStyles.navTabs}>
+                <div 
+                  className={`${currentStyles.tabItem} ${activeTab === '关注' ? currentStyles.active : ''}`}
+                  onClick={() => setActiveTab('关注')}
+                >
+                  关注
+                </div>
+                <div 
+                  className={`${currentStyles.tabItem} ${activeTab === '论剑' ? currentStyles.active : ''}`}
+                  onClick={() => setActiveTab('论剑')}
+                >
+                  论剑
+                </div>
+                <div 
+                  className={`${currentStyles.tabItem} ${activeTab === '同城' ? currentStyles.active : ''}`}
+                  onClick={() => setActiveTab('同城')}
+                >
+                  同城
+                </div>
+              </div>
+              
+              {/* 右侧搜索按钮 */}
+              <div className={currentStyles.searchButton}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+              </div>
+            </div>
+          </nav>
+        )}
+        
+        {/* 底部导航 - 始终显示 */}
+        <div className={currentStyles.bottomNavigation}>
+          <div className={`${currentStyles.navItem} ${activeMenu === '广场' ? currentStyles.active : ''}`} onClick={() => navigate('/')}>
+            <div className={currentStyles.navIcon}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <span className={currentStyles.navText}>首页</span>
+          </div>
+          
+          <div className={currentStyles.navItem}>
+            <div className={currentStyles.navIcon}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </div>
+            <span className={currentStyles.navText}>经楼</span>
+          </div>
+          
+          {/* 阴阳图标 */}
+          <div className={currentStyles.yinYangContainer}>
+            <div className={currentStyles.yinYangIcon} onClick={() => navigate('/divination/liuyao')}>
+              <img src={yinYangIcon} alt="阴阳" />
             </div>
           </div>
           
-          {/* 中间标签栏 */}
-          <div className={currentStyles.navTabs}>
-            <div 
-              className={`${currentStyles.tabItem} ${activeTab === '关注' ? currentStyles.active : ''}`}
-              onClick={() => setActiveTab('关注')}
-            >
-              关注
+          <div className={currentStyles.navItem}>
+            <div className={currentStyles.navIcon}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
             </div>
-            <div 
-              className={`${currentStyles.tabItem} ${activeTab === '论剑' ? currentStyles.active : ''}`}
-              onClick={() => setActiveTab('论剑')}
-            >
-              论剑
-            </div>
-            <div 
-              className={`${currentStyles.tabItem} ${activeTab === '同城' ? currentStyles.active : ''}`}
-              onClick={() => setActiveTab('同城')}
-            >
-              同城
-            </div>
+            <span className={currentStyles.navText}>消息</span>
           </div>
           
-          {/* 右侧搜索按钮 */}
-          <div className={currentStyles.searchButton}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
+          <div className={`${currentStyles.navItem} ${isUserCenter ? currentStyles.active : ''}`} onClick={() => handleLoginClick()}>
+            <div className={currentStyles.navIcon}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <span className={currentStyles.navText}>我</span>
           </div>
         </div>
-      </nav>
-      
-      {/* 底部导航 */}
-      <div className={currentStyles.bottomNavigation}>
-        <div className={`${currentStyles.navItem} ${activeMenu === '广场' ? currentStyles.active : ''}`} onClick={() => navigate('/')}>
-          <div className={currentStyles.navIcon}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-          </div>
-          <span className={currentStyles.navText}>首页</span>
-        </div>
-        
-        <div className={currentStyles.navItem} onClick={() => navigate('/divination/liuyao')}>
-          <div className={currentStyles.navIcon}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-          </div>
-          <span className={currentStyles.navText}>经楼</span>
-        </div>
-        
-        {/* 阴阳图标 */}
-        <div className={currentStyles.yinYangContainer}>
-          <div className={currentStyles.yinYangIcon} onClick={() => navigate('/divination/liuyao')}>
-            <img src={yinYangIcon} alt="阴阳" />
-          </div>
-        </div>
-        
-        <div className={currentStyles.navItem}>
-          <div className={currentStyles.navIcon}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-          </div>
-          <span className={currentStyles.navText}>消息</span>
-        </div>
-        
-        <div className={currentStyles.navItem} onClick={() => handleLoginClick()}>
-          <div className={currentStyles.navIcon}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <span className={currentStyles.navText}>我</span>
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  };
 
   // 渲染桌面端导航
   const renderDesktopNavigation = () => (

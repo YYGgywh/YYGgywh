@@ -111,6 +111,7 @@ class PanService:
                 "comment_count": record.comment_count,
                 "view_count": record.view_count,
                 "create_time": record.create_time,
+                "publish_time": record.publish_time,
                 "user": {
                     "id": user.id if user else None,
                     "nickname": user.nickname if user and user.nickname else "六爻用户",
@@ -195,6 +196,7 @@ class PanService:
             "comment_count": record.comment_count,
             "view_count": record.view_count,
             "create_time": record.create_time,
+            "publish_time": record.publish_time,
             "audit_status": record.audit_status,
             "user": {
                 "id": user.id if user else None,

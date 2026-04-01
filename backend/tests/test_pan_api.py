@@ -22,7 +22,7 @@ from main import app
 from app.db.database import SessionLocal, Base, engine
 from app.models.user import User
 from app.models.pan_record import PanRecord
-from app.utils.password import get_password_hash
+from app.utils.password import hash_password
 from app.utils.token import create_access_token
 
 # 创建测试客户端
@@ -38,7 +38,8 @@ def setup_db():
     # 创建测试用户
     test_user = User(
         phone="13800138000",
-        password_hash=get_password_hash("123456"),
+        password_hash=hash_password("123456"),
+
         nickname="测试用户",
         role=0,
         status=1

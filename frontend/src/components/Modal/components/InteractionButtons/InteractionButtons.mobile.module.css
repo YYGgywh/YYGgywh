@@ -3,7 +3,7 @@
  * @description     互动按钮组件移动端样式
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-26 18:20:00
- * @lastModified    2026-03-26 18:20:00
+ * @lastModified    2026-03-31 10:30:50
  * Copyright © All rights reserved
 */
 
@@ -25,6 +25,7 @@
   align-items: center;
   gap: var(--button-gap);
   padding: 6px 0;
+  justify-content: center;
 }
 
 /* 卡片样式变体 - 用于首页卡片 */

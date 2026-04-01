@@ -52,7 +52,10 @@ const PostHeader = ({
       {showMeta && (
         <div className={styles.postMeta}>
           {/* 显示发布时间，使用 formatStandardTime 函数格式化 */}
-          <span className={styles.postTime}>{formatStandardTime(data.create_time)}</span>
+          <span className={styles.postTime}>
+            {data.publish_time ? formatStandardTime(data.publish_time) : 
+             data.create_time ? formatStandardTime(data.create_time) : '未发布'}
+          </span>
           {/* 条件渲染：如果 data.location 存在，则显示发布地点 */}
           {data.location && <span className={styles.postLocation}>{data.location}</span>}
         </div>

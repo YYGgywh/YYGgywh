@@ -30,6 +30,7 @@ class PanRecord(Base):
     audit_time = Column(Integer, nullable=True)
     audit_user_id = Column(Integer, ForeignKey("user.id"), nullable=True)
     audit_remark = Column(String, nullable=True)
+    publish_time = Column(Integer, nullable=True)
     is_visible = Column(Integer, default=1)
     deleted_at = Column(Integer, nullable=True)
     like_count = Column(Integer, default=0)

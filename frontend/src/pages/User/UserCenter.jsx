@@ -228,7 +228,7 @@ const UserCenter = () => {
   // 退出登录
   const handleLogout = () => {
     removeToken();
-    navigate('/login');
+    navigate('/');
   };
 
   // 昵称编辑处理
@@ -274,9 +274,15 @@ const UserCenter = () => {
     const file = e.target.files[0];
     if (file) setAvatarFile(file);
   };
-  const handleAvatarUpload = async () => {
+  const handleAvatarUpload = async (file) => {
     try {
-      const response = await uploadAvatar(avatarFile);
+      // 优先使用传递的文件参数，否则使用状态中的文件
+      const uploadFile = file || avatarFile;
+      if (!uploadFile) {
+        setError('请选择要上传的头像');
+        return;
+      }
+      const response = await uploadAvatar(uploadFile);
       const updatedUserInfo = { ...userInfo, avatar: response.data.avatar };
       setUserInfo(updatedUserInfo);
       saveUserInfo(updatedUserInfo);
@@ -437,11 +443,9 @@ const UserCenter = () => {
 
   return (
     <div className="user-center-page">
-      {!isMobile && (
-        <header className="user-center-header">
-          <Navigation />
-        </header>
-      )}
+      <header className="user-center-header">
+        <Navigation />
+      </header>
 
       <div className="user-center-body">
         {isMobile ? (
@@ -454,6 +458,7 @@ const UserCenter = () => {
             onRecordTypeChange={handleRecordTypeChange}
             onAvatarUpload={handleAvatarUpload}
             onProfileUpdate={handleUserInfoUpdate}
+            onLogout={handleLogout}
             onRecordAction={(action, data) => {
               switch (action) {
                 case 'view':

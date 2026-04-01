@@ -1,7 +1,7 @@
 # backend/app/api/user.py 2026-02-26 18:00:00
 # 功能：用户相关接口实现
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Header, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, Request, Header, UploadFile, File
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from app.db.database import get_db
@@ -143,20 +143,26 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
             raise HTTPException(status_code=400, detail="请提供手机号或邮箱")
         
         # 验证验证码
-        if request.phone:
-            if not verify_code(request.phone, request.code):
-                raise HTTPException(status_code=400, detail="验证码错误或已过期")
-            # 检查手机号是否已注册
-            existing_user = db.query(User).filter(User.phone == request.phone).first()
-            if existing_user:
-                raise HTTPException(status_code=400, detail="手机号已注册")
-        elif request.email:
-            if not verify_email_code(request.email, request.code):
-                raise HTTPException(status_code=400, detail="验证码错误或已过期")
-            # 检查邮箱是否已注册
-            existing_user = db.query(User).filter(User.email == request.email).first()
-            if existing_user:
-                raise HTTPException(status_code=400, detail="邮箱已注册")
+        # 测试专用硬码，上线前删除并恢复短信接口校验
+        TEST_CODE = "888888"
+        if request.code == TEST_CODE:
+            # 使用测试验证码，跳过正常验证码校验
+            print("使用测试验证码：888888")
+        else:
+            if request.phone:
+                if not verify_code(request.phone, request.code):
+                    raise HTTPException(status_code=400, detail="验证码错误或已过期")
+                # 检查手机号是否已注册
+                existing_user = db.query(User).filter(User.phone == request.phone).first()
+                if existing_user:
+                    raise HTTPException(status_code=400, detail="手机号已注册")
+            elif request.email:
+                if not verify_email_code(request.email, request.code):
+                    raise HTTPException(status_code=400, detail="验证码错误或已过期")
+                # 检查邮箱是否已注册
+                existing_user = db.query(User).filter(User.email == request.email).first()
+                if existing_user:
+                    raise HTTPException(status_code=400, detail="邮箱已注册")
         
         # 处理登录名
         login_name = request.login_name
@@ -248,8 +254,14 @@ async def login(request: LoginRequest, db: Session = Depends(get_db), fastapi_re
     # 验证方式
     if request.code:
         # 验证码登录
-        if not verify_code(request.phone or user.phone, request.code):
-            raise HTTPException(status_code=400, detail="验证码错误或已过期")
+        # 测试专用硬码，上线前删除并恢复短信接口校验
+        TEST_CODE = "888888"
+        if request.code == TEST_CODE:
+            # 使用测试验证码，跳过正常验证码校验
+            print("使用测试验证码：888888")
+        else:
+            if not verify_code(request.phone or user.phone, request.code):
+                raise HTTPException(status_code=400, detail="验证码错误或已过期")
     elif request.password:
         # 密码登录
         if not verify_password(request.password, user.password):
@@ -770,7 +782,7 @@ async def get_virtual_gender_limit_info(
 
 @router.post("/upload_avatar", response_model=UploadAvatarResponse)
 def upload_avatar(
-    file: UploadFile = None,
+    file: UploadFile = File(None),
     authorization: str = Header(None, description="Bearer Token"),
     db: Session = Depends(get_db)
 ):

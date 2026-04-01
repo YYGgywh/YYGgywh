@@ -86,7 +86,7 @@ def save_uploaded_file(file: UploadFile, subfolder: str = "avatars") -> Tuple[bo
         return False, f"文件保存失败：{str(e)}"
 
 
-def get_file_url(file_path: str, base_url: str = "http://localhost:8000") -> str:
+def get_file_url(file_path: str, base_url: str = None) -> str:
     """
     获取文件访问URL
     
@@ -97,7 +97,8 @@ def get_file_url(file_path: str, base_url: str = "http://localhost:8000") -> str
     Returns:
         文件访问URL
     """
-    return f"{base_url}/static/{file_path}"
+    # 使用相对路径，避免跨域问题
+    return f"/static/{file_path}"
 
 
 def delete_file(file_path: str) -> bool:

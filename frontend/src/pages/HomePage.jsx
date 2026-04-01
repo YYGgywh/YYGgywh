@@ -29,14 +29,37 @@ import avatar10 from '../assets/images/avatar-10.svg'; // 导入用户头像图�
 
 /**
  * 计算相对时间
- * @param {string} createTime - 创建时间字符串
+ * @param {string|number} createTime - 创建时间字符串或时间戳
  * @returns {string} 相对时间字符串，如"2小时前"、"1天前"等
  */
 const getRelativeTime = (createTime) => {
   if (!createTime) return '';
   
   const now = new Date();
-  const createDate = new Date(createTime);
+  let createDate;
+  
+  // 尝试解析不同格式的时间
+  if (typeof createTime === 'string') {
+    // 如果是字符串，直接创建日期对象
+    createDate = new Date(createTime);
+  } else if (typeof createTime === 'number') {
+    // 如果是数字，检查是否是秒级时间戳
+    if (createTime.toString().length === 10) {
+      // 秒级时间戳，转换为毫秒
+      createDate = new Date(createTime * 1000);
+    } else {
+      // 毫秒级时间戳，直接创建日期对象
+      createDate = new Date(createTime);
+    }
+  } else {
+    return '';
+  }
+  
+  // 检查日期是否有效
+  if (isNaN(createDate.getTime())) {
+    return '';
+  }
+  
   const diffMs = now - createDate;
   const diffSecs = Math.floor(diffMs / 1000);
   const diffMins = Math.floor(diffSecs / 60);
@@ -259,6 +282,7 @@ const HomePage = () => {
             user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
             user_avatar: getUserAvatar(record.user?.avatar_url, record.user?.nickname), // 用户头像：优先使用用户头像，否则使用基于昵称的默认头像
             create_time: record.create_time, // 创建时间
+            publish_time: record.publish_time, // 发布时间
             like_count: record.like_count || 0, // 点赞数：默认为 0
             collect_count: record.collect_count || 0, // 收藏数：默认为 0
             view_count: record.view_count || 0, // 浏览数：默认为 0
@@ -402,6 +426,7 @@ const HomePage = () => {
               user_nickname: record.user?.nickname || "匿名用户", // 用户昵称：优先使用用户昵称，否则使用默认值
               user_avatar: getUserAvatar(record.user?.avatar_url, record.user?.nickname), // 用户头像：优先使用用户头像，否则使用基于昵称的默认头像
               create_time: record.create_time, // 创建时间
+              publish_time: record.publish_time, // 发布时间
               like_count: record.like_count || 0, // 点赞数：默认为 0
               collect_count: record.collect_count || 0, // 收藏数：默认为 0
               view_count: record.view_count || 0, // 浏览数：默认为 0
@@ -509,7 +534,9 @@ const HomePage = () => {
                     />
                     
                     {/* 发布时间 */}
-                    <span className={currentStyles.postTime}>{getRelativeTime(item.create_time)}</span>
+                    <span className={currentStyles.postTime}>
+                      {item.publish_time ? getRelativeTime(item.publish_time) : '未发布'}
+                    </span>
                   </div>
                   
                   {/* 卡片统计信息：点赞、收藏、评论、浏览量 */}

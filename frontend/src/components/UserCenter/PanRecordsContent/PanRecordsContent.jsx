@@ -3,7 +3,7 @@
  * @description     排盘记录内容组件，展示用户的排盘历史记录
  * @author          圆运阁古易文化 <gordon_cao@qq.com>
  * @createTime      2026-03-03 20:52:00
- * @lastModified    2026-03-30 13:00:00
+ * @lastModified    2026-03-31 10:20:37
  * Copyright © All rights reserved
 */
 
@@ -192,6 +192,14 @@ const PanRecordsContent = ({
             onClick={() => onViewDetail && onViewDetail(record)}
             style={{ cursor: 'pointer' }}
           >
+            {/* 标签 */}
+            <div className={currentStyles.recordCardTags}>
+              <CardTags 
+                tags={record.tags || [panTypeToChinese ? panTypeToChinese(record.pan_type || 'liuyao') : '六爻', '职业']} 
+                className={currentStyles.cardTagsMain}
+              />
+            </div>
+            
             {/* 上半部分：横向布局 */}
             <div className={currentStyles.recordCardTop}>
               {/* 左侧：时间 + 问卜详情 */}
@@ -200,6 +208,7 @@ const PanRecordsContent = ({
                   formData={record.formData || {}}
                   divinationData={record.divinationData || {}}
                   className={currentStyles.briefDivinationQueryMain}
+                  isMobile={isMobile}
                 />
               </div>
               {/* 右侧：卦象结果 */}
@@ -213,12 +222,8 @@ const PanRecordsContent = ({
             {/* 分隔线 */}
             <div className={currentStyles.recordCardDivider}></div>
             
-            {/* 下半部分：标签 + 交互按钮 + 操作按钮 */}
+            {/* 下半部分：交互按钮 + 操作按钮 */}
             <div className={currentStyles.recordCardBottom}>
-              <CardTags 
-                tags={record.tags || [panTypeToChinese ? panTypeToChinese(record.pan_type || 'liuyao') : '六爻', '职业']} 
-                className={currentStyles.cardTagsMain}
-              />
               <InteractionButtons 
                 likeCount={record.like_count || 0}
                 collectCount={record.collect_count || 0}

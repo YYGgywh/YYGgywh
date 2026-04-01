@@ -56,6 +56,7 @@ class PanRecordResponse(BaseModel):
     pan_result: dict
     create_time: int
     update_time: int
+    publish_time: int | None = None
     supplement: str | None
     supplement_create_time: int | None = None
     supplement_update_time: int | None = None
@@ -70,7 +71,7 @@ class ListPanResponse(BaseModel):
 # 根据payload获取当前用户
 def get_current_user_from_payload(payload: dict = Depends(get_current_user, use_cache=False), db: Session = Depends(get_db)):
     """根据payload获取当前用户（可选）"""
-    user_id = payload.get("user_id") if payload else None
+    user_id = payload.get("user_id") if payload and isinstance(payload, dict) else None
     if not user_id:
         return None
     
@@ -82,6 +83,11 @@ async def save_pan(request: SavePanRequest, current_user: User = Depends(get_cur
     """
     保存排盘记录
     """
+    # 检查用户是否登录
+    if not current_user:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="请先登录")
+    
     # 获取当前时间戳
     current_time = int(time.time())
     
@@ -115,6 +121,11 @@ async def list_pan(
     """
     查询用户排盘记录
     """
+    # 检查用户是否登录
+    if not current_user:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="请先登录")
+    
     # 计算偏移量
     offset = (page - 1) * size
     
@@ -159,6 +170,7 @@ async def list_pan(
             pan_result=pan_result,
             create_time=record.create_time,
             update_time=record.update_time,
+            publish_time=record.publish_time,
             supplement=record.supplement,
             supplement_create_time=record.supplement_create_time,
             supplement_update_time=record.supplement_update_time,
@@ -179,6 +191,11 @@ async def update_pan(
     """
     更新排盘记录
     """
+    # 检查用户是否登录
+    if not current_user:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="请先登录")
+    
     # 查询排盘记录
     record = db.query(PanRecord).filter(
         PanRecord.id == record_id,
@@ -201,6 +218,9 @@ async def update_pan(
                 record.supplement_create_time = current_time
             record.supplement_modify_count += 1
     if request.audit_status is not None:
+        # 记录首次发布时间
+        if record.audit_status == 0 and request.audit_status == 1 and record.publish_time is None:
+            record.publish_time = current_time
         record.audit_status = request.audit_status
     if request.audit_remark is not None:
         record.audit_remark = request.audit_remark
@@ -223,6 +243,11 @@ async def delete_pan(
     """
     删除排盘记录（逻辑删除）
     """
+    # 检查用户是否登录
+    if not current_user:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="请先登录")
+    
     # 查询排盘记录
     record = db.query(PanRecord).filter(
         PanRecord.id == record_id,

@@ -12,11 +12,8 @@ import { getFrontendToken, getBackendToken, removeFrontendToken, removeBackendTo
 
 // 创建axios实例
 const api = axios.create({
-  baseURL: '/api/v1',
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  baseURL: 'http://115.191.48.226:8000/api/v1',
+  timeout: 10000
 });
 
 // 错误提示函数
@@ -31,15 +28,31 @@ const showError = (message) => {
 // 请求拦截器
 api.interceptors.request.use(
   config => {
-    // 添加请求时间戳，防止缓存
-    config.params = {
-      ...config.params,
-      _t: Date.now()
-    };
+    // 检查是否是 FormData 类型的请求
+    const isFormData = config.data instanceof FormData;
+    
+    // 添加请求时间戳，防止缓存（只对非 FormData 请求添加）
+    if (!isFormData) {
+      config.params = {
+        ...config.params,
+        _t: Date.now()
+      };
+      // 非 FormData 请求设置默认 Content-Type
+      if (!config.headers['Content-Type']) {
+        config.headers['Content-Type'] = 'application/json';
+      }
+    } else {
+      // FormData 请求删除 Content-Type，让 axios 自动设置
+      delete config.headers['Content-Type'];
+    }
     
     // 开发环境打印请求日志
     if (process.env.NODE_ENV === 'development') {
       console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`, config.params || {});
+      if (isFormData) {
+        console.log('FormData request detected');
+        console.log('FormData content:', config.data);
+      }
     }
     
     // 根据请求路径选择使用的Token

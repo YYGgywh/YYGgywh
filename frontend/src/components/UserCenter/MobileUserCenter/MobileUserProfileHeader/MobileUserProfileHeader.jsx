@@ -13,6 +13,7 @@ import styles from './MobileUserProfileHeader.desktop.module.css';
 import mobileStyles from './MobileUserProfileHeader.mobile.module.css';
 import StatsSection from '../StatsSection/StatsSection.jsx';
 import Avatar from '../../../common/Avatar/Avatar.jsx';
+import modificationIcon from '../../../../assets/images/modification.svg';
 
 /**
  * 移动端用户中心个人信息头部组件
@@ -27,7 +28,8 @@ import Avatar from '../../../common/Avatar/Avatar.jsx';
 const MobileUserProfileHeader = ({ 
   userInfo = {}, 
   onAvatarUpload, 
-  onProfileUpdate 
+  onProfileUpdate,
+  onLogout
 }) => {
   // 移动端状态管理
   const [isMobile, setIsMobile] = useState(() => {
@@ -38,6 +40,9 @@ const MobileUserProfileHeader = ({
   const [avatarFile, setAvatarFile] = useState(null);
   const [editingBio, setEditingBio] = useState(false);
   const [bio, setBio] = useState((userInfo?.bio) || '点击添加介绍，让大家认识你...');
+  const [editingNickname, setEditingNickname] = useState(false);
+  const [newNickname, setNewNickname] = useState(userInfo?.nickname || '');
+  const [nicknameError, setNicknameError] = useState('');
   
   // 监听窗口大小变化
   useEffect(() => {
@@ -59,6 +64,7 @@ const MobileUserProfileHeader = ({
   // 监听 userInfo 变化
   useEffect(() => {
     setBio((userInfo?.bio) || '点击添加介绍，让大家认识你...');
+    setNewNickname(userInfo?.nickname || '');
   }, [userInfo]);
   
   // 根据屏幕尺寸选择样式
@@ -91,6 +97,47 @@ const MobileUserProfileHeader = ({
   const handleBioCancel = () => {
     setBio(userInfo.bio || '点击添加介绍，让大家认识你...');
     setEditingBio(false);
+  };
+  
+  // 处理昵称编辑
+  const handleNicknameEdit = () => {
+    setNewNickname(userInfo?.nickname || '');
+    setNicknameError('');
+    setEditingNickname(true);
+  };
+  
+  const handleNicknameSave = () => {
+    // 简单验证
+    if (!newNickname.trim()) {
+      setNicknameError('昵称不能为空');
+      return;
+    }
+    
+    if (newNickname.length > 20) {
+      setNicknameError('昵称长度不能超过20个字符');
+      return;
+    }
+    
+    // 调用更新回调
+    if (onProfileUpdate) {
+      onProfileUpdate({ nickname: newNickname.trim() });
+    }
+    
+    setEditingNickname(false);
+  };
+  
+  const handleNicknameCancel = () => {
+    setNewNickname(userInfo?.nickname || '');
+    setNicknameError('');
+    setEditingNickname(false);
+  };
+  
+  // 处理退出登录
+  const handleLogout = () => {
+    // 调用退出登录回调
+    if (onLogout) {
+      onLogout();
+    }
   };
   
   return (
@@ -127,8 +174,56 @@ const MobileUserProfileHeader = ({
         
         {/* 个人信息 */}
         <div className={currentStyles.userInfo}>
-          <h2 className={currentStyles.nickname}>{userInfo?.nickname || '昵称'}</h2>
+          {editingNickname ? (
+            <div className={currentStyles.nicknameEdit}>
+              <input
+                type="text"
+                value={newNickname}
+                onChange={(e) => setNewNickname(e.target.value)}
+                className={currentStyles.nicknameInput}
+                placeholder="请输入昵称"
+                maxLength={20}
+              />
+              {nicknameError && <div className={currentStyles.nicknameError}>{nicknameError}</div>}
+              <div className={currentStyles.nicknameEditActions}>
+                <button 
+                  className={currentStyles.nicknameCancelButton}
+                  onClick={handleNicknameCancel}
+                >
+                  取消
+                </button>
+                <button 
+                  className={currentStyles.nicknameSaveButton}
+                  onClick={handleNicknameSave}
+                >
+                  保存
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={currentStyles.nicknameContainer}>
+              <h2 className={currentStyles.nickname}>{userInfo?.nickname || '昵称'}</h2>
+              <button 
+                className={currentStyles.nicknameEditButton}
+                onClick={handleNicknameEdit}
+                title="修改昵称"
+              >
+                <img src={modificationIcon} alt="修改" className={currentStyles.modificationIcon} />
+              </button>
+            </div>
+          )}
           <p className={currentStyles.loginName}>登录名: {userInfo?.login_name || '未设置'}</p>
+        </div>
+        
+        {/* 退出登录按钮 */}
+        <div className={currentStyles.logoutSection}>
+          <button className={currentStyles.logoutButton} onClick={handleLogout}>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={currentStyles.logoutIcon}>
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16 17l5-5-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M21 12H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
         </div>
       </div>
       

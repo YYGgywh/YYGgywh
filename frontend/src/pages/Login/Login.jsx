@@ -18,7 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('login'); // 'login' 或 'register'
-  const [loginMethod, setLoginMethod] = useState('code'); // 'code' 或 'password'
+  const [loginMethod, setLoginMethod] = useState('password'); // 'code' 或 'password'
   const [registerMethod, setRegisterMethod] = useState('phone'); // 'phone' 或 'email'
   const [formData, setFormData] = useState({
     phone: '',
@@ -163,8 +163,8 @@ const Login = () => {
           last_login_ip: response.data.last_login_ip,
           login_count: response.data.login_count
         });
-        // 如果有来源页面，登录后返回原页面；否则跳转到用户中心
-        const from = location.state?.from || '/user';
+        // 如果有来源页面，登录后返回原页面；否则跳转到首页
+        const from = location.state?.from || '/';
         navigate(from);
       }
     } catch (err) {
