@@ -12,7 +12,7 @@ import { getFrontendToken, getBackendToken, removeFrontendToken, removeBackendTo
 
 // 创建axios实例
 const api = axios.create({
-  baseURL: 'http://115.191.48.226:8000/api/v1',
+  baseURL: process.env.REACT_APP_API_BASE_URL ? `${process.env.REACT_APP_API_BASE_URL}/api/v1` : 'http://localhost:8000/api/v1',
   timeout: 10000
 });
 

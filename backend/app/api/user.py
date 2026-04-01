@@ -781,8 +781,8 @@ async def get_virtual_gender_limit_info(
 
 
 @router.post("/upload_avatar", response_model=UploadAvatarResponse)
-def upload_avatar(
-    file: UploadFile = File(None),
+async def upload_avatar(
+    file: UploadFile = File(...),
     authorization: str = Header(None, description="Bearer Token"),
     db: Session = Depends(get_db)
 ):
@@ -857,9 +857,9 @@ async def get_user_info(
     return GetUserInfoResponse(
         data={
             "id": current_user.id,
-            "username": current_user.login_name,
+            "login_name": current_user.login_name,
             "nickname": current_user.nickname,
-            "avatar_url": current_user.avatar,
+            "avatar": current_user.avatar,
             "email": mask_email(current_user.email) if current_user.email else None,
             "phone": mask_phone(current_user.phone) if current_user.phone else None,
             "gender": current_user.gender,

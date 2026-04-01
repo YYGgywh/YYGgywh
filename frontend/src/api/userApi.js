@@ -161,7 +161,14 @@ export const updateLoginName = async (newLoginName) => {
 export const uploadAvatar = async (file) => {
   try {
     const formData = new FormData();
-    formData.append('file', file);
+    // 确保文件存在
+    if (file) {
+      formData.append('file', file);
+      console.log('File added to FormData:', file);
+    } else {
+      console.error('No file provided to uploadAvatar');
+      throw new Error('请选择要上传的头像');
+    }
     
     const response = await api.post('/user/upload_avatar', formData);
     return response;

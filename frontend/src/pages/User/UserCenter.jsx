@@ -373,9 +373,20 @@ const UserCenter = () => {
   };
 
   // 处理用户信息更新
-  const handleUserInfoUpdate = (updatedUserInfo) => {
-    setUserInfo(updatedUserInfo);
-    saveUserInfo(updatedUserInfo);
+  const handleUserInfoUpdate = async (updatedUserInfo) => {
+    try {
+      // 调用 API 更新数据库
+      const response = await updateUserInfo(updatedUserInfo);
+      if (response.code === 200) {
+        // 更新本地状态和本地存储
+        const newUserInfo = { ...userInfo, ...updatedUserInfo };
+        setUserInfo(newUserInfo);
+        saveUserInfo(newUserInfo);
+        alert('修改成功');
+      }
+    } catch (err) {
+      setError(err.message || '修改失败');
+    }
   };
 
   // 渲染内容区域

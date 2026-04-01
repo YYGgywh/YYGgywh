@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.834aedf8.css",
+    "main.js": "/static/js/main.265a4c31.js",
+    "static/media/Logo.png": "/static/media/Logo.f7145cd92816ace3e1ec.png",
+    "static/media/taiji.svg": "/static/media/taiji.8e5309c44e4d164ccadc0d7925218181.svg",
+    "static/media/@.svg": "/static/media/@.24fd72b34683786cea7e1b95ccdf6fe8.svg",
+    "static/media/modification.svg": "/static/media/modification.4a6f72e7d07d98503418c8a42feae08e.svg",
+    "static/media/smiling face.svg": "/static/media/smiling face.9329e2220a7232cb3c11c490e779bd98.svg",
+    "static/media/go back.svg": "/static/media/go back.b19f193dd4e58f2e629ce2b275d0f66e.svg",
+    "index.html": "/index.html",
+    "static/media/avatar-1.svg": "/static/media/avatar-1.db724ce635b6abba04cebc832abbad0b.svg",
+    "static/media/avatar-10.svg": "/static/media/avatar-10.ea48b8793fec93afd090489a89073576.svg",
+    "static/media/avatar-2.svg": "/static/media/avatar-2.d9f00b1fbbdd77488e405b6a332f7ec9.svg",
+    "static/media/avatar-3.svg": "/static/media/avatar-3.e9a3b6e9fb84ce4f2f1519812a6e2db2.svg",
+    "static/media/avatar-4.svg": "/static/media/avatar-4.9747fd53320c112feffcb44fd72a723e.svg",
+    "static/media/avatar-5.svg": "/static/media/avatar-5.8dd03504d93f63ddd9ecae43a8c08457.svg",
+    "static/media/avatar-6.svg": "/static/media/avatar-6.f91b7890e9279514fe7edc2ae27b652e.svg",
+    "static/media/avatar-7.svg": "/static/media/avatar-7.b40fa13fc71cbca91cd7306144df8b16.svg",
+    "static/media/avatar-8.svg": "/static/media/avatar-8.ebae0766ea341cb02ccaeb473dbae86e.svg",
+    "static/media/avatar-9.svg": "/static/media/avatar-9.f2d993d65680890cdad972a7b20153d0.svg",
+    "main.834aedf8.css.map": "/static/css/main.834aedf8.css.map",
+    "main.265a4c31.js.map": "/static/js/main.265a4c31.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.834aedf8.css",
+    "static/js/main.265a4c31.js"
+  ]
+}

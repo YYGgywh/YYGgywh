@@ -636,7 +636,7 @@ const UserProfileContent = ({
           {avatarFile && (
             <button
               className={currentStyles.actionBtn + ' ' + currentStyles.actionBtnSuccess}
-              onClick={onAvatarUpload}
+              onClick={() => onAvatarUpload(avatarFile)}
             >
               保存
             </button>

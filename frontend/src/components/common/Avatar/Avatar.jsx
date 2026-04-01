@@ -97,14 +97,14 @@ const Avatar = ({
     }
   };
 
-  // 处理头像URL，将localhost地址替换为生产环境地址
+  // 处理头像URL，将localhost地址替换为相对路径
   const processAvatarUrl = (url) => {
     if (!url) return defaultAvatar;
     
     // 检查是否包含localhost
     if (url.includes('localhost')) {
-      // 替换为生产环境地址
-      return url.replace('http://localhost:8000', 'http://115.191.48.226:8000');
+      // 替换为相对路径，避免跨域问题
+      return url.replace('http://localhost:8000', '');
     }
     return url;
   };
